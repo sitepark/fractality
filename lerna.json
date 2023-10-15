@@ -5,6 +5,11 @@
       "message": "chore: publish"
     }
   },
-  "packages": ["packages/*", "examples/*"],
-  "version": "independent"
+  "npmClient": "pnpm",
+  "packages": [
+    "packages/*",
+    "examples/*"
+  ],
+  "version": "independent",
+  "$schema": "node_modules/lerna/schemas/lerna-schema.json"
 }

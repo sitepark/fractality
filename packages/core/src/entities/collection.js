@@ -1,11 +1,11 @@
 'use strict';
 
-const mix = require('../mixins/mix');
-const Collection = require('../mixins/collection');
-const Heritable = require('../mixins/heritable');
-const Entity = require('../mixins/entity');
+import mix from '../mixins/mix.js';
+import Collection from '../mixins/collection.js';
+import Heritable from '../mixins/heritable.js';
+import Entity from '../mixins/entity.js';
 
-module.exports = class EntityCollection extends mix(Heritable, Collection, Entity) {
+export default class EntityCollection extends mix(Heritable, Collection, Entity) {
     constructor(name, config, items, parent) {
         super();
         this.initEntity(name, config, parent);
@@ -39,4 +39,4 @@ module.exports = class EntityCollection extends mix(Heritable, Collection, Entit
         self.items = this.toArray().map((i) => (i.toJSON ? i.toJSON() : i));
         return self;
     }
-};
+}

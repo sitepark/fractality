@@ -1,9 +1,9 @@
 'use strict';
 
-const Promise = require('bluebird');
-const Readable = require('readable-stream').Readable;
+import Promise from "bluebird";
+import { Readable as Readable } from "readable-stream";
 
-module.exports = class PromiseStream extends Readable {
+export default class PromiseStream extends Readable {
     constructor(p) {
         super({ objectMode: true });
         this._data = Promise.resolve(p);

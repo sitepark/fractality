@@ -1,15 +1,14 @@
 'use strict';
 
-const Promise = require('bluebird');
-const _ = require('lodash');
-const Path = require('path');
-const co = require('co');
-const Variant = require('./variant');
-const Log = require('@frctl/core').Log;
-const utils = require('@frctl/core').utils;
-const EntityCollection = require('@frctl/core').entities.Collection;
+import { Log, entities, utils } from "@frctl/core";
+import Promise from "bluebird";
+import co from "co";
+import _ from "lodash";
+import Path from "path";
+import Variant from "./variant.js";
+const EntityCollection = entities.Collection;
 
-module.exports = class VariantCollection extends EntityCollection {
+export default class VariantCollection extends EntityCollection {
     constructor(config, items, parent) {
         super(config.name, config, items, parent);
     }

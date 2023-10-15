@@ -1,9 +1,9 @@
 'use strict';
 
-const _ = require('lodash');
-const utils = require('@frctl/core').utils;
+import _ from "lodash";
+import { utils } from "@frctl/core";
 
-module.exports = function (app, engine) {
+export default function (app, engine) {
     return {
         name: 'path',
         value(path, req) {

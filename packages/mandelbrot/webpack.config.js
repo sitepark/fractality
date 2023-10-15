@@ -1,8 +1,11 @@
-const path = require('path');
-const glob = require('globby');
+import path from "path";
+import glob from "globby";
+import autoprefixer from "autoprefixer";
+import { fileURLToPath } from "url";
 
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import CopyPlugin from "copy-webpack-plugin";
+
 
 const skins = glob.sync('./assets/scss/skins/*.scss').reduce((acc, file) => {
     const fileName = path.basename(file, '.scss');
@@ -13,7 +16,7 @@ const skins = glob.sync('./assets/scss/skins/*.scss').reduce((acc, file) => {
     };
 }, {});
 
-module.exports = {
+export default {
     entry: {
         mandelbrot: ['./assets/js/mandelbrot.js'],
         highlight: ['./assets/scss/highlight.scss'],
@@ -21,7 +24,7 @@ module.exports = {
     },
     output: {
         filename: 'js/[name].js',
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve('./dist'),
     },
     plugins: [
         new MiniCssExtractPlugin({
@@ -53,7 +56,7 @@ module.exports = {
                 },
             },
             {
-                test: require.resolve('jquery'),
+                test: fileURLToPath(import.meta.resolve('jquery')),
                 loader: 'expose-loader',
                 options: {
                     exposes: ['$', 'jQuery'],
@@ -86,7 +89,7 @@ module.exports = {
                         loader: 'postcss-loader',
                         options: {
                             postcssOptions: {
-                                plugins: [require('autoprefixer')()],
+                                plugins: [autoprefixer()],
                             },
                         },
                     },

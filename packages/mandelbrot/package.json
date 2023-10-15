@@ -1,6 +1,7 @@
 {
   "name": "@frctl/mandelbrot",
   "version": "1.10.3",
+  "type": "module",
   "description": "The default theme for Fractal.",
   "main": "index.js",
   "repository": {
@@ -52,7 +53,7 @@
     "sass": "^1.32.13",
     "sass-loader": "^11.0.1",
     "sass-mq": "^5.0.1",
-    "webpack": "^5.37.0",
+    "webpack": "^5.89.0",
     "webpack-bundle-analyzer": "^4.4.1",
     "webpack-cli": "^4.7.0"
   },

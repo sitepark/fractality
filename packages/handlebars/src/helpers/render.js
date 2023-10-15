@@ -1,10 +1,10 @@
 'use strict';
 
-const Handlebars = require('handlebars');
-const _ = require('lodash');
-const utils = require('@frctl/core').utils;
+import { utils } from "@frctl/core";
+import Handlebars from "handlebars";
+import _ from "lodash";
 
-module.exports = function (fractal) {
+export default function (fractal) {
     return function render(handle) {
         let context;
         let source = fractal.components;

@@ -1,5 +1,6 @@
-const mix = require('../../src/mixins/mix');
-const Emitter = mix(require('../../src/mixins/emitter'));
+import mix from "../../src/mixins/mix";
+import Tmp from '../../src/mixins/emitter';
+const Emitter = mix(Tmp);
 
 describe('Emitter', () => {
     let emitter;

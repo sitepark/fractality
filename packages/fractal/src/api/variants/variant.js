@@ -1,11 +1,13 @@
 'use strict';
 
-const Path = require('path');
-const _ = require('lodash');
-const utils = require('@frctl/core').utils;
-const Entity = require('@frctl/core').entities.Entity;
 
-module.exports = class Variant extends Entity {
+import { entities, utils } from "@frctl/core";
+import _ from "lodash";
+import Path from "path";
+
+const Entity = entities.Entity;
+
+export default class Variant extends Entity {
     constructor(config, view, resources, parent) {
         super(config.name, config, parent);
         this.isVariant = true;

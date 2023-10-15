@@ -1,10 +1,10 @@
 'use strict';
 
-const _ = require('lodash');
-const mixin = require('mixwith').Mixin;
-const utils = require('../utils');
+import _ from 'lodash';
+import { Mixin as mixin } from 'mixwith';
+import * as utils from "../utils.js";
 
-module.exports = mixin(
+export default mixin(
     (superclass) =>
         class Heritable extends superclass {
             constructor() {

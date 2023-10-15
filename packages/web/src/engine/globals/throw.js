@@ -1,8 +1,8 @@
 'use strict';
 
-const WebError = require('../../error');
+import WebError from "../../error.js";
 
-module.exports = function () {
+export default function () {
     return {
         name: 'throw',
         value(code, message) {

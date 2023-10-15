@@ -1,11 +1,11 @@
 'use strict';
 
-import storage from '../storage';
-import utils from '../utils';
-import events from '../events';
+import storage from '../storage.js';
+import utils from '../utils.js';
+import events from '../events.js';
 
-import Tree, { getHandleFromUrl } from './tree';
-import Search from './search';
+import Tree, { getHandleFromUrl } from './tree.js';
+import Search from './search.js';
 
 export default class Navigation {
     constructor(el) {

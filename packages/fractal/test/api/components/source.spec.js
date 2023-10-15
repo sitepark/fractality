@@ -1,7 +1,7 @@
-const _ = require('lodash');
+import _ from "lodash";
 
-const ComponentSource = require('../../../src/api/components');
-const app = require('../../../src/fractal')();
+import ComponentSource from "../../../src/api/components";
+import app from "../../../src/fractal";
 
 describe('ComponentSource', () => {
     let components;

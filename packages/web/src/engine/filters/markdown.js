@@ -1,8 +1,8 @@
 'use strict';
 
-const markdown = require('@frctl/core').markdown;
+import { markdown } from "@frctl/core";
 
-module.exports = function () {
+export default function () {
     return {
         name: 'markdown',
         filter: (str) => markdown(str),

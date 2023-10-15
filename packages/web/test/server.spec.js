@@ -1,8 +1,8 @@
-const app = require('../../fractal/src/fractal')();
+import app from "../../fractal/src/fractal";
 
-const Theme = require('../src/theme');
+import Theme from "../src/theme";
 
-const Server = require('../src/server');
+import Server from "../src/server";
 
 describe('Server', () => {
     let server;

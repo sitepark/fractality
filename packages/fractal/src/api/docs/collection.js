@@ -1,8 +1,8 @@
 'use strict';
+import { entities } from "@frctl/core";
+const EntityCollection = entities.Collection;
 
-const EntityCollection = require('@frctl/core').entities.Collection;
-
-module.exports = class DocCollection extends EntityCollection {
+export default class DocCollection extends EntityCollection {
     constructor(config, items, parent) {
         super(config.name, config, items, parent);
     }

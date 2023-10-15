@@ -1,23 +1,23 @@
 'use strict';
 
-const Promise = require('bluebird');
-const _ = require('lodash');
-const chokidar = require('chokidar');
-const anymatch = require('anymatch');
-const Path = require('path');
-const mixin = require('mixwith').Mixin;
-const mix = require('mixwith').mix;
+import Promise from "bluebird";
+import _ from "lodash";
+import chokidar from "chokidar";
+import anymatch from "anymatch";
+import Path from "path";
+import { Mixin as mixin } from "mixwith";
+import { mix } from "mixwith";
 
-const fs = require('../fs');
-const utils = require('../utils');
-const Log = require('../log');
-const Configurable = require('../mixins/configurable');
-const Collection = require('../mixins/collection');
-const Emitter = require('../mixins/emitter');
-const Stream = require('../promise-stream');
-const resolver = require('../resolver');
+import fs from "../fs.js";
+import * as utils from "../utils.js";
+import Log from "../log.js";
+import Configurable from "../mixins/configurable.js";
+import Collection from "../mixins/collection.js";
+import Emitter from "../mixins/emitter.js";
+import Stream from "../promise-stream.js";
+import resolver from "../resolver.js";
 
-module.exports = mixin(
+export default mixin(
     (superclass) =>
         class Source extends mix(superclass).with(Configurable, Collection, Emitter) {
             constructor() {

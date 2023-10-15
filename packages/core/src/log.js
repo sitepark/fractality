@@ -1,7 +1,7 @@
 'use strict';
 
-const mix = require('./mixins/mix');
-const Emitter = require('./mixins/emitter');
+import mix from "./mixins/mix.js";
+import Emitter from "./mixins/emitter.js";
 
 class Log extends mix(Emitter) {
     log(msg, data) {
@@ -29,4 +29,4 @@ class Log extends mix(Emitter) {
     }
 }
 
-module.exports = new Log();
+export default new Log();

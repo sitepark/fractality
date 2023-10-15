@@ -1,9 +1,9 @@
 'use strict';
 
-const Path = require('path');
-const File = require('../files/file');
+import Path from "path";
+import File from "../files/file.js";
 
-module.exports = class Asset extends File {
+export default class Asset extends File {
     constructor(file, relativeTo, source) {
         super(file, relativeTo);
         this.isAsset = true;

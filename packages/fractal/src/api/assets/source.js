@@ -1,13 +1,12 @@
 'use strict';
 
-const Asset = require('./asset');
-const AssetCollection = require('./collection');
-const fs = require('@frctl/core').fs;
-const mix = require('@frctl/core').mixins.mix;
-const Source = require('@frctl/core').mixins.source;
-const Stream = require('@frctl/core').PromiseStream;
+import { PromiseStream as Stream, fs, mixins } from "@frctl/core";
+import Asset from "./asset.js";
+import AssetCollection from "./collection.js";
+const mix = mixins.mix;
+const Source = mixins.source;
 
-module.exports = class AssetSource extends mix(Source) {
+export default class AssetSource extends mix(Source) {
     constructor(name, config, app) {
         super();
         this.isHidden = config.hidden || false;

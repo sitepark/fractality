@@ -1,14 +1,19 @@
 'use strict';
 
-const _ = require('lodash');
-const Promise = require('bluebird');
-const defaults = require('../config');
-const utils = require('@frctl/core').utils;
-const mix = require('@frctl/core').mixins.mix;
-const Configurable = require('@frctl/core').mixins.configurable;
-const Emitter = require('@frctl/core/').mixins.emitter;
+import { mixins, utils } from "@frctl/core";
+import { Web } from "@frctl/web";
+import Promise from "bluebird";
+import _ from "lodash";
+import defaults from "../config.js";
+import AssetSourceCollection from "./api/assets/index.js";
+import ComponentSource from "./api/components/index.js";
+import DocSource from "./api/docs/index.js";
+import Cli from "./cli/index.js";
+const mix = mixins.mix;
+const Configurable = mixins.configurable;
+const Emitter = mixins.emitter;
 
-class Fractal extends mix(Configurable, Emitter) {
+export class Fractal extends mix(Configurable, Emitter) {
     /**
      * Constructor.
      * @return {Fractal}
@@ -33,7 +38,6 @@ class Fractal extends mix(Configurable, Emitter) {
 
     get components() {
         if (!this._components) {
-            const ComponentSource = require('./api/components');
             this._components = new ComponentSource(this);
         }
         return this._components;
@@ -41,7 +45,6 @@ class Fractal extends mix(Configurable, Emitter) {
 
     get docs() {
         if (!this._docs) {
-            const DocSource = require('./api/docs');
             this._docs = new DocSource(this);
         }
         return this._docs;
@@ -49,7 +52,6 @@ class Fractal extends mix(Configurable, Emitter) {
 
     get assets() {
         if (!this._assets) {
-            const AssetSourceCollection = require('./api/assets');
             this._assets = new AssetSourceCollection(this);
         }
         return this._assets;
@@ -57,7 +59,6 @@ class Fractal extends mix(Configurable, Emitter) {
 
     get cli() {
         if (!this._cli) {
-            const Cli = require('./cli');
             this._cli = new Cli(this);
         }
         return this._cli;
@@ -65,7 +66,6 @@ class Fractal extends mix(Configurable, Emitter) {
 
     get web() {
         if (!this._web) {
-            const Web = require('@frctl/web').Web;
             this._web = new Web(this);
         }
         return this._web;
@@ -114,22 +114,21 @@ class Fractal extends mix(Configurable, Emitter) {
     }
 }
 
-function create(config) {
+export function create(config) {
     return new Fractal(config);
 }
 
-module.exports = create;
+export default create;
 
-module.exports.create = create;
-module.exports.Fractal = Fractal;
-module.exports.WebTheme = require('@frctl/web').Theme;
-module.exports.CliTheme = require('./cli/theme');
-module.exports.Adapter = require('@frctl/core').Adapter;
-module.exports.log = require('@frctl/core').Log;
-module.exports.utils = require('@frctl/core').utils;
+export { Adapter, Log as log, utils } from '@frctl/core';
+export { Theme as WebTheme } from '@frctl/web';
+export * as CliTheme from './cli/theme.js';
+import Component from "./api/components/component.js";
+import Variant from "./api/variants/variant.js";
+import Doc from "./api/docs/doc.js";
 
-module.exports.core = {
-    Component: require('./api/components/component.js'),
-    Variant: require('./api/variants/variant.js'),
-    Doc: require('./api/docs/doc.js'),
+export const core = {
+    Component,
+    Variant,
+    Doc,
 };

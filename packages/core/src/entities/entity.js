@@ -1,11 +1,11 @@
 'use strict';
 
-const _ = require('lodash');
-const mix = require('../mixins/mix');
-const Heritable = require('../mixins/heritable');
-const EntityMixin = require('../mixins/entity');
+import _ from "lodash";
+import EntityMixin from "../mixins/entity.js";
+import Heritable from "../mixins/heritable.js";
+import mix from "../mixins/mix.js";
 
-module.exports = class Entity extends mix(Heritable, EntityMixin) {
+export default class Entity extends mix(Heritable, EntityMixin) {
     constructor(name, config, parent) {
         super();
         this.isEntity = true;

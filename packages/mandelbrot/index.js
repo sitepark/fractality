@@ -1,3 +1,4 @@
 'use strict';
 
-module.exports = require('./src/theme');
+import Mandelbrot from './src/theme.js';
+export default Mandelbrot

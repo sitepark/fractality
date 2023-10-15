@@ -1,1 +1,2 @@
-module.exports = require('./source');
+import Source from "./source.js";
+export default Source;

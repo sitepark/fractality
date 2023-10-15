@@ -1,10 +1,10 @@
 'use strict';
 
-const _ = require('lodash');
-const Stream = require('../array-stream');
-const mixin = require('mixwith').Mixin;
+import _ from 'lodash';
+import Stream from '../array-stream.js';
+import { Mixin as mixin } from 'mixwith';
 
-module.exports = mixin(
+export default mixin(
     (superclass) =>
         class Collection extends superclass {
             constructor() {

@@ -1,2 +1,2 @@
 import 'regenerator-runtime/runtime';
-import 'jest-extended';
+import 'jest-extended/all';

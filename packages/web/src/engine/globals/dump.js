@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function () {
+export default function () {
     return {
         name: 'dump',
         value(obj, preformat) {

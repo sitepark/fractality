@@ -1,11 +1,13 @@
 'use strict';
 
-const path = require('path');
-const _ = require('lodash');
-const Promise = require('bluebird');
-const promisedHbs = require('promised-handlebars');
-const Handlebars = require('handlebars');
-const Adapter = require('@frctl/core').Adapter;
+import { Adapter } from "@frctl/core";
+import Promise from "bluebird";
+import Handlebars from "handlebars";
+import _ from "lodash";
+import path from "path";
+import promisedHbs from "promised-handlebars";
+import helpers from "./helpers/index.js"
+import partials from "./partials/index.js"
 
 class HandlebarsAdapter extends Adapter {
     constructor(hbs, source, app) {
@@ -44,7 +46,7 @@ function setEnv(key, value, context) {
     }
 }
 
-module.exports = function (config) {
+export default function (config) {
     config = config || {};
 
     return {
@@ -79,10 +81,10 @@ module.exports = function (config) {
             const adapter = new HandlebarsAdapter(hbs, source, app);
 
             if (!config.pristine) {
-                _.each(require('./helpers')(app) || {}, function (helper, name) {
+                _.each(helpers(app) || {}, function (helper, name) {
                     hbs.registerHelper(name, helper);
                 });
-                _.each(require('./partials')(app) || {}, function (partial, name) {
+                _.each(partials(app) || {}, function (partial, name) {
                     hbs.registerPartial(name, partial);
                 });
             }

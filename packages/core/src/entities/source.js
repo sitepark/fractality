@@ -1,17 +1,17 @@
 'use strict';
 
-const Promise = require('bluebird');
-const _ = require('lodash');
+import Promise from "bluebird";
+import _ from "lodash";
 
-const utils = require('../utils');
-const Log = require('../log');
-const Data = require('../data');
-const Adapter = require('../adapter');
-const mix = require('../mixins/mix');
-const Source = require('../mixins/source');
-const Heritable = require('../mixins/heritable');
+import * as utils from "../utils.js";
+import Log from "../log.js";
+import Data from "../data.js";
+import Adapter from "../adapter.js";
+import mix from "../mixins/mix.js";
+import Source from "../mixins/source.js";
+import Heritable from "../mixins/heritable.js";
 
-module.exports = class EntitySource extends mix(Source, Heritable) {
+export default class EntitySource extends mix(Source, Heritable) {
     constructor(name, app) {
         super();
         this._engine = null;

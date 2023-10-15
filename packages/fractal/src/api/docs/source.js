@@ -1,17 +1,16 @@
 'use strict';
 
-const Promise = require('bluebird');
-const _ = require('lodash');
-const co = require('co');
-const fs = require('fs-extra');
-const anymatch = require('anymatch');
-const DocCollection = require('./collection');
-const Doc = require('./doc');
-const EntitySource = require('@frctl/core').entities.Source;
-const resolver = require('@frctl/core').resolver;
-const md = require('@frctl/core').markdown;
+import { entities, markdown as md, resolver } from "@frctl/core";
+import anymatch from "anymatch";
+import Promise from "bluebird";
+import co from "co";
+import fs from "fs-extra";
+import _ from "lodash";
+import DocCollection from "./collection.js";
+import Doc from "./doc.js";
+const EntitySource = entities.Source;
 
-module.exports = class DocSource extends EntitySource {
+export default class DocSource extends EntitySource {
     constructor(app) {
         super('docs', app);
     }

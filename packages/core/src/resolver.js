@@ -1,10 +1,10 @@
 'use strict';
 
-const Promise = require('bluebird');
-const _ = require('lodash');
-const Log = require('./log');
+import Promise from "bluebird";
+import _ from "lodash";
+import Log from "./log.js";
 
-module.exports = {
+export default {
     entity(entity) {
         if (entity.isComponent) {
             entity = entity.variants().default();

@@ -1,11 +1,15 @@
 'use strict';
 
-const Path = require('path');
-const _ = require('lodash');
-const Theme = require('@frctl/web').Theme;
-const packageJSON = require('../package.json');
+import Path from "path";
+import _ from "lodash";
+import { Theme } from "@frctl/web";
+import packageJSON from "../package.json" assert { type: 'json' };
+import { URL, fileURLToPath } from "url";
+import filters from "./filters.js"
 
-module.exports = function (options) {
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
+
+export default function (options) {
     const config = _.defaultsDeep(_.clone(options || {}), {
         skin: 'default',
         navigation: 'default',
@@ -208,7 +212,7 @@ module.exports = function (options) {
     );
 
     theme.on('init', function (env, app) {
-        require('./filters')(theme, env, app);
+        filters(theme, env, app);
     });
 
     let handles = null;

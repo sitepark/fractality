@@ -1,15 +1,13 @@
-module.exports = {
-    Adapter: require('./adapter'),
-    ArrayStream: require('./array-stream'),
-    data: require('./data'),
-    entities: require('./entities'),
-    fs: require('./fs'),
-    highlighter: require('./highlighter'),
-    Log: require('./log'),
-    markdown: require('./markdown'),
-    mixins: require('./mixins'),
-    PromiseStream: require('./promise-stream'),
-    resolver: require('./resolver'),
-    shell: require('./shell'),
-    utils: require('./utils'),
-};
+export { default as Adapter } from './adapter.js';
+export { default as ArrayStream} from './array-stream.js';
+export { default as data} from './data.js';
+export { default as entities} from './entities/index.js';
+export { default as fs} from './fs.js';
+export { default as highlighter} from './highlighter.js';
+export { default as Log} from './log.js';
+export { default as markdown} from './markdown.js';
+export { default as mixins} from './mixins/index.js';
+export { default as PromiseStream} from './promise-stream.js';
+export { default as resolver} from './resolver.js';
+export { default as shell} from './shell.js';
+export * as utils from './utils.js';

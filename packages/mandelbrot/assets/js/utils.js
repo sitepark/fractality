@@ -1,6 +1,6 @@
 'use strict';
 
-import config from './config';
+import config from './config.js';
 
 export default {
     debounce(func, wait, immediate) {

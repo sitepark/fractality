@@ -1,11 +1,11 @@
 'use strict';
 
-const anymatch = require('anymatch');
-const mix = require('@frctl/core').mixins.mix;
-const Collection = require('@frctl/core').mixins.collection;
-const Stream = require('@frctl/core').PromiseStream;
+import { PromiseStream as Stream, mixins } from "@frctl/core";
+import anymatch from "anymatch";
+const mix = mixins.mix;
+const Collection = mixins.collection;
 
-module.exports = class FileCollection extends mix(Collection) {
+export default class FileCollection extends mix(Collection) {
     constructor(config, items) {
         super();
         this.setItems(items);

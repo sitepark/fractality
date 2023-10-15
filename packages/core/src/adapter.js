@@ -1,13 +1,13 @@
 'use strict';
 
-const Promise = require('bluebird');
-const _ = require('lodash');
-const Path = require('path');
-const mix = require('./mixins/mix');
-const Emitter = require('./mixins/emitter');
-const utils = require('./utils');
+import Promise from "bluebird";
+import _ from "lodash";
+import Path from "path";
+import mix from "./mixins/mix.js";
+import Emitter from "./mixins/emitter.js";
+import * as utils from "./utils.js";
 
-module.exports = class Adapter extends mix(Emitter) {
+export default class Adapter extends mix(Emitter) {
     constructor(engine, source) {
         super();
         this._engine = engine;

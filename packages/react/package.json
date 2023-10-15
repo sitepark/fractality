@@ -1,6 +1,7 @@
 {
   "name": "@frctl/react",
   "version": "0.3.7",
+  "type": "module",
   "description": "React template adapter for Fractal.",
   "main": "index.js",
   "repository": {

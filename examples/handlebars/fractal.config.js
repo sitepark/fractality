@@ -3,13 +3,17 @@
 /*
  * Require the path module
  */
-const path = require('path');
-const mandelbrot = require('@frctl/mandelbrot');
+import path from 'path';
+import mandelbrot from '@frctl/mandelbrot';
+import create from '@frctl/fractal';
+import { URL, fileURLToPath } from "url";
+
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
 /*
  * Require the Fractal module
  */
-const fractal = (module.exports = require('@frctl/fractal').create());
+const fractal = create();
 
 /*
  * Give your project a title.
@@ -44,3 +48,5 @@ const customTheme = mandelbrot({
 });
 
 fractal.web.theme(customTheme);
+
+export default fractal;

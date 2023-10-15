@@ -1,11 +1,16 @@
 'use strict';
+import render from './render.js';
+import context from './context.js';
+import contextData from './context-data.js';
+import view from './view.js';
+import path from './path.js';
 
-module.exports = function (fractal) {
+export default function (fractal) {
     return {
-        render: require('./render.js')(fractal),
-        context: require('./context.js')(fractal),
-        contextData: require('./context-data.js')(fractal),
-        view: require('./view.js')(fractal),
-        path: require('./path.js')(fractal),
+        render: render(fractal),
+        context: context(fractal),
+        contextData: contextData(fractal),
+        view: view(fractal),
+        path: path(fractal),
     };
 };

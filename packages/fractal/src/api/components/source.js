@@ -1,21 +1,19 @@
 'use strict';
 
-const Promise = require('bluebird');
-const Path = require('path');
-const _ = require('lodash');
-const co = require('co');
-const fs = require('fs-extra');
-const anymatch = require('anymatch');
-const Component = require('./component');
-const ComponentCollection = require('./collection');
-const File = require('../files/file');
-const FileCollection = require('../files/collection');
-const frfs = require('@frctl/core').fs;
-const Log = require('@frctl/core').Log;
-const resolver = require('@frctl/core').resolver;
-const EntitySource = require('@frctl/core').entities.Source;
+import { Log, entities, fs as frfs, resolver } from "@frctl/core";
+import anymatch from "anymatch";
+import Promise from "bluebird";
+import co from "co";
+import fs from "fs-extra";
+import _ from "lodash";
+import Path from "path";
+import FileCollection from "../files/collection.js";
+import File from "../files/file.js";
+import ComponentCollection from "./collection.js";
+import Component from "./component.js";
+const EntitySource = entities.Source;
 
-module.exports = class ComponentSource extends EntitySource {
+export default class ComponentSource extends EntitySource {
     constructor(app) {
         super('components', app);
     }

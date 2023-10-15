@@ -1,17 +1,20 @@
 'use strict';
 
-const _ = require('lodash');
-const chalk = require('chalk');
-const chokidar = require('chokidar');
-const Vorpal = require('vorpal');
-const Console = require('./console');
-const Notifier = require('./notifier');
-const requireAll = require('require-all');
-const Log = require('@frctl/core').Log;
-const mix = require('@frctl/core').mixins.mix;
-const Configurable = require('@frctl/core').mixins.configurable;
-const Emitter = require('@frctl/core').mixins.emitter;
-const utils = require('@frctl/core').utils;
+import { Log, mixins, utils } from "@frctl/core";
+import chalk from "chalk";
+import chokidar from "chokidar";
+import _ from "lodash";
+import Vorpal from "vorpal";
+import Console from "./console.js";
+import Notifier from "./notifier.js";
+import commands from "./commands/index.js";
+
+const mix = mixins.mix;
+const Configurable = mixins.configurable;
+const Emitter = mixins.emitter;
+import { URL, fileURLToPath } from "url";
+
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
 class Cli extends mix(Configurable, Emitter) {
     constructor(app) {
@@ -108,7 +111,7 @@ class Cli extends mix(Configurable, Emitter) {
     }
 
     exec() {
-        _.forEach(requireAll(this._commandsDir), (c) => this.command(c.command, c.action, c.config || {}));
+        _.forEach(commands, (c) => this.command(c.command, c.action, c.config || {}));
         return arguments.length ? this._execFromString.apply(this, Array.from(arguments)) : this._execFromArgv();
     }
 
@@ -259,4 +262,4 @@ You can use the ${chalk.magenta('fractal new')} command to create a new project.
     }
 }
 
-module.exports = Cli;
+export default Cli;

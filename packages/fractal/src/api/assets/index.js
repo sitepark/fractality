@@ -1,1 +1,2 @@
-module.exports = require('./source-collection');
+import SourceCollection from './source-collection.js'
+export default SourceCollection;

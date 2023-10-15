@@ -1,13 +1,13 @@
 'use strict';
 
-const Path = require('path');
-const Promise = require('bluebird');
-const matter = require('gray-matter');
-const _ = require('lodash');
-const utils = require('@frctl/core').utils;
-const Entity = require('@frctl/core').entities.Entity;
+import Path from "path";
+import Promise from "bluebird";
+import matter from "gray-matter";
+import _ from "lodash";
+import { utils, entities } from "@frctl/core";
+const Entity = entities.Entity;
 
-module.exports = class Doc extends Entity {
+export default class Doc extends Entity {
     constructor(config, content, parent) {
         super(config.name, config, parent);
         this.isDoc = true;

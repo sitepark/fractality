@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = class WebError extends Error {
+export default class WebError extends Error {
     constructor(statusCode, message) {
         statusCode = (statusCode || '500').toString();
         message = message || `${statusCode} error`;

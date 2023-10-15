@@ -1,6 +1,6 @@
 'use strict';
 
-import storage from '../storage';
+import storage from '../storage.js';
 
 export default class Browser {
     constructor(el) {

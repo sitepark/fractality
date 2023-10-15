@@ -1,9 +1,9 @@
 'use strict';
 
-const _ = require('lodash');
-const chalk = require('chalk');
+import _ from "lodash";
+import chalk from "chalk";
 
-module.exports = class Theme {
+export default class Theme {
     constructor(config) {
         config = config || {};
         this._delimiter = {

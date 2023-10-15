@@ -1,12 +1,12 @@
 'use strict';
 
-const _ = require('lodash');
-const Path = require('path');
-const VinylFile = require('vinyl');
-const mime = require('mime');
-const utils = require('@frctl/core').utils;
+import _ from "lodash";
+import Path from "path";
+import VinylFile from "vinyl";
+import mime from "mime";
+import { utils } from "@frctl/core";
 
-module.exports = class File {
+export default class File {
     constructor(file, relativeTo) {
         this.isFile = true;
         this.id = utils.md5(file.path);

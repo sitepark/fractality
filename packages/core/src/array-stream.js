@@ -1,8 +1,8 @@
 'use strict';
 
-const Readable = require('readable-stream').Readable;
+import { Readable } from "readable-stream";
 
-module.exports = class ArrayStream extends Readable {
+export default class ArrayStream extends Readable {
     constructor(items) {
         super({ objectMode: true });
         this._items = items;

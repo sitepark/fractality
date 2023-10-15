@@ -1,10 +1,10 @@
 'use strict';
 
-const _ = require('lodash');
-const utils = require('../utils');
-const mixin = require('mixwith').Mixin;
+import _ from "lodash";
+import * as utils from "../utils.js";
+import { Mixin as mixin } from "mixwith";
 
-module.exports = mixin(
+export default mixin(
     (superclass) =>
         class Entity extends superclass {
             constructor() {

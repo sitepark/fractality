@@ -1,8 +1,8 @@
 'use strict';
 
-import storage from '../storage';
-import utils from '../utils';
-import events from '../events';
+import storage from '../storage.js';
+import utils from '../utils.js';
+import events from '../events.js';
 
 export default function (element) {
     const el = $(element);

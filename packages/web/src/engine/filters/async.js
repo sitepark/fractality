@@ -1,8 +1,8 @@
 'use strict';
 
-const Promise = require('bluebird');
+import Promise from "bluebird";
 
-module.exports = function () {
+export default function () {
     return {
         name: 'async',
         async: true,

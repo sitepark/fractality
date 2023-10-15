@@ -1,10 +1,9 @@
 'use strict';
 
-const _ = require('lodash');
-const Path = require('path');
-const beautifyHTML = require('js-beautify').html;
+import _ from "lodash";
+import Path from "path";
 
-module.exports = function (theme, env, app) {
+export default function (theme, env, app) {
     env.engine.addFilter('url', function (item) {
         if (item.isDoc) {
             if (!item.path) {
@@ -22,6 +21,8 @@ module.exports = function (theme, env, app) {
     });
 
     env.engine.addFilter('beautify', function (str) {
+        /*
+        TODO: Removed for now, maybe replace with prettier?
         const defaults = {
             indent_size: 4,
             preserve_newlines: true,
@@ -37,6 +38,8 @@ module.exports = function (theme, env, app) {
         beautifyOptions = _.merge({}, defaults, beautifyOptions);
 
         return beautifyHTML(str, beautifyOptions);
+        */
+       return str;
     });
 
     env.engine.addFilter('resourceUrl', function (str) {

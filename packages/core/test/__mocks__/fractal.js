@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     get: jest.fn((key) => {
         if (key === 'foo') {
             return {

@@ -1,9 +1,9 @@
 'use strict';
 
-const _ = require('lodash');
-const mixin = require('mixwith').Mixin;
+import _ from "lodash";
+import { Mixin as mixin } from "mixwith";
 
-module.exports = mixin(
+export default mixin(
     (superclass) =>
         class Configurable extends superclass {
             constructor() {

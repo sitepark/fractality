@@ -1,9 +1,9 @@
 'use strict';
 
-const _ = require('lodash');
-const yaml = require('js-yaml');
+import _ from "lodash";
+import yaml from "js-yaml";
 
-module.exports = function () {
+export default function () {
     return {
         name: 'format',
         filter(obj, format) {

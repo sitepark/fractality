@@ -2,8 +2,8 @@
 
 import 'jquery-resizable-dom';
 
-import storage from '../storage';
-import events from '../events';
+import storage from '../storage.js';
+import events from '../events.js';
 
 export default class Preview {
     constructor(el, previewSizeEl) {

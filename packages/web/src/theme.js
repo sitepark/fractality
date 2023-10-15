@@ -1,12 +1,13 @@
 'use strict';
 
-const _ = require('lodash');
-const { pathToRegexp, compile } = require('path-to-regexp');
-const mix = require('@frctl/core').mixins.mix;
-const Configurable = require('@frctl/core').mixins.configurable;
-const Emitter = require('@frctl/core').mixins.emitter;
+import _ from "lodash";
+import { pathToRegexp, compile } from "path-to-regexp";
+import { mixins } from "@frctl/core"
+const mix = mixins.mix;
+const Configurable = mixins.configurable;
+const Emitter = mixins.emitter;
 
-module.exports = class Theme extends mix(Configurable, Emitter) {
+export default class Theme extends mix(Configurable, Emitter) {
     constructor(viewPaths, options) {
         super();
 

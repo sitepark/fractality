@@ -3,11 +3,11 @@
 import 'jquery';
 import 'jquery-pjax';
 
-import events from './events';
-import utils from './utils';
-import framer from './components/frame';
-import Pen from './components/pen';
-import Navigation from './components/navigation';
+import events from './events.js';
+import utils from './utils.js';
+import framer from './components/frame.js';
+import Pen from './components/pen.js';
+import Navigation from './components/navigation.js';
 
 const doc = $(document);
 const frctl = window.frctl || {};

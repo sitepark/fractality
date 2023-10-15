@@ -1,12 +1,13 @@
-const { Web } = require('@frctl/web');
+import { Web } from "@frctl/web";
 
-const pkg = require('../package.json');
-const app = require('../src/fractal')();
-const Cli = require('../src/cli');
-const ComponentSource = require('../src/api/components');
-const DocSource = require('../src/api/docs/source');
+import pkg from "../package.json" assert { type: 'json' };
+import { create } from "../src/fractal";
+import Cli from "../src/cli";
+import ComponentSource from "../src/api/components";
+import DocSource from "../src/api/docs/source";
 
 describe('Fractal', () => {
+    let app = create();
     beforeEach(() => {
         app.web;
         app.cli;

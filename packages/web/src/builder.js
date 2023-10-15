@@ -1,16 +1,16 @@
 'use strict';
 
-const Promise = require('bluebird');
-const anymatch = require('anymatch');
-const Path = require('path');
-const _ = require('lodash');
-const fs = require('fs-extra');
-const Log = require('@frctl/core').Log;
-const mix = require('@frctl/core').mixins.mix;
-const Emitter = require('@frctl/core').mixins.emitter;
-const throat = require('throat');
+import { Log, mixins } from "@frctl/core";
+import anymatch from "anymatch";
+import Promise from "bluebird";
+import fs from "fs-extra";
+import _ from "lodash";
+import Path from "path";
+import throat from "throat";
+const mix = mixins.mix;
+const Emitter = mixins.emitter;
 
-module.exports = class Builder extends mix(Emitter) {
+export default class Builder extends mix(Emitter) {
     constructor(theme, engine, config, app) {
         super(app);
 

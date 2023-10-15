@@ -1,15 +1,15 @@
 'use strict';
 
-const _ = require('lodash');
-const Promise = require('bluebird');
+import _ from "lodash";
+import Promise from "bluebird";
 
-const utils = require('@frctl/core').utils;
-const mix = require('@frctl/core').mixins.mix;
-const Configurable = require('@frctl/core').mixins.configurable;
-const Emitter = require('@frctl/core').mixins.emitter;
-const Source = require('./source');
+import { utils, mixins } from "@frctl/core";
+import Source from "./source.js";
+const mix = mixins.mix;
+const Configurable = mixins.configurable;
+const Emitter = mixins.emitter;
 
-module.exports = class AssetSourceCollection extends mix(Configurable, Emitter) {
+export default class AssetSourceCollection extends mix(Configurable, Emitter) {
     constructor(app) {
         super('assets', app);
         this.name = 'assets';

@@ -1,9 +1,17 @@
-module.exports = {
-    collection: require('./collection'),
-    configurable: require('./configurable'),
-    emitter: require('./emitter'),
-    entity: require('./entity'),
-    heritable: require('./heritable'),
-    mix: require('./mix'),
-    source: require('./source'),
-};
+import collection from "./collection.js";
+import configurable from "./configurable.js";
+import emitter from "./emitter.js";
+import entity from "./entity.js";
+import heritable from "./heritable.js";
+import mix from "./mix.js";
+import source from "./source.js";
+
+export default {
+    collection,
+    configurable,
+    emitter,
+    entity,
+    heritable,
+    mix,
+    source
+}

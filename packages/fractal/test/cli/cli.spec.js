@@ -1,6 +1,6 @@
-const app = require('../../src/fractal')();
-const Cli = require('../../src/cli');
-const Console = require('../../src/cli/console');
+import app from "../../src/fractal";
+import Cli from "../../src/cli";
+import Console from "../../src/cli/console";
 
 describe('Cli', () => {
     let cli;

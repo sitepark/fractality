@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function (app, engine) {
+export default function (app, engine) {
     return {
         name: 'render',
         async: false,

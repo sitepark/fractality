@@ -2,10 +2,10 @@
 
 import 'jquery-resizable-dom';
 
-import storage from '../storage';
-import events from '../events';
-import Preview from './preview';
-import Browser from './browser';
+import storage from '../storage.js';
+import events from '../events.js';
+import Preview from './preview.js';
+import Browser from './browser.js';
 
 export default class Pen {
     constructor(el) {

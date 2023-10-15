@@ -2,12 +2,12 @@
 
 'use strict';
 
-const Path = require('path');
-const semver = require('semver');
-const Liftoff = require('liftoff');
-const chalk = require('chalk');
-const updateNotifier = require('update-notifier');
-const cliPackage = require('../package.json');
+import Path from "path";
+import semver from "semver";
+import Liftoff from "liftoff";
+import chalk from "chalk";
+import updateNotifier from "update-notifier";
+import cliPackage from "../package.json" assert { type: 'json' };
 
 const notifier = updateNotifier({
     pkg: cliPackage,
@@ -34,7 +34,12 @@ const FractalCli = new Liftoff({
 
 let config = {};
 try {
-    const projectPackage = require(Path.join(process.cwd(), 'package.json'));
+    const projectPackage = (await import(Path.join(process.cwd(), 'package.json'), {
+        assert: {
+            type: "json",
+        },
+    })).default;
+
     if (projectPackage.fractal && projectPackage.fractal.main) {
         config.configPath = Path.join(process.cwd(), projectPackage.fractal.main);
     }
@@ -43,7 +48,7 @@ try {
     // is expected when it can't be required
 }
 
-FractalCli.launch(config, function (env) {
+FractalCli.launch(config, async function (env) {
     let app;
     let scope = 'global';
     let configPath = env.configPath;
@@ -51,7 +56,7 @@ FractalCli.launch(config, function (env) {
     if (configPath) {
         // Config file found - it's running in project context.
         try {
-            app = require(configPath);
+            app = (await import(configPath)).default;
             scope = 'project';
         } catch (e) {
             console.error(e.stack);

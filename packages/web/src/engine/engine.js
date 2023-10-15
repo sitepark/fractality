@@ -1,14 +1,17 @@
 'use strict';
 
-const Promise = require('bluebird');
-const Path = require('path');
-const nunjucks = require('nunjucks');
-const _ = require('lodash');
-const requireAll = require('require-all');
-const WebError = require('../error');
-const extensions = requireAll(`${__dirname}/extensions`);
-const filters = requireAll(`${__dirname}/filters`);
-const globals = requireAll(`${__dirname}/globals`);
+import Promise from "bluebird";
+import Path from "path";
+import nunjucks from "nunjucks";
+import _ from "lodash";
+import WebError from "../error.js";
+import { URL, fileURLToPath } from "url";
+
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
+
+import filters from './filters/index.js';
+import globals from './globals/index.js';
+const extensions = [];
 
 const templateError = nunjucks.lib.TemplateError;
 let lastError = null;
@@ -28,7 +31,7 @@ nunjucks.lib.TemplateError = function (message, lineno, colno) {
     return err;
 };
 
-module.exports = class Engine {
+export default class Engine {
     constructor(viewsPath, env, app) {
         this._app = app;
         this._env = env;

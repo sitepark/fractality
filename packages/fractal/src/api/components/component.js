@@ -1,15 +1,14 @@
 'use strict';
 
-const _ = require('lodash');
-const Path = require('path');
-const utils = require('@frctl/core').utils;
-const Data = require('@frctl/core').data;
-const Entity = require('@frctl/core').entities.Entity;
-const VariantCollection = require('../variants/collection');
-const AssetCollection = require('../assets/collection');
-const Asset = require('../assets/asset');
+import { data as Data, entities, utils } from "@frctl/core";
+import _ from "lodash";
+import Path from "path";
+import Asset from "../assets/asset.js";
+import AssetCollection from "../assets/collection.js";
+import VariantCollection from "../variants/collection.js";
+const Entity = entities.Entity;
 
-module.exports = class Component extends Entity {
+export default class Component extends Entity {
     constructor(config, files, resources, parent) {
         super(config.name, config, parent);
         this.isComponent = true;

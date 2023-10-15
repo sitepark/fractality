@@ -1,8 +1,8 @@
 'use strict';
 
-const marked = require('marked');
-const _ = require('lodash');
-const highlighter = require('./highlighter');
+import marked from "marked";
+import _ from "lodash";
+import highlighter from "./highlighter.js";
 const renderer = new marked.Renderer();
 
 renderer.code = function (code, lang) {
@@ -20,7 +20,7 @@ renderer.code = function (code, lang) {
  * Export the markdown parser.
  */
 
-module.exports = function markdown(content, mdConfig) {
+const markdown = function markdown(content, mdConfig) {
     mdConfig = _.cloneDeep(mdConfig && _.isObject(mdConfig) ? mdConfig : {});
     mdConfig.renderer = renderer;
 
@@ -28,7 +28,7 @@ module.exports = function markdown(content, mdConfig) {
 };
 
 // TODO: remove if noone understands what this is for
-module.exports.toc = function (content, maxDepth, mdConfig) {
+markdown.toc = function (content, maxDepth, mdConfig) {
     maxDepth = maxDepth || 6;
     mdConfig = mdConfig && _.isObject(mdConfig) ? mdConfig : {};
     mdConfig.renderer = renderer;
@@ -44,3 +44,5 @@ module.exports.toc = function (content, maxDepth, mdConfig) {
             return token;
         });
 };
+
+export default markdown;

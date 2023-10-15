@@ -1,5 +1,6 @@
-const mix = require('../../src/mixins/mix');
-const Heritable = mix(require('../../src/mixins/heritable'));
+import mix from "../../src/mixins/mix";
+import Tmp from '../../src/mixins/heritable';
+const Heritable = mix(Tmp);
 
 describe('Heritable', () => {
     describe('.setHeritable()', () => {

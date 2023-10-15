@@ -1,9 +1,9 @@
 'use strict';
 
-const HighlightJs = require('highlight.js');
-const _ = require('lodash');
+import HighlightJs from "highlight.js";
+import _ from "lodash";
 
-module.exports = function highlighter(content, lang) {
+export default function highlighter(content, lang) {
     content = _.toString(content || '');
     lang = lang ? lang.toLowerCase() : lang;
     try {

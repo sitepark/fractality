@@ -1,5 +1,6 @@
-const mix = require('../../src/mixins/mix');
-const Configurable = mix(require('../../src/mixins/configurable'));
+import mix from "../../src/mixins/mix";
+import Temp from '../../src/mixins/configurable';
+const Configurable = mix(Temp);
 
 describe('Configurable', () => {
     let config;

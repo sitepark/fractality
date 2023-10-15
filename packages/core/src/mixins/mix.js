@@ -1,7 +1,7 @@
 'use strict';
 
-const _ = require('lodash');
-const mix = require('mixwith').mix;
+import _ from 'lodash';
+import { mix } from 'mixwith';
 
 class Base {
     constructor() {
@@ -23,7 +23,7 @@ class Base {
     }
 }
 
-module.exports = function () {
+export default function () {
     const mixer = mix(Base);
     return mixer.with.apply(mixer, Array.from(arguments));
-};
+}

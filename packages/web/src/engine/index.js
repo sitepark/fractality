@@ -1,1 +1,2 @@
-module.exports = require('./engine');
+import Engine from "./engine.js";
+export default Engine;

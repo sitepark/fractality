@@ -1,8 +1,11 @@
 'use strict';
 
-const packageJSON = require('./package.json');
+import packageJSON from "./package.json" assert { type: 'json' };
+import mandelbrot from "@frctl/mandelbrot";
+import handlebars from "@frctl/handlebars";
+import { highlighter } from "@frctl/core"
 
-module.exports = {
+export default {
     version: packageJSON.version,
     env: process.env.NODE_ENV || 'production',
     project: {
@@ -10,7 +13,7 @@ module.exports = {
         version: null,
     },
     components: {
-        engine: require('@frctl/handlebars'),
+        engine: handlebars,
         path: null,
         label: 'components',
         title: 'Components',
@@ -61,7 +64,7 @@ module.exports = {
         },
     },
     docs: {
-        engine: require('@frctl/handlebars'),
+        engine: handlebars,
         path: null,
         label: 'documentation',
         title: 'Documentation',
@@ -103,7 +106,7 @@ module.exports = {
     },
     cli: {},
     web: {
-        theme: require('@frctl/mandelbrot')(),
+        theme: mandelbrot(),
         server: {
             sync: false,
             watch: false,
@@ -129,6 +132,6 @@ module.exports = {
         assets: {
             mount: 'assets',
         },
-        highlighter: require('@frctl/core').highlighter,
+        highlighter: highlighter,
     },
 };

@@ -3,6 +3,7 @@
   "version": "1.2.13",
   "description": "Twig template adapter for Fractal.",
   "main": "index.js",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/frctl/fractal.git",

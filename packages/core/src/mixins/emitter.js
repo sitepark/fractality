@@ -1,10 +1,10 @@
 'use strict';
 
-const _ = require('lodash');
-const { Mixin } = require('mixwith');
-const { EventEmitter } = require('events');
+import _ from "lodash";
+import { Mixin } from "mixwith";
+import { EventEmitter } from "events";
 
-module.exports = Mixin((superclass) => {
+export default Mixin((superclass) => {
     const Emitter = class extends superclass {
         constructor() {
             super();

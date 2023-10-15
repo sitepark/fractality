@@ -1,8 +1,8 @@
 'use strict';
 
-const Handlebars = require('handlebars');
+import Handlebars from "handlebars";
 
-module.exports = function (fractal) {
+export default function (fractal) {
     return function view(handle) {
         const source = fractal.components;
         let entity = source.find(handle);

@@ -1,16 +1,16 @@
 'use strict';
 
-const _ = require('lodash');
-const utils = require('@frctl/core').utils;
-const mix = require('@frctl/core').mixins.mix;
-const Configurable = require('@frctl/core').mixins.configurable;
-const Emitter = require('@frctl/core').mixins.emitter;
-const Server = require('./server');
-const Builder = require('./builder');
-const Theme = require('./theme');
-const Engine = require('./engine');
+import _ from "lodash";
+import { utils, mixins } from "@frctl/core";
+import Server from "./server.js";
+import Builder from "./builder.js";
+import Theme from "./theme.js";
+import Engine from "./engine/index.js";
+const mix = mixins.mix;
+const Configurable = mixins.configurable;
+const Emitter = mixins.emitter;
 
-module.exports = class Web extends mix(Configurable, Emitter) {
+export default class Web extends mix(Configurable, Emitter) {
     constructor(app) {
         super(app);
         this.config(app.get('web'));

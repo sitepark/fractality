@@ -1,15 +1,17 @@
 'use strict';
 
-const Promise = require('bluebird');
-const Path = require('path');
-const Handlebars = require('handlebars');
-const inquirer = require('inquirer');
-const execa = require('execa');
-const shell = require('@frctl/core').shell;
-const fs = require('fs-extra');
-const helpers = require('@frctl/core').utils;
+import { shell } from "@frctl/core";
+import Promise from "bluebird";
+import execa from "execa";
+import fs from "fs-extra";
+import Handlebars from "handlebars";
+import inquirer from "inquirer";
+import Path from "path";
+import { URL, fileURLToPath } from "url";
 
-module.exports = {
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
+
+export default {
     command: 'new <path>',
 
     config: {

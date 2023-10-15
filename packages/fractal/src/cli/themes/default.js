@@ -1,5 +1,5 @@
 'use strict';
 
-const Theme = require('../theme');
+import Theme from "../theme.js"
 
-module.exports = new Theme();
+export default new Theme();

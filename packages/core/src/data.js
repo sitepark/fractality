@@ -1,14 +1,17 @@
 'use strict';
 
-const Promise = require('bluebird');
-const yaml = require('js-yaml');
-const _ = require('lodash');
-const Path = require('path');
-const fs = require('fs-extra');
-const utils = require('./utils');
-const Log = require('./log');
+import Promise from "bluebird";
+import yaml from "js-yaml";
+import _ from "lodash";
+import Path from "path";
+import fs from "fs-extra";
+import * as utils from "./utils.js";
+import Log from "./log.js";
+import { URL, fileURLToPath } from "url";
 
-module.exports = {
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
+
+export default {
     parse(data, format) {
         format = format.toLowerCase();
         if (format === 'js' || format === 'javascript') {
@@ -33,13 +36,17 @@ module.exports = {
         throw new Error('Data format not recognised');
     },
 
-    readFile(filePath) {
+    async readFile(filePath) {
         const format = utils.lang(filePath, true).mode;
         if (format === 'js' || format === 'javascript') {
             try {
                 filePath = Path.relative(__dirname, filePath);
-                delete require.cache[require.resolve(filePath)]; // Always fetch a fresh copy
-                let data = require(filePath);
+                // TODO: This is a problem with ESM and import syntax
+                // delete require.cache[require.resolve(filePath)]; // Always fetch a fresh copy
+                // let data = require(filePath);
+                // Using Cache-Bustim parameter for now
+
+                let data = (await import(`${import.meta.resolve(filePath)}?t=${Date.now()}`)).default;
                 if (typeof data === 'function') {
                     data = data();
                 }

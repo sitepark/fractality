@@ -1,13 +1,14 @@
 'use strict';
 
-const Promise = require('bluebird');
-const _ = require('lodash');
-const chalk = require('chalk');
-const Table = require('cli-table3');
-const slog = require('log-update');
-const Theme = require('./theme');
-const defaultTheme = require('./themes/default');
-const utils = require('@frctl/core').utils;
+import Promise from "bluebird";
+import _ from "lodash";
+import chalk from "chalk";
+import Table from "cli-table3";
+import slog from "log-update";
+import Theme from "./theme.js";
+import defaultTheme from "./themes/default.js";
+import { utils } from "@frctl/core";
+import columnify from "columnify";
 
 class Console {
     constructor(logger) {
@@ -132,7 +133,6 @@ class Console {
     }
 
     columns(data, options) {
-        const columnify = require('columnify');
         this.write(columnify(data, options));
         return this;
     }
@@ -161,4 +161,4 @@ class Console {
     }
 }
 
-module.exports = Console;
+export default Console;

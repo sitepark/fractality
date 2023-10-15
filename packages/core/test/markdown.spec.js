@@ -1,4 +1,4 @@
-const md = require('../src/markdown');
+import md from "../src/markdown";
 
 const code = `
 \`\`\`

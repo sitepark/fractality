@@ -1,8 +1,8 @@
 'use strict';
 
-const FileCollection = require('../files/collection');
+import FileCollection from "../files/collection.js";
 
-module.exports = class AssetCollection extends FileCollection {
+export default class AssetCollection extends FileCollection {
     constructor(config, items) {
         super(config, items);
     }

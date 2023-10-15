@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function () {
+export default function () {
     return {
         // none added yet!
     };

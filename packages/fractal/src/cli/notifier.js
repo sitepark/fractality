@@ -1,6 +1,6 @@
 'use strict';
 
-const chalk = require('chalk');
+import chalk from "chalk";
 
 class Notifier {
     constructor(console, interactive) {
@@ -25,4 +25,4 @@ Run ${chalk.cyan('npm i -g ' + details.name)} to update.`
     }
 }
 
-module.exports = Notifier;
+export default Notifier;

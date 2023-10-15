@@ -1,7 +1,7 @@
 'use strict';
 
-import storage from '../storage';
-import events from '../events';
+import storage from '../storage.js';
+import events from '../events.js';
 
 export function getTreeUrl(urlPath) {
     const parser = document.createElement('a');

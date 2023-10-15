@@ -1,3 +1,4 @@
 'use strict';
 
-module.exports = require('./src/adapter');
+import Adapter from './src/adapter.js';
+export default Adapter

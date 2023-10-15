@@ -1,15 +1,15 @@
 'use strict';
 
-const Promise = require('bluebird');
-const Path = require('path');
-const co = require('co');
-const _ = require('lodash');
-const fs = require('fs-extra');
-const isBinary = require('istextorbinary').isBinary;
-const utils = require('./utils');
-const glob = require('globby');
+import { isBinary } from "istextorbinary";
+import Promise from "bluebird";
+import Path from "path";
+import co from "co";
+import _ from "lodash";
+import fs from "fs-extra";
+import * as utils from "./utils.js";
+import glob from "globby";
 
-module.exports = {
+export default {
     describe(dir, relDir, filter, ext) {
         filter = filter || ((filePath) => !/(^|\/)\.[^/.]/g.test(filePath));
 

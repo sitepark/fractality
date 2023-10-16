@@ -1,3 +1,3 @@
 'use strict';
-
-module.exports = require('./src/adapter');
+import NunjucksAdapter from "./src/adapter.js";
+export default NunjucksAdapter;

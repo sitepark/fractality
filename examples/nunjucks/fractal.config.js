@@ -1,15 +1,17 @@
 'use strict';
 
-/*
- * Require the path module
- */
-const path = require('path');
-const mandelbrot = require('@frctl/mandelbrot');
+import create from '@frctl/fractal';
+import mandelbrot from '@frctl/mandelbrot';
+import nunjucks from '@frctl/nunjucks';
+import path from 'path';
+import { URL, fileURLToPath } from "url";
+
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
 /*
  * Require the Fractal module
  */
-const fractal = (module.exports = require('@frctl/fractal').create());
+const fractal = create();
 
 /*
  * Give your project a title.
@@ -21,13 +23,13 @@ fractal.set('project.title', 'Fractal Nunjucks example');
  */
 fractal.components.set('path', path.join(__dirname, 'components'));
 fractal.components.set('ext', '.njk');
-fractal.components.engine(require('@frctl/nunjucks'));
+fractal.components.engine(nunjucks);
 
 /*
  * Tell Fractal where to look for documentation pages.
  */
 fractal.docs.set('path', path.join(__dirname, 'docs'));
-fractal.docs.engine(require('@frctl/nunjucks'));
+fractal.docs.engine(nunjucks);
 
 /*
  * Tell the Fractal web preview plugin where to look for static assets.
@@ -47,3 +49,5 @@ const customTheme = mandelbrot({
 });
 
 fractal.web.theme(customTheme);
+
+export default fractal;

@@ -1,11 +1,13 @@
 'use strict';
 
-const _ = require('lodash');
-const Promise = require('bluebird');
-const nunjucks = require('nunjucks');
-const path = require('path');
-const fs = require('fs');
-const Adapter = require('@frctl/core').Adapter;
+import _ from "lodash";
+import Promise from "bluebird";
+import nunjucks from "nunjucks";
+import path from "path";
+import fs from "fs";
+import { Adapter } from "@frctl/core";
+import extensions from "./extensions/index.js";
+import filters from "./filters/index.js";
 
 class NunjucksAdapter extends Adapter {
     constructor(source, config, app) {
@@ -103,7 +105,7 @@ function setEnv(key, value, context) {
     }
 }
 
-module.exports = function (config) {
+export default function (config) {
     config = config || {};
 
     return {
@@ -112,10 +114,10 @@ module.exports = function (config) {
             const nj = adapter.engine;
 
             if (!config.pristine) {
-                _.each(require('./filters')(app) || {}, function (filter, name) {
+                _.each(filters(app) || {}, function (filter, name) {
                     addFilter(name, filter);
                 });
-                _.each(require('./extensions')(app) || {}, function (ext, name) {
+                _.each(extensions(app) || {}, function (ext, name) {
                     nj.addExtension(name, ext);
                 });
             }

@@ -1,3 +1,4 @@
 packages:
   - "packages/*"
   - "examples/handlebars"
+  - "examples/nunjucks"

@@ -1,7 +1,9 @@
 'use strict';
 
-module.exports = function (fractal) {
+import pathFilter from "./path.js";
+
+export default function (fractal) {
     return {
-        path: require('./path.js')(fractal),
+        path: pathFilter(fractal),
     };
 };

@@ -2,6 +2,7 @@
   "name": "@frctl/nunjucks-example",
   "version": "0.0.10",
   "private": true,
+  "type": "module",
   "scripts": {
     "start": "fractal start --sync",
     "build": "fractal build"
@@ -12,7 +13,6 @@
     "@frctl/nunjucks": "^2.0.15"
   },
   "devDependencies": {
-    "@frctl/adapter-tests": "^0.1.0",
     "node-fetch": "^2.6.1"
   }
 }

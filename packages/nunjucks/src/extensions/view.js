@@ -1,8 +1,8 @@
 'use strict';
 
-const nunjucks = require('nunjucks');
+import nunjucks from "nunjucks";
 
-module.exports = function (fractal) {
+export default function (fractal) {
     function ViewExtension() {
         this.tags = ['view'];
 

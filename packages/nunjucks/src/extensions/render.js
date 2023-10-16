@@ -1,9 +1,9 @@
 'use strict';
 
-const nunjucks = require('nunjucks');
-const utils = require('@frctl/core').utils;
+import nunjucks from "nunjucks";
+import { utils } from "@frctl/core";
 
-module.exports = function (fractal) {
+export default function (fractal) {
     function RenderExtension() {
         this.tags = ['render'];
 

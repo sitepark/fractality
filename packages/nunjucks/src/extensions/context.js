@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function (fractal) {
+export default function (fractal) {
     function ContextExtension() {
         this.tags = ['context'];
 

@@ -8,7 +8,7 @@
   - [x] fractal
   - [x] handlebars
   - [x] mandelbrot
-  - [ ] nunjucks
+  - [x] nunjucks
   - [ ] react
   - [ ] twig
   - [x] web
@@ -16,7 +16,7 @@
 - Migrate Examples
   - [ ] adapter-tests
   - [x] handlebars
-  - [ ] nunjucks
+  - [x] nunjucks
   - [ ] react
   - [ ] twig
 - Make tests pass

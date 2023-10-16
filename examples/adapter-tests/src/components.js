@@ -1,4 +1,4 @@
-module.exports = function components(fractal) {
+export default function components(fractal) {
     it('properly loads components', () => {
         expect(fractal.components.find('@tree-leaf')).toBeDefined();
         expect(fractal.components.find('@subtree-leaf')).toBeDefined();

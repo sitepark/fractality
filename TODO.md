@@ -14,7 +14,7 @@
   - [x] web
 - [ ] Update all dependencies
 - Migrate Examples
-  - [ ] adapter-tests
+  - [x] adapter-tests
   - [x] handlebars
   - [x] nunjucks
   - [ ] react

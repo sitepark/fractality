@@ -1,4 +1,4 @@
-module.exports = function tree(fractal) {
+export default function tree(fractal) {
     it('inherits context from parents', () => {
         expect(fractal.components.find('@subtree-leaf').context.root).toBe(true);
         expect(fractal.components.find('@subtree-leaf').context.subTree).toBe(true);

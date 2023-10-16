@@ -1,4 +1,4 @@
-module.exports = function renderTag(fractal) {
+export default function renderTag(fractal) {
     it('renders specified component', async () => {
         const render = await fractal.components.find('@render-tag-comp-2').render();
         expect(render).toBe('Override Context\nDefault Context\n\n');

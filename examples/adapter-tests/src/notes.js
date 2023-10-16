@@ -1,4 +1,4 @@
-module.exports = function notes(fractal) {
+export default function notes(fractal) {
     it('loads notes from config', async () => {
         const cmp = await fractal.components.find('@notes-config');
         expect(cmp.notes).toBe('Component Notes');

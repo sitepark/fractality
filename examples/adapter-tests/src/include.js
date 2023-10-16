@@ -1,4 +1,4 @@
-module.exports = function include(fractal) {
+export default function include(fractal) {
     it('includes child component', async () => {
         const render = await fractal.components.find('@include-parent').render();
         expect(render).toMatchSnapshot();

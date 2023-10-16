@@ -1,4 +1,4 @@
-module.exports = function context(fractal) {
+export default function context(fractal) {
     it('asynchronously loads context', async () => {
         const ctx = await fractal.components.find('@async').getResolvedContext();
         expect(ctx).toMatchSnapshot();

@@ -1,4 +1,4 @@
-module.exports = function path(fractal) {
+export default function path(fractal) {
     it('renders original path for server', async () => {
         const render = await fractal.components.find('@path').render(undefined, { server: true });
         expect(render).toMatchSnapshot();

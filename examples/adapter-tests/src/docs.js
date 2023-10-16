@@ -1,4 +1,4 @@
-module.exports = function docs(fractal) {
+export default function docs(fractal) {
     it('properly loads docs', () => {
         expect(fractal.docs.find('@index')).toBeDefined();
     });

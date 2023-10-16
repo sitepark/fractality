@@ -1,4 +1,4 @@
-module.exports = function render(fractal) {
+export default function render(fractal) {
     it('renders default template for default variant', async () => {
         const render = await fractal.components.find('@render').render();
         expect(render).toMatchSnapshot();

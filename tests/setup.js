@@ -1,2 +1,3 @@
-import 'regenerator-runtime/runtime';
-import 'jest-extended/all';
+import { expect } from 'vitest';
+import * as matchers from 'jest-extended';
+expect.extend(matchers);

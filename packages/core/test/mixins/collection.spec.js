@@ -137,7 +137,7 @@ describe('Collection', () => {
         });
         it('calls toJSON() on items if they have a toJSON method', () => {
             const collection = new Collection();
-            const toJSON = jest.fn();
+            const toJSON = vi.fn();
             const collectionItem = {
                 type: 'component',
                 id: 3,
@@ -159,7 +159,7 @@ describe('Collection', () => {
     describe('.each()', () => {
         it('runs specified function n times', () => {
             const collection = new Collection();
-            const callback = jest.fn();
+            const callback = vi.fn();
             collection.setItems(items);
             collection.each(callback);
             expect(callback).toHaveBeenCalledTimes(2);
@@ -168,7 +168,7 @@ describe('Collection', () => {
         });
         it('is chainable', () => {
             const collection = new Collection();
-            const callback = jest.fn();
+            const callback = vi.fn();
             collection.setItems(items);
             const ret = collection.each(callback);
             expect(ret).toEqual(collection);
@@ -178,7 +178,7 @@ describe('Collection', () => {
     describe('.forEach()', () => {
         it('runs specified function n times', () => {
             const collection = new Collection();
-            const callback = jest.fn();
+            const callback = vi.fn();
             collection.setItems(items);
             collection.forEach(callback);
             expect(callback).toHaveBeenCalledTimes(2);
@@ -187,7 +187,7 @@ describe('Collection', () => {
         });
         it('is chainable', () => {
             const collection = new Collection();
-            const callback = jest.fn();
+            const callback = vi.fn();
             collection.setItems(items);
             const ret = collection.forEach(callback);
 
@@ -198,7 +198,7 @@ describe('Collection', () => {
     describe('.map()', () => {
         it('runs specified function n times', () => {
             const collection = new Collection();
-            const callback = jest.fn();
+            const callback = vi.fn();
             collection.setItems(items);
             collection.map(callback);
             expect(callback).toHaveBeenCalledTimes(2);
@@ -207,7 +207,7 @@ describe('Collection', () => {
         });
         it('returns a new collection', () => {
             const collection = new Collection();
-            const callback = jest.fn();
+            const callback = vi.fn();
             collection.setItems(items);
             const ret = collection.map(callback);
             expect(ret).not.toBe(collection);
@@ -476,7 +476,7 @@ describe('Collection', () => {
     describe('.flattenDeep()', () => {
         it('calls .flatten() on items if they have a flatten method', () => {
             const collection = new Collection();
-            const flatten = jest.fn(() => collectionItem);
+            const flatten = vi.fn(() => collectionItem);
             const collectionItem = {
                 id: 3,
                 flatten: flatten,
@@ -504,7 +504,7 @@ describe('Collection', () => {
         it('filters items with a function', () => {
             const collection = new Collection();
             collection.setItems(items);
-            const callback = jest.fn((item) => {
+            const callback = vi.fn((item) => {
                 return item.isCollection;
             });
             const ret = collection.filter(callback);

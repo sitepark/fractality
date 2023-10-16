@@ -1,9 +1,10 @@
-import app from "../../src/fractal";
+import { create } from "../../src/fractal";
 import Cli from "../../src/cli";
 import Console from "../../src/cli/console";
 
 describe('Cli', () => {
     let cli;
+    let app = create()
 
     beforeEach(() => {
         cli = new Cli(app);
@@ -57,7 +58,7 @@ describe('Cli', () => {
     for (let method of ['log', 'error', 'warn', 'success', 'debug']) {
         describe(`.${method}()`, () => {
             it(`calls the console ${method} method`, () => {
-                const spy = jest.spyOn(cli.console, method);
+                const spy = vi.spyOn(cli.console, method);
                 cli[method]('Message');
                 expect(spy).toHaveBeenCalled();
                 expect(spy).toHaveBeenCalledWith('Message');

@@ -99,7 +99,7 @@ describe('Theme', () => {
 
     it('adds route and resolver with function', () => {
         const theme = new Theme();
-        const resolver = jest.fn();
+        const resolver = vi.fn();
         theme.addRoute('/', {}, resolver);
         expect(theme.routes()).toEqual([
             {

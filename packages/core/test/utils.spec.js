@@ -117,7 +117,7 @@ describe('Utils', () => {
     });
 
     describe('.fileExistsSync()', () => {
-        xit('returns true if file is accessible', () => {
+        it.skip('returns true if file is accessible', () => {
             mock({
                 'path/to/accessible/file': 'can access',
             });

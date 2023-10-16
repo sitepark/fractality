@@ -2,7 +2,6 @@ import path from "path";
 
 import fs from "fs-extra";
 import mock from "mock-fs";
-
 import shell from "../src/shell";
 
 describe('Shell', () => {
@@ -35,7 +34,7 @@ describe('Shell', () => {
         expect(() => shell.cd()).not.toThrow();
     });
 
-    xit('can create a file', async () => {
+    it.skip('can create a file', async () => {
         shell.touch('test-file.md');
         const stats = await fs.stat(path.join(process.cwd(), 'test-file.md'));
         expect(stats.isFile()).toBe(true);

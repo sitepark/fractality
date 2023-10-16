@@ -1,10 +1,11 @@
 import _ from "lodash";
 
 import ComponentSource from "../../../src/api/components";
-import app from "../../../src/fractal";
+import { create } from "../../../src/fractal";
 
 describe('ComponentSource', () => {
     let components;
+    let app = create();
 
     beforeEach(() => {
         components = new ComponentSource(app);

@@ -1,5 +1,5 @@
 export default {
-    get: jest.fn((key) => {
+    get: vi.fn((key) => {
         if (key === 'foo') {
             return {
                 statuses: {
@@ -14,7 +14,7 @@ export default {
                     register: () => {
                         return {
                             foo: 'bar',
-                            load: jest.fn(),
+                            load: vi.fn(),
                         };
                     },
                 },

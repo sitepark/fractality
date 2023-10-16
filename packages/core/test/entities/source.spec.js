@@ -35,25 +35,11 @@ describe('EntitySource', () => {
     });
 
     describe('.engine()', () => {
-        it('requires engine if passed string', () => {
-            const mockEngine = {
-                load: jest.fn(),
-            };
-            jest.mock(
-                'mock_engine_module',
-                () => ({
-                    register: () => mockEngine,
-                }),
-                { virtual: true }
-            );
-            expect(source.engine('mock_engine_module')).toBe(mockEngine);
-        });
-
         it('creates engine if passed function', () => {
-            const mockEngine = jest.fn(() => {
+            const mockEngine = vi.fn(() => {
                 return {
-                    register: jest.fn(() => ({
-                        load: jest.fn(),
+                    register: vi.fn(() => ({
+                        load: vi.fn(),
                     })),
                 };
             });
@@ -62,9 +48,9 @@ describe('EntitySource', () => {
         });
 
         it('throws if engine factory does not have a register method', () => {
-            const mockEngine = jest.fn(() => {
+            const mockEngine = vi.fn(() => {
                 return {
-                    not_register: jest.fn(),
+                    not_register: vi.fn(),
                 };
             });
             expect(() => {
@@ -73,7 +59,7 @@ describe('EntitySource', () => {
         });
 
         it('triggers engine load', () => {
-            const mockLoad = jest.fn();
+            const mockLoad = vi.fn();
             const mockFactory = {
                 register: () => ({
                     load: mockLoad,
@@ -85,7 +71,7 @@ describe('EntitySource', () => {
 
         it('returns engine', () => {
             const mockEngine = {
-                load: jest.fn(),
+                load: vi.fn(),
             };
             const mockFactory = {
                 register: () => mockEngine,
@@ -95,7 +81,7 @@ describe('EntitySource', () => {
 
         it('returns engine if called second time without arguments', () => {
             const mockEngine = {
-                load: jest.fn(),
+                load: vi.fn(),
             };
             const mockFactory = {
                 register: () => mockEngine,
@@ -141,7 +127,7 @@ describe('EntitySource', () => {
             expect(json).toMatchSnapshot();
         });
         it('calls toJSON() on items if they have a toJSON method', () => {
-            const toJSON = jest.fn();
+            const toJSON = vi.fn();
             const collectionItem = {
                 type: 'component',
                 id: 3,

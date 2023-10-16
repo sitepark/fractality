@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`EntitySource .toJSON() returns a plain object 1`] = `
+exports[`EntitySource > .toJSON() > returns a plain object 1`] = `
 {
   "fullPath": "",
   "isCollection": true,

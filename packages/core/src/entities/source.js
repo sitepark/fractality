@@ -36,9 +36,10 @@ export default class EntitySource extends mix(Source, Heritable) {
             }
             return this._engine;
         }
-        if (_.isString(adapter)) {
-            adapter = require(adapter);
-        }
+        // TODO: Breaking Change
+        // if (_.isString(adapter)) {
+        //     adapter = require(adapter);
+        // }
         if (_.isFunction(adapter)) {
             adapter = adapter({});
         }

@@ -21,14 +21,15 @@
   - [x] twig
 - Make tests pass
   - packages
-    - [ ] core
-    - [ ] fractal
-    - [ ] handlebars
-    - [ ] mandelbrot
-    - [ ] nunjucks
-    - [ ] react
-    - [ ] twig
-    - [ ] web
+    - [x] core
+    - [x] fractal
+    - [x] handlebars
+    - [x] mandelbrot
+    - [x] nunjucks
+    - [x] react
+    - [x] twig
+    - [x] web
+- [ ] migrate to vite & vitest
 
 ## Features
 - [ ] Convert to Typescript

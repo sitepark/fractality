@@ -3,13 +3,18 @@
 /*
  * Require the path module
  */
-const path = require('path');
-const mandelbrot = require('@frctl/mandelbrot');
+import path from "path";
+import mandelbrot from "@frctl/mandelbrot";
+import { create } from "@frctl/fractal";
+import twigEngine from "@frctl/twig"
+import { URL, fileURLToPath } from "url";
+
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
 /*
  * Require the Fractal module
  */
-const fractal = (module.exports = require('@frctl/fractal').create());
+const fractal = create();
 
 /*
  * Give your project a title.
@@ -21,13 +26,13 @@ fractal.set('project.title', 'Fractal Twig example');
  */
 fractal.components.set('path', path.join(__dirname, 'components'));
 fractal.components.set('ext', '.twig');
-fractal.components.engine(require('@frctl/twig'));
+fractal.components.engine(twigEngine);
 
 /*
  * Tell Fractal where to look for documentation pages.
  */
 fractal.docs.set('path', path.join(__dirname, 'docs'));
-fractal.docs.engine(require('@frctl/twig'));
+fractal.docs.engine(twigEngine);
 
 /*
  * Tell the Fractal web preview plugin where to look for static assets.
@@ -47,3 +52,5 @@ const customTheme = mandelbrot({
 });
 
 fractal.web.theme(customTheme);
+
+export default fractal;

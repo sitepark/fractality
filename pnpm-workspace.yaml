@@ -2,3 +2,4 @@ packages:
   - "packages/*"
   - "examples/handlebars"
   - "examples/nunjucks"
+  - "examples/twig"

@@ -1,16 +1,16 @@
 'use strict';
 
-const _ = require('lodash');
-const path = require('path');
-const utils = require('@frctl/core').utils;
-const adapterUtils = require('../utils');
+import _ from "lodash";
+import path from "path";
+import { utils } from "@frctl/core";
+import adapterUtils from "../utils.js";
 
 /**
  * Render tag
  *
  *  Format: {% render "@component" with {some: 'values'} %}
  */
-module.exports = function (fractal, config) {
+export default function (fractal, config) {
     return function (Twig) {
         return {
             type: 'rendertag',

@@ -1,10 +1,15 @@
 'use strict';
 
-const Fractal = require('@frctl/core');
-const _ = require('lodash');
-const Path = require('path');
+import * as Fractal from "@frctl/core";
+import _ from "lodash";
+import Path from "path";
+import Twig from "twig";
 const utils = Fractal.utils;
-const adapterUtils = require('./utils');
+import adapterUtils from "./utils.js";
+import functions from "./functions/index.js";
+import tags from "./tags/index.js";
+import tests from "./tests/index.js";
+import filters from "./filters/index.js";
 
 class TwigAdapter extends Fractal.Adapter {
     constructor(Twig, source, app, config) {
@@ -165,7 +170,7 @@ class TwigAdapter extends Fractal.Adapter {
     }
 }
 
-module.exports = function (config) {
+export default function (config) {
     config = _.defaults(config || {}, {
         method: 'fractal',
         pristine: false,
@@ -178,20 +183,19 @@ module.exports = function (config) {
 
     return {
         register(source, app) {
-            const Twig = require('twig');
 
             if (!config.pristine) {
-                _.each(require('./functions')(app) || {}, function (func, name) {
+                _.each(functions(app) || {}, function (func, name) {
                     Twig.extendFunction(name, func);
                 });
-                _.each(require('./filters')(app), function (filter, name) {
+                _.each(filters(app), function (filter, name) {
                     Twig.extendFilter(name, filter);
                 });
-                _.each(require('./tests')(app), function (test, name) {
+                _.each(tests(app), function (test, name) {
                     Twig.extendTest(name, test);
                 });
                 Twig.extend(function (Twig) {
-                    _.each(require('./tags')(app, config), function (tag) {
+                    _.each(tags(app, config), function (tag) {
                         Twig.exports.extendTag(tag(Twig));
                     });
                 });

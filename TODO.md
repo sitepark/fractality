@@ -10,7 +10,7 @@
   - [x] mandelbrot
   - [x] nunjucks
   - [ ] react
-  - [ ] twig
+  - [x] twig
   - [x] web
 - [ ] Update all dependencies
 - Migrate Examples
@@ -18,7 +18,7 @@
   - [x] handlebars
   - [x] nunjucks
   - [ ] react
-  - [ ] twig
+  - [x] twig
 - Make tests pass
   - packages
     - [ ] core

@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = {
+export default {
     isHandle(str, handlePrefix) {
         return str && str.startsWith(handlePrefix);
     },

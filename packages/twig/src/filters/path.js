@@ -1,9 +1,9 @@
 'use strict';
 
-const _ = require('lodash');
-const utils = require('@frctl/core').utils;
+import _ from "lodash";
+import { utils } from "@frctl/core";
 
-module.exports = function (fractal) {
+export default function (fractal) {
     return function (path) {
         let env = this.context._env;
         if (!env || env.server) {

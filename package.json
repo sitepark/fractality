@@ -58,7 +58,6 @@
     "jest-extended": "^4.0.2",
     "lerna": "^7.3.1",
     "lint-staged": "^14.0.1",
-    "mini-css-extract-plugin": "^1.6.0",
     "mock-argv": "^3.0.0",
     "mock-fs": "^5.2.0",
     "node-fetch": "^2.6.1",

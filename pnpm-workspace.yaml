@@ -1,6 +1,3 @@
 packages:
   - "packages/*"
-  - "examples/adapter-tests"
-  - "examples/handlebars"
-  - "examples/nunjucks"
-  - "examples/twig"
+  - "examples/*"

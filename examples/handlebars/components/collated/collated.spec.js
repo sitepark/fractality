@@ -1,6 +1,6 @@
-const { collated } = require('@frctl/adapter-tests');
+import { collated } from "@frctl/adapter-tests";
 
-const fractal = require('../../fractal.config.js');
+import fractal from "../../fractal.config.js";
 
 describe('collated', () => {
     beforeEach(async () => {

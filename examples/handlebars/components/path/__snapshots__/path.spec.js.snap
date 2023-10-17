@@ -1,11 +1,11 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`path converts absolute path to relative for builder 1`] = `
+exports[`path > converts absolute path to relative for builder 1`] = `
 "./some-path.html
 "
 `;
 
-exports[`path renders original path for server 1`] = `
+exports[`path > renders original path for server 1`] = `
 "/some-path
 "
 `;

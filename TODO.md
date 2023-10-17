@@ -30,8 +30,7 @@
     - [x] twig
     - [x] web
   - examples
-    - [ ] adapter-tests
-    - [ ] handlebars
+    - [x] handlebars
     - [ ] nunjucks
     - [ ] react
     - [x] twig

@@ -31,7 +31,7 @@
     - [x] web
   - examples
     - [x] handlebars
-    - [ ] nunjucks
+    - [x] nunjucks
     - [ ] react
     - [x] twig
 - [ ] migrate to vite & vitest

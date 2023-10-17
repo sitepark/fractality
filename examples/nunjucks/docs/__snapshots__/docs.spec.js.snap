@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`docs properly render docs through templating engine 1`] = `
+exports[`docs > properly render docs through templating engine 1`] = `
 "<p>This is some documentation for the project. Still to do:</p>
 <ul>
 <li><p>Finish the docs</p>

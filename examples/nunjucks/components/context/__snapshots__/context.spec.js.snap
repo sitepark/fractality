@@ -1,8 +1,8 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`context asynchronously loads context 1`] = `
-Object {
-  "xkcd": Object {
+exports[`context > asynchronously loads context 1`] = `
+{
+  "xkcd": {
     "alt": "Proper User Policy apparently means Simon Says.",
     "day": "28",
     "img": "https://imgs.xkcd.com/comics/sandwich.png",
@@ -22,7 +22,7 @@ Second man:  Okay",
 }
 `;
 
-exports[`context loads fully rendered component from another component context key 1`] = `
+exports[`context > loads fully rendered component from another component context key 1`] = `
 "<p>JS Context</p>
 "
 `;

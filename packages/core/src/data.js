@@ -46,7 +46,7 @@ export default {
                 // let data = require(filePath);
                 // Using Cache-Bustim parameter for now
 
-                let data = (await import(`${import.meta.resolve(filePath)}?t=${Date.now()}`)).default;
+                let data = (await import(`${filePath}?t=${Date.now()}`)).default;
                 if (typeof data === 'function') {
                     data = data();
                 }

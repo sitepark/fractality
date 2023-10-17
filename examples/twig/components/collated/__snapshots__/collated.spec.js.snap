@@ -1,4 +1,31 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`collated > renders collated components collated 1`] = `
+"<!-- Start: @collated--default -->
+<div>
+    Collated component default
+</div>
+<!-- End: @collated--default -->
+
+<!-- Start: @collated--one -->
+<div>
+    Collated component one
+</div>
+<!-- End: @collated--one -->
+
+<!-- Start: @collated--two -->
+<div>
+    Collated component two
+</div>
+<!-- End: @collated--two -->
+
+<!-- Start: @collated--three -->
+<div>
+    Collated component three
+</div>
+<!-- End: @collated--three -->
+"
+`;
 
 exports[`collated renders collated components collated 1`] = `
 "<!-- Start: @collated--default -->

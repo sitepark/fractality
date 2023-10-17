@@ -9,8 +9,7 @@ import context from "./context.js";
 import collated from "./collated.js";
 import path from "./path.js";
 
-
-export default {
+export {
     components,
     tree,
     renderTag,

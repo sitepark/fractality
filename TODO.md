@@ -29,6 +29,12 @@
     - [x] react
     - [x] twig
     - [x] web
+  - examples
+    - [ ] adapter-tests
+    - [ ] handlebars
+    - [ ] nunjucks
+    - [ ] react
+    - [x] twig
 - [ ] migrate to vite & vitest
 
 ## Features

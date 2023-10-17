@@ -1,6 +1,6 @@
-const { path } = require('@frctl/adapter-tests');
+import { path } from "@frctl/adapter-tests";
 
-const fractal = require('../../fractal.config.js');
+import fractal from "../../fractal.config.js";
 
 describe('path', () => {
     beforeEach(async () => {

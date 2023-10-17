@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @mixin link-default($color, $decoration) {
     &:link,
     &:visited,
@@ -61,7 +63,7 @@
 @mixin font($preset) {
     @if $preset == title {
         font-size: 1.75rem;
-        line-height: #{(32 / 28)};
+        line-height: #{math.div(32, 28)};
         font-weight: bold;
         letter-spacing: -0.025em;
         font-feature-settings: "dlig" 1;
@@ -69,37 +71,37 @@
 
     @if $preset == heading {
         font-size: 1.3125rem;
-        line-height: #{(24 / 21)};
+        line-height: #{math.div(24, 21)};
         font-weight: bold;
         font-feature-settings: "dlig" 1;
     }
 
     @if $preset == subHeading {
         font-size: 1.125rem;
-        line-height: #{(24 / 18)};
+        line-height: #{math.div(24, 18)};
         font-weight: bold;
         font-feature-settings: "dlig" 1;
     }
 
     @if $preset == body {
         font-size: 1rem;
-        line-height: #{(24 / 16)};
+        line-height: #{math.div(24, 16)};
     }
 
     @if $preset == caption {
         font-size: 0.875rem;
-        line-height: #{(24 / 14)};
+        line-height: #{math.div(24, 14)};
     }
 
     @if $preset == code {
         font-family: $font-family-monospace;
         font-size: 0.875rem;
-        line-height: #{(24 / 14)};
+        line-height: #{math.div(24, 14)};
     }
 
     @if $preset == label {
         font-size: 0.75rem;
-        line-height: #{(20 / 12)};
+        line-height: #{math.div(20, 12)};
         letter-spacing: 0.075em;
         text-transform: uppercase;
     }

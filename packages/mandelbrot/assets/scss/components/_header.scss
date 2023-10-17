@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .Header {
     --background-color: rgb(var(--skin-accent));
     --color: rgb(var(--skin-complement));
@@ -19,7 +21,7 @@
 
     padding: 0.75rem 1rem;
     font-size: 1.125rem; // 18px
-    line-height: (24 / 18);
+    line-height: math.div(24, 18);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

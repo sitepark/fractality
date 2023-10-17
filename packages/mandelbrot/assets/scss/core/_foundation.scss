@@ -1,3 +1,5 @@
+@use "sass:math";
+
 *,
 *::before,
 *::after {
@@ -18,7 +20,7 @@ html {
     background: $color-background;
     box-sizing: border-box;
     font-size: 16px;
-    line-height: (24/16);
+    line-height: math.div(24, 16);
     font-family: $font-family-sans-serif;
     color: $color-text;
     -moz-osx-font-smoothing: grayscale;
@@ -102,7 +104,7 @@ code,
 pre {
     font-family: $font-family-monospace;
     font-size: 0.875rem; //14px
-    line-height: (24/14);
+    line-height: math.div(24, 14);
 }
 
 svg {

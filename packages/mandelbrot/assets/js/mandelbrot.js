@@ -15,7 +15,7 @@ const frctl = window.frctl || {};
 const frame = framer($('#frame'));
 const nav = new Navigation($('[data-behaviour="navigation"]'));
 
-global.fractal = {
+globalThis.fractal = {
     events: events,
 };
 

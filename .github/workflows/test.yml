@@ -12,15 +12,14 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
-        node: [10, 12, 14, 16]
+        node: [18. 20]
     steps:
-      - uses: actions/checkout@v2.4.0
+      - uses:  actions/checkout@v4
       - name: Use Node.js ${{ matrix.node }}
-        uses: actions/setup-node@v2.5.1
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
-      - run: npm ci
-      - run: npm run bootstrap
-      - run: npm test
+      - run: pnpm install
+      - run: pnpm test
         env:
           CI: true

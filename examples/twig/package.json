@@ -13,7 +13,7 @@
     "@frctl/twig": "^1.2.13"
   },
   "devDependencies": {
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^2.6.7",
     "@frctl/adapter-tests": "workspace:../adapter-tests"
   }
 }

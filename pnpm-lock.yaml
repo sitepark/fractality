@@ -172,8 +172,8 @@ importers:
         specifier: ^5.2.0
         version: 5.2.0
       node-fetch:
-        specifier: ^2.6.1
-        version: 2.6.1
+        specifier: ^2.6.7
+        version: 2.6.7
       prettier:
         specifier: ^3.0.3
         version: 3.0.3
@@ -217,7 +217,7 @@ importers:
         specifier: workspace:../adapter-tests
         version: link:../adapter-tests
       node-fetch:
-        specifier: ^2.6.1
+        specifier: ^2.6.7
         version: 2.6.7
 
   examples/nunjucks:
@@ -236,7 +236,7 @@ importers:
         specifier: workspace:../adapter-tests
         version: link:../adapter-tests
       node-fetch:
-        specifier: ^2.6.1
+        specifier: ^2.6.7
         version: 2.6.7
 
   examples/react:
@@ -255,7 +255,7 @@ importers:
         specifier: workspace:../adapter-tests
         version: link:../adapter-tests
       node-fetch:
-        specifier: ^2.6.1
+        specifier: ^2.6.7
         version: 2.6.7
       prop-types:
         specifier: ^15.8.1
@@ -283,7 +283,7 @@ importers:
         specifier: workspace:../adapter-tests
         version: link:../adapter-tests
       node-fetch:
-        specifier: ^2.6.1
+        specifier: ^2.6.7
         version: 2.6.7
 
   packages/core:
@@ -8458,11 +8458,6 @@ packages:
 
   /node-addon-api@3.2.1:
     resolution: {integrity: sha512-mmcei9JghVNDYydghQmeDX8KoAm0FAiYyIcUt/N4nhyAipB17pllZQDOJD2fotxABnt4Mdz+dKTO7eftLg4d0A==}
-    dev: true
-
-  /node-fetch@2.6.1:
-    resolution: {integrity: sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==}
-    engines: {node: 4.x || >=6.0.0}
     dev: true
 
   /node-fetch@2.6.7:

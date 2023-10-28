@@ -1,6 +1,7 @@
-const { render } = require('@frctl/adapter-tests');
+import { render } from "@frctl/adapter-tests";
 
-const fractal = require('../../fractal.config.js');
+import fractal from "../../fractal.config.js";
+import frctlReact from '@frctl/react';
 
 describe('render', () => {
     beforeEach(async () => {
@@ -10,19 +11,19 @@ describe('render', () => {
     render(fractal);
 
     it('renders empty string if ssr is turned off', async () => {
-        fractal.components.engine(require('@frctl/react')({ ssr: false }));
+        fractal.components.engine(frctlReact({ ssr: false }));
         const render = await fractal.components.find('@render').render();
         expect(render).toEqual('');
     });
 
     it('renders component if ssr is turned off but enabled in component meta', async () => {
-        fractal.components.engine(require('@frctl/react')({ ssr: false }));
+        fractal.components.engine(frctlReact({ ssr: false }));
         const render = await fractal.components.find('@render').render(undefined, { ssr: true });
         expect(render).toMatchSnapshot();
     });
 
     it('renders component with renderToStaticMarkup method', async () => {
-        fractal.components.engine(require('@frctl/react')({ renderMethod: 'renderToStaticMarkuo' }));
+        fractal.components.engine(frctlReact({ renderMethod: 'renderToStaticMarkuo' }));
         const render = await fractal.components.find('@render').render();
         expect(render).toMatchSnapshot();
     });

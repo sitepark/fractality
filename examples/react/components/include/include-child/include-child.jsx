@@ -1,7 +1,7 @@
-const React = require('react');
+import React from "react";
 
 const IncludeChild = () => {
     return <>include child</>;
 };
 
-module.exports = IncludeChild;
+export default IncludeChild;

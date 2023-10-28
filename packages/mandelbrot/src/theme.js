@@ -3,11 +3,14 @@
 import Path from "path";
 import _ from "lodash";
 import { Theme } from "@frctl/web";
-import packageJSON from "../package.json" assert { type: 'json' };
 import { URL, fileURLToPath } from "url";
 import filters from "./filters.js"
+import fsExtra from 'fs-extra';
+const { readJsonSync } = fsExtra;
+
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
+const packageJSON = readJsonSync(__dirname + "../package.json");
 
 export default function (options) {
     const config = _.defaultsDeep(_.clone(options || {}), {

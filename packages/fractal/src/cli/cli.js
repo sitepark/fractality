@@ -116,9 +116,10 @@ class Cli extends mix(Configurable, Emitter) {
     }
 
     theme(theme) {
-        if (_.isString(theme)) {
-            theme = require(theme);
-        }
+        // TODO: Breaking Change
+        // if (_.isString(theme)) {
+        //     theme = require(theme);
+        // }
         this.console.theme = theme;
         return this;
     }

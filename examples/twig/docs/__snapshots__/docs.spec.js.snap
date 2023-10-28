@@ -12,16 +12,3 @@ exports[`docs > properly render docs through templating engine 1`] = `
 </ul>
 "
 `;
-
-exports[`docs properly render docs through templating engine 1`] = `
-"<p>This is some documentation for the project. Still to do:</p>
-<ul>
-<li><p>Finish the docs</p>
-</li>
-<li><p>Write tests</p>
-</li>
-<li><p>Make the tea</p>
-</li>
-</ul>
-"
-`;

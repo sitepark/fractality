@@ -1,6 +1,6 @@
-const { notes } = require('@frctl/adapter-tests');
+import { notes } from "@frctl/adapter-tests";
 
-const fractal = require('../../fractal.config.js');
+import fractal from "../../fractal.config.js";
 
 describe('notes', () => {
     beforeEach(async () => {

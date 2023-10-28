@@ -1,10 +1,10 @@
-const React = require('react');
+import React from "react";
 
-const { usePath } = require('@frctl/react/components');
+import { usePath } from "@frctl/react/components";
 
 const Path = () => {
     const path = usePath();
     return <>{path.get('/some-path')}</>;
 };
 
-module.exports = Path;
+export default Path;

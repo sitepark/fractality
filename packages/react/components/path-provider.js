@@ -1,11 +1,11 @@
-const React = require('react');
-const PropTypes = require('prop-types');
+import React from "react";
+import PropTypes from "prop-types";
 
-const PathContext = React.createContext({
+export const PathContext = React.createContext({
     get: (path) => path,
 });
 
-const PathProvider = (props) => {
+export const PathProvider = (props) => {
     const { children, ...rest } = props;
 
     return React.createElement(PathContext.Provider, { value: rest }, children);
@@ -16,10 +16,8 @@ PathProvider.propTypes = {
     get: PropTypes.func,
 };
 
-const usePath = () => {
+export const usePath = () => {
     return React.useContext(PathContext);
 };
 
-module.exports = PathProvider;
-module.exports.PathContext = PathContext;
-module.exports.usePath = usePath;
+export default PathProvider;

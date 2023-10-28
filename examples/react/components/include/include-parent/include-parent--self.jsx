@@ -1,8 +1,8 @@
-const React = require('react');
-const PropTypes = require('prop-types');
+import React from "react";
+import PropTypes from "prop-types";
 
 // TODO: it should be possible to import components by handles
-const IncludeChild = require('../include-child/include-child.jsx');
+import IncludeChild from "../include-child/include-child.jsx";
 
 const IncludeParentSelf = (props) => {
     return (
@@ -20,4 +20,4 @@ IncludeParentSelf.propTypes = {
     }),
 };
 
-module.exports = IncludeParentSelf;
+export default IncludeParentSelf;

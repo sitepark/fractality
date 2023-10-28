@@ -1,7 +1,7 @@
-const React = require('react');
+import React from "react";
 
 const SubtreeLeafVariant = () => {
     return <>Subtree leaf variant</>;
 };
 
-module.exports = SubtreeLeafVariant;
+export default SubtreeLeafVariant;

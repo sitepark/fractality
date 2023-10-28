@@ -1,4 +1,4 @@
-const fractal = require('../../fractal.config.js');
+import fractal from "../../fractal.config.js";
 
 describe('wrapper', () => {
     beforeEach(async () => {

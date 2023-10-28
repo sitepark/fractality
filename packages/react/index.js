@@ -1,3 +1,3 @@
 'use strict';
-
-module.exports = require('./src/adapter');
+import ReactAdapter from "./src/adapter.js";
+export default ReactAdapter;

@@ -1,7 +1,7 @@
-const React = require('react');
+import React from "react";
 
 const NotesFilesAlt = () => {
     return <>Load notes from readme files</>;
 };
 
-module.exports = NotesFilesAlt;
+export default NotesFilesAlt;

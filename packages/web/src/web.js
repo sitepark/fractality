@@ -46,9 +46,10 @@ export default class Web extends mix(Configurable, Emitter) {
 
     theme(name, instance) {
         instance = instance || name;
-        if (_.isString(instance)) {
-            instance = require(instance)();
-        }
+        // TODO: Breaking Change
+        // if (_.isString(instance)) {
+        //     instance = require(instance)();
+        // }
         this._themes.set(name, instance);
         this._themes.set('default', instance);
         return this;
@@ -65,13 +66,14 @@ export default class Web extends mix(Configurable, Emitter) {
         if (!theme) {
             theme = this.defaultTheme();
         }
-        if (_.isString(theme)) {
-            if (this._themes.has(theme)) {
-                theme = this._themes.get(theme);
-            } else {
-                theme = require(theme)();
-            }
-        }
+        // TODO: Breaking Change
+        // if (_.isString(theme)) {
+        //     if (this._themes.has(theme)) {
+        //         theme = this._themes.get(theme);
+        //     } else {
+        //         theme = require(theme)();
+        //     }
+        // }
         if (!(theme instanceof Theme)) {
             throw new Error('Fractal themes must inherit from the base Theme class.');
         }

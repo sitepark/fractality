@@ -1,13 +1,16 @@
 'use strict';
 
-const _ = require('lodash');
-const React = require('react');
-const ReactDOM = require('react-dom/server');
+import _ from "lodash";
+import React from "react";
+import * as ReactDOMServer from 'react-dom/server';
 
-const { Adapter, utils } = require('@frctl/core');
+import { Adapter, utils } from "@frctl/core";
 
-const PathProvider = require('../components/path-provider');
-const clearModule = require('./clear-module');
+import PathProvider from "../components/path-provider.js";
+import clearModule from "./clear-module.js";
+
+import registerBabel from "@babel/register";
+import importSync from "import-sync";
 
 /*
  * React Adapter
@@ -19,9 +22,9 @@ class ReactAdapter extends Adapter {
         this._app = app;
 
         if (options.renderMethod == 'renderToString') {
-            this._renderMethod = ReactDOM.renderToString;
+            this._renderMethod = ReactDOMServer.renderToString;
         } else {
-            this._renderMethod = ReactDOM.renderToStaticMarkup;
+            this._renderMethod = ReactDOMServer.renderToStaticMarkup;
         }
 
         this.options = options;
@@ -114,7 +117,7 @@ class ReactAdapter extends Adapter {
         const element = React.createElement(component, context);
         const parentElements = this.renderParentElements(element, meta);
         // DOCTYPE is not allowed to be a part of a React component, so it must be prepended here.
-        const html = '<!DOCTYPE html>' + ReactDOM.renderToStaticMarkup(parentElements);
+        const html = '<!DOCTYPE html>' + ReactDOMServer.renderToStaticMarkup(parentElements);
 
         return Promise.resolve(html);
     }
@@ -159,12 +162,12 @@ const DEFAULT_OPTIONS = {
 /*
  * Adapter factory
  */
-module.exports = function (config = {}) {
+export default function (config = {}) {
     return {
         register(source, app) {
             const options = utils.defaultsDeep(config, DEFAULT_OPTIONS);
 
-            require('@babel/register')(options.babelOptions);
+            registerBabel(options.babelOptions);
 
             return new ReactAdapter(source, app, options);
         },
@@ -172,7 +175,7 @@ module.exports = function (config = {}) {
 };
 
 const requireModule = (path) => {
-    let component = require(path);
+    let component = importSync(path);
 
     return component.default || component;
 };

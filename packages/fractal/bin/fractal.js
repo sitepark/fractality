@@ -7,7 +7,10 @@ import semver from "semver";
 import Liftoff from "liftoff";
 import chalk from "chalk";
 import updateNotifier from "update-notifier";
-import cliPackage from "../package.json" assert { type: 'json' };
+import { create } from "../src/fractal.js"
+import fsExtra from 'fs-extra';
+const { readJsonSync } = fsExtra;
+const cliPackage = readJsonSync("./package.json");
 
 const notifier = updateNotifier({
     pkg: cliPackage,
@@ -34,12 +37,7 @@ const FractalCli = new Liftoff({
 
 let config = {};
 try {
-    const projectPackage = (await import(Path.join(process.cwd(), 'package.json'), {
-        assert: {
-            type: "json",
-        },
-    })).default;
-
+    const projectPackage = readJsonSync(Path.join(process.cwd(), 'package.json'));
     if (projectPackage.fractal && projectPackage.fractal.main) {
         config.configPath = Path.join(process.cwd(), projectPackage.fractal.main);
     }
@@ -77,8 +75,7 @@ FractalCli.launch(config, async function (env) {
             console.log(
                 `Fractal version mismatch! Global: ${cliPackage.version} / Local: ${env.modulePackage.version}`
             );
-            let frctl = require(env.modulePath);
-            frctl.run();
+            import(env.modulePath).then(frctl => frctl.run())
             return;
         }
 
@@ -105,7 +102,7 @@ FractalCli.launch(config, async function (env) {
         }
     } else {
         // Global context
-        app = require('../.').create();
+        app = create();
     }
 
     /*

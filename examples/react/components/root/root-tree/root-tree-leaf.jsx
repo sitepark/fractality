@@ -1,7 +1,7 @@
-const React = require('react');
+import React from "react";
 
 const RootTreeLeaf = () => {
     return <>root tree leaf</>;
 };
 
-module.exports = RootTreeLeaf;
+export default RootTreeLeaf;

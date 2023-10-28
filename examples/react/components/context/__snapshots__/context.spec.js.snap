@@ -1,9 +1,9 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`tree asynchronously loads context 1`] = `
-Object {
+exports[`tree > asynchronously loads context 1`] = `
+{
   "foo": "bar",
-  "xkcd": Object {
+  "xkcd": {
     "alt": "Proper User Policy apparently means Simon Says.",
     "day": "28",
     "img": "https://imgs.xkcd.com/comics/sandwich.png",
@@ -23,4 +23,4 @@ Second man:  Okay",
 }
 `;
 
-exports[`tree loads fully rendered component from another component context key 1`] = `"<p>JS Context</p>"`;
+exports[`tree > loads fully rendered component from another component context key 1`] = `"<p>JS Context</p>"`;

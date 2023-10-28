@@ -1,15 +1,16 @@
 ## Maintanance
 - [ ] Write Changelog & Migration Guide
-- [ ] replace imports of `package.json` for better support
-- [ ] Figure out how to deal with `__dirname`
+- [x] replace imports of `package.json` for better support
+- [x] Figure out how to deal with `__dirname`
 - [ ] Re-implement beautify filter
+- [ ] Figure out browsersync + react or maybe replace with vite?
 - Migrate Packages to ESM
   - [x] core
   - [x] fractal
   - [x] handlebars
   - [x] mandelbrot
   - [x] nunjucks
-  - [ ] react
+  - [x] react
   - [x] twig
   - [x] web
 - [ ] Update all dependencies
@@ -17,7 +18,7 @@
   - [x] adapter-tests
   - [x] handlebars
   - [x] nunjucks
-  - [ ] react
+  - [x] react
   - [x] twig
 - Make tests pass
   - packages
@@ -32,7 +33,7 @@
   - examples
     - [x] handlebars
     - [x] nunjucks
-    - [ ] react
+    - [x] react
     - [x] twig
 - [ ] migrate to vite & vitest
 

@@ -1,7 +1,7 @@
-const React = require('react');
+import React from "react";
 
 const NotesConfig = () => {
     return <>Load notes from config</>;
 };
 
-module.exports = NotesConfig;
+export default NotesConfig;

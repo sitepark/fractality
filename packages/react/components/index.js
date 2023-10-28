@@ -1,7 +1,3 @@
-const PathProvider = require('./path-provider');
-
-module.exports = {
-    PathProvider: PathProvider,
-    PathContext: PathProvider.PathContext,
-    usePath: PathProvider.usePath,
-};
+import PathProvider from "./path-provider.js"
+export { PathContext, usePath} from "./path-provider.js";
+export default PathProvider;

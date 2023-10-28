@@ -1,5 +1,5 @@
-const React = require('react');
-const PropTypes = require('prop-types');
+import React from "react";
+import PropTypes from "prop-types";
 
 const TreeLeaf = (props) => {
     return <>Tree leaf {props._self.name}</>;
@@ -11,4 +11,4 @@ TreeLeaf.propTypes = {
     }),
 };
 
-module.exports = TreeLeaf;
+export default TreeLeaf;

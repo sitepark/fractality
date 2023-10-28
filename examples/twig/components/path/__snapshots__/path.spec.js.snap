@@ -9,13 +9,3 @@ exports[`path > renders original path for server 1`] = `
 "/some-path
 "
 `;
-
-exports[`path converts absolute path to relative for builder 1`] = `
-"./some-path.html
-"
-`;
-
-exports[`path renders original path for server 1`] = `
-"/some-path
-"
-`;

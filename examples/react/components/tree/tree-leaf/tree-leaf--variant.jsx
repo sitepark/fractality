@@ -1,7 +1,7 @@
-const React = require('react');
+import React from "react";
 
 const TreeLeafVariant = () => {
     return <>Tree leaf variant</>;
 };
 
-module.exports = TreeLeafVariant;
+export default TreeLeafVariant;

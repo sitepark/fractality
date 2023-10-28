@@ -1,5 +1,5 @@
-const React = require('react');
-const PropTypes = require('prop-types');
+import React from "react";
+import PropTypes from "prop-types";
 
 const ReferenceFull = (props) => {
     return <div>{props.reference}</div>;
@@ -9,4 +9,4 @@ ReferenceFull.propTypes = {
     reference: PropTypes.string,
 };
 
-module.exports = ReferenceFull;
+export default ReferenceFull;

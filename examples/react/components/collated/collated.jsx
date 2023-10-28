@@ -1,5 +1,5 @@
-const React = require('react');
-const PropTypes = require('prop-types');
+import React from "react";
+import PropTypes from "prop-types";
 
 const Collated = (props) => {
     return <div>{`Collated component ${props._self.name}`}</div>;
@@ -11,4 +11,4 @@ Collated.propTypes = {
     }),
 };
 
-module.exports = Collated;
+export default Collated;

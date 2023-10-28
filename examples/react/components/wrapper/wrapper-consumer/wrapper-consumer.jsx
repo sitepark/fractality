@@ -1,6 +1,6 @@
-const React = require('react');
+import React from "react";
 
-const { WrapperContext } = require('../wrapper-provider/wrapper-provider.jsx');
+import { WrapperContext } from "../wrapper-provider/wrapper-provider.jsx";
 
 const WrapperConsumer = () => {
     const { getValue } = React.useContext(WrapperContext);
@@ -8,4 +8,4 @@ const WrapperConsumer = () => {
     return <>{getValue('consumer')}</>;
 };
 
-module.exports = WrapperConsumer;
+export default WrapperConsumer;

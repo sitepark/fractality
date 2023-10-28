@@ -1,16 +1,13 @@
 'use strict';
 
-/*
- * Require the path module
- */
-const path = require('path');
+import create from '@frctl/fractal';
+import mandelbrot from '@frctl/mandelbrot';
+import path from 'path';
+import { URL, fileURLToPath } from "url";
+import createReactAdapter from "@frctl/react";
 
-/*
- * Require the Fractal module
- */
-const fractal = (module.exports = require('@frctl/fractal').create());
-const mandelbrot = require('@frctl/mandelbrot');
-const createReactAdapter = require('@frctl/react');
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
+const fractal = create();
 const reactAdapter = createReactAdapter({
     wrapperElements: [
         {
@@ -53,3 +50,5 @@ const customTheme = mandelbrot({
 });
 
 fractal.web.theme(customTheme);
+
+export default fractal

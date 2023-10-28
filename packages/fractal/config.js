@@ -1,9 +1,14 @@
 'use strict';
 
-import packageJSON from "./package.json" assert { type: 'json' };
 import mandelbrot from "@frctl/mandelbrot";
 import handlebars from "@frctl/handlebars";
 import { highlighter } from "@frctl/core"
+import { URL, fileURLToPath } from "url";
+import fsExtra from 'fs-extra';
+const { readJsonSync } = fsExtra;
+
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
+const packageJSON = readJsonSync(__dirname + "./package.json");
 
 export default {
     version: packageJSON.version,

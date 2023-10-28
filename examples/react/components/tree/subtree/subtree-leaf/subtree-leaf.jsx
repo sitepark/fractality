@@ -1,7 +1,7 @@
-const React = require('react');
+import React from "react";
 
 const SubtreeLeaf = () => {
     return <>Subtree leaf</>;
 };
 
-module.exports = SubtreeLeaf;
+export default SubtreeLeaf;

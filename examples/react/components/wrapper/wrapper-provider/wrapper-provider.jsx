@@ -1,5 +1,5 @@
-const React = require('react');
-const PropTypes = require('prop-types');
+import React from "react";
+import PropTypes from "prop-types";
 
 const WrapperContext = React.createContext({
     getValue: (value) => value,
@@ -15,5 +15,5 @@ WrapperProvider.propTypes = {
     getValue: PropTypes.func,
 };
 
-module.exports = WrapperProvider;
+export default WrapperProvider;
 module.exports.WrapperContext = WrapperContext;

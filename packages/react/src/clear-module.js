@@ -1,7 +1,9 @@
-const path = require('path');
+import path from "path";
 
-const resolveFrom = require('resolve-from');
-const parentModule = require('parent-module');
+import resolveFrom from "resolve-from";
+import parentModule from "parent-module";
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 
 const resolve = (moduleId) => {
     try {
@@ -67,4 +69,4 @@ const isModuleDependentOnPath = (module, filePath, checkedDependencies = []) => 
     return false;
 };
 
-module.exports = clearModule;
+export default clearModule;

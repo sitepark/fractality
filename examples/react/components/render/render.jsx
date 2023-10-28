@@ -1,5 +1,5 @@
-const React = require('react');
-const PropTypes = require('prop-types');
+import React from "react";
+import PropTypes from "prop-types";
 
 const Render = (props) => {
     return <>Render {props.something}</>;
@@ -9,4 +9,4 @@ Render.propTypes = {
     something: PropTypes.string,
 };
 
-module.exports = Render;
+export default Render;

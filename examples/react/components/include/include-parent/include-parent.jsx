@@ -1,7 +1,7 @@
-const React = require('react');
+import React from "react";
 
 // TODO: it should be possible to import components by handles
-const IncludeChild = require('../include-child/include-child.jsx');
+import IncludeChild from "../include-child/include-child.jsx";
 
 const IncludeParent = () => {
     return (
@@ -12,4 +12,4 @@ const IncludeParent = () => {
     );
 };
 
-module.exports = IncludeParent;
+export default IncludeParent;

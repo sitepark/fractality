@@ -555,8 +555,8 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       nunjucks:
-        specifier: ^3.2.3
-        version: 3.2.3(chokidar@3.5.3)
+        specifier: ^3.2.4
+        version: 3.2.4(chokidar@3.5.3)
 
   packages/react:
     dependencies:
@@ -649,8 +649,8 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       nunjucks:
-        specifier: ^3.2.3
-        version: 3.2.3(chokidar@3.5.1)
+        specifier: ^3.2.4
+        version: 3.2.4(chokidar@3.5.1)
       path-to-regexp:
         specifier: ^6.2.0
         version: 6.2.0
@@ -8722,8 +8722,8 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: false
 
-  /nunjucks@3.2.3(chokidar@3.5.1):
-    resolution: {integrity: sha512-psb6xjLj47+fE76JdZwskvwG4MYsQKXUtMsPh6U0YMvmyjRtKRFcxnlXGWglNybtNTNVmGdp94K62/+NjF5FDQ==}
+  /nunjucks@3.2.4(chokidar@3.5.1):
+    resolution: {integrity: sha512-26XRV6BhkgK0VOxfbU5cQI+ICFUtMLixv1noZn1tGU38kQH5A5nmmbk/O45xdyBhD1esk47nKrY0mvQpZIhRjQ==}
     engines: {node: '>= 6.9.0'}
     hasBin: true
     peerDependencies:
@@ -8735,22 +8735,6 @@ packages:
       a-sync-waterfall: 1.0.1
       asap: 2.0.6
       chokidar: 3.5.1
-      commander: 5.1.0
-    dev: false
-
-  /nunjucks@3.2.3(chokidar@3.5.3):
-    resolution: {integrity: sha512-psb6xjLj47+fE76JdZwskvwG4MYsQKXUtMsPh6U0YMvmyjRtKRFcxnlXGWglNybtNTNVmGdp94K62/+NjF5FDQ==}
-    engines: {node: '>= 6.9.0'}
-    hasBin: true
-    peerDependencies:
-      chokidar: ^3.3.0
-    peerDependenciesMeta:
-      chokidar:
-        optional: true
-    dependencies:
-      a-sync-waterfall: 1.0.1
-      asap: 2.0.6
-      chokidar: 3.5.3
       commander: 5.1.0
     dev: false
 

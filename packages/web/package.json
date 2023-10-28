@@ -26,7 +26,7 @@
     "js-yaml": "^4.1.0",
     "lodash": "^4.17.21",
     "nunjucks": "^3.2.4",
-    "path-to-regexp": "^6.2.0",
+    "path-to-regexp": "^6.2.1",
     "require-all": "^3.0.0",
     "throat": "^6.0.1"
   },

@@ -1,6 +1,5 @@
 'use strict';
-
-import HighlightJs from "highlight.js";
+import hljs from 'highlight.js';
 import _ from "lodash";
 
 export default function highlighter(content, lang) {
@@ -8,9 +7,9 @@ export default function highlighter(content, lang) {
     lang = lang ? lang.toLowerCase() : lang;
     try {
         return lang
-            ? HighlightJs.highlight(content, { language: lang }).value
-            : HighlightJs.highlightAuto(content).value;
+            ? hljs.highlight(content, { language: lang}).value
+            : hljs.highlightAuto(content).value;
     } catch (e) {
-        return HighlightJs.highlightAuto(content).value;
+        return hljs.highlightAuto(content).value;
     }
 };

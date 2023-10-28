@@ -26,11 +26,11 @@
     "co": "^4.6.0",
     "fs-extra": "^11.0.0",
     "globby": "^11.0.3",
-    "highlight.js": "^10.7.2",
+    "highlight.js": "^11.9.0",
     "istextorbinary": "^5.15.0",
     "js-yaml": "^4.1.0",
     "lodash": "^4.17.21",
-    "marked": "^2.0.3",
+    "marked": "^7.0.0",
     "minimist": "^1.2.8",
     "mixwith": "^0.1.1",
     "readable-stream": "^3.6.0"

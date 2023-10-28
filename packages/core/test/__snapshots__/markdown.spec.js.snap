@@ -1,13 +1,13 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Markdown renderer > renders code correctly 1`] = `
-"<pre><code class=\\"hljs\\"><span class=\\"hljs-built_in\\">module</span>.<span class=\\"hljs-built_in\\">exports</span> = {
+"<pre><code class=\\"hljs\\"><span class=\\"hljs-keyword\\">module</span>.<span class=\\"hljs-keyword\\">exports</span> = {
     foo: <span class=\\"hljs-string\\">&#x27;bar&#x27;</span>,
 };</code></pre>"
 `;
 
 exports[`Markdown renderer > renders code with lang correctly 1`] = `
-"<pre><code class=\\"hljs language-js\\"><span class=\\"hljs-built_in\\">module</span>.exports = {
+"<pre><code class=\\"hljs language-js\\"><span class=\\"hljs-variable language_\\">module</span>.<span class=\\"hljs-property\\">exports</span> = {
     <span class=\\"hljs-attr\\">foo</span>: <span class=\\"hljs-string\\">&#x27;bar&#x27;</span>,
 };</code></pre>"
 `;

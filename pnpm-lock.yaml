@@ -53,9 +53,6 @@ importers:
       handlebars:
         specifier: ^4.7.8
         version: 4.7.8
-      highlight.js:
-        specifier: ^10.7.2
-        version: 10.7.2
       inquirer:
         specifier: ^7.3.3
         version: 7.3.3
@@ -77,9 +74,6 @@ importers:
       log-update:
         specifier: ^4.0.0
         version: 4.0.0
-      marked:
-        specifier: ^2.0.3
-        version: 2.0.3
       mime:
         specifier: ^2.5.2
         version: 2.5.2
@@ -310,8 +304,8 @@ importers:
         specifier: ^11.0.3
         version: 11.0.3
       highlight.js:
-        specifier: ^10.7.2
-        version: 10.7.2
+        specifier: ^11.9.0
+        version: 11.9.0
       istextorbinary:
         specifier: ^5.15.0
         version: 5.15.0
@@ -322,8 +316,8 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       marked:
-        specifier: ^2.0.3
-        version: 2.0.3
+        specifier: ^7.0.0
+        version: 7.0.5
       minimist:
         specifier: ^1.2.8
         version: 1.2.8
@@ -6430,14 +6424,9 @@ packages:
       function-bind: 1.1.2
     dev: true
 
-  /highlight.js@10.7.2:
-    resolution: {integrity: sha512-oFLl873u4usRM9K63j4ME9u3etNF0PLiJhSQ8rdfuL51Wn3zkD6drf9ZW0dOzjnZI22YYG24z30JcmfCZjMgYg==}
-    dev: false
-
   /highlight.js@11.9.0:
     resolution: {integrity: sha512-fJ7cW7fQGCYAkgv4CPfwFHrfd/cLS4Hau96JuJ+ZTOWhjnhoeN1ub1tFmALm/+lW5z4WCAuAV9bm05AP0mS6Gw==}
     engines: {node: '>=12.0.0'}
-    dev: true
 
   /homedir-polyfill@1.0.3:
     resolution: {integrity: sha512-eSmmWE5bZTK2Nou4g0AI3zZ9rswp7GRKoKXS1BLUkvPviOqs4YTN1djQIqrXy9k5gEtdLPy86JjRwsNM9tnDcA==}
@@ -8002,9 +7991,9 @@ packages:
     resolution: {integrity: sha512-1I+1qpDt4idfgLQG+BNWmrqku+7/2bi5nLf4YwF8y8zXvmfiTBY3PV3ZibfrjBueCByROpuBjLLFCajqkgYoLQ==}
     dev: true
 
-  /marked@2.0.3:
-    resolution: {integrity: sha512-5otztIIcJfPc2qGTN8cVtOJEjNJZ0jwa46INMagrYfk0EvqtRuEHLsEe0LrFS0/q+ZRKT0+kXK7P2T1AN5lWRA==}
-    engines: {node: '>= 8.16.2'}
+  /marked@7.0.5:
+    resolution: {integrity: sha512-lwNAFTfXgqpt/XvK17a/8wY9/q6fcSPZT1aP6QW0u74VwaJF/Z9KbRcX23sWE4tODM+AolJNcUtErTkgOeFP/Q==}
+    engines: {node: '>= 16'}
     hasBin: true
     dev: false
 

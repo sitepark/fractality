@@ -1,6 +1,6 @@
 'use strict';
 
-import marked from "marked";
+import { marked } from "marked";
 import _ from "lodash";
 import highlighter from "./highlighter.js";
 const renderer = new marked.Renderer();

@@ -28,7 +28,7 @@
     "nunjucks": "^3.2.4",
     "path-to-regexp": "^6.2.1",
     "require-all": "^3.0.0",
-    "throat": "^6.0.1"
+    "throat": "^6.0.2"
   },
   "publishConfig": {
     "access": "public"

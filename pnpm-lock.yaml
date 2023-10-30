@@ -652,8 +652,8 @@ importers:
         specifier: ^3.0.0
         version: 3.0.0
       throat:
-        specifier: ^6.0.1
-        version: 6.0.1
+        specifier: ^6.0.2
+        version: 6.0.2
 
 packages:
 
@@ -11377,10 +11377,6 @@ packages:
   /textextensions@5.16.0:
     resolution: {integrity: sha512-7D/r3s6uPZyU//MCYrX6I14nzauDwJ5CxazouuRGNuvSCihW87ufN6VLoROLCrHg6FblLuJrT6N2BVaPVzqElw==}
     engines: {node: '>=0.8'}
-    dev: false
-
-  /throat@6.0.1:
-    resolution: {integrity: sha512-8hmiGIJMDlwjg7dlJ4yKGLK8EsYqKgPWbG3b4wjJddKNwc7N7Dpn08Df4szr/sZdMVeOstrdYSsqzX6BYbcB+w==}
     dev: false
 
   /throat@6.0.2:

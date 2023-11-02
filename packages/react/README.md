@@ -10,8 +10,8 @@ npm install @frctl/react --save-dev
 ## Usage
 Require the adapter in your Fractal configuration file:
 ```js
-// Require the adapter factory:
-const createReactAdapter = require('@frctl/react');
+// Import the adapter factory:
+import createReactAdapter from '@frctl/react';
 // Create the adapter instance:
 const reactAdapter = createReactAdapter({/* options */});
 // Register the adapter as engine:
@@ -23,7 +23,7 @@ fractal.components.engine(reactAdapter);
 The adapter exposes a React Context Provider component called PathProvider to allow usage of relative paths in static HTML exports. The rendered components and preview layouts are automatically wrapped with it.
 
 ```js
-const { PathProvider, PathContext, usePath } = require('@frctl/react/components');
+import { PathProvider, PathContext, usePath } from '@frctl/react/components';
 
 const Button = (props) => {
   // use via useContext hook
@@ -94,7 +94,7 @@ Sometimes it is necessary to wrap the rendered component, for example with a Rea
 Note you need to do the same wrapping when hydrating the component client-side.
 
 ```js
-const SomeComponent = require('some-react-component');
+import SomeComponent from 'some-react-component';
 const reactAdapter = createReactAdapter({
   // default is []
   wrapperElements: [
@@ -120,7 +120,7 @@ const reactAdapter = createReactAdapter({
 
 Override babel configuration, for example, to use TypeScript components. Babel is used for parsing component templates.
 ```js
-const SomeComponent = require('some-react-component');
+import SomeComponent from 'some-react-component';
 const reactAdapter = createReactAdapter({
   // default is { presets: ['@babel/preset-react', '@babel/preset-env'] }
   babelOptions: {

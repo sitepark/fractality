@@ -380,8 +380,8 @@ importers:
         specifier: ^4.0.3
         version: 4.0.3
       handlebars:
-        specifier: ^4.7.7
-        version: 4.7.7
+        specifier: ^4.7.8
+        version: 4.7.8
       inquirer:
         specifier: ^7.3.3
         version: 7.3.3
@@ -425,14 +425,14 @@ importers:
         specifier: ^3.7.2
         version: 3.7.2
       handlebars:
-        specifier: ^4.7.7
-        version: 4.7.7
+        specifier: ^4.7.8
+        version: 4.7.8
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
       promised-handlebars:
         specifier: ^2.0.1
-        version: 2.0.1(handlebars@4.7.7)
+        version: 2.0.1(handlebars@4.7.8)
 
   packages/mandelbrot:
     dependencies:
@@ -6263,19 +6263,6 @@ packages:
       duplexer: 0.1.2
     dev: true
 
-  /handlebars@4.7.7:
-    resolution: {integrity: sha512-aAcXm5OAfE/8IXkcZvCepKU3VzW1/39Fb5ZuqMtgI/hT8X2YgoMvBY5dLhq/cpOvw7Lk1nK/UF71aLG/ZnVYRA==}
-    engines: {node: '>=0.4.7'}
-    hasBin: true
-    dependencies:
-      minimist: 1.2.8
-      neo-async: 2.6.2
-      source-map: 0.6.1
-      wordwrap: 1.0.0
-    optionalDependencies:
-      uglify-js: 3.17.4
-    dev: false
-
   /handlebars@4.7.8:
     resolution: {integrity: sha512-vafaFqs8MZkRrSX7sFVUdo3ap/eNiLnb4IakshzvP56X5Nr1iGKAIqdX6tMlm6HcNRIkr6AxO5jFEoJzzpT8aQ==}
     engines: {node: '>=0.4.7'}
@@ -9588,15 +9575,6 @@ packages:
       err-code: 2.0.3
       retry: 0.12.0
     dev: true
-
-  /promised-handlebars@2.0.1(handlebars@4.7.7):
-    resolution: {integrity: sha512-idhuCYZulsjgBssopKqsV6lpJXFEzK+vjoCa+bDmbUG7lUz9kO+25GgcZKw+xbXrPfJxV8PwKrS5CIPmhbLgBg==}
-    peerDependencies:
-      handlebars: 3||4
-    dependencies:
-      deep-aplus: 1.0.4
-      handlebars: 4.7.7
-    dev: false
 
   /promised-handlebars@2.0.1(handlebars@4.7.8):
     resolution: {integrity: sha512-idhuCYZulsjgBssopKqsV6lpJXFEzK+vjoCa+bDmbUG7lUz9kO+25GgcZKw+xbXrPfJxV8PwKrS5CIPmhbLgBg==}

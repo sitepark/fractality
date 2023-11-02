@@ -1,14 +1,19 @@
 'use strict';
 
 /*
-* Require the path module
-*/
-const path = require('path');
+ * Import the path module
+ */
+import path from 'node:path';
 
 /*
- * Require the Fractal module
+ * import the Fractal module
  */
-const fractal = module.exports = require('@frctl/fractal').create();
+
+import { create } from '@frctl/fractal';
+
+const fractal = create();
+
+export default fractal;
 
 {{#if projectTitle}}
 /*

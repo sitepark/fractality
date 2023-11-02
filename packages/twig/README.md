@@ -14,10 +14,10 @@ then open your fractal.js file and add following lines:
 
 ```js
 /*
- * Require the Twig adapter
+ * Import the Twig adapter
  */
-const twigAdapter = require('@frctl/twig')();
-fractal.components.engine(twigAdapter);
+import twigAdapter from '@frctl/twig';
+fractal.components.engine(twigAdapter());
 fractal.components.set('ext', '.twig');
 ```
 
@@ -32,9 +32,10 @@ fractal.docs.engine(twigAdapter);
 ## Extending with a custom config
 ```js
 /*
- * Require the Twig adapter
+ * import the Twig adapter
  */
-const twigAdapter = require('@frctl/twig')({
+import twigAdapter from '@frctl/twig';
+const twig = twigAdapter({
     // if pristine is set to true, bundled filters, functions, tests
     // and tags are not registered.
     // default is false
@@ -155,7 +156,7 @@ const twigAdapter = require('@frctl/twig')({
 
 An example to use [twig-js-markdown](https://github.com/ianbytchek/twig-js-markdown):
 ```js
-const twigMarkdown = require('twig-markdown');
+import twigMarkdown from 'twig-markdown';
 const instance = fractal.components.engine(twigAdapter);
 
 // instance.twig refers to the twig.js instance

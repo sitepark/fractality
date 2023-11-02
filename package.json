@@ -57,7 +57,7 @@
     "lint-staged": "^14.0.1",
     "mock-argv": "^3.0.0",
     "mock-fs": "^5.2.0",
-    "node-fetch": "^2.6.7",
+    "node-fetch": "^3.3.2",
     "prettier": "^3.0.3",
     "rimraf": "^3.0.2",
     "stylelint": "^13.13.1",

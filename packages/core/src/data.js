@@ -14,26 +14,28 @@ const __dirname = fileURLToPath(new URL('.', import.meta.url));
 export default {
     parse(data, format) {
         format = format.toLowerCase();
-        if (format === 'js' || format === 'javascript') {
+        if (['js', 'mjs', 'cjs', 'javascript'].includes(format)) {
             return data;
         } else if (format === 'json') {
             return JSON.parse(data);
         } else if (format === 'yaml') {
             return yaml.load(data);
         }
-        throw new Error('Data format not recognised');
+        throw new Error(`Data format '${format}' not recognised`);
     },
 
     stringify(data, format) {
         format = format.toLowerCase();
-        if (format === 'js' || format === 'javascript') {
+        if (['cjs'].includes(format)) {
             return `module.exports = ${JSON.stringify(data, null, 4)};`;
+        } else if (['js', 'mjs', 'javascript'].includes(format)) {
+            return `export default ${JSON.stringify(data, null, 4)};`;
         } else if (format === 'json') {
             return JSON.stringify(data, null, 4);
         } else if (format === 'yaml') {
             return yaml.dump(data);
         }
-        throw new Error('Data format not recognised');
+        throw new Error(`Data format '${format}' not recognised`);
     },
 
     async readFile(filePath) {

@@ -167,9 +167,9 @@ export default mixin(
             isConfig(file) {
                 return anymatch(
                     [
-                        `**/*.${this.get('files.config')}.{js,json,yaml,yml}`,
-                        `**/${this.get('files.config')}.{js,json,yaml,yml}`,
-                        `**/_${this.get('files.config')}.{js,json,yaml,yml}`,
+                        `**/*.${this.get('files.config')}.{js,mjs,cjs,json,yaml,yml}`,
+                        `**/${this.get('files.config')}.{js,mjs,cjs,json,yaml,yml}`,
+                        `**/_${this.get('files.config')}.{js,mjs,cjs,json,yaml,yml}`,
                     ],
                     this._getPath(file)
                 );

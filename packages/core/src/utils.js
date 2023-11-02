@@ -22,6 +22,14 @@ export function lang(filePath) {
                 scope: 'text.html.django',
                 color: null,
             };
+        case '.MJS':
+        case '.CJS':
+            return {
+                name: 'JavaScript',
+                mode: 'javascript',
+                scope: 'source.js',
+                color: null,
+            };
         default: {
             const result = fang(filePath) || {};
 

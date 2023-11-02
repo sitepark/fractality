@@ -9,6 +9,11 @@ export default function context(fractal) {
         expect(ctx.text).toBe('JS Context');
     });
 
+    it('loads context from CJS config file', async () => {
+        const ctx = await fractal.components.find('@cjs').getResolvedContext();
+        expect(ctx.text).toBe('CJS Context');
+    });
+
     it('loads context from JSON config file', async () => {
         const ctx = await fractal.components.find('@json').getResolvedContext();
         expect(ctx.text).toBe('JSON Context');

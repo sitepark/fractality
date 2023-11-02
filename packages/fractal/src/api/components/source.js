@@ -368,7 +368,7 @@ export default class ComponentSource extends EntitySource {
                 `**/*${this.get('ext')}`,
                 `!**/*${this.get('splitter')}*${this.get('ext')}`,
                 `!**/*.${this.get('files.config')}.${this.get('ext')}`,
-                `!**/${this.get('files.config')}.{js,json,yaml,yml}`,
+                `!**/${this.get('files.config')}.{js,mjs,cjs,json,yaml,yml}`,
             ],
             this._getPath(file)
         );
@@ -415,9 +415,9 @@ export default class ComponentSource extends EntitySource {
             [
                 '**/*.*',
                 `!**/*${this.get('ext')}`,
-                `!**/*.${this.get('files.config')}.{js,json,yaml,yml}`,
-                `!**/${this.get('files.config')}.{js,json,yaml,yml}`,
-                `!**/_${this.get('files.config')}.{js,json,yaml,yml}`,
+                `!**/*.${this.get('files.config')}.{js,mjs,cjs,json,yaml,yml}`,
+                `!**/${this.get('files.config')}.{js,mjs,cjs,json,yaml,yml}`,
+                `!**/_${this.get('files.config')}.{js,mjs,cjs,json,yaml,yml}`,
                 `!**/${this.get('files.notes')}.md`,
                 `!**/*.${this.get('files.notes')}.md`,
             ],

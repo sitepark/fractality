@@ -5,7 +5,7 @@ import anymatch from "anymatch";
 import Promise from "bluebird";
 import chokidar from "chokidar";
 import express from "express";
-import getPort from "get-port";
+import getPort, { portNumbers } from "get-port";
 import _ from "lodash";
 import Path from "path";
 import WebError from "./error.js";
@@ -301,7 +301,7 @@ async function findPorts(serverPort, useSync) {
         return {
             sync: Promise.resolve(serverPort),
             server: getPort({
-                port: getPort.makeRange(serverPort + 1, parseInt(serverPort, 10) + range),
+                port: portNumbers(serverPort + 1, parseInt(serverPort, 10) + range),
                 host: ip,
             }),
         };
@@ -309,17 +309,17 @@ async function findPorts(serverPort, useSync) {
         return {
             sync: Promise.resolve(null),
             server: getPort({
-                port: getPort.makeRange(from, until),
+                port: portNumbers(from, until),
                 host: ip,
             }),
         };
     } else if (useSync && !serverPort) {
         const syncPort = await getPort({
-            port: getPort.makeRange(from, until),
+            port: portNumbers(from, until),
             host: ip,
         });
         const serverPort = await getPort({
-            port: getPort.makeRange(syncPort + 1, syncPort + range),
+            port: portNumbers(syncPort + 1, syncPort + range),
             host: ip,
         });
         return {

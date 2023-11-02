@@ -80,7 +80,6 @@ export default {
             pedantic: false,
             sanitize: false,
             smartLists: true,
-            smartypants: true,
         },
         ext: '.md',
         indexLabel: 'Overview',

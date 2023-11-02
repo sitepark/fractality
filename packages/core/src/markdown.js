@@ -1,8 +1,11 @@
 'use strict';
 
 import { marked } from "marked";
+import { markedSmartypants } from "marked-smartypants";
 import _ from "lodash";
 import highlighter from "./highlighter.js";
+
+marked.use(markedSmartypants());
 const renderer = new marked.Renderer();
 
 renderer.code = function (code, lang) {

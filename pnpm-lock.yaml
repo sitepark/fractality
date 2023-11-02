@@ -107,9 +107,6 @@ importers:
       readable-stream:
         specifier: ^4.4.2
         version: 4.4.2
-      require-all:
-        specifier: ^3.0.0
-        version: 3.0.0
       resolve-from:
         specifier: ^5.0.0
         version: 5.0.0
@@ -397,9 +394,6 @@ importers:
       mime:
         specifier: ^2.5.2
         version: 2.5.2
-      require-all:
-        specifier: ^3.0.0
-        version: 3.0.0
       semver:
         specifier: ^7.5.2
         version: 7.5.4
@@ -648,9 +642,6 @@ importers:
       path-to-regexp:
         specifier: ^6.2.1
         version: 6.2.1
-      require-all:
-        specifier: ^3.0.0
-        version: 3.0.0
       throat:
         specifier: ^6.0.2
         version: 6.0.2
@@ -9520,11 +9511,6 @@ packages:
   /replace-ext@2.0.0:
     resolution: {integrity: sha512-UszKE5KVK6JvyD92nzMn9cDapSk6w/CaFZ96CnmDMUqH9oowfxF/ZjRITD25H4DnOQClLA4/j7jLGXXLVKxAug==}
     engines: {node: '>= 10'}
-    dev: false
-
-  /require-all@3.0.0:
-    resolution: {integrity: sha512-jPGN876lc5exWYrMcgZSd7U42P0PmVQzxnQB13fCSzmyGnqQWW4WUz5DosZ/qe24hz+5o9lSvW2epBNZ1xa6Fw==}
-    engines: {node: '>= 0.8'}
     dev: false
 
   /require-directory@2.1.1:

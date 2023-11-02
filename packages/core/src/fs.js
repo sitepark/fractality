@@ -7,7 +7,7 @@ import co from "co";
 import _ from "lodash";
 import fs from "fs-extra";
 import * as utils from "./utils.js";
-import glob from "globby";
+import { globbySync } from "globby";
 
 export default {
     describe(dir, relDir, filter, ext) {
@@ -22,7 +22,7 @@ export default {
     },
 
     globDescribe(dir, relDir, match) {
-        return glob(match, {
+        return globbySync(match, {
             cwd: dir,
         }).then((matches) => {
             const directories = [];

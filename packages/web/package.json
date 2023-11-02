@@ -22,7 +22,7 @@
     "chokidar": "^3.5.1",
     "express": "^4.18.2",
     "fs-extra": "^11.0.0",
-    "get-port": "^5.1.1",
+    "get-port": "^7.0.0",
     "js-yaml": "^4.1.0",
     "lodash": "^4.17.21",
     "nunjucks": "^3.2.4",

@@ -368,8 +368,8 @@ importers:
         specifier: ^4.6.0
         version: 4.6.0
       columnify:
-        specifier: ^1.5.4
-        version: 1.5.4
+        specifier: ^1.6.0
+        version: 1.6.0
       execa:
         specifier: ^8.0.1
         version: 8.0.1
@@ -4045,13 +4045,6 @@ packages:
     requiresBuild: true
     dev: false
     optional: true
-
-  /columnify@1.5.4:
-    resolution: {integrity: sha512-rFl+iXVT1nhLQPfGDw+3WcS8rmm7XsLKUmhsGE3ihzzpIikeGrTaZPIRKYWeLsLBypsHzjXIvYEltVUZS84XxQ==}
-    dependencies:
-      strip-ansi: 3.0.1
-      wcwidth: 1.0.1
-    dev: false
 
   /columnify@1.6.0:
     resolution: {integrity: sha512-lomjuFZKfM6MSAnV9aCZC9sc0qGbmZdfygNv+nCpqVkSKdCxCklLtd16O0EILGkImHw9ZpHkAnHaB+8Zxq5W6Q==}

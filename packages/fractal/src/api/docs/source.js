@@ -2,7 +2,6 @@
 
 import { entities, markdown as md, resolver } from "@frctl/core";
 import anymatch from "anymatch";
-import co from "co";
 import fs from "fs-extra";
 import _ from "lodash";
 import DocCollection from "./collection.js";

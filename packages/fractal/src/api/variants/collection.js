@@ -1,7 +1,6 @@
 'use strict';
 
 import { Log, entities, utils } from "@frctl/core";
-import co from "co";
 import _ from "lodash";
 import Path from "path";
 import Variant from "./variant.js";

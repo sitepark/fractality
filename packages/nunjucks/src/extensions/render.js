@@ -1,7 +1,7 @@
 'use strict';
 
-import nunjucks from "nunjucks";
-import { utils } from "@frctl/core";
+import nunjucks from 'nunjucks';
+import { utils } from '@frctl/core';
 
 export default function (fractal) {
     function RenderExtension() {
@@ -51,4 +51,4 @@ export default function (fractal) {
     }
 
     return new RenderExtension();
-};
+}

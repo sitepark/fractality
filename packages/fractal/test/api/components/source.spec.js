@@ -1,7 +1,7 @@
-import _ from "lodash";
+import _ from 'lodash';
 
-import ComponentSource from "../../../src/api/components";
-import { create } from "../../../src/fractal";
+import ComponentSource from '../../../src/api/components';
+import { create } from '../../../src/fractal';
 
 describe('ComponentSource', () => {
     let components;

@@ -1,9 +1,9 @@
 'use strict';
 
-import _ from "lodash";
-import path from "path";
-import { utils } from "@frctl/core";
-import adapterUtils from "../utils.js";
+import _ from 'lodash';
+import path from 'path';
+import { utils } from '@frctl/core';
+import adapterUtils from '../utils.js';
 
 /**
  * Render tag
@@ -60,13 +60,13 @@ export default function (fractal, config) {
                 }
 
                 let innerContext = _.cloneDeep(
-                    entity.isComponent ? entity.variants().default().getContext() : entity.getContext()
+                    entity.isComponent ? entity.variants().default().getContext() : entity.getContext(),
                 );
 
                 if (token.contextStack !== undefined) {
                     innerContext = utils.defaultsDeep(
                         Twig.expression.parse.apply(this, [token.contextStack, context]),
-                        innerContext
+                        innerContext,
                     );
                 }
 
@@ -85,4 +85,4 @@ export default function (fractal, config) {
             },
         };
     };
-};
+}

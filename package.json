@@ -60,13 +60,9 @@
     "eslint": "eslint . --ignore-path .gitignore",
     "stylelint": "stylelint --ignore-path .gitignore \"**/*.scss\"",
     "validate": "npm run eslint && npm run stylelint",
-    "format": "npm run eslint -- --fix",
+    "format": "prettier . --write",
     "test": "pnpm run test:unit",
     "test:unit": "vitest run",
     "prepare": "husky install"
-  },
-  "lint-staged": {
-    "*.js": "eslint --cache --fix",
-    "*.{css,scss}": "stylelint --fix"
   }
 }

@@ -1,6 +1,6 @@
 'use strict';
 
-import { Readable } from "readable-stream";
+import { Readable } from 'readable-stream';
 
 export default class PromiseStream extends Readable {
     constructor(p) {
@@ -29,4 +29,4 @@ export default class PromiseStream extends Readable {
             });
         }
     }
-};
+}

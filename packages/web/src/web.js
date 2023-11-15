@@ -1,11 +1,11 @@
 'use strict';
 
-import _ from "lodash";
-import { utils, mixins } from "@frctl/core";
-import Server from "./server.js";
-import Builder from "./builder.js";
-import Theme from "./theme.js";
-import Engine from "./engine/index.js";
+import _ from 'lodash';
+import { utils, mixins } from '@frctl/core';
+import Server from './server.js';
+import Builder from './builder.js';
+import Theme from './theme.js';
+import Engine from './engine/index.js';
 const mix = mixins.mix;
 const Configurable = mixins.configurable;
 const Emitter = mixins.emitter;
@@ -85,4 +85,4 @@ export default class Web extends mix(Configurable, Emitter) {
         }
         return theme;
     }
-};
+}

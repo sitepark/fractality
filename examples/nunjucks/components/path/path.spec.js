@@ -1,6 +1,6 @@
-import { path } from "@frctl/adapter-tests";
+import { path } from '@frctl/adapter-tests';
 
-import fractal from "../../fractal.config.js";
+import fractal from '../../fractal.config.js';
 
 describe('path', () => {
     beforeEach(async () => {

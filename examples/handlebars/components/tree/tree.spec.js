@@ -1,6 +1,6 @@
-import { tree } from "@frctl/adapter-tests";
+import { tree } from '@frctl/adapter-tests';
 
-import fractal from "../../fractal.config.js";
+import fractal from '../../fractal.config.js';
 
 describe('tree', () => {
     beforeEach(async () => {

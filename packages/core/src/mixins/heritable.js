@@ -2,7 +2,7 @@
 
 import _ from 'lodash';
 import { Mixin as mixin } from 'mixwith';
-import * as utils from "../utils.js";
+import * as utils from '../utils.js';
 
 export default mixin(
     (superclass) =>
@@ -118,5 +118,5 @@ export default mixin(
                 }
                 return props;
             }
-        }
+        },
 );

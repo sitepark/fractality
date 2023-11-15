@@ -1,15 +1,15 @@
 'use strict';
 
-import * as Fractal from "@frctl/core";
-import _ from "lodash";
-import Path from "path";
-import Twig from "twig";
+import * as Fractal from '@frctl/core';
+import _ from 'lodash';
+import Path from 'path';
+import Twig from 'twig';
 const utils = Fractal.utils;
-import adapterUtils from "./utils.js";
-import functions from "./functions/index.js";
-import tags from "./tags/index.js";
-import tests from "./tests/index.js";
-import filters from "./filters/index.js";
+import adapterUtils from './utils.js';
+import functions from './functions/index.js';
+import tags from './tags/index.js';
+import tests from './tests/index.js';
+import filters from './filters/index.js';
 
 class TwigAdapter extends Fractal.Adapter {
     constructor(Twig, source, app, config) {
@@ -84,7 +84,7 @@ class TwigAdapter extends Fractal.Adapter {
                     obj._keys = _.compact(
                         _.map(obj, (val, key) => {
                             return _.isString(key) && !key.startsWith('_') ? key : undefined;
-                        })
+                        }),
                     );
                     _.each(obj, (val, key) => {
                         if (_.isPlainObject(val) && _.isString(key) && !key.startsWith('_')) {
@@ -183,7 +183,6 @@ export default function (config) {
 
     return {
         register(source, app) {
-
             if (!config.pristine) {
                 _.each(functions(app) || {}, function (func, name) {
                     Twig.extendFunction(name, func);
@@ -223,4 +222,4 @@ export default function (config) {
             return adapter;
         },
     };
-};
+}

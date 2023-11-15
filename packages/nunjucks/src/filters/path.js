@@ -1,7 +1,7 @@
 'use strict';
 
-import _ from "lodash";
-import { utils } from "@frctl/core";
+import _ from 'lodash';
+import { utils } from '@frctl/core';
 
 export default function (fractal) {
     return function (path) {
@@ -12,4 +12,4 @@ export default function (fractal) {
             ? path
             : utils.relUrlPath(path, _.get(request, 'path', '/'), fractal.web.get('builder.urls'));
     };
-};
+}

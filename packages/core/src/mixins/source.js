@@ -1,20 +1,20 @@
 'use strict';
 
-import _ from "lodash";
-import chokidar from "chokidar";
-import anymatch from "anymatch";
-import Path from "path";
-import { Mixin as mixin } from "mixwith";
-import { mix } from "mixwith";
+import _ from 'lodash';
+import chokidar from 'chokidar';
+import anymatch from 'anymatch';
+import Path from 'path';
+import { Mixin as mixin } from 'mixwith';
+import { mix } from 'mixwith';
 
-import fs from "../fs.js";
-import * as utils from "../utils.js";
-import Log from "../log.js";
-import Configurable from "../mixins/configurable.js";
-import Collection from "../mixins/collection.js";
-import Emitter from "../mixins/emitter.js";
-import Stream from "../promise-stream.js";
-import resolver from "../resolver.js";
+import fs from '../fs.js';
+import * as utils from '../utils.js';
+import Log from '../log.js';
+import Configurable from '../mixins/configurable.js';
+import Collection from '../mixins/collection.js';
+import Emitter from '../mixins/emitter.js';
+import Stream from '../promise-stream.js';
+import resolver from '../resolver.js';
 
 export default mixin(
     (superclass) =>
@@ -170,7 +170,7 @@ export default mixin(
                         `**/${this.get('files.config')}.{js,mjs,cjs,json,yaml,yml}`,
                         `**/_${this.get('files.config')}.{js,mjs,cjs,json,yaml,yml}`,
                     ],
-                    this._getPath(file)
+                    this._getPath(file),
                 );
             }
 
@@ -216,7 +216,7 @@ export default mixin(
                     this.fullPath,
                     this.relPath,
                     exclude ? (filePath) => !anymatch(exclude, filePath) : undefined,
-                    this.get('ext')
+                    this.get('ext'),
                 );
             }
 
@@ -235,5 +235,5 @@ export default mixin(
                 const filePath = _.isString(file) ? file : file.path;
                 return filePath.toLowerCase();
             }
-        }
+        },
 );

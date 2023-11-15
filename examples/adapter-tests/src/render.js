@@ -23,4 +23,4 @@ export default function render(fractal) {
         const render = await fractal.components.find('@render--variant-4').render();
         expect(render).toMatchSnapshot();
     });
-};
+}

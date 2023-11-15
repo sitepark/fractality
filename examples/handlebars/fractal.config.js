@@ -6,7 +6,7 @@
 import path from 'path';
 import mandelbrot from '@frctl/mandelbrot';
 import create from '@frctl/fractal';
-import { URL, fileURLToPath } from "url";
+import { URL, fileURLToPath } from 'url';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 

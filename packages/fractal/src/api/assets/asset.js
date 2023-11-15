@@ -1,7 +1,7 @@
 'use strict';
 
-import Path from "path";
-import File from "../files/file.js";
+import Path from 'path';
+import File from '../files/file.js';
 
 export default class Asset extends File {
     constructor(file, relativeTo, source) {
@@ -24,4 +24,4 @@ export default class Asset extends File {
         self[`is${this.ext.replace(/^\./, '').toUpperCase()}`] = true;
         return self;
     }
-};
+}

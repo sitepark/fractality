@@ -1,11 +1,11 @@
 'use strict';
 
-import { Log, mixins } from "@frctl/core";
-import anymatch from "anymatch";
-import fs from "fs-extra";
-import _ from "lodash";
-import Path from "path";
-import throat from "throat";
+import { Log, mixins } from '@frctl/core';
+import anymatch from 'anymatch';
+import fs from 'fs-extra';
+import _ from 'lodash';
+import Path from 'path';
+import throat from 'throat';
 const mix = mixins.mix;
 const Emitter = mixins.emitter;
 
@@ -53,7 +53,7 @@ export default class Builder extends mix(Emitter) {
 
                     // 1. Start any static copy jobs
                     jobs.push(
-                        this._static.map((p) => this._throttle(() => this._copy(p.path, Path.join(Path.sep, p.mount))))
+                        this._static.map((p) => this._throttle(() => this._copy(p.path, Path.join(Path.sep, p.mount)))),
                     );
 
                     // 2. Run the requests in parallel
@@ -233,8 +233,8 @@ export default class Builder extends mix(Emitter) {
             if (stat.path == this._config.dest) {
                 throw new Error(
                     `Your build destination directory (${Path.resolve(
-                        stat.path
-                    )}) cannot be the same as any of your static assets directories.`
+                        stat.path,
+                    )}) cannot be the same as any of your static assets directories.`,
                 );
             }
         }
@@ -254,4 +254,4 @@ export default class Builder extends mix(Emitter) {
             route: route,
         };
     }
-};
+}

@@ -1,8 +1,8 @@
-import path from "path";
+import path from 'path';
 
-import fs from "fs-extra";
-import mock from "mock-fs";
-import shell from "../src/shell";
+import fs from 'fs-extra';
+import mock from 'mock-fs';
+import shell from '../src/shell';
 
 describe('Shell', () => {
     let originalPwd;

@@ -1,6 +1,6 @@
-import mix from "../../src/mixins/mix";
-import Tmp from "../../src/mixins/collection"
-import Stream from "../../src/array-stream";
+import mix from '../../src/mixins/mix';
+import Tmp from '../../src/mixins/collection';
+import Stream from '../../src/array-stream';
 const Collection = mix(Tmp);
 
 const items = [

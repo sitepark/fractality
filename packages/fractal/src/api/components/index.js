@@ -1,3 +1,3 @@
-import ComponentSource from './source.js'
+import ComponentSource from './source.js';
 
 export default ComponentSource;

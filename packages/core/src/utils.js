@@ -1,11 +1,11 @@
 'use strict';
 
-import Path from "path";
-import fs from "fs";
-import crypto from "crypto";
-import minimist from "minimist";
-import fang from "@allmarkedup/fang";
-import _ from "lodash";
+import Path from 'path';
+import fs from 'fs';
+import crypto from 'crypto';
+import minimist from 'minimist';
+import fang from '@allmarkedup/fang';
+import _ from 'lodash';
 
 export function lang(filePath) {
     const name = Path.extname(filePath).toUpperCase();
@@ -82,7 +82,7 @@ export function stringify(data, indent) {
             }
             return val;
         },
-        indent || 4
+        indent || 4,
     );
 }
 
@@ -188,8 +188,8 @@ export function relUrlPath(toPath, fromPath, opts) {
 export async function awaitProps(obj) {
     const waitingEntries = Object.entries(obj).map(async ([key, value]) => {
         return [key, await value];
-    })
-    return Promise.all(waitingEntries).then(entries => {
+    });
+    return Promise.all(waitingEntries).then((entries) => {
         return Object.fromEntries(entries);
-    })
+    });
 }

@@ -2,15 +2,15 @@
 
 'use strict';
 
-import Path from "path";
-import semver from "semver";
-import Liftoff from "liftoff";
-import chalk from "chalk";
-import updateNotifier from "update-notifier";
-import { create } from "../src/fractal.js"
+import Path from 'path';
+import semver from 'semver';
+import Liftoff from 'liftoff';
+import chalk from 'chalk';
+import updateNotifier from 'update-notifier';
+import { create } from '../src/fractal.js';
 import fsExtra from 'fs-extra';
 const { readJsonSync } = fsExtra;
-const cliPackage = readJsonSync("./package.json");
+const cliPackage = readJsonSync('./package.json');
 
 const notifier = updateNotifier({
     pkg: cliPackage,
@@ -46,7 +46,6 @@ try {
     // is expected when it can't be required
 }
 
-
 FractalCli.prepare(config, (env) => {
     FractalCli.execute(env, async (env) => {
         let app;
@@ -75,9 +74,9 @@ FractalCli.prepare(config, (env) => {
             if (semver.lt(env.modulePackage.version, `1.0.0`)) {
                 // Project is using a legacy version of Fractal, load it the old way...
                 console.log(
-                    `Fractal version mismatch! Global: ${cliPackage.version} / Local: ${env.modulePackage.version}`
+                    `Fractal version mismatch! Global: ${cliPackage.version} / Local: ${env.modulePackage.version}`,
                 );
-                import(env.modulePath).then(frctl => frctl.run())
+                import(env.modulePath).then((frctl) => frctl.run());
                 return;
             }
 
@@ -85,8 +84,8 @@ FractalCli.prepare(config, (env) => {
                 // looks like the configuration file is not correctly module.export'ing a fractal instance
                 console.log(
                     `${chalk.red(
-                        'Configuration error'
-                    )}: The CLI configuration file is not exporting an instance of Fractal.`
+                        'Configuration error',
+                    )}: The CLI configuration file is not exporting an instance of Fractal.`,
                 );
                 return;
             }
@@ -123,5 +122,5 @@ FractalCli.prepare(config, (env) => {
 
         app.cli.init(scope, configPath, env, cliPackage);
         app.cli.exec();
-    })
-})
+    });
+});

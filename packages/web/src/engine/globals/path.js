@@ -1,7 +1,7 @@
 'use strict';
 
-import _ from "lodash";
-import { utils } from "@frctl/core";
+import _ from 'lodash';
+import { utils } from '@frctl/core';
 
 export default function (app, engine) {
     return {
@@ -13,4 +13,4 @@ export default function (app, engine) {
                 : utils.relUrlPath(path, _.get(req, 'path', '/'), app.web.get('builder.urls'));
         },
     };
-};
+}

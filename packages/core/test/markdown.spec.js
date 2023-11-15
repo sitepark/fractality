@@ -1,4 +1,4 @@
-import md from "../src/markdown";
+import md from '../src/markdown';
 
 const code = `
 \`\`\`

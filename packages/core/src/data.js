@@ -1,12 +1,12 @@
 'use strict';
 
-import yaml from "js-yaml";
-import _ from "lodash";
-import Path from "path";
-import fs from "fs-extra";
-import * as utils from "./utils.js";
-import Log from "./log.js";
-import { URL, fileURLToPath } from "url";
+import yaml from 'js-yaml';
+import _ from 'lodash';
+import Path from 'path';
+import fs from 'fs-extra';
+import * as utils from './utils.js';
+import Log from './log.js';
+import { URL, fileURLToPath } from 'url';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
@@ -58,7 +58,7 @@ export default {
                 return Promise.resolve(data);
             } catch (err) {
                 Log.error(
-                    `Error parsing data file ${filePath.split('/')[filePath.split('/').length - 1]}: ${err.message}`
+                    `Error parsing data file ${filePath.split('/')[filePath.split('/').length - 1]}: ${err.message}`,
                 );
                 return Promise.resolve({});
             }

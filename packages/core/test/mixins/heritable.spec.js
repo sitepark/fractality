@@ -1,4 +1,4 @@
-import mix from "../../src/mixins/mix";
+import mix from '../../src/mixins/mix';
 import Tmp from '../../src/mixins/heritable';
 const Heritable = mix(Tmp);
 

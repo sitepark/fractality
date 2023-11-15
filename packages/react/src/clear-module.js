@@ -1,7 +1,7 @@
-import path from "path";
+import path from 'path';
 
-import resolveFrom from "resolve-from";
-import parentModule from "parent-module";
+import resolveFrom from 'resolve-from';
+import parentModule from 'parent-module';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 

@@ -3,11 +3,11 @@
 /*
  * Require the path module
  */
-import path from "path";
-import mandelbrot from "@frctl/mandelbrot";
-import { create } from "@frctl/fractal";
-import twigEngine from "@frctl/twig"
-import { URL, fileURLToPath } from "url";
+import path from 'path';
+import mandelbrot from '@frctl/mandelbrot';
+import { create } from '@frctl/fractal';
+import twigEngine from '@frctl/twig';
+import { URL, fileURLToPath } from 'url';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 

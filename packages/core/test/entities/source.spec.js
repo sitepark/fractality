@@ -1,5 +1,5 @@
-import Source from "../../src/entities/source";
-import fractal from "../__mocks__/fractal";
+import Source from '../../src/entities/source';
+import fractal from '../__mocks__/fractal';
 
 const items = [
     {

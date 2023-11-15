@@ -6,9 +6,9 @@
 
 ## 🚨 Breaking changes in v2.0
 
-- `render` tag - Arrays in context data are **no longer merged** with those in the default component context
-- **Autoescaping** - this is now **disabled by default**. Preview templates will need to be updated to mark the `yield` output as safe using the Nunjucks `safe` filter: `{{ yield | safe }}`. Alternatively this can be enabled globally again using the environment options when [configuring the adapter](#customisation) (not recommended).
-- **Nunjucks version** - bumped to 3.x
+-   `render` tag - Arrays in context data are **no longer merged** with those in the default component context
+-   **Autoescaping** - this is now **disabled by default**. Preview templates will need to be updated to mark the `yield` output as safe using the Nunjucks `safe` filter: `{{ yield | safe }}`. Alternatively this can be enabled globally again using the environment options when [configuring the adapter](#customisation) (not recommended).
+-   **Nunjucks version** - bumped to 3.x
 
 ## Installation
 
@@ -19,8 +19,8 @@ npm i @frctl/nunjucks --save
 ## Usage
 
 ```javascript
-fractal.components.engine("@frctl/nunjucks"); // register the Nunjucks adapter for your components
-fractal.components.set("ext", ".njk"); // look for files with a .njk file extension
+fractal.components.engine('@frctl/nunjucks'); // register the Nunjucks adapter for your components
+fractal.components.set('ext', '.njk'); // look for files with a .njk file extension
 ```
 
 ## Customisation
@@ -30,23 +30,21 @@ If you want to register custom [filters](https://mozilla.github.io/nunjucks/api.
 ```javascript
 import nunjucksAdapter from '@frctl/nunjucks';
 const nunj = nunjucksAdapter({
-  env: {
-    // Nunjucks environment opts: https://mozilla.github.io/nunjucks/api.html#configure
-  },
-  filters: {
-    // filter-name: function filterFunc(){}
-  },
-  globals: {
-    // global-name: global-val
-  },
-  extensions: {
-    // extension-name: function extensionFunc(){}
-  }
+    env: {
+        // Nunjucks environment opts: https://mozilla.github.io/nunjucks/api.html#configure
+    },
+    filters: {
+        // filter-name: function filterFunc(){}
+    },
+    globals: {
+        // global-name: global-val
+    },
+    extensions: {
+        // extension-name: function extensionFunc(){}
+    },
 });
 
-fractal.components.engine(
-  nunj
-); /* set as the default template engine for components */
+fractal.components.engine(nunj); /* set as the default template engine for components */
 ```
 
 For example, to register the 'shorten' filter example from the [Nujucks docs](https://mozilla.github.io/nunjucks/api.html#custom-filters):
@@ -54,11 +52,11 @@ For example, to register the 'shorten' filter example from the [Nujucks docs](ht
 ```javascript
 import nunjucksAdapter from '@frctl/nunjucks';
 const nunj = nunjucksAdapter({
-  filters: {
-    shorten: function(str, count) {
-      return str.slice(0, count || 5);
-    }
-  }
+    filters: {
+        shorten: function (str, count) {
+            return str.slice(0, count || 5);
+        },
+    },
 });
 ```
 
@@ -81,7 +79,7 @@ However, if you wish to include (or extend) non-component templates, you can als
 ```javascript
 import nunjucksAdapter from '@frctl/nunjucks';
 const nunj = nunjucksAdapter({
-  paths: ["path/to/files"]
+    paths: ['path/to/files'],
 });
 ```
 

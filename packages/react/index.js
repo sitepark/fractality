@@ -1,3 +1,3 @@
 'use strict';
-import ReactAdapter from "./src/adapter.js";
+import ReactAdapter from './src/adapter.js';
 export default ReactAdapter;

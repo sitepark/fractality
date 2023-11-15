@@ -3,17 +3,22 @@
 An adapter to let you use React templates with Fractal. Not supported for docs.
 
 ## Installation
+
 ```
 npm install @frctl/react --save-dev
 ```
 
 ## Usage
+
 Require the adapter in your Fractal configuration file:
+
 ```js
 // Import the adapter factory:
 import createReactAdapter from '@frctl/react';
 // Create the adapter instance:
-const reactAdapter = createReactAdapter({/* options */});
+const reactAdapter = createReactAdapter({
+    /* options */
+});
 // Register the adapter as engine:
 fractal.components.engine(reactAdapter);
 ```
@@ -26,21 +31,19 @@ The adapter exposes a React Context Provider component called PathProvider to al
 import { PathProvider, PathContext, usePath } from '@frctl/react/components';
 
 const Button = (props) => {
-  // use via useContext hook
-  const path = React.useContext(PathContext);
-  // use via provided hook
-  const hookPath = usePath();
+    // use via useContext hook
+    const path = React.useContext(PathContext);
+    // use via provided hook
+    const hookPath = usePath();
 
-  return (
-    <>
-      {path.get('/path/to/asset.png')}
-      {hookPath.get('/path/to/asset.png')}
-      {/* use via consumer component */}
-      <PathContext.Consumer>
-        {(consumerPath) => consumerPath.get('/path/to/asset.png')}
-      </PathContext.Consumer>
-    </>
-  )
+    return (
+        <>
+            {path.get('/path/to/asset.png')}
+            {hookPath.get('/path/to/asset.png')}
+            {/* use via consumer component */}
+            <PathContext.Consumer>{(consumerPath) => consumerPath.get('/path/to/asset.png')}</PathContext.Consumer>
+        </>
+    );
 };
 ```
 
@@ -58,8 +61,8 @@ Specify which method to use for rendering your components. Note that preview lay
 
 ```js
 const reactAdapter = createReactAdapter({
-  // default is 'renderToString'
-  renderMethod: 'renderToStaticMarkup',
+    // default is 'renderToString'
+    renderMethod: 'renderToStaticMarkup',
 });
 ```
 
@@ -69,8 +72,8 @@ Enable/disable server side rendering of components.
 
 ```js
 const reactAdapter = createReactAdapter({
-  // default is true
-  ssr: false,
+    // default is true
+    ssr: false,
 });
 ```
 
@@ -79,10 +82,10 @@ You can force server-side rendering on specific components by setting `meta.ssr`
 ```js
 // icon.config.js
 module.exports = {
-  meta: {
-    ssr: true,
-  }
-}
+    meta: {
+        ssr: true,
+    },
+};
 ```
 
 ### wrapperElements
@@ -96,36 +99,37 @@ Note you need to do the same wrapping when hydrating the component client-side.
 ```js
 import SomeComponent from 'some-react-component';
 const reactAdapter = createReactAdapter({
-  // default is []
-  wrapperElements: [
-    {
-      component: SomeComponent,
-      props: {
-        some: 'prop',
-        yin: 'yang',
-      },
-    },
-    {
-      component: '@fractal-component',
-      props: {
-        some: 'prop',
-        yin: 'yang',
-      },
-    },
-  ],
+    // default is []
+    wrapperElements: [
+        {
+            component: SomeComponent,
+            props: {
+                some: 'prop',
+                yin: 'yang',
+            },
+        },
+        {
+            component: '@fractal-component',
+            props: {
+                some: 'prop',
+                yin: 'yang',
+            },
+        },
+    ],
 });
 ```
 
 ### babelOptions
 
 Override babel configuration, for example, to use TypeScript components. Babel is used for parsing component templates.
+
 ```js
 import SomeComponent from 'some-react-component';
 const reactAdapter = createReactAdapter({
-  // default is { presets: ['@babel/preset-react', '@babel/preset-env'] }
-  babelOptions: {
-    presets: ['@babel/preset-react', '@babel/preset-env', '@babel/preset-typescript'],
-    extensions: ['.js', '.jsx', '.ts', '.tsx'],
-  },
+    // default is { presets: ['@babel/preset-react', '@babel/preset-env'] }
+    babelOptions: {
+        presets: ['@babel/preset-react', '@babel/preset-env', '@babel/preset-typescript'],
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+    },
 });
 ```

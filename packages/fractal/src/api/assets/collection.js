@@ -1,6 +1,6 @@
 'use strict';
 
-import FileCollection from "../files/collection.js";
+import FileCollection from '../files/collection.js';
 
 export default class AssetCollection extends FileCollection {
     constructor(config, items) {
@@ -17,4 +17,4 @@ export default class AssetCollection extends FileCollection {
             .map((asset) => asset.toVinyl())
             .toArray();
     }
-};
+}

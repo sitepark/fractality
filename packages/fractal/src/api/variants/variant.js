@@ -1,9 +1,8 @@
 'use strict';
 
-
-import { entities, utils } from "@frctl/core";
-import _ from "lodash";
-import Path from "path";
+import { entities, utils } from '@frctl/core';
+import _ from 'lodash';
+import Path from 'path';
 
 const Entity = entities.Entity;
 
@@ -98,7 +97,7 @@ export default class Variant extends Entity {
             {
                 preview: preview,
                 collate: collate,
-            }
+            },
         );
     }
 
@@ -179,4 +178,4 @@ export default class Variant extends Entity {
         parent.source.emit('variant:created', variant);
         return variant;
     }
-};
+}

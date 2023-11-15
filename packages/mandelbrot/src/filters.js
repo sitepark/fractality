@@ -1,7 +1,7 @@
 'use strict';
 
-import _ from "lodash";
-import Path from "path";
+import _ from 'lodash';
+import Path from 'path';
 
 export default function (theme, env, app) {
     env.engine.addFilter('url', function (item) {
@@ -39,13 +39,14 @@ export default function (theme, env, app) {
 
         return beautifyHTML(str, beautifyOptions);
         */
-       return str;
+        return str;
     });
 
     env.engine.addFilter('resourceUrl', function (str) {
-        return `/${app.web.get(
-            'assets.mount'
-        )}/components/${Path.relative(Path.resolve(app.components.get('path')), Path.resolve(str))}`;
+        return `/${app.web.get('assets.mount')}/components/${Path.relative(
+            Path.resolve(app.components.get('path')),
+            Path.resolve(str),
+        )}`;
     });
 
     env.engine.addFilter('componentPath', function (str) {
@@ -53,8 +54,8 @@ export default function (theme, env, app) {
             process.cwd(),
             Path.join(
                 app.components.get('path'),
-                Path.relative(Path.resolve(app.components.get('path')), Path.resolve(str))
-            )
+                Path.relative(Path.resolve(app.components.get('path')), Path.resolve(str)),
+            ),
         );
     });
 
@@ -109,4 +110,4 @@ export default function (theme, env, app) {
 
         return `${parseInt(r, 16)}, ${parseInt(g, 16)}, ${parseInt(b, 16)}`;
     });
-};
+}

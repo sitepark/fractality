@@ -1,13 +1,13 @@
 'use strict';
 
-import _ from "lodash";
-import nunjucks from "nunjucks";
-import path from "path";
-import fs from "fs";
-import { Adapter } from "@frctl/core";
-import extensions from "./extensions/index.js";
-import filters from "./filters/index.js";
-import { AsyncNunjucksEnvironment } from "./AsyncNunjucksEnvironment.js";
+import _ from 'lodash';
+import nunjucks from 'nunjucks';
+import path from 'path';
+import fs from 'fs';
+import { Adapter } from '@frctl/core';
+import extensions from './extensions/index.js';
+import filters from './filters/index.js';
+import { AsyncNunjucksEnvironment } from './AsyncNunjucksEnvironment.js';
 
 class NunjucksAdapter extends Adapter {
     constructor(source, config, app) {
@@ -140,4 +140,4 @@ export default function (config) {
             return adapter;
         },
     };
-};
+}

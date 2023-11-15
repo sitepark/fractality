@@ -1,6 +1,6 @@
-import { renderTag } from "@frctl/adapter-tests";
+import { renderTag } from '@frctl/adapter-tests';
 
-import fractal from "../../fractal.config.js";
+import fractal from '../../fractal.config.js';
 
 describe('render-tag', () => {
     beforeEach(async () => {

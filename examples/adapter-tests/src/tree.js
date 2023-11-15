@@ -12,4 +12,4 @@ export default function tree(fractal) {
     it('overrides context from parents and pass it further down', () => {
         expect(fractal.components.find('@subtree-leaf').context.level).toBe(2);
     });
-};
+}

@@ -1,9 +1,9 @@
-import mockArgv from "mock-argv";
-import mock from "mock-fs";
+import mockArgv from 'mock-argv';
+import mock from 'mock-fs';
 
-import * as utils from "../src/utils";
-import { describe } from "vitest";
-import { beforeEach } from "vitest";
+import * as utils from '../src/utils';
+import { describe } from 'vitest';
+import { beforeEach } from 'vitest';
 
 describe('Utils', () => {
     describe('.lang()', () => {
@@ -150,7 +150,7 @@ describe('Utils', () => {
 
         it('Merges the contents of arrays', () => {
             expect(utils.mergeProp(['one', 'two'], ['one', 'three', 'four'])).toEqual(
-                expect.arrayContaining(['one', 'two', 'three', 'four'])
+                expect.arrayContaining(['one', 'two', 'three', 'four']),
             );
         });
 
@@ -163,8 +163,8 @@ describe('Utils', () => {
             expect(
                 utils.mergeProp(
                     { one: 'one', nested: { three: 'three' } },
-                    { two: 'zwei', nested: { three: 'drei', four: 'vier' } }
-                )
+                    { two: 'zwei', nested: { three: 'drei', four: 'vier' } },
+                ),
             ).toEqual({ one: 'one', two: 'zwei', nested: { three: 'three', four: 'vier' } });
         });
 
@@ -360,19 +360,19 @@ describe('Utils', () => {
                 return new Promise((resolve) => {
                     setTimeout(() => {
                         resolve(value);
-                    }, time)
-                })
-            }
+                    }, time);
+                });
+            };
             const resolved = await utils.awaitProps({
-                a: wait("A", 75),
-                b: wait("B", 50),
-                c: wait("C", 100)
+                a: wait('A', 75),
+                b: wait('B', 50),
+                c: wait('C', 100),
             });
-            expect(resolved.a).toEqual("A");
-            expect(resolved.b).toEqual("B");
-            expect(resolved.c).toEqual("C");
-        })
-    })
+            expect(resolved.a).toEqual('A');
+            expect(resolved.b).toEqual('B');
+            expect(resolved.c).toEqual('C');
+        });
+    });
 });
 
 class MyClass {

@@ -1,11 +1,11 @@
 'use strict';
 
-import { data as Data, entities, utils } from "@frctl/core";
-import _ from "lodash";
-import Path from "path";
-import Asset from "../assets/asset.js";
-import AssetCollection from "../assets/collection.js";
-import VariantCollection from "../variants/collection.js";
+import { data as Data, entities, utils } from '@frctl/core';
+import _ from 'lodash';
+import Path from 'path';
+import Asset from '../assets/asset.js';
+import AssetCollection from '../assets/collection.js';
+import VariantCollection from '../variants/collection.js';
 const Entity = entities.Entity;
 
 export default class Component extends Entity {
@@ -86,7 +86,7 @@ export default class Component extends Entity {
             {
                 preview: preview,
                 collate: collate,
-            }
+            },
         );
     }
 
@@ -123,7 +123,7 @@ export default class Component extends Entity {
                             label: group.label,
                             title: group.label,
                         },
-                        items
+                        items,
                     );
                     collections.push(files);
                 }
@@ -133,7 +133,7 @@ export default class Component extends Entity {
                     name: 'resources',
                     label: 'Resources',
                 },
-                collections
+                collections,
             );
         }
         return this._resourceCollections;
@@ -178,7 +178,7 @@ export default class Component extends Entity {
         return self;
     }
 
-    static async  create(config, files, resources, parent) {
+    static async create(config, files, resources, parent) {
         parent.source.emit('component:beforeCreate', config, files, resources, parent);
         config.raw = files.config ? await Data.readFile(files.config.path) : null;
         const comp = new Component(config, files, resources, parent);
@@ -188,10 +188,10 @@ export default class Component extends Entity {
             config.variants,
             files.varViews,
             files.varReadmes,
-            config
+            config,
         );
         comp.setVariants(variants);
         parent.source.emit('component:created', comp);
         return comp;
     }
-};
+}

@@ -1,9 +1,9 @@
 'use strict';
 
-import { Log, entities, utils } from "@frctl/core";
-import _ from "lodash";
-import Path from "path";
-import Variant from "./variant.js";
+import { Log, entities, utils } from '@frctl/core';
+import _ from 'lodash';
+import Path from 'path';
+import Variant from './variant.js';
 const EntityCollection = entities.Collection;
 
 export default class VariantCollection extends EntityCollection {
@@ -24,7 +24,7 @@ export default class VariantCollection extends EntityCollection {
                 return variant.getContent().then((content) => {
                     return `<!-- ${variant.label} -->\n${content.trim()}\n`;
                 });
-            })
+            }),
         ).then((contents) => contents.join('\n'));
     }
 
@@ -91,7 +91,7 @@ export default class VariantCollection extends EntityCollection {
 
         function findReadme(name) {
             const readmeName = `${opts.viewName}${source.get('splitter')}${name}.${source.get(
-                'files.notes'
+                'files.notes',
             )}.md`.toLowerCase();
 
             return _.find(readmes, (f) => f.name.toLowerCase() === readmeName);
@@ -113,42 +113,41 @@ export default class VariantCollection extends EntityCollection {
                     },
                     defaultView,
                     resources,
-                    component
-                )
+                    component,
+                ),
             );
         }
 
         const configuredVars = configured.map((conf, i) => {
-                let viewFile = null;
-                if (_.isUndefined(conf.name)) {
-                    Log.error(`Could not create variant of ${component.handle} - 'name' value is missing`);
-                    return null;
-                }
-                conf.name = utils.slugify(conf.name.toLowerCase());
-
-                const p = _.defaults(conf, {
-                    dir: opts.dir,
-                    parent: component,
-                });
-                if (!p.view) {
-                    // no view file specified
-                    const viewName = `${opts.viewName}${source.get('splitter')}${p.name}`.toLowerCase();
-                    viewFile = _.find(views, (f) => f.name.toLowerCase() === viewName.toLowerCase());
-                    p.view = viewFile ? viewFile.base : opts.view;
-                } else {
-                    viewFile = _.find(views, (f) => f.base.toLowerCase() === p.view.toLowerCase());
-                }
-                viewFile = viewFile || defaultView;
-                p.isDefault = p.name === component.defaultName;
-                p.order = conf.order || p.isDefault ? 1 : i + (hasDefaultConfigured ? 1 : 2);
-                p.viewPath = Path.join(p.dir, p.view);
-                p.handle = `${component.handle}${source.get('splitter')}${p.name}`.toLowerCase();
-                p.isHidden = _.isUndefined(conf.hidden) ? viewFile.isHidden : conf.hidden;
-                p.readme = findReadme(p.name);
-
-                return Variant.create(p, viewFile, resources.filter(isRelated(p.handle)), component);
+            let viewFile = null;
+            if (_.isUndefined(conf.name)) {
+                Log.error(`Could not create variant of ${component.handle} - 'name' value is missing`);
+                return null;
             }
-        );
+            conf.name = utils.slugify(conf.name.toLowerCase());
+
+            const p = _.defaults(conf, {
+                dir: opts.dir,
+                parent: component,
+            });
+            if (!p.view) {
+                // no view file specified
+                const viewName = `${opts.viewName}${source.get('splitter')}${p.name}`.toLowerCase();
+                viewFile = _.find(views, (f) => f.name.toLowerCase() === viewName.toLowerCase());
+                p.view = viewFile ? viewFile.base : opts.view;
+            } else {
+                viewFile = _.find(views, (f) => f.base.toLowerCase() === p.view.toLowerCase());
+            }
+            viewFile = viewFile || defaultView;
+            p.isDefault = p.name === component.defaultName;
+            p.order = conf.order || p.isDefault ? 1 : i + (hasDefaultConfigured ? 1 : 2);
+            p.viewPath = Path.join(p.dir, p.view);
+            p.handle = `${component.handle}${source.get('splitter')}${p.name}`.toLowerCase();
+            p.isHidden = _.isUndefined(conf.hidden) ? viewFile.isHidden : conf.hidden;
+            p.readme = findReadme(p.name);
+
+            return Variant.create(p, viewFile, resources.filter(isRelated(p.handle)), component);
+        });
 
         variants = variants.concat(configuredVars);
 
@@ -176,7 +175,7 @@ export default class VariantCollection extends EntityCollection {
                 name: `${component.name}-variants`,
             },
             _.orderBy(variants, ['order', 'name']),
-            component
+            component,
         );
     }
-};
+}

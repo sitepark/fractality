@@ -1,7 +1,7 @@
 'use strict';
 
-import _ from "lodash";
-import chalk from "chalk";
+import _ from 'lodash';
+import chalk from 'chalk';
 
 export default class Theme {
     constructor(config) {
@@ -75,4 +75,4 @@ export default class Theme {
         const formatter = this._delimiter.format || ((s) => s);
         return formatter(this._delimiter.text);
     }
-};
+}

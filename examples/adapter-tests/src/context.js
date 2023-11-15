@@ -38,4 +38,4 @@ export default function context(fractal) {
         const ctx = await fractal.components.find('@reference-full').getResolvedContext();
         expect(ctx.reference).toMatchSnapshot();
     });
-};
+}

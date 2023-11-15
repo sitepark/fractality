@@ -1,13 +1,13 @@
 'use strict';
 
-import _ from "lodash";
-import chalk from "chalk";
-import Table from "cli-table3";
-import slog from "log-update";
-import Theme from "./theme.js";
-import defaultTheme from "./themes/default.js";
-import { utils } from "@frctl/core";
-import columnify from "columnify";
+import _ from 'lodash';
+import chalk from 'chalk';
+import Table from 'cli-table3';
+import slog from 'log-update';
+import Theme from './theme.js';
+import defaultTheme from './themes/default.js';
+import { utils } from '@frctl/core';
+import columnify from 'columnify';
 
 class Console {
     constructor(logger) {

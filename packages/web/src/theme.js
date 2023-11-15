@@ -1,8 +1,8 @@
 'use strict';
 
-import _ from "lodash";
-import { pathToRegexp, compile } from "path-to-regexp";
-import { mixins } from "@frctl/core"
+import _ from 'lodash';
+import { pathToRegexp, compile } from 'path-to-regexp';
+import { mixins } from '@frctl/core';
 const mix = mixins.mix;
 const Configurable = mixins.configurable;
 const Emitter = mixins.emitter;
@@ -143,7 +143,7 @@ export default class Theme extends mix(Configurable, Emitter) {
         }
         return null;
     }
-};
+}
 
 function cleanUrlPath(urlPath) {
     return urlPath.replace(/%2F/g, '/');

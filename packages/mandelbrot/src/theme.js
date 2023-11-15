@@ -1,16 +1,15 @@
 'use strict';
 
-import Path from "path";
-import _ from "lodash";
-import { Theme } from "@frctl/web";
-import { URL, fileURLToPath } from "url";
-import filters from "./filters.js"
+import Path from 'path';
+import _ from 'lodash';
+import { Theme } from '@frctl/web';
+import { URL, fileURLToPath } from 'url';
+import filters from './filters.js';
 import fsExtra from 'fs-extra';
 const { readJsonSync } = fsExtra;
 
-
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
-const packageJSON = readJsonSync(__dirname + "../package.json");
+const packageJSON = readJsonSync(__dirname + '../package.json');
 
 export default function (options) {
     const config = _.defaultsDeep(_.clone(options || {}), {
@@ -155,7 +154,7 @@ export default function (options) {
         },
         function (app) {
             return app.assets.visible().map((asset) => ({ name: asset.name }));
-        }
+        },
     );
 
     theme.addRoute(
@@ -164,7 +163,7 @@ export default function (options) {
             handle: 'preview',
             view: 'pages/components/preview.nunj',
         },
-        getHandles
+        getHandles,
     );
 
     theme.addRoute(
@@ -173,7 +172,7 @@ export default function (options) {
             handle: 'render',
             view: 'pages/components/render.nunj',
         },
-        getHandles
+        getHandles,
     );
 
     theme.addRoute(
@@ -182,7 +181,7 @@ export default function (options) {
             handle: 'component',
             view: 'pages/components/detail.nunj',
         },
-        getHandles
+        getHandles,
     );
 
     theme.addRoute(
@@ -197,7 +196,7 @@ export default function (options) {
                 throw new Error('Component not found');
             },
         },
-        getResources
+        getResources,
     );
 
     theme.addRoute(
@@ -211,7 +210,7 @@ export default function (options) {
                 .filter((d) => !d.isHidden && d.path !== '')
                 .flatten()
                 .map((page) => ({ path: page.path }));
-        }
+        },
     );
 
     theme.on('init', function (env, app) {
@@ -249,11 +248,11 @@ export default function (options) {
                             handle: comp.handle,
                             asset: res.base,
                         };
-                    })
+                    }),
             );
         });
         return params;
     }
 
     return theme;
-};
+}

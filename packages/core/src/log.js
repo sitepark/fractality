@@ -1,7 +1,7 @@
 'use strict';
 
-import mix from "./mixins/mix.js";
-import Emitter from "./mixins/emitter.js";
+import mix from './mixins/mix.js';
+import Emitter from './mixins/emitter.js';
 
 class Log extends mix(Emitter) {
     log(msg, data) {

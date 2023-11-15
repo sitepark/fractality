@@ -1,10 +1,10 @@
 'use strict';
 
-import _ from "lodash";
-import Path from "path";
-import mix from "./mixins/mix.js";
-import Emitter from "./mixins/emitter.js";
-import * as utils from "./utils.js";
+import _ from 'lodash';
+import Path from 'path';
+import mix from './mixins/mix.js';
+import Emitter from './mixins/emitter.js';
+import * as utils from './utils.js';
 
 export default class Adapter extends mix(Emitter) {
     constructor(engine, source) {
@@ -46,7 +46,7 @@ export default class Adapter extends mix(Emitter) {
         let prefixMatcher = new RegExp(`^${utils.escapeForRegexp(this._handlePrefix)}`);
         return _.find(
             this._views,
-            (view) => view.handle.replace(prefixMatcher, '') === handle.replace(prefixMatcher, '')
+            (view) => view.handle.replace(prefixMatcher, '') === handle.replace(prefixMatcher, ''),
         );
     }
 
@@ -121,4 +121,4 @@ export default class Adapter extends mix(Emitter) {
     render() {
         throw new Error("Template engine adapter classes must provide a 'render' method.");
     }
-};
+}

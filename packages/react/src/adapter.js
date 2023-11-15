@@ -1,16 +1,16 @@
 'use strict';
 
-import _ from "lodash";
-import React from "react";
+import _ from 'lodash';
+import React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 
-import { Adapter, utils } from "@frctl/core";
+import { Adapter, utils } from '@frctl/core';
 
-import PathProvider from "../components/path-provider.js";
-import clearModule from "./clear-module.js";
+import PathProvider from '../components/path-provider.js';
+import clearModule from './clear-module.js';
 
-import registerBabel from "@babel/register";
-import importSync from "import-sync";
+import registerBabel from '@babel/register';
+import importSync from 'import-sync';
 
 /*
  * React Adapter
@@ -132,7 +132,7 @@ class ReactAdapter extends Adapter {
         return utils.relUrlPath(
             assetPath,
             _.get(root.env.request || root.request, 'path', '/'),
-            fractal.web.get('builder.urls')
+            fractal.web.get('builder.urls'),
         );
     }
 }
@@ -172,7 +172,7 @@ export default function (config = {}) {
             return new ReactAdapter(source, app, options);
         },
     };
-};
+}
 
 const requireModule = (path) => {
     let component = importSync(path);

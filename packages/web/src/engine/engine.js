@@ -1,11 +1,11 @@
 'use strict';
 
-import Path from "path";
-import nunjucks from "nunjucks";
-import _ from "lodash";
-import WebError from "../error.js";
-import { URL, fileURLToPath } from "url";
-import { AsyncNunjucksEnvironment } from "../AsyncNunjucksEnvironment.js";
+import Path from 'path';
+import nunjucks from 'nunjucks';
+import _ from 'lodash';
+import WebError from '../error.js';
+import { URL, fileURLToPath } from 'url';
+import { AsyncNunjucksEnvironment } from '../AsyncNunjucksEnvironment.js';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
@@ -108,4 +108,4 @@ export default class Engine {
         this._engine.addGlobal('frctl', this._globals);
         return this._engine.renderStringAsync(str, context || {});
     }
-};
+}

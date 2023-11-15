@@ -1,8 +1,8 @@
 'use strict';
 
-import { utils } from "@frctl/core";
-import Handlebars from "handlebars";
-import _ from "lodash";
+import { utils } from '@frctl/core';
+import Handlebars from 'handlebars';
+import _ from 'lodash';
 
 export default function (fractal) {
     return function staticPath(path) {
@@ -17,7 +17,7 @@ export default function (fractal) {
             let context = _.defaults(
                 {},
                 this,
-                _.pickBy(root, (item, key) => key.startsWith('_'))
+                _.pickBy(root, (item, key) => key.startsWith('_')),
             );
             const tpl = Handlebars.compile(path, {
                 data: false,
@@ -32,7 +32,7 @@ export default function (fractal) {
         return utils.relUrlPath(
             path,
             _.get(root._env.request || root._request, 'path', '/'),
-            fractal.web.get('builder.urls')
+            fractal.web.get('builder.urls'),
         );
     };
-};
+}

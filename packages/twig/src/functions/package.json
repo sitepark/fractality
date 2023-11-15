@@ -1,4 +1,4 @@
 {
-    "main": "index.js",
-    "type": "module"
+  "main": "index.js",
+  "type": "module"
 }

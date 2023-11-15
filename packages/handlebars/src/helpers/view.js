@@ -1,6 +1,6 @@
 'use strict';
 
-import Handlebars from "handlebars";
+import Handlebars from 'handlebars';
 
 export default function (fractal) {
     return function view(handle) {
@@ -14,4 +14,4 @@ export default function (fractal) {
         }
         return entity.getContent().then((content) => new Handlebars.SafeString(content));
     };
-};
+}

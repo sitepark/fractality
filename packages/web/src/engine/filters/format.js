@@ -1,7 +1,7 @@
 'use strict';
 
-import _ from "lodash";
-import yaml from "js-yaml";
+import _ from 'lodash';
+import yaml from 'js-yaml';
 
 export default function () {
     return {
@@ -23,4 +23,4 @@ export default function () {
             throw new Error(`Unknown format: ${format}`);
         },
     };
-};
+}

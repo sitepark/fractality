@@ -18,4 +18,4 @@ export default function notes(fractal) {
         const cmp = await fractal.components.find('@notes-files--alt');
         expect(cmp.notes).toBe('Component Notes for variant\n');
     });
-};
+}

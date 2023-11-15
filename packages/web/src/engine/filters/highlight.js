@@ -5,4 +5,4 @@ export default function (app) {
         name: 'highlight',
         filter: (str, lang) => app.get('web.highlighter')(str, lang),
     };
-};
+}

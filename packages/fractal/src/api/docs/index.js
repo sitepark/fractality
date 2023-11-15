@@ -1,2 +1,2 @@
-import Source from "./source.js";
+import Source from './source.js';
 export default Source;

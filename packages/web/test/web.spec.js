@@ -1,6 +1,6 @@
-import { create } from "../../fractal/src/fractal";
+import { create } from '../../fractal/src/fractal';
 
-import Web from "../src/web";
+import Web from '../src/web';
 
 describe('Web', () => {
     let web;

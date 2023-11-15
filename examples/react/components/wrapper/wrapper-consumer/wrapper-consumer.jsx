@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import { WrapperContext } from "../wrapper-provider/wrapper-provider.jsx";
+import { WrapperContext } from '../wrapper-provider/wrapper-provider.jsx';
 
 const WrapperConsumer = () => {
     const { getValue } = React.useContext(WrapperContext);

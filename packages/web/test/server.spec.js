@@ -1,8 +1,8 @@
-import app from "../../fractal/src/fractal";
+import app from '../../fractal/src/fractal';
 
-import Theme from "../src/theme";
+import Theme from '../src/theme';
 
-import Server from "../src/server";
+import Server from '../src/server';
 
 describe('Server', () => {
     let server;

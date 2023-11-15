@@ -1,6 +1,6 @@
-import { collated } from "@frctl/adapter-tests";
+import { collated } from '@frctl/adapter-tests';
 
-import fractal from "../../fractal.config.js";
+import fractal from '../../fractal.config.js';
 
 describe('collated', () => {
     beforeEach(async () => {

@@ -1,7 +1,7 @@
 'use strict';
 
-import { PromiseStream as Stream, mixins } from "@frctl/core";
-import anymatch from "anymatch";
+import { PromiseStream as Stream, mixins } from '@frctl/core';
+import anymatch from 'anymatch';
 const mix = mixins.mix;
 const Collection = mixins.collection;
 
@@ -60,4 +60,4 @@ export default class FileCollection extends mix(Collection) {
         self.name = this.name || null;
         return self;
     }
-};
+}

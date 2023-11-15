@@ -1,6 +1,6 @@
-import { components } from "@frctl/adapter-tests";
+import { components } from '@frctl/adapter-tests';
 
-import fractal from "../fractal.config.js";
+import fractal from '../fractal.config.js';
 
 describe('components', () => {
     beforeEach(async () => {

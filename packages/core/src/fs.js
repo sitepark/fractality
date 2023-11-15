@@ -1,11 +1,11 @@
 'use strict';
 
-import { isBinary } from "istextorbinary";
-import Path from "path";
-import _ from "lodash";
-import fs from "fs-extra";
-import * as utils from "./utils.js";
-import { globbySync } from "globby";
+import { isBinary } from 'istextorbinary';
+import Path from 'path';
+import _ from 'lodash';
+import fs from 'fs-extra';
+import * as utils from './utils.js';
+import { globbySync } from 'globby';
 
 export default {
     describe(dir, relDir, filter, ext) {

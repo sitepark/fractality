@@ -1,5 +1,5 @@
 'use strict';
-import { entities } from "@frctl/core";
+import { entities } from '@frctl/core';
 const EntityCollection = entities.Collection;
 
 export default class DocCollection extends EntityCollection {
@@ -10,4 +10,4 @@ export default class DocCollection extends EntityCollection {
     pages() {
         return super.entities();
     }
-};
+}

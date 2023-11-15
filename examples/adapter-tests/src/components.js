@@ -12,4 +12,4 @@ export default function components(fractal) {
     it('properly loads variants from config', () => {
         expect(fractal.components.find('@tree-leaf--another')).toBeDefined();
     });
-};
+}

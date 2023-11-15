@@ -1,6 +1,6 @@
 'use strict';
 
-import Handlebars from "handlebars";
+import Handlebars from 'handlebars';
 
 export default function (fractal) {
     return function context(handle) {
@@ -12,4 +12,4 @@ export default function (fractal) {
         const context = entity.isComponent ? entity.variants().default().getContext() : entity.getContext();
         return new Handlebars.SafeString(JSON.stringify(context, null, 4));
     };
-};
+}

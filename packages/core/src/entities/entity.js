@@ -1,9 +1,9 @@
 'use strict';
 
-import _ from "lodash";
-import EntityMixin from "../mixins/entity.js";
-import Heritable from "../mixins/heritable.js";
-import mix from "../mixins/mix.js";
+import _ from 'lodash';
+import EntityMixin from '../mixins/entity.js';
+import Heritable from '../mixins/heritable.js';
+import mix from '../mixins/mix.js';
 
 export default class Entity extends mix(Heritable, EntityMixin) {
     constructor(name, config, parent) {
@@ -58,4 +58,4 @@ export default class Entity extends mix(Heritable, EntityMixin) {
             });
         }
     }
-};
+}

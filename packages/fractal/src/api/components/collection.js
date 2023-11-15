@@ -19,4 +19,4 @@ export default class ComponentCollection extends EntityCollection {
     variants() {
         return this.source.variants.apply(this, arguments);
     }
-};
+}

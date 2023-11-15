@@ -1,7 +1,7 @@
 'use strict';
 
-import _ from "lodash";
-import { Mixin as mixin } from "mixwith";
+import _ from 'lodash';
+import { Mixin as mixin } from 'mixwith';
 
 export default mixin(
     (superclass) =>
@@ -31,5 +31,5 @@ export default mixin(
                 }
                 return _.get(this._config, config, defaultVal || undefined);
             }
-        }
+        },
 );

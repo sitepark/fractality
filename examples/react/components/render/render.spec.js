@@ -1,6 +1,6 @@
-import { render } from "@frctl/adapter-tests";
+import { render } from '@frctl/adapter-tests';
 
-import fractal from "../../fractal.config.js";
+import fractal from '../../fractal.config.js';
 import frctlReact from '@frctl/react';
 
 describe('render', () => {

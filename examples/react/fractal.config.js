@@ -3,8 +3,8 @@
 import create from '@frctl/fractal';
 import mandelbrot from '@frctl/mandelbrot';
 import path from 'path';
-import { URL, fileURLToPath } from "url";
-import createReactAdapter from "@frctl/react";
+import { URL, fileURLToPath } from 'url';
+import createReactAdapter from '@frctl/react';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const fractal = create();
@@ -51,4 +51,4 @@ const customTheme = mandelbrot({
 
 fractal.web.theme(customTheme);
 
-export default fractal
+export default fractal;

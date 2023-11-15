@@ -15,4 +15,4 @@ export default class WebError extends Error {
             this.stack = new Error(message).stack;
         }
     }
-};
+}

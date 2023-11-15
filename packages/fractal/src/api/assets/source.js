@@ -1,8 +1,8 @@
 'use strict';
 
-import { PromiseStream as Stream, fs, mixins } from "@frctl/core";
-import Asset from "./asset.js";
-import AssetCollection from "./collection.js";
+import { PromiseStream as Stream, fs, mixins } from '@frctl/core';
+import Asset from './asset.js';
+import AssetCollection from './collection.js';
 const mix = mixins.mix;
 const Source = mixins.source;
 
@@ -77,4 +77,4 @@ export default class AssetSource extends mix(Source) {
         }
         this.setItems(convert(fileTree.children));
     }
-};
+}

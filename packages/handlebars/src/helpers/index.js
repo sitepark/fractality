@@ -13,4 +13,4 @@ export default function (fractal) {
         view: view(fractal),
         path: path(fractal),
     };
-};
+}

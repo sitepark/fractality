@@ -32,4 +32,4 @@ export default function renderTag(fractal) {
         const render = await fractal.components.find('@render-tag-comp-2--escaped-handle').render();
         expect(render).toBe('@render-tag-comp-1\n\n');
     });
-};
+}

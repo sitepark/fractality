@@ -7,105 +7,53 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package @frctl/nunjucks
 
-
-
-
-
 ## [2.0.14](https://github.com/frctl/fractal/compare/@frctl/nunjucks@2.0.13...@frctl/nunjucks@2.0.14) (2022-01-26)
 
 **Note:** Version bump only for package @frctl/nunjucks
-
-
-
-
 
 ## [2.0.13](https://github.com/frctl/fractal/compare/@frctl/nunjucks@2.0.12...@frctl/nunjucks@2.0.13) (2021-07-20)
 
 **Note:** Version bump only for package @frctl/nunjucks
 
-
-
-
-
 ## [2.0.12](https://github.com/frctl/fractal/compare/@frctl/nunjucks@2.0.11...@frctl/nunjucks@2.0.12) (2021-07-19)
 
 **Note:** Version bump only for package @frctl/nunjucks
-
-
-
-
 
 ## [2.0.11](https://github.com/frctl/fractal/compare/@frctl/nunjucks@2.0.10...@frctl/nunjucks@2.0.11) (2021-05-20)
 
 **Note:** Version bump only for package @frctl/nunjucks
 
-
-
-
-
 ## [2.0.10](https://github.com/frctl/fractal/compare/@frctl/nunjucks@2.0.9...@frctl/nunjucks@2.0.10) (2021-03-23)
 
 **Note:** Version bump only for package @frctl/nunjucks
-
-
-
-
 
 ## [2.0.9](https://github.com/frctl/fractal/compare/@frctl/nunjucks@2.0.8...@frctl/nunjucks@2.0.9) (2021-03-20)
 
 **Note:** Version bump only for package @frctl/nunjucks
 
-
-
-
-
 ## [2.0.8](https://github.com/frctl/fractal/compare/@frctl/nunjucks@2.0.7...@frctl/nunjucks@2.0.8) (2021-02-14)
 
 **Note:** Version bump only for package @frctl/nunjucks
-
-
-
-
 
 ## [2.0.7](https://github.com/frctl/fractal/compare/@frctl/nunjucks@2.0.6...@frctl/nunjucks@2.0.7) (2021-02-07)
 
 **Note:** Version bump only for package @frctl/nunjucks
 
-
-
-
-
 ## [2.0.6](https://github.com/frctl/fractal/compare/@frctl/nunjucks@2.0.5...@frctl/nunjucks@2.0.6) (2020-12-22)
 
 **Note:** Version bump only for package @frctl/nunjucks
-
-
-
-
 
 ## [2.0.5](https://github.com/frctl/fractal/compare/@frctl/nunjucks@2.0.4...@frctl/nunjucks@2.0.5) (2020-11-03)
 
 **Note:** Version bump only for package @frctl/nunjucks
 
-
-
-
-
 ## [2.0.4](https://github.com/frctl/fractal/compare/@frctl/nunjucks@2.0.3...@frctl/nunjucks@2.0.4) (2020-10-19)
 
 **Note:** Version bump only for package @frctl/nunjucks
 
-
-
-
-
 ## [2.0.3](https://github.com/frctl/fractal/compare/@frctl/nunjucks@2.0.2...@frctl/nunjucks@2.0.3) (2020-10-15)
 
 **Note:** Version bump only for package @frctl/nunjucks
-
-
-
-
 
 ## 2.0.2
 

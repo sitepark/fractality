@@ -1,14 +1,14 @@
 'use strict';
 
-import _ from "lodash";
+import _ from 'lodash';
 
-import * as utils from "../utils.js";
-import Log from "../log.js";
-import Data from "../data.js";
-import Adapter from "../adapter.js";
-import mix from "../mixins/mix.js";
-import Source from "../mixins/source.js";
-import Heritable from "../mixins/heritable.js";
+import * as utils from '../utils.js';
+import Log from '../log.js';
+import Data from '../data.js';
+import Adapter from '../adapter.js';
+import mix from '../mixins/mix.js';
+import Source from '../mixins/source.js';
+import Heritable from '../mixins/heritable.js';
 
 export default class EntitySource extends mix(Source, Heritable) {
     constructor(name, app) {
@@ -44,7 +44,7 @@ export default class EntitySource extends mix(Source, Heritable) {
         }
         if (!_.isFunction(adapter.register)) {
             throw new Error(
-                "Template engine adaptor factory functions must return an object with a 'register' method."
+                "Template engine adaptor factory functions must return an object with a 'register' method.",
             );
         }
         const engine = adapter.register(this, this._app);
@@ -107,4 +107,4 @@ export default class EntitySource extends mix(Source, Heritable) {
                 return defaults;
             });
     }
-};
+}

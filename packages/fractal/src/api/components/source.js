@@ -1,14 +1,14 @@
 'use strict';
 
-import { Log, entities, fs as frfs, resolver } from "@frctl/core";
-import anymatch from "anymatch";
-import fs from "fs-extra";
-import _ from "lodash";
-import Path from "path";
-import FileCollection from "../files/collection.js";
-import File from "../files/file.js";
-import ComponentCollection from "./collection.js";
-import Component from "./component.js";
+import { Log, entities, fs as frfs, resolver } from '@frctl/core';
+import anymatch from 'anymatch';
+import fs from 'fs-extra';
+import _ from 'lodash';
+import Path from 'path';
+import FileCollection from '../files/collection.js';
+import File from '../files/file.js';
+import ComponentCollection from './collection.js';
+import Component from './component.js';
 const EntitySource = entities.Source;
 
 export default class ComponentSource extends EntitySource {
@@ -155,7 +155,6 @@ export default class ComponentSource extends EntitySource {
 
         const self = this;
 
-
         if (!entity) {
             return Promise.reject(null);
         }
@@ -212,18 +211,20 @@ export default class ComponentSource extends EntitySource {
 
     async _renderCollatedComponent(component, env) {
         const target = component.toJSON();
-        const items = await Promise.all(component
-            .variants()
-            .filter('isHidden', false)
-            .toArray()
-            .map((variant) => {
-                return this.render(variant, variant.getContext(), env).then((markup) => {
-                    return {
-                        markup: markup.trim(),
-                        item: variant.toJSON(),
-                    };
-                });
-            }));
+        const items = await Promise.all(
+            component
+                .variants()
+                .filter('isHidden', false)
+                .toArray()
+                .map((variant) => {
+                    return this.render(variant, variant.getContext(), env).then((markup) => {
+                        return {
+                            markup: markup.trim(),
+                            item: variant.toJSON(),
+                        };
+                    });
+                }),
+        );
 
         if (!component.collator) {
             return items.map((i) => i.markup).join('\n');
@@ -368,7 +369,7 @@ export default class ComponentSource extends EntitySource {
                 `!**/*.${this.get('files.config')}.${this.get('ext')}`,
                 `!**/${this.get('files.config')}.{js,mjs,cjs,json,yaml,yml}`,
             ],
-            this._getPath(file)
+            this._getPath(file),
         );
     }
 
@@ -383,7 +384,7 @@ export default class ComponentSource extends EntitySource {
                 `**/*.${this.get('files.notes')}.md`,
                 `!**/*${this.get('splitter')}*.${this.get('files.notes')}.md`,
             ],
-            this._getPath(file)
+            this._getPath(file),
         );
     }
 
@@ -394,7 +395,7 @@ export default class ComponentSource extends EntitySource {
     isPreview(file) {
         return anymatch(
             [`**/${this.get('files.preview')}${this.get('ext')}`, `**/_${this.get('files.preview')}${this.get('ext')}`],
-            this._getPath(file)
+            this._getPath(file),
         );
     }
 
@@ -404,7 +405,7 @@ export default class ComponentSource extends EntitySource {
                 `**/${this.get('files.collator')}${this.get('ext')}`,
                 `**/_${this.get('files.collator')}${this.get('ext')}`,
             ],
-            this._getPath(file)
+            this._getPath(file),
         );
     }
 
@@ -419,7 +420,7 @@ export default class ComponentSource extends EntitySource {
                 `!**/${this.get('files.notes')}.md`,
                 `!**/*.${this.get('files.notes')}.md`,
             ],
-            this._getPath(file)
+            this._getPath(file),
         );
     }
 
@@ -463,7 +464,7 @@ export default class ComponentSource extends EntitySource {
             const configFile =
                 _.find(
                     matched.configs,
-                    (f) => f.base.startsWith(`${dir.name}.`) || f.base.startsWith(`_${dir.name}.`)
+                    (f) => f.base.startsWith(`${dir.name}.`) || f.base.startsWith(`_${dir.name}.`),
                 ) || _.find(matched.configs, (f) => /^_?config\./.test(f.base));
             const dirConfig = await EntitySource.getConfig(configFile, dirDefaults);
 
@@ -488,7 +489,7 @@ export default class ComponentSource extends EntitySource {
 
                 const resources = new FileCollection(
                     {},
-                    matched.resources.map((f) => new File(f, source.relPath))
+                    matched.resources.map((f) => new File(f, source.relPath)),
                 );
                 const files = {
                     view: view,
@@ -510,35 +511,37 @@ export default class ComponentSource extends EntitySource {
             }
 
             const collections = await Promise.all(matched.directories.map((item) => build(item, collection)));
-            const components = await Promise.all(matched.views.map((view) => {
-                const nameMatch = view.name;
-                // config files for 'simple' components must have the format component-name.config.ext
-                const configFile = _.find(
-                    matched.configs,
-                    (f) => f.base.startsWith(`${nameMatch}.`) || f.base.startsWith(`_${nameMatch}.`)
-                );
-                const conf = EntitySource.getConfig(configFile, {
-                    name: view.name,
-                    order: view.order,
-                    isHidden: view.isHidden,
-                    view: view.base,
-                    viewName: view.name,
-                    viewPath: view.path,
-                    dir: dir.path,
-                    readme: matchFile(source.isReadme),
-                });
+            const components = await Promise.all(
+                matched.views.map((view) => {
+                    const nameMatch = view.name;
+                    // config files for 'simple' components must have the format component-name.config.ext
+                    const configFile = _.find(
+                        matched.configs,
+                        (f) => f.base.startsWith(`${nameMatch}.`) || f.base.startsWith(`_${nameMatch}.`),
+                    );
+                    const conf = EntitySource.getConfig(configFile, {
+                        name: view.name,
+                        order: view.order,
+                        isHidden: view.isHidden,
+                        view: view.base,
+                        viewName: view.name,
+                        viewPath: view.path,
+                        dir: dir.path,
+                        readme: matchFile(source.isReadme),
+                    });
 
-                return conf.then((c) => {
-                    const files = {
-                        view: view,
-                        varViews: matched.varViews.filter((f) => f.name.startsWith(nameMatch)),
-                        varReadmes: _.filter(matched.varReadmes, (f) => f.name.startsWith(nameMatch)),
-                        config: configFile,
-                    };
-                    const resources = new FileCollection({}, []);
-                    return Component.create(c, files, resources, collection);
-                });
-            }));
+                    return conf.then((c) => {
+                        const files = {
+                            view: view,
+                            varViews: matched.varViews.filter((f) => f.name.startsWith(nameMatch)),
+                            varReadmes: _.filter(matched.varReadmes, (f) => f.name.startsWith(nameMatch)),
+                            config: configFile,
+                        };
+                        const resources = new FileCollection({}, []);
+                        return Component.create(c, files, resources, collection);
+                    });
+                }),
+            );
 
             const items = _.concat(components, collections);
             collection.setItems(_.orderBy(items, ['order', 'name']));
@@ -547,4 +550,4 @@ export default class ComponentSource extends EntitySource {
 
         return build(fileTree);
     }
-};
+}

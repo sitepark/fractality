@@ -4,7 +4,7 @@ import create from '@frctl/fractal';
 import mandelbrot from '@frctl/mandelbrot';
 import nunjucks from '@frctl/nunjucks';
 import path from 'path';
-import { URL, fileURLToPath } from "url";
+import { URL, fileURLToPath } from 'url';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 

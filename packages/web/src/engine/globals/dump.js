@@ -9,4 +9,4 @@ export default function () {
             return preformat ? '<pre>' + output + '</pre>' : output;
         },
     };
-};
+}

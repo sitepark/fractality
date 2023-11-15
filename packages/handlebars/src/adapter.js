@@ -1,12 +1,12 @@
 'use strict';
 
-import { Adapter } from "@frctl/core";
-import Handlebars from "handlebars";
-import _ from "lodash";
-import path from "path";
-import promisedHbs from "promised-handlebars";
-import helpers from "./helpers/index.js"
-import partials from "./partials/index.js"
+import { Adapter } from '@frctl/core';
+import Handlebars from 'handlebars';
+import _ from 'lodash';
+import path from 'path';
+import promisedHbs from 'promised-handlebars';
+import helpers from './helpers/index.js';
+import partials from './partials/index.js';
 
 class HandlebarsAdapter extends Adapter {
     constructor(hbs, source, app) {
@@ -14,13 +14,13 @@ class HandlebarsAdapter extends Adapter {
         this._app = app;
         this.on('view:added', (view) => this.engine.registerPartial(view.handle, view.content));
         this.on('view:added', (view) =>
-            this.engine.registerPartial(path.relative(source.get('path'), view.path), view.content)
+            this.engine.registerPartial(path.relative(source.get('path'), view.path), view.content),
         );
         this.on('view:removed', (view) => this.engine.unregisterPartial(view.handle));
         this.on('view:removed', (view) => this.engine.unregisterPartial(path.relative(source.get('path'), view.path)));
         this.on('view:updated', (view) => this.engine.registerPartial(view.handle, view.content));
         this.on('view:updated', (view) =>
-            this.engine.registerPartial(path.relative(source.get('path'), view.path), view.content)
+            this.engine.registerPartial(path.relative(source.get('path'), view.path), view.content),
         );
     }
 
@@ -98,4 +98,4 @@ export default function (config) {
             return adapter;
         },
     };
-};
+}

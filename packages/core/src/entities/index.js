@@ -5,5 +5,5 @@ import Source from './source.js';
 export default {
     Collection,
     Entity,
-    Source
-}
+    Source,
+};

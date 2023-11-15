@@ -1,9 +1,9 @@
 'use strict';
 
-import Path from "path";
-import matter from "gray-matter";
-import _ from "lodash";
-import { utils, entities } from "@frctl/core";
+import Path from 'path';
+import matter from 'gray-matter';
+import _ from 'lodash';
+import { utils, entities } from '@frctl/core';
 const Entity = entities.Entity;
 
 export default class Doc extends Entity {
@@ -90,4 +90,4 @@ export default class Doc extends Entity {
         self.context = this.context;
         return self;
     }
-};
+}

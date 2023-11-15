@@ -7,176 +7,96 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package @frctl/fractal
 
-
-
-
-
 ## [1.5.14](https://github.com/frctl/fractal/compare/@frctl/fractal@1.5.13...@frctl/fractal@1.5.14) (2022-08-17)
 
 **Note:** Version bump only for package @frctl/fractal
-
-
-
-
 
 ## [1.5.13](https://github.com/frctl/fractal/compare/@frctl/fractal@1.5.12...@frctl/fractal@1.5.13) (2022-02-01)
 
 **Note:** Version bump only for package @frctl/fractal
 
-
-
-
-
 ## [1.5.12](https://github.com/frctl/fractal/compare/@frctl/fractal@1.5.11...@frctl/fractal@1.5.12) (2022-01-26)
-
 
 ### Bug Fixes
 
-* don't lowercase name before titlizing to generate label ([#1081](https://github.com/frctl/fractal/issues/1081)) ([daf5c69](https://github.com/frctl/fractal/commit/daf5c69a455e320f43ccdba830ee46ab40929ad5))
-
-
-
-
+-   don't lowercase name before titlizing to generate label ([#1081](https://github.com/frctl/fractal/issues/1081)) ([daf5c69](https://github.com/frctl/fractal/commit/daf5c69a455e320f43ccdba830ee46ab40929ad5))
 
 ## [1.5.11](https://github.com/frctl/fractal/compare/@frctl/fractal@1.5.10...@frctl/fractal@1.5.11) (2021-07-20)
 
 **Note:** Version bump only for package @frctl/fractal
 
-
-
-
-
 ## [1.5.10](https://github.com/frctl/fractal/compare/@frctl/fractal@1.5.9...@frctl/fractal@1.5.10) (2021-07-19)
-
 
 ### Bug Fixes
 
-* add relative path to component links in static builds ([#1062](https://github.com/frctl/fractal/issues/1062)) ([2f84d3b](https://github.com/frctl/fractal/commit/2f84d3b84498c238d28c2ca1021daf89aff879be))
-
-
-
-
+-   add relative path to component links in static builds ([#1062](https://github.com/frctl/fractal/issues/1062)) ([2f84d3b](https://github.com/frctl/fractal/commit/2f84d3b84498c238d28c2ca1021daf89aff879be))
 
 ## [1.5.9](https://github.com/frctl/fractal/compare/@frctl/fractal@1.5.8...@frctl/fractal@1.5.9) (2021-07-12)
 
-
 ### Bug Fixes
 
-* try to resolve file preview to a component ([#1044](https://github.com/frctl/fractal/issues/1044)) ([f5b915a](https://github.com/frctl/fractal/commit/f5b915a927cbd3261d81609ad8360781c677bb35))
-
-
-
-
+-   try to resolve file preview to a component ([#1044](https://github.com/frctl/fractal/issues/1044)) ([f5b915a](https://github.com/frctl/fractal/commit/f5b915a927cbd3261d81609ad8360781c677bb35))
 
 ## [1.5.8](https://github.com/frctl/fractal/compare/@frctl/fractal@1.5.7...@frctl/fractal@1.5.8) (2021-05-20)
 
 **Note:** Version bump only for package @frctl/fractal
 
-
-
-
-
 ## [1.5.7](https://github.com/frctl/fractal/compare/@frctl/fractal@1.5.6...@frctl/fractal@1.5.7) (2021-05-20)
 
 **Note:** Version bump only for package @frctl/fractal
-
-
-
-
 
 ## [1.5.6](https://github.com/frctl/fractal/compare/@frctl/fractal@1.5.5...@frctl/fractal@1.5.6) (2021-03-23)
 
 **Note:** Version bump only for package @frctl/fractal
 
-
-
-
-
 ## [1.5.5](https://github.com/frctl/fractal/compare/@frctl/fractal@1.5.4...@frctl/fractal@1.5.5) (2021-03-20)
 
 **Note:** Version bump only for package @frctl/fractal
-
-
-
-
 
 ## [1.5.4](https://github.com/frctl/fractal/compare/@frctl/fractal@1.5.3...@frctl/fractal@1.5.4) (2021-02-14)
 
 **Note:** Version bump only for package @frctl/fractal
 
-
-
-
-
 ## [1.5.3](https://github.com/frctl/fractal/compare/@frctl/fractal@1.5.2...@frctl/fractal@1.5.3) (2021-02-07)
 
 **Note:** Version bump only for package @frctl/fractal
 
-
-
-
-
 ## [1.5.2](https://github.com/frctl/fractal/compare/@frctl/fractal@1.5.1...@frctl/fractal@1.5.2) (2020-12-22)
-
 
 ### Bug Fixes
 
-* remove console.error when looking for a package.json file ([#691](https://github.com/frctl/fractal/issues/691)) ([b46536b](https://github.com/frctl/fractal/commit/b46536bb3d6a5851154c80a38764c1cc2d8d7ebc))
-
-
-
-
+-   remove console.error when looking for a package.json file ([#691](https://github.com/frctl/fractal/issues/691)) ([b46536b](https://github.com/frctl/fractal/commit/b46536bb3d6a5851154c80a38764c1cc2d8d7ebc))
 
 ## [1.5.1](https://github.com/frctl/fractal/compare/@frctl/fractal@1.5.0...@frctl/fractal@1.5.1) (2020-11-13)
 
 **Note:** Version bump only for package @frctl/fractal
 
-
-
-
-
 # [1.5.0](https://github.com/frctl/fractal/compare/@frctl/fractal@1.4.1...@frctl/fractal@1.5.0) (2020-11-03)
-
 
 ### Bug Fixes
 
-* update file extension of docs index in new command ([#681](https://github.com/frctl/fractal/issues/681)) ([6cfa943](https://github.com/frctl/fractal/commit/6cfa943784c6462231ffd51e8afb30b0803c03bb)), closes [/github.com/frctl/fractal/commit/b23ecbaa433fb57fae20136ac7ea7e10469a34ff#diff-bce2cc04110d03fb1499379830faa44a173d254ad7f6f3fda808728746b291e5](https://github.com//github.com/frctl/fractal/commit/b23ecbaa433fb57fae20136ac7ea7e10469a34ff/issues/diff-bce2cc04110d03fb1499379830faa44a173d254ad7f6f3fda808728746b291e5)
-
+-   update file extension of docs index in new command ([#681](https://github.com/frctl/fractal/issues/681)) ([6cfa943](https://github.com/frctl/fractal/commit/6cfa943784c6462231ffd51e8afb30b0803c03bb)), closes [/github.com/frctl/fractal/commit/b23ecbaa433fb57fae20136ac7ea7e10469a34ff#diff-bce2cc04110d03fb1499379830faa44a173d254ad7f6f3fda808728746b291e5](https://github.com//github.com/frctl/fractal/commit/b23ecbaa433fb57fae20136ac7ea7e10469a34ff/issues/diff-bce2cc04110d03fb1499379830faa44a173d254ad7f6f3fda808728746b291e5)
 
 ### Features
 
-* allow pulling collections to root ([#642](https://github.com/frctl/fractal/issues/642)) ([d2cfa1b](https://github.com/frctl/fractal/commit/d2cfa1b6a76ca2328967374c62f4e35ca10cb758))
-
-
-
-
+-   allow pulling collections to root ([#642](https://github.com/frctl/fractal/issues/642)) ([d2cfa1b](https://github.com/frctl/fractal/commit/d2cfa1b6a76ca2328967374c62f4e35ca10cb758))
 
 ## [1.4.1](https://github.com/frctl/fractal/compare/@frctl/fractal@1.4.0...@frctl/fractal@1.4.1) (2020-10-19)
 
 **Note:** Version bump only for package @frctl/fractal
 
-
-
-
-
 # [1.4.0](https://github.com/frctl/fractal/compare/@frctl/fractal@1.3.0...@frctl/fractal@1.4.0) (2020-10-15)
-
 
 ### Bug Fixes
 
-* fix resolving camelCased variant templates ([#652](https://github.com/frctl/fractal/issues/652)) ([c81c69a](https://github.com/frctl/fractal/commit/c81c69ae5237f3027e70089a6918221513d7f106))
-* properly load notes from readme files for components variants ([#630](https://github.com/frctl/fractal/issues/630)) ([d2f6dcf](https://github.com/frctl/fractal/commit/d2f6dcffeefe25f3e9f0d272c0b0bdd9590779bf)), closes [#629](https://github.com/frctl/fractal/issues/629)
-
+-   fix resolving camelCased variant templates ([#652](https://github.com/frctl/fractal/issues/652)) ([c81c69a](https://github.com/frctl/fractal/commit/c81c69ae5237f3027e70089a6918221513d7f106))
+-   properly load notes from readme files for components variants ([#630](https://github.com/frctl/fractal/issues/630)) ([d2f6dcf](https://github.com/frctl/fractal/commit/d2f6dcffeefe25f3e9f0d272c0b0bdd9590779bf)), closes [#629](https://github.com/frctl/fractal/issues/629)
 
 ### Features
 
-* allow overriding/extending highlighter ([#628](https://github.com/frctl/fractal/issues/628)) ([ad1689b](https://github.com/frctl/fractal/commit/ad1689bb82f8ba87911a66f8117482d8c247055d))
-* filter excluded files/directories in the file system parsing stage ([#661](https://github.com/frctl/fractal/issues/661)) ([7c09c27](https://github.com/frctl/fractal/commit/7c09c27ca970dc2bca79ea4f1acafb1d7209642d))
-* **CLI:** add start/build npm scripts to package.json for new projects ([#620](https://github.com/frctl/fractal/issues/620)) ([1c923d8](https://github.com/frctl/fractal/commit/1c923d86f70eef8c85d662e72beaf81098a2bb38))
-
-
-
-
+-   allow overriding/extending highlighter ([#628](https://github.com/frctl/fractal/issues/628)) ([ad1689b](https://github.com/frctl/fractal/commit/ad1689bb82f8ba87911a66f8117482d8c247055d))
+-   filter excluded files/directories in the file system parsing stage ([#661](https://github.com/frctl/fractal/issues/661)) ([7c09c27](https://github.com/frctl/fractal/commit/7c09c27ca970dc2bca79ea4f1acafb1d7209642d))
+-   **CLI:** add start/build npm scripts to package.json for new projects ([#620](https://github.com/frctl/fractal/issues/620)) ([1c923d8](https://github.com/frctl/fractal/commit/1c923d86f70eef8c85d662e72beaf81098a2bb38))
 
 ## 1.3.0
 

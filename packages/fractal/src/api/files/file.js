@@ -1,10 +1,10 @@
 'use strict';
 
-import _ from "lodash";
-import Path from "path";
-import VinylFile from "vinyl";
-import mime from "mime";
-import { utils } from "@frctl/core";
+import _ from 'lodash';
+import Path from 'path';
+import VinylFile from 'vinyl';
+import mime from 'mime';
+import { utils } from '@frctl/core';
 
 export default class File {
     constructor(file, relativeTo) {
@@ -83,4 +83,4 @@ export default class File {
             isImage: this.isImage,
         };
     }
-};
+}

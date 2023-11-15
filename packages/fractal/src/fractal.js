@@ -1,13 +1,13 @@
 'use strict';
 
-import { mixins, utils } from "@frctl/core";
-import { Web } from "@frctl/web";
-import _ from "lodash";
-import defaults from "../config.js";
-import AssetSourceCollection from "./api/assets/index.js";
-import ComponentSource from "./api/components/index.js";
-import DocSource from "./api/docs/index.js";
-import Cli from "./cli/index.js";
+import { mixins, utils } from '@frctl/core';
+import { Web } from '@frctl/web';
+import _ from 'lodash';
+import defaults from '../config.js';
+import AssetSourceCollection from './api/assets/index.js';
+import ComponentSource from './api/components/index.js';
+import DocSource from './api/docs/index.js';
+import Cli from './cli/index.js';
 const mix = mixins.mix;
 const Configurable = mixins.configurable;
 const Emitter = mixins.emitter;
@@ -117,9 +117,9 @@ export default create;
 export { Adapter, Log as log, utils } from '@frctl/core';
 export { Theme as WebTheme } from '@frctl/web';
 export * as CliTheme from './cli/theme.js';
-import Component from "./api/components/component.js";
-import Variant from "./api/variants/variant.js";
-import Doc from "./api/docs/doc.js";
+import Component from './api/components/component.js';
+import Variant from './api/variants/variant.js';
+import Doc from './api/docs/doc.js';
 
 export const core = {
     Component,

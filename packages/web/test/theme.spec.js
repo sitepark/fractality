@@ -1,4 +1,4 @@
-import Theme from "../src/theme";
+import Theme from '../src/theme';
 
 describe('Theme', () => {
     it('is an event emitter', () => {

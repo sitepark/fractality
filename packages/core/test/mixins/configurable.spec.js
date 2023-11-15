@@ -1,4 +1,4 @@
-import mix from "../../src/mixins/mix";
+import mix from '../../src/mixins/mix';
 import Temp from '../../src/mixins/configurable';
 const Configurable = mix(Temp);
 

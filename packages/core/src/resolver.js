@@ -1,8 +1,8 @@
 'use strict';
 
-import _ from "lodash";
-import Log from "./log.js";
-import { awaitProps } from "./utils.js"
+import _ from 'lodash';
+import Log from './log.js';
+import { awaitProps } from './utils.js';
 
 export default {
     entity(entity) {

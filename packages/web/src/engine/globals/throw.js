@@ -1,6 +1,6 @@
 'use strict';
 
-import WebError from "../../error.js";
+import WebError from '../../error.js';
 
 export default function () {
     return {
@@ -10,4 +10,4 @@ export default function () {
             throw new WebError(code, message || `${code} error`);
         },
     };
-};
+}

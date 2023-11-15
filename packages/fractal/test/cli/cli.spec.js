@@ -1,10 +1,10 @@
-import { create } from "../../src/fractal";
-import Cli from "../../src/cli";
-import Console from "../../src/cli/console";
+import { create } from '../../src/fractal';
+import Cli from '../../src/cli';
+import Console from '../../src/cli/console';
 
 describe('Cli', () => {
     let cli;
-    let app = create()
+    let app = create();
 
     beforeEach(() => {
         cli = new Cli(app);
@@ -41,7 +41,7 @@ describe('Cli', () => {
                 },
                 () => {
                     // do nothing
-                }
+                },
             );
             expect(cli.has('test-command')).toBe(true);
         });

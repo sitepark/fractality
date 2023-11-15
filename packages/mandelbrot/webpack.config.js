@@ -1,11 +1,10 @@
-import path from "path";
-import { globbySync } from "globby"
-import autoprefixer from "autoprefixer";
-import { fileURLToPath } from "url";
+import path from 'path';
+import { globbySync } from 'globby';
+import autoprefixer from 'autoprefixer';
+import { fileURLToPath } from 'url';
 
-import MiniCssExtractPlugin from "mini-css-extract-plugin";
-import CopyPlugin from "copy-webpack-plugin";
-
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import CopyPlugin from 'copy-webpack-plugin';
 
 const skins = globbySync('./assets/scss/skins/*.scss').reduce((acc, file) => {
     const fileName = path.basename(file, '.scss');

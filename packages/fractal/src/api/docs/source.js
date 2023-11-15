@@ -1,11 +1,11 @@
 'use strict';
 
-import { entities, markdown as md, resolver } from "@frctl/core";
-import anymatch from "anymatch";
-import fs from "fs-extra";
-import _ from "lodash";
-import DocCollection from "./collection.js";
-import Doc from "./doc.js";
+import { entities, markdown as md, resolver } from '@frctl/core';
+import anymatch from 'anymatch';
+import fs from 'fs-extra';
+import _ from 'lodash';
+import DocCollection from './collection.js';
+import Doc from './doc.js';
 const EntitySource = entities.Source;
 
 export default class DocSource extends EntitySource {
@@ -68,7 +68,7 @@ export default class DocSource extends EntitySource {
         const target = page.toJSON();
 
         if (!self.isLoaded) {
-            await self.load()
+            await self.load();
         }
         {
             const context = await self.resolve(renderContext);
@@ -125,7 +125,7 @@ export default class DocSource extends EntitySource {
                     isHidden: dir.isHidden,
                     order: dir.order,
                     dir: dir,
-                }
+                },
             );
 
             if (!parent) {
@@ -136,28 +136,30 @@ export default class DocSource extends EntitySource {
                 collection.setProps(dirConfig);
             }
 
-            const items = await Promise.all(children.map((item) => {
-                if (source.isPage(item)) {
-                    const nameMatch = `${item.name}.`;
-                    const configFile = _.find(configs, (f) => f.name.startsWith(nameMatch));
-                    const contents = item.read();
-                    const config = EntitySource.getConfig(configFile, {
-                        name: item.name,
-                        isHidden: item.isHidden,
-                        order: item.order,
-                        lang: item.lang,
-                        filePath: item.path,
-                        file: item,
-                    });
+            const items = await Promise.all(
+                children.map((item) => {
+                    if (source.isPage(item)) {
+                        const nameMatch = `${item.name}.`;
+                        const configFile = _.find(configs, (f) => f.name.startsWith(nameMatch));
+                        const contents = item.read();
+                        const config = EntitySource.getConfig(configFile, {
+                            name: item.name,
+                            isHidden: item.isHidden,
+                            order: item.order,
+                            lang: item.lang,
+                            filePath: item.path,
+                            file: item,
+                        });
 
-                    return Promise.all([config, contents]).then(([config, contents]) =>
-                        Doc.create(config, contents, collection)
-                    )
-                } else if (item.isDirectory) {
-                    return build(item, collection);
-                }
-                return Promise.resolve(null);
-            }));
+                        return Promise.all([config, contents]).then(([config, contents]) =>
+                            Doc.create(config, contents, collection),
+                        );
+                    } else if (item.isDirectory) {
+                        return build(item, collection);
+                    }
+                    return Promise.resolve(null);
+                }),
+            );
 
             collection.setItems(_.orderBy(_.compact(items), ['order', 'name']));
             return collection;
@@ -165,4 +167,4 @@ export default class DocSource extends EntitySource {
 
         return build(fileTree);
     }
-};
+}

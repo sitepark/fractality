@@ -1,6 +1,6 @@
-import { notes } from "@frctl/adapter-tests";
+import { notes } from '@frctl/adapter-tests';
 
-import fractal from "../../fractal.config.js";
+import fractal from '../../fractal.config.js';
 
 describe('notes', () => {
     beforeEach(async () => {

@@ -1,15 +1,15 @@
-import { Web } from "@frctl/web";
+import { Web } from '@frctl/web';
 
-import { create } from "../src/fractal";
-import Cli from "../src/cli";
-import ComponentSource from "../src/api/components";
-import DocSource from "../src/api/docs/source";
+import { create } from '../src/fractal';
+import Cli from '../src/cli';
+import ComponentSource from '../src/api/components';
+import DocSource from '../src/api/docs/source';
 import fsExtra from 'fs-extra';
-import { URL, fileURLToPath } from "url";
+import { URL, fileURLToPath } from 'url';
 
 const { readJsonSync } = fsExtra;
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
-const pkg = readJsonSync(__dirname + "../package.json");
+const pkg = readJsonSync(__dirname + '../package.json');
 
 describe('Fractal', () => {
     let app = create();

@@ -1,18 +1,18 @@
 'use strict';
 
-import { Log, mixins, utils } from "@frctl/core";
-import chalk from "chalk";
-import chokidar from "chokidar";
-import _ from "lodash";
-import Vorpal from "vorpal";
-import Console from "./console.js";
-import Notifier from "./notifier.js";
-import commands from "./commands/index.js";
+import { Log, mixins, utils } from '@frctl/core';
+import chalk from 'chalk';
+import chokidar from 'chokidar';
+import _ from 'lodash';
+import Vorpal from 'vorpal';
+import Console from './console.js';
+import Notifier from './notifier.js';
+import commands from './commands/index.js';
 
 const mix = mixins.mix;
 const Configurable = mixins.configurable;
 const Emitter = mixins.emitter;
-import { URL, fileURLToPath } from "url";
+import { URL, fileURLToPath } from 'url';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
@@ -78,7 +78,7 @@ class Cli extends mix(Configurable, Emitter) {
             cmd
                 .action((args, done) => {
                     console.error(
-                        'No Fractal CLI configuration file found. Are you running this from the root directory of your project?'
+                        'No Fractal CLI configuration file found. Are you running this from the root directory of your project?',
                     );
                     done();
                 })
@@ -225,11 +225,11 @@ class Cli extends mix(Configurable, Emitter) {
                         .box(
                             'Fractal interactive CLI',
                             `- Use the ${chalk.magenta(
-                                'help'
+                                'help',
                             )} command to see all available commands.\n- Use the ${chalk.magenta(
-                                'exit'
+                                'exit',
                             )} command to exit the app.`,
-                            `Powered by Fractal v${app.version}`
+                            `Powered by Fractal v${app.version}`,
                         )
                         .unslog()
                         .br();
@@ -242,7 +242,7 @@ class Cli extends mix(Configurable, Emitter) {
                         'Fractal CLI',
                         `No local Fractal configuration found.
 You can use the ${chalk.magenta('fractal new')} command to create a new project.`,
-                        `Powered by Fractal v${app.version}`
+                        `Powered by Fractal v${app.version}`,
                     )
                     .unslog();
 

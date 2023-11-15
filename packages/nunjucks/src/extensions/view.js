@@ -1,6 +1,6 @@
 'use strict';
 
-import nunjucks from "nunjucks";
+import nunjucks from 'nunjucks';
 
 export default function (fractal) {
     function ViewExtension() {
@@ -38,4 +38,4 @@ export default function (fractal) {
     }
 
     return new ViewExtension();
-};
+}

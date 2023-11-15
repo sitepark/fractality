@@ -8,4 +8,4 @@ export default function path(fractal) {
         const render = await fractal.components.find('@path').render(undefined, { builder: true });
         expect(render).toMatchSnapshot();
     });
-};
+}

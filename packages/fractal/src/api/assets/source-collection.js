@@ -1,9 +1,9 @@
 'use strict';
 
-import _ from "lodash";
+import _ from 'lodash';
 
-import { utils, mixins } from "@frctl/core";
-import Source from "./source.js";
+import { utils, mixins } from '@frctl/core';
+import Source from './source.js';
 const mix = mixins.mix;
 const Configurable = mixins.configurable;
 const Emitter = mixins.emitter;
@@ -94,4 +94,4 @@ export default class AssetSourceCollection extends mix(Configurable, Emitter) {
     [Symbol.iterator]() {
         return this._sources.entries()[Symbol.iterator]();
     }
-};
+}

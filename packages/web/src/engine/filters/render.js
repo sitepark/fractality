@@ -6,4 +6,4 @@ export default function (app, engine) {
         async: false,
         filter: (str, context) => engine.renderString(str, context || {}),
     };
-};
+}

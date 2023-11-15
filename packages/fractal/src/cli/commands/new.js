@@ -1,12 +1,12 @@
 'use strict';
 
-import { shell } from "@frctl/core";
-import { execa } from "execa";
-import fs from "fs-extra";
-import Handlebars from "handlebars";
-import inquirer from "inquirer";
-import Path from "path";
-import { URL, fileURLToPath } from "url";
+import { shell } from '@frctl/core';
+import { execa } from 'execa';
+import fs from 'fs-extra';
+import Handlebars from 'handlebars';
+import inquirer from 'inquirer';
+import Path from 'path';
+import { URL, fileURLToPath } from 'url';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 

@@ -1,8 +1,8 @@
 'use strict';
 
-import _ from "lodash";
-import * as utils from "../utils.js";
-import { Mixin as mixin } from "mixwith";
+import _ from 'lodash';
+import * as utils from '../utils.js';
+import { Mixin as mixin } from 'mixwith';
 
 export default mixin(
     (superclass) =>
@@ -102,5 +102,5 @@ export default mixin(
                     // config: this.config,
                 };
             }
-        }
+        },
 );

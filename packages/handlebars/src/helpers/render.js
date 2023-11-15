@@ -1,8 +1,8 @@
 'use strict';
 
-import { utils } from "@frctl/core";
-import Handlebars from "handlebars";
-import _ from "lodash";
+import { utils } from '@frctl/core';
+import Handlebars from 'handlebars';
+import _ from 'lodash';
 
 export default function (fractal) {
     return function render(handle) {
@@ -23,7 +23,7 @@ export default function (fractal) {
             throw new Error(`Could not render component '${handle}' - component not found.`);
         }
         const defaultContext = _.cloneDeep(
-            entity.isComponent ? entity.variants().default().getContext() : entity.getContext()
+            entity.isComponent ? entity.variants().default().getContext() : entity.getContext(),
         );
         if (!context) {
             context = defaultContext;
@@ -40,4 +40,4 @@ export default function (fractal) {
             .then((html) => new Handlebars.SafeString(html))
             .catch(() => {});
     };
-};
+}

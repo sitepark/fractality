@@ -1,14 +1,14 @@
 'use strict';
 
-import { Log, mixins, utils } from "@frctl/core";
-import anymatch from "anymatch";
-import chokidar from "chokidar";
-import express from "express";
-import getPort, { portNumbers } from "get-port";
-import _ from "lodash";
-import Path from "path";
-import WebError from "./error.js";
-import browserSync from "browser-sync";
+import { Log, mixins, utils } from '@frctl/core';
+import anymatch from 'anymatch';
+import chokidar from 'chokidar';
+import express from 'express';
+import getPort, { portNumbers } from 'get-port';
+import _ from 'lodash';
+import Path from 'path';
+import WebError from './error.js';
+import browserSync from 'browser-sync';
 const mix = mixins.mix;
 const Emitter = mixins.emitter;
 
@@ -283,7 +283,7 @@ export default class Server extends mix(Emitter) {
 
         this._server.use(this._onError.bind(this));
     }
-};
+}
 
 async function findPorts(serverPort, useSync) {
     const ip = '127.0.0.1';

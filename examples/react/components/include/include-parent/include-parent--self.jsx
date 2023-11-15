@@ -1,8 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 // TODO: it should be possible to import components by handles
-import IncludeChild from "../include-child/include-child.jsx";
+import IncludeChild from '../include-child/include-child.jsx';
 
 const IncludeParentSelf = (props) => {
     return (

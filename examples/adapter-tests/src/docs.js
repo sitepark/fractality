@@ -11,4 +11,4 @@ export default function docs(fractal) {
         const render = await fractal.docs.find('@index').render();
         expect(render).toMatchSnapshot();
     });
-};
+}

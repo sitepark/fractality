@@ -34,4 +34,4 @@ export default function (fractal) {
     }
 
     return new ContextExtension();
-};
+}

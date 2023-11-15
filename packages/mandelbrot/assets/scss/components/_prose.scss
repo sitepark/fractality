@@ -88,7 +88,9 @@
         margin: 1rem -0.5rem;
         border-collapse: collapse;
         font-size: 0.875rem;
-        font-feature-settings: "lnum" 1, "tnum" 1;
+        font-feature-settings:
+            "lnum" 1,
+            "tnum" 1;
     }
 
     caption {

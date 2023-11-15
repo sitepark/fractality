@@ -3,4 +3,4 @@ export default function collated(fractal) {
         const render = await fractal.components.find('@collated').render(null, null, { collate: true });
         expect(render).toMatchSnapshot();
     });
-};
+}

@@ -8,4 +8,4 @@ export default function include(fractal) {
         const render = await fractal.components.find('@include-parent--self').render();
         expect(render).toMatchSnapshot();
     });
-};
+}

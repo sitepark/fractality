@@ -18,7 +18,7 @@
   "dependencies": {
     "@frctl/core": "^0.3.5",
     "lodash": "^4.17.21",
-    "twig": "^1.15.4"
+    "twig": "^1.16.0"
   },
   "peerDependencies": {
     "@frctl/fractal": "^1.1.0-beta.1"

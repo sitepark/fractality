@@ -11,7 +11,7 @@ describe('Utils', () => {
             const lang = utils.lang('file.scss');
             expect(lang.name).toEqual('SCSS');
             expect(lang.mode).toEqual('scss');
-            expect(lang.scope).toEqual('source.scss');
+            expect(lang.scope).toEqual('source.css.scss');
         });
 
         it('returns correct info for nunjucks variants', () => {
@@ -31,7 +31,7 @@ describe('Utils', () => {
 
         it('returns default value for unknown file type', () => {
             const expected = {
-                name: '.THIS_IS_NOT_A_FILE',
+                name: '.this_is_not_a_file',
                 mode: 'plaintext',
                 scope: null,
                 color: null,

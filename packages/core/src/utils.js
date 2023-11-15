@@ -4,40 +4,33 @@ import Path from 'path';
 import fs from 'fs';
 import crypto from 'crypto';
 import minimist from 'minimist';
-import fang from '@allmarkedup/fang';
+import linguistLanguages from 'linguist-languages'
 import _ from 'lodash';
 
+const languages = Object.values(linguistLanguages)
+
 export function lang(filePath) {
-    const name = Path.extname(filePath).toUpperCase();
+    const name = Path.extname(filePath).toLowerCase();
     switch (name) {
-        case '.NUNJUCKS':
-        case '.NUNJS':
-        case '.NUNJ':
-        case '.NJ':
-        case '.JINJA2':
-        case '.J2':
+        case '.nunjucks':
+        case '.nunjs':
+        case '.nunj':
+        case '.nj':
+        case '.jinja2':
+        case '.j2':
             return {
                 name: 'HTML+Django',
                 mode: 'django',
                 scope: 'text.html.django',
                 color: null,
             };
-        case '.MJS':
-        case '.CJS':
-            return {
-                name: 'JavaScript',
-                mode: 'javascript',
-                scope: 'source.js',
-                color: null,
-            };
         default: {
-            const result = fang(filePath) || {};
-
+            const result = languages.find(lang => (lang.extensions ?? []).includes(name));
             return {
-                name: result.name || name,
-                mode: result.ace_mode || 'plaintext',
-                scope: result.tm_scope || null,
-                color: result.color || null,
+                name: result?.name || name,
+                mode: result?.aceMode || 'plaintext',
+                scope: result?.tmScope || null,
+                color: result?.color || null
             };
         }
     }

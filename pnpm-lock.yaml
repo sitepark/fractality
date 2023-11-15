@@ -23,9 +23,6 @@ importers:
       cli-table3:
         specifier: ^0.6.3
         version: 0.6.3
-      co:
-        specifier: ^4.6.0
-        version: 4.6.0
       columnify:
         specifier: ^1.6.0
         version: 1.6.0
@@ -276,9 +273,6 @@ importers:
       chokidar:
         specifier: ^3.5.1
         version: 3.5.1
-      co:
-        specifier: ^4.6.0
-        version: 4.6.0
       fs-extra:
         specifier: ^11.0.0
         version: 11.1.1
@@ -346,9 +340,6 @@ importers:
       cli-table3:
         specifier: ^0.6.3
         version: 0.6.3
-      co:
-        specifier: ^4.6.0
-        version: 4.6.0
       columnify:
         specifier: ^1.6.0
         version: 1.6.0
@@ -3959,11 +3950,6 @@ packages:
     resolution: {integrity: sha512-S9iI9y0nKR4hwEQsVWpyxld/6kRfGepGfzff83FcaiEBpmvlbA2nnGe7Cylgrx2f/p1P5S5wpRm9oL8z1PbS3Q==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
     dev: true
-
-  /co@4.6.0:
-    resolution: {integrity: sha512-QVb0dM5HvG+uaxitm8wONl7jltx8dqhfU33DcqtOZcLSVIKSDDLDi7+0LbAKiyI8hD9u42m2YxXSkMGWThaecQ==}
-    engines: {iojs: '>= 1.0.0', node: '>= 0.12.0'}
-    dev: false
 
   /code-point-at@1.1.0:
     resolution: {integrity: sha512-RpAVKQA5T63xEj6/giIbUEtZwJ4UFIc3ZtvEkiaUERylqe8xb5IvqcgOurZLahv93CLKfxcw5YI+DZcUBRyLXA==}

@@ -70,7 +70,7 @@ export default class VariantCollection extends EntityCollection {
         return true;
     }
 
-    static *create(component, defaultView, configured, views, readmes, opts) {
+    static async create(component, defaultView, configured, views, readmes, opts) {
         configured = configured || [];
         views = views || [];
         readmes = readmes || [];
@@ -119,8 +119,7 @@ export default class VariantCollection extends EntityCollection {
             );
         }
 
-        const configuredVars = yield configured.map(
-            co.wrap(function (conf, i) {
+        const configuredVars = configured.map((conf, i) => {
                 let viewFile = null;
                 if (_.isUndefined(conf.name)) {
                     Log.error(`Could not create variant of ${component.handle} - 'name' value is missing`);
@@ -149,7 +148,7 @@ export default class VariantCollection extends EntityCollection {
                 p.readme = findReadme(p.name);
 
                 return Variant.create(p, viewFile, resources.filter(isRelated(p.handle)), component);
-            })
+            }
         );
 
         variants = variants.concat(configuredVars);
@@ -177,7 +176,7 @@ export default class VariantCollection extends EntityCollection {
             {
                 name: `${component.name}-variants`,
             },
-            _.orderBy(yield variants, ['order', 'name']),
+            _.orderBy(variants, ['order', 'name']),
             component
         );
     }

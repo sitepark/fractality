@@ -178,11 +178,11 @@ export default class Component extends Entity {
         return self;
     }
 
-    static *create(config, files, resources, parent) {
+    static async  create(config, files, resources, parent) {
         parent.source.emit('component:beforeCreate', config, files, resources, parent);
-        config.raw = files.config ? yield Data.readFile(files.config.path) : null;
+        config.raw = files.config ? await Data.readFile(files.config.path) : null;
         const comp = new Component(config, files, resources, parent);
-        const variants = yield VariantCollection.create(
+        const variants = await VariantCollection.create(
             comp,
             files.view,
             config.variants,

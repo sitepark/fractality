@@ -2,7 +2,6 @@
 
 import { isBinary } from "istextorbinary";
 import Path from "path";
-import co from "co";
 import _ from "lodash";
 import fs from "fs-extra";
 import * as utils from "./utils.js";
@@ -47,49 +46,47 @@ export default {
     },
 };
 
-function build(filePath, stat, root, ext) {
-    return co(function* () {
-        const p = Path.parse(filePath);
-        // use basename instead of p.name to account for double extensions, like ".html.twig"
-        const basename = Path.basename(filePath, ext);
+async function build(filePath, stat, root, ext) {
+    const p = Path.parse(filePath);
+    // use basename instead of p.name to account for double extensions, like ".html.twig"
+    const basename = Path.basename(filePath, ext);
 
-        p.relPath = Path.relative(root, filePath);
-        p.fsName = basename;
-        p.name = _.get(p.fsName.match(/^_?(\d+-)?(.*)/), 2, p.fsName);
-        p.path = filePath;
-        p.dirs = _.compact(p.dir.split('/'));
-        p.isHidden = !!(_.find(p.relPath.split('/'), (s) => s.startsWith('_')) || p.fsName.startsWith('_'));
-        p.order = parseInt(_.get(p.fsName.match(/^_?(\d+)-.*/), 1, 1000000), 10);
-        p.ext = p.ext.toLowerCase();
-        p.isFile = stat.isFile();
-        p.isDirectory = stat.isDirectory();
-        p.stat = stat;
-        if (p.isFile) {
-            p.lang = utils.lang(filePath);
-            p.isBinary = yield checkIsBinary(p);
-            p.readBuffer = function () {
-                return fs.readFileSync(filePath);
-            };
-            p.readSync = function () {
-                const contents = p.isBinary ? fs.readFileSync(filePath) : fs.readFileSync(filePath, 'utf8');
+    p.relPath = Path.relative(root, filePath);
+    p.fsName = basename;
+    p.name = _.get(p.fsName.match(/^_?(\d+-)?(.*)/), 2, p.fsName);
+    p.path = filePath;
+    p.dirs = _.compact(p.dir.split('/'));
+    p.isHidden = !!(_.find(p.relPath.split('/'), (s) => s.startsWith('_')) || p.fsName.startsWith('_'));
+    p.order = parseInt(_.get(p.fsName.match(/^_?(\d+)-.*/), 1, 1000000), 10);
+    p.ext = p.ext.toLowerCase();
+    p.isFile = stat.isFile();
+    p.isDirectory = stat.isDirectory();
+    p.stat = stat;
+    if (p.isFile) {
+        p.lang = utils.lang(filePath);
+        p.isBinary = await checkIsBinary(p);
+        p.readBuffer = function () {
+            return fs.readFileSync(filePath);
+        };
+        p.readSync = function () {
+            const contents = p.isBinary ? fs.readFileSync(filePath) : fs.readFileSync(filePath, 'utf8');
+            return contents.toString();
+        };
+        p.read = function () {
+            const read = p.isBinary ? fs.readFile(filePath) : fs.readFile(filePath, 'utf8');
+            return read.then(function (contents) {
                 return contents.toString();
-            };
-            p.read = function () {
-                const read = p.isBinary ? fs.readFile(filePath) : fs.readFile(filePath, 'utf8');
-                return read.then(function (contents) {
-                    return contents.toString();
-                });
-            };
-        }
-        p.toString = function () {
-            return p.path;
+            });
         };
-        p.toJSON = function () {
-            const self = _.clone(this);
-            return self;
-        };
-        return p;
-    });
+    }
+    p.toString = function () {
+        return p.path;
+    };
+    p.toJSON = function () {
+        const self = _.clone(this);
+        return self;
+    };
+    return p;
 }
 
 function dirscribe(root, opts) {

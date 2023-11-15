@@ -37,7 +37,7 @@ export default class DocSource extends EntitySource {
         });
     }
 
-    render(page, context, env, opts) {
+    async render(page, context, env, opts) {
         const self = this;
 
         /* eslint-disable-next-line no-unused-vars */
@@ -67,15 +67,18 @@ export default class DocSource extends EntitySource {
 
         const renderContext = context || page.context;
         const target = page.toJSON();
-        return co(function* () {
-            yield self.isLoaded ? Promise.resolve(self) : self.load();
-            const context = yield self.resolve(renderContext);
-            const content = yield page.getContent();
+
+        if (!self.isLoaded) {
+            await self.load()
+        }
+        {
+            const context = await self.resolve(renderContext);
+            const content = await page.getContent();
             return self._render(page.filePath, content, context, {
                 env: env,
                 self: target,
             });
-        });
+        }
     }
 
     renderString(str, context, env) {
@@ -111,12 +114,12 @@ export default class DocSource extends EntitySource {
     _parse(fileTree) {
         const source = this;
 
-        const build = co.wrap(function* (dir, parent) {
+        const build = async (dir, parent) => {
             let collection;
             const children = dir.children || [];
             const configs = children.filter((f) => source.isConfig(f));
 
-            const dirConfig = yield EntitySource.getConfig(
+            const dirConfig = await EntitySource.getConfig(
                 _.find(configs, (f) => f.name.startsWith(dir.name)),
                 {
                     name: dir.name,
@@ -134,7 +137,7 @@ export default class DocSource extends EntitySource {
                 collection.setProps(dirConfig);
             }
 
-            const items = yield children.map((item) => {
+            const items = await Promise.all(children.map((item) => {
                 if (source.isPage(item)) {
                     const nameMatch = `${item.name}.`;
                     const configFile = _.find(configs, (f) => f.name.startsWith(nameMatch));
@@ -155,11 +158,11 @@ export default class DocSource extends EntitySource {
                     return build(item, collection);
                 }
                 return Promise.resolve(null);
-            });
+            }));
 
             collection.setItems(_.orderBy(_.compact(items), ['order', 'name']));
             return collection;
-        });
+        };
 
         return build(fileTree);
     }

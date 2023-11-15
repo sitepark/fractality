@@ -2,7 +2,6 @@
 
 import { Log, entities, fs as frfs, resolver } from "@frctl/core";
 import anymatch from "anymatch";
-import co from "co";
 import fs from "fs-extra";
 import _ from "lodash";
 import Path from "path";
@@ -148,13 +147,14 @@ export default class ComponentSource extends EntitySource {
      * @api public
      */
 
-    render(entity, context, env, opts) {
+    async render(entity, context, env, opts) {
         env = env || {};
         opts = opts || {};
         opts.preview = opts.preview || opts.useLayout || false;
         opts.collate = opts.collate || false;
 
         const self = this;
+
 
         if (!entity) {
             return Promise.reject(null);
@@ -178,43 +178,41 @@ export default class ComponentSource extends EntitySource {
             }
         }
 
-        return co(function* () {
-            let rendered;
-            if (entity.isComponent || entity.isVariant) {
-                if (entity.isComponent) {
-                    if (entity.isCollated && opts.collate && entity.variants().size > 1) {
-                        rendered = yield self._renderCollatedComponent(entity, env);
-                    } else {
-                        entity = entity.variants().default();
-                        rendered = yield self._renderVariant(entity, context, env);
-                    }
+        let rendered;
+        if (entity.isComponent || entity.isVariant) {
+            if (entity.isComponent) {
+                if (entity.isCollated && opts.collate && entity.variants().size > 1) {
+                    rendered = await self._renderCollatedComponent(entity, env);
                 } else {
-                    rendered = yield self._renderVariant(entity, context, env);
+                    entity = entity.variants().default();
+                    rendered = await self._renderVariant(entity, context, env);
                 }
-                if (opts.preview && entity.preview) {
-                    const target = entity.toJSON();
-                    target.component = target.isVariant ? entity.parent.toJSON() : target;
-                    const layout = _.isString(opts.preview) ? opts.preview : entity.preview;
-                    return yield self._wrapInLayout(target, rendered, layout, env);
-                }
-                return rendered;
             } else {
-                throw new Error('Only components or variants can be rendered.');
+                rendered = await self._renderVariant(entity, context, env);
             }
-        });
+            if (opts.preview && entity.preview) {
+                const target = entity.toJSON();
+                target.component = target.isVariant ? entity.parent.toJSON() : target;
+                const layout = _.isString(opts.preview) ? opts.preview : entity.preview;
+                return await self._wrapInLayout(target, rendered, layout, env);
+            }
+            return rendered;
+        } else {
+            throw new Error('Only components or variants can be rendered.');
+        }
     }
 
-    *_renderVariant(variant, context, env) {
-        const content = yield variant.getContent();
+    async _renderVariant(variant, context, env) {
+        const content = await variant.getContent();
         return this.engine().render(variant.viewPath, content, context || variant.getContext(), {
             self: variant.toJSON(),
             env: env,
         });
     }
 
-    *_renderCollatedComponent(component, env) {
+    async _renderCollatedComponent(component, env) {
         const target = component.toJSON();
-        const items = yield component
+        const items = await Promise.all(component
             .variants()
             .filter('isHidden', false)
             .toArray()
@@ -225,7 +223,7 @@ export default class ComponentSource extends EntitySource {
                         item: variant.toJSON(),
                     };
                 });
-            });
+            }));
 
         if (!component.collator) {
             return items.map((i) => i.markup).join('\n');
@@ -235,7 +233,7 @@ export default class ComponentSource extends EntitySource {
             return items.map((i) => component.collator(i.markup, i.item)).join('\n');
         }
 
-        const collator = yield this._getWrapper(component.collator);
+        const collator = await this._getWrapper(component.collator);
 
         if (!collator) {
             Log.warn(`Collator ${component.collator} not found.`);
@@ -255,8 +253,8 @@ export default class ComponentSource extends EntitySource {
         });
     }
 
-    *_wrapInLayout(target, content, identifier, env) {
-        const layout = yield this._getWrapper(identifier);
+    async _wrapInLayout(target, content, identifier, env) {
+        const layout = await this._getWrapper(identifier);
 
         if (!layout) {
             Log.warn(`Preview layout ${identifier} not found. Rendering component without layout.`);
@@ -296,7 +294,7 @@ export default class ComponentSource extends EntitySource {
         return eventData;
     }
 
-    *_getWrapper(indentifier) {
+    async _getWrapper(indentifier) {
         if (_.isString(indentifier) && indentifier.startsWith('@')) {
             // looking for a component
             let entity = this.find(indentifier);
@@ -306,8 +304,8 @@ export default class ComponentSource extends EntitySource {
             if (entity.isComponent) {
                 entity = entity.variants().default();
             }
-            let context = entity.getContext();
-            let content = yield entity.getContent();
+            const context = await entity.getContext();
+            const content = await entity.getContent();
             return {
                 context: context,
                 content: content,
@@ -329,6 +327,7 @@ export default class ComponentSource extends EntitySource {
                     }));
                 })
                 .catch((err) => {
+                    console.error(e);
                     Log.warn(err);
                     return undefined;
                 });
@@ -339,11 +338,11 @@ export default class ComponentSource extends EntitySource {
             // This happens when using a wrapper template in root of components dir.
             let entity = this.find('viewPath', indentifier.path);
             if (entity) {
-                return yield this._getWrapper(`@${entity.handle}`);
+                return await this._getWrapper(`@${entity.handle}`);
             }
 
             // using a file
-            let content = yield indentifier.getContent();
+            let content = await indentifier.getContent();
             return {
                 context: {},
                 content: content,
@@ -427,7 +426,7 @@ export default class ComponentSource extends EntitySource {
     _parse(fileTree) {
         const source = this;
 
-        const build = co.wrap(function* (dir, parent) {
+        const build = async (dir, parent) => {
             let collection;
             const children = dir.children || [];
             const files = children.filter((item) => item.isFile);
@@ -466,7 +465,7 @@ export default class ComponentSource extends EntitySource {
                     matched.configs,
                     (f) => f.base.startsWith(`${dir.name}.`) || f.base.startsWith(`_${dir.name}.`)
                 ) || _.find(matched.configs, (f) => /^_?config\./.test(f.base));
-            const dirConfig = yield EntitySource.getConfig(configFile, dirDefaults);
+            const dirConfig = await EntitySource.getConfig(configFile, dirDefaults);
 
             // first figure out if it's a component directory or not...
 
@@ -510,8 +509,8 @@ export default class ComponentSource extends EntitySource {
                 collection.setProps(dirConfig);
             }
 
-            const collections = yield matched.directories.map((item) => build(item, collection));
-            const components = yield matched.views.map((view) => {
+            const collections = await Promise.all(matched.directories.map((item) => build(item, collection)));
+            const components = await Promise.all(matched.views.map((view) => {
                 const nameMatch = view.name;
                 // config files for 'simple' components must have the format component-name.config.ext
                 const configFile = _.find(
@@ -539,12 +538,12 @@ export default class ComponentSource extends EntitySource {
                     const resources = new FileCollection({}, []);
                     return Component.create(c, files, resources, collection);
                 });
-            });
+            }));
 
-            const items = yield _.concat(components, collections);
+            const items = _.concat(components, collections);
             collection.setItems(_.orderBy(items, ['order', 'name']));
             return collection;
-        });
+        };
 
         return build(fileTree);
     }

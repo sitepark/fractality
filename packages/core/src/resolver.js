@@ -1,8 +1,8 @@
 'use strict';
 
-import Promise from "bluebird";
 import _ from "lodash";
 import Log from "./log.js";
+import { awaitProps } from "./utils.js"
 
 export default {
     entity(entity) {
@@ -19,10 +19,11 @@ export default {
             if (!obj) {
                 return Promise.resolve(null);
             }
-            const iterator = _.isArray(obj) ? 'map' : 'mapValues';
-            const resolver = iterator == 'map' ? 'all' : 'props';
 
-            return Promise[resolver](_[iterator](obj, mapper));
+            if (_.isArray(obj)) {
+                return Promise.all(_.map(obj, mapper));
+            }
+            return awaitProps(_.mapValues(obj, mapper));
         }
 
         function mapper(item) {

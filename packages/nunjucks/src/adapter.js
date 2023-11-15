@@ -1,13 +1,13 @@
 'use strict';
 
 import _ from "lodash";
-import Promise from "bluebird";
 import nunjucks from "nunjucks";
 import path from "path";
 import fs from "fs";
 import { Adapter } from "@frctl/core";
 import extensions from "./extensions/index.js";
 import filters from "./filters/index.js";
+import { AsyncNunjucksEnvironment } from "./AsyncNunjucksEnvironment.js";
 
 class NunjucksAdapter extends Adapter {
     constructor(source, config, app) {
@@ -83,10 +83,7 @@ class NunjucksAdapter extends Adapter {
         /**
          * Instantiate the Nunjucks environment instance.
          */
-
-        let nj = Promise.promisifyAll(new nunjucks.Environment(loaders, config.env || {}));
-
-        this._engine = nj;
+        this._engine = new AsyncNunjucksEnvironment(loaders, config.env || {});
     }
 
     render(path, str, context, meta) {

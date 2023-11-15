@@ -1,7 +1,5 @@
 'use strict';
 
-import Promise from "bluebird";
-
 export default function () {
     return {
         name: 'async',

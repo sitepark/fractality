@@ -184,3 +184,12 @@ export function relUrlPath(toPath, fromPath, opts) {
         return `${parts.dir}/${parts.name}.PLACEHOLDER`;
     }
 }
+
+export async function awaitProps(obj) {
+    const waitingEntries = Object.entries(obj).map(async ([key, value]) => {
+        return [key, await value];
+    })
+    return Promise.all(waitingEntries).then(entries => {
+        return Object.fromEntries(entries);
+    })
+}

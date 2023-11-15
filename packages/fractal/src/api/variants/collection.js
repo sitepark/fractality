@@ -1,7 +1,6 @@
 'use strict';
 
 import { Log, entities, utils } from "@frctl/core";
-import Promise from "bluebird";
 import co from "co";
 import _ from "lodash";
 import Path from "path";
@@ -44,10 +43,10 @@ export default class VariantCollection extends EntityCollection {
 
     getCollatedContext() {
         const collated = {};
-        this.toArray().forEach((variant) => {
-            collated[`${variant.label}`] = variant.getResolvedContext();
+        this.toArray().forEach(async (variant) => {
+            collated[`${variant.label}`] = await variant.getResolvedContext();
         });
-        return Promise.props(collated);
+        return utils.awaitProps(collated);
     }
 
     get references() {

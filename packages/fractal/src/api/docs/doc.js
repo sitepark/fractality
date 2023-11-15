@@ -1,7 +1,6 @@
 'use strict';
 
 import Path from "path";
-import Promise from "bluebird";
 import matter from "gray-matter";
 import _ from "lodash";
 import { utils, entities } from "@frctl/core";

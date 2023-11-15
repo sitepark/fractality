@@ -2,7 +2,6 @@
 
 import { Log, mixins } from "@frctl/core";
 import anymatch from "anymatch";
-import Promise from "bluebird";
 import fs from "fs-extra";
 import _ from "lodash";
 import Path from "path";

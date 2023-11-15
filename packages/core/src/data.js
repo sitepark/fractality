@@ -1,6 +1,5 @@
 'use strict';
 
-import Promise from "bluebird";
 import yaml from "js-yaml";
 import _ from "lodash";
 import Path from "path";

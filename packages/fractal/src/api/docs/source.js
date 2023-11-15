@@ -2,7 +2,6 @@
 
 import { entities, markdown as md, resolver } from "@frctl/core";
 import anymatch from "anymatch";
-import Promise from "bluebird";
 import co from "co";
 import fs from "fs-extra";
 import _ from "lodash";
@@ -148,9 +147,10 @@ export default class DocSource extends EntitySource {
                         filePath: item.path,
                         file: item,
                     });
-                    return Promise.join(config, contents, (config, contents) =>
+
+                    return Promise.all([config, contents]).then(([config, contents]) =>
                         Doc.create(config, contents, collection)
-                    );
+                    )
                 } else if (item.isDirectory) {
                     return build(item, collection);
                 }

@@ -17,7 +17,6 @@
   "dependencies": {
     "@frctl/core": "^0.3.5",
     "anymatch": "^3.1.2",
-    "bluebird": "^3.7.2",
     "browser-sync": "^2.29.3",
     "chokidar": "^3.5.1",
     "express": "^4.18.2",

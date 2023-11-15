@@ -1,6 +1,5 @@
 'use strict';
 
-import Promise from "bluebird";
 import _ from "lodash";
 import Path from "path";
 import mix from "./mixins/mix.js";

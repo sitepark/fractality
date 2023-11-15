@@ -1,6 +1,5 @@
 'use strict';
 
-import Promise from "bluebird";
 import { Readable } from "readable-stream";
 
 export default class PromiseStream extends Readable {

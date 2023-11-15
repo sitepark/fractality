@@ -1,7 +1,6 @@
 'use strict';
 
 import { shell } from "@frctl/core";
-import Promise from "bluebird";
 import { execa } from "execa";
 import fs from "fs-extra";
 import Handlebars from "handlebars";

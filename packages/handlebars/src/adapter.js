@@ -1,7 +1,6 @@
 'use strict';
 
 import { Adapter } from "@frctl/core";
-import Promise from "bluebird";
 import Handlebars from "handlebars";
 import _ from "lodash";
 import path from "path";

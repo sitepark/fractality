@@ -1,6 +1,5 @@
 'use strict';
 
-import Promise from "bluebird";
 import _ from "lodash";
 import chokidar from "chokidar";
 import anymatch from "anymatch";

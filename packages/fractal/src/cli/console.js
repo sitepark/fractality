@@ -1,6 +1,5 @@
 'use strict';
 
-import Promise from "bluebird";
 import _ from "lodash";
 import chalk from "chalk";
 import Table from "cli-table3";

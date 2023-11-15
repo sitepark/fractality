@@ -1,11 +1,11 @@
 'use strict';
 
-import Promise from "bluebird";
 import Path from "path";
 import nunjucks from "nunjucks";
 import _ from "lodash";
 import WebError from "../error.js";
 import { URL, fileURLToPath } from "url";
+import { AsyncNunjucksEnvironment } from "../AsyncNunjucksEnvironment.js";
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
@@ -56,11 +56,9 @@ export default class Engine {
             noCache: true,
         });
 
-        this._engine = Promise.promisifyAll(
-            new nunjucks.Environment(loader, {
-                autoescape: false,
-            })
-        );
+        this._engine = new AsyncNunjucksEnvironment(loader, {
+            autoescape: false,
+        });
 
         _.forEach(extensions, (factory) => {
             const e = factory(app, this);

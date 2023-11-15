@@ -1,7 +1,6 @@
 'use strict';
 
 import { isBinary } from "istextorbinary";
-import Promise from "bluebird";
 import Path from "path";
 import co from "co";
 import _ from "lodash";

@@ -2,6 +2,8 @@ import mockArgv from "mock-argv";
 import mock from "mock-fs";
 
 import * as utils from "../src/utils";
+import { describe } from "vitest";
+import { beforeEach } from "vitest";
 
 describe('Utils', () => {
     describe('.lang()', () => {
@@ -351,6 +353,26 @@ describe('Utils', () => {
             expect(utils.relUrlPath('../to/image.png', '/path/b', opts2)).toEqual('../to/image.png');
         });
     });
+
+    describe('awaitProps', () => {
+        it('returns a promise that resolves when all value promises are resolved', async () => {
+            const wait = (value, time) => {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        resolve(value);
+                    }, time)
+                })
+            }
+            const resolved = await utils.awaitProps({
+                a: wait("A", 75),
+                b: wait("B", 50),
+                c: wait("C", 100)
+            });
+            expect(resolved.a).toEqual("A");
+            expect(resolved.b).toEqual("B");
+            expect(resolved.c).toEqual("C");
+        })
+    })
 });
 
 class MyClass {

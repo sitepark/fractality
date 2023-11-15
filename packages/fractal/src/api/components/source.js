@@ -2,7 +2,6 @@
 
 import { Log, entities, fs as frfs, resolver } from "@frctl/core";
 import anymatch from "anymatch";
-import Promise from "bluebird";
 import co from "co";
 import fs from "fs-extra";
 import _ from "lodash";

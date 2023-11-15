@@ -1,7 +1,6 @@
 'use strict';
 
 import _ from "lodash";
-import Promise from "bluebird";
 
 import { utils, mixins } from "@frctl/core";
 import Source from "./source.js";

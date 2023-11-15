@@ -2,7 +2,6 @@
 
 import { mixins, utils } from "@frctl/core";
 import { Web } from "@frctl/web";
-import Promise from "bluebird";
 import _ from "lodash";
 import defaults from "../config.js";
 import AssetSourceCollection from "./api/assets/index.js";
@@ -28,12 +27,6 @@ export class Fractal extends mix(Configurable, Emitter) {
         this._docs = null;
         this._assets = null;
         this._engine = null;
-
-        if (this.debug) {
-            Promise.config({
-                longStackTraces: true,
-            });
-        }
     }
 
     get components() {

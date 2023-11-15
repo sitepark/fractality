@@ -2,7 +2,6 @@
 
 import { Log, mixins, utils } from "@frctl/core";
 import anymatch from "anymatch";
-import Promise from "bluebird";
 import chokidar from "chokidar";
 import express from "express";
 import getPort, { portNumbers } from "get-port";
@@ -61,7 +60,7 @@ export default class Server extends mix(Emitter) {
                 this._app.watch();
             }
 
-            return Promise.props(findPorts(this._config.port, sync)).then((ports) => {
+            return findPorts(this._config.port, sync).then((ports) => {
                 this._ports = ports;
                 this._sync = sync;
 
@@ -291,29 +290,34 @@ async function findPorts(serverPort, useSync) {
     const from = 3000;
     const range = 50;
     const until = from + range;
+
     if (!useSync && serverPort) {
         return {
-            sync: Promise.resolve(null),
-            server: Promise.resolve(serverPort),
+            sync: null,
+            server: serverPort,
         };
     }
+
     if (useSync && serverPort) {
         return {
-            sync: Promise.resolve(serverPort),
-            server: getPort({
+            sync: serverPort,
+            server: await getPort({
                 port: portNumbers(serverPort + 1, parseInt(serverPort, 10) + range),
                 host: ip,
             }),
         };
-    } else if (!useSync && !serverPort) {
+    }
+
+    if (!useSync && !serverPort) {
         return {
-            sync: Promise.resolve(null),
-            server: getPort({
+            sync: null,
+            server: await getPort({
                 port: portNumbers(from, until),
                 host: ip,
             }),
         };
-    } else if (useSync && !serverPort) {
+    }
+    if (useSync && !serverPort) {
         const syncPort = await getPort({
             port: portNumbers(from, until),
             host: ip,

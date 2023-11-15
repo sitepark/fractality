@@ -26,7 +26,6 @@
     "minimist": "^1.2.8",
     "mixwith": "^0.1.1",
     "nunjucks": "^3.2.4",
-    "parent-module": "^2.0.0",
     "path-to-regexp": "^6.2.1",
     "promised-handlebars": "^2.0.1",
     "prop-types": "^15.8.1",

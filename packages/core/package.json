@@ -35,7 +35,7 @@
     "readable-stream": "^4.4.2"
   },
   "devDependencies": {
-    "mock-argv": "^1.1.15",
+    "mock-argv": "^3.0.0",
     "mock-fs": "^4.14.0"
   },
   "publishConfig": {

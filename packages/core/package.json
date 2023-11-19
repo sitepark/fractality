@@ -24,7 +24,7 @@
     "fs-extra": "^11.0.0",
     "globby": "^14.0.0",
     "highlight.js": "^11.9.0",
-    "istextorbinary": "^6.0.0",
+    "istextorbinary": "^8.1.0",
     "js-yaml": "^4.1.0",
     "linguist-languages": "^7.27.0",
     "lodash": "^4.17.21",

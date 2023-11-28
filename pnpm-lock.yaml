@@ -39,8 +39,8 @@ importers:
         specifier: ^4.7.8
         version: 4.7.8
       istextorbinary:
-        specifier: ^9.1.0
-        version: 9.1.0
+        specifier: ^9.2.0
+        version: 9.2.0
       js-beautify:
         specifier: ^1.14.11
         version: 1.14.11
@@ -256,8 +256,8 @@ importers:
         specifier: ^11.9.0
         version: 11.9.0
       istextorbinary:
-        specifier: ^9.1.0
-        version: 9.1.0
+        specifier: ^9.2.0
+        version: 9.2.0
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.0
@@ -3472,8 +3472,8 @@ packages:
     resolution: {integrity: sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==}
     engines: {node: '>=8'}
 
-  /binaryextensions@6.6.0:
-    resolution: {integrity: sha512-ho8Ni4nhrQrlb5zOFi4ICOhQSX40kJ5X07/LuziJlI+Qf67Hf4ghAtdoDy4jDwCHA66Lrbyc+W7Q0ATQ3KbujA==}
+  /binaryextensions@6.7.0:
+    resolution: {integrity: sha512-cC7b/dN87/wIc1viNshobKYrvFx+YlU3ydTrf/Q/i5SElG3jEdiAdvu2OEVSyox/vcMW48d5XfVKNvZtQPDHmw==}
     engines: {node: '>=4'}
     dev: false
 
@@ -4598,11 +4598,11 @@ packages:
       chalk: 4.1.2
     dev: false
 
-  /editions@6.15.0:
-    resolution: {integrity: sha512-E3fxet47eXtvLbgmkJQJq4l5pHZH6P8fi75jZisdFwoYqW2yiDY3+xH6Br4o0C7dEmxsf1mTz5cHV6ssqHtGbQ==}
+  /editions@6.16.0:
+    resolution: {integrity: sha512-RsLYxqnrKIpdKTY670m2pkpYhkd2bPL3ytsSqhm/dMOCCCub9HjIjZACYQDVZ0BMvdKX4Xie6yOzkb1HFJEMyQ==}
     engines: {node: '>=4'}
     dependencies:
-      version-range: 4.6.0
+      version-range: 4.8.0
     dev: false
 
   /editorconfig@1.0.4:
@@ -6796,12 +6796,12 @@ packages:
     resolution: {integrity: sha512-WhB9zCku7EGTj/HQQRz5aUQEUeoQZH2bWcltRErOpymJ4boYE6wL9Tbr23krRPSZ+C5zqNSrSw+Cc7sZZ4b7vg==}
     engines: {node: '>=0.10.0'}
 
-  /istextorbinary@9.1.0:
-    resolution: {integrity: sha512-XbuVwbK864rjThT+MWWiSLDfiKfHyPftdMJjtbHy3jL4fwoieOlyJHlhViuKj/9g8JcG0klwaGS1a7FaMoBgQA==}
+  /istextorbinary@9.2.0:
+    resolution: {integrity: sha512-tqKiKVhx8fWJYtq0Flk0XlIngRLrRysTOf0xcg38hZHuUVTS9UqWoa+U6vjXAfEyUsI102gw+O8y5yp2iO1H5A==}
     engines: {node: '>=4'}
     dependencies:
-      binaryextensions: 6.6.0
-      editions: 6.15.0
+      binaryextensions: 6.7.0
+      editions: 6.16.0
       textextensions: 6.6.0
     dev: false
 
@@ -10875,8 +10875,8 @@ packages:
     engines: {node: '>= 0.8'}
     dev: false
 
-  /version-range@4.6.0:
-    resolution: {integrity: sha512-9abTQcIh2H+BoFSh0l9OfiSxVuYaWFDQCH/JiT3QDj/4tjNNTSd59pljOvCzgbUz86lEEA5pGI2f2fQcyldqSA==}
+  /version-range@4.8.0:
+    resolution: {integrity: sha512-9f/3JWSAky9xO8SHiDUWD/5M0C54HVryDo1Zn3bgoVSTHoF/7RS4GqCiSUInDxmaOfMUkdIyPw7mpMMnJd9tTw==}
     engines: {node: '>=4'}
     dev: false
 

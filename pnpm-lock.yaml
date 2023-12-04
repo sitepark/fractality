@@ -290,8 +290,8 @@ importers:
         specifier: ^3.0.0
         version: 3.0.0
       mock-fs:
-        specifier: ^4.14.0
-        version: 4.14.0
+        specifier: ^5.2.0
+        version: 5.2.0
 
   packages/fractal:
     dependencies:
@@ -7897,10 +7897,6 @@ packages:
   /mock-argv@3.0.0:
     resolution: {integrity: sha512-2pI8OVbJNSS61pA2o6k4jszBemXB+x2Zgv5DCmoo071EPRmKMYEaXHRcFUauCiw8zHDncZMvFEdkl3R7oXP8nQ==}
     engines: {node: '>=14'}
-    dev: true
-
-  /mock-fs@4.14.0:
-    resolution: {integrity: sha512-qYvlv/exQ4+svI3UOvPUpLDF0OMX5euvUH0Ny4N5QyRyhNdgAgUrVH3iUINSzEPLvx0kbo/Bp28GJKIqvE7URw==}
     dev: true
 
   /mock-fs@5.2.0:

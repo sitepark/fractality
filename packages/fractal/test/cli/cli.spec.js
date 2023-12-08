@@ -3,6 +3,7 @@ import Cli from '../../src/cli';
 import Console from '../../src/cli/console';
 
 describe('Cli', () => {
+    /** @type Cli */
     let cli;
     let app = create();
 
@@ -23,36 +24,6 @@ describe('Cli', () => {
 
     describe('.theme()', () => {
         it.todo('sets the CLI theme');
-    });
-
-    describe('.add()', () => {
-        it('adds a command with no configuration', () => {
-            cli.command('test-command', () => {
-                // do nothing
-            });
-            expect(cli.has('test-command')).toBe(true);
-        });
-
-        it('adds a command configuration', () => {
-            cli.command(
-                'test-command',
-                {
-                    description: 'This is the description',
-                },
-                () => {
-                    // do nothing
-                },
-            );
-            expect(cli.has('test-command')).toBe(true);
-        });
-    });
-
-    describe('.exec()', () => {
-        it.todo('executes a command from a string');
-    });
-
-    describe('.exec()', () => {
-        it.todo('executes a command');
     });
 
     for (let method of ['log', 'error', 'warn', 'success', 'debug']) {

@@ -4,35 +4,36 @@ import { Log, mixins, utils } from '@frctl/core';
 import chalk from 'chalk';
 import chokidar from 'chokidar';
 import _ from 'lodash';
-import Vorpal from 'vorpal';
 import Console from './console.js';
 import Notifier from './notifier.js';
 import commands from './commands/index.js';
+import { Command } from "commander";
 
 const mix = mixins.mix;
 const Configurable = mixins.configurable;
 const Emitter = mixins.emitter;
 import { URL, fileURLToPath } from 'url';
 
-const __dirname = fileURLToPath(new URL('.', import.meta.url));
-
 class Cli extends mix(Configurable, Emitter) {
+
+    /**
+     * @param {import('../fractal.js').Fractal} app
+     */
     constructor(app) {
         super(app);
         this.config(app.get('cli'));
 
         this._app = app;
-        this._commands = new Set();
-        this._vorpal = new Vorpal();
+        this._programm = new Command();
+
         this._defaultsLoaded = false;
         this._interactive = false;
         this._configPath = null;
         this._scope = 'project';
         this._cliPackage = {};
         this._env = {};
-        this._commandsDir = `${__dirname}/commands`;
 
-        this.console = new Console(this._vorpal);
+        this.console = new Console();
         this.console.debugMode(app.debug);
 
         this.notify = new Notifier(this.console, this._interactive);
@@ -45,74 +46,17 @@ class Cli extends mix(Configurable, Emitter) {
         }
     }
 
-    has(command) {
-        return !!this._vorpal.find(command);
-    }
-
-    get(command) {
-        return this._vorpal.find(command);
-    }
-
     isInteractive() {
         return this._interactive;
     }
 
-    command(command, action, config) {
-        const console = this.console;
-        const vorpal = this._vorpal;
-        const app = this._app;
-
-        action = action || function () {};
-        config = config || {};
-        if (_.isString(config)) {
-            config = {
-                description: config,
-            };
-        }
-
-        const commandScope = config.scope ? [].concat(config.scope) : ['project'];
-
-        if (!_.includes(commandScope, this._scope)) {
-            // command not available in this scope
-            const cmd = vorpal.command(command.replace(/</g, '[').replace(/>/g, ']'), config.description || ' ');
-            cmd
-                .action((args, done) => {
-                    console.error(
-                        'No Fractal CLI configuration file found. Are you running this from the root directory of your project?',
-                    );
-                    done();
-                })
-                .hidden().__scope = commandScope;
-            cmd.action = undefined; // prevent this from being overridden now it is bound
-            return;
-        }
-
-        const cmd = this._vorpal.command(command, config.description || ' ');
-
-        cmd.action(function (args, done) {
-            this.console = console;
-            this.fractal = app;
-            return action.bind(this)(args, done);
-        });
-        cmd.action = undefined; // prevent this from being overridden now it is bound
-
-        (config.options || []).forEach((opt) => {
-            opt = _.castArray(opt);
-            cmd.option.apply(cmd, opt);
-        });
-        if (config.hidden) {
-            cmd.hidden();
-        }
-        if (config.alias) {
-            cmd.alias(config.alias);
-        }
-        cmd.__scope = commandScope;
-        return cmd;
-    }
 
     exec() {
-        _.forEach(commands, (c) => this.command(c.command, c.action, c.config || {}));
-        return arguments.length ? this._execFromString.apply(this, Array.from(arguments)) : this._execFromArgv();
+
+        for (const registerCmd of commands) {
+            registerCmd(this._app)
+        }
+        this._programm.parse();
     }
 
     theme(theme) {
@@ -146,109 +90,6 @@ class Cli extends mix(Configurable, Emitter) {
 
     get cliPackage() {
         return this._cliPackage;
-    }
-
-    /**
-     * Run a command specified by string
-     * @param  {String} command The command line string to process
-     * @param  {Function} onStdout Output handler
-     * @return {Promise}
-     */
-
-    _execFromString(command, onStdout) {
-        const vorpal = this._vorpal;
-        const app = this._app;
-
-        if (typeof onStdout === 'function') {
-            vorpal.pipe(function (output) {
-                if (output) {
-                    output = output[0];
-                    const ret = onStdout(output);
-                    if (ret) {
-                        return ret;
-                    }
-                    return '';
-                }
-            });
-        }
-
-        return app.load().then(function () {
-            return vorpal.execSync(command);
-        });
-    }
-
-    /**
-     * Run a command by parsing argv
-     * @return {Promise}
-     */
-
-    _execFromArgv() {
-        const input = utils.parseArgv();
-        const console = this.console;
-        const vorpal = this._vorpal;
-        const app = this._app;
-
-        if (input.command) {
-            // non-interactive mode
-
-            vorpal.ui.attach = () => {}; // fix for vorpal bug in 1.11.4
-
-            if (this._scope === 'global') {
-                vorpal.parse(process.argv);
-                return;
-            }
-
-            return app.load().then(() => {
-                vorpal.parse(process.argv);
-            });
-        } else {
-            // interactive mode
-
-            if (input.command && !vorpal.find(input.command)) {
-                console.error(`The ${input.command} command is not recognised.`);
-                return;
-            }
-
-            if (this._scope == 'project') {
-                this._interactive = true;
-
-                console.slog().log('Initialising Fractal....');
-
-                return app.load().then(() => {
-                    app.watch();
-                    this._watchConfigFile();
-
-                    vorpal.delimiter(console.theme.delimiter());
-                    vorpal.history('fractal');
-
-                    console
-                        .box(
-                            'Fractal interactive CLI',
-                            `- Use the ${chalk.magenta(
-                                'help',
-                            )} command to see all available commands.\n- Use the ${chalk.magenta(
-                                'exit',
-                            )} command to exit the app.`,
-                            `Powered by Fractal v${app.version}`,
-                        )
-                        .unslog()
-                        .br();
-
-                    return vorpal.show();
-                });
-            } else {
-                console
-                    .box(
-                        'Fractal CLI',
-                        `No local Fractal configuration found.
-You can use the ${chalk.magenta('fractal new')} command to create a new project.`,
-                        `Powered by Fractal v${app.version}`,
-                    )
-                    .unslog();
-
-                return;
-            }
-        }
     }
 
     _watchConfigFile() {

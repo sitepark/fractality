@@ -62,5 +62,12 @@
     "test": "pnpm run test:unit",
     "test:unit": "vitest run",
     "prepare": "husky install"
+  },
+  "pnpm": {
+    "overrides": {
+      "loader-utils@>=2.0.0 <2.0.4": ">=2.0.4",
+      "loader-utils@>=2.0.0 <2.0.3": ">=2.0.3",
+      "axios@>=0.8.1 <1.6.0": ">=1.6.0"
+    }
   }
 }

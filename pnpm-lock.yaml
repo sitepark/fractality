@@ -270,14 +270,14 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       marked:
-        specifier: ^11.0.0
-        version: 11.0.0
+        specifier: ^11.0.1
+        version: 11.0.1
       marked-highlight:
         specifier: ^2.0.9
-        version: 2.0.9(marked@11.0.0)
+        version: 2.0.9(marked@11.0.1)
       marked-smartypants:
         specifier: ^1.1.5
-        version: 1.1.5(marked@11.0.0)
+        version: 1.1.5(marked@11.0.1)
       minimist:
         specifier: ^1.2.8
         version: 1.2.8
@@ -7454,25 +7454,25 @@ packages:
     resolution: {integrity: sha512-1I+1qpDt4idfgLQG+BNWmrqku+7/2bi5nLf4YwF8y8zXvmfiTBY3PV3ZibfrjBueCByROpuBjLLFCajqkgYoLQ==}
     dev: true
 
-  /marked-highlight@2.0.9(marked@11.0.0):
+  /marked-highlight@2.0.9(marked@11.0.1):
     resolution: {integrity: sha512-HAK1WJSK6CGVDzplOf6layWFz1lHm8Fsjd+SEUYmLhAZmM8TlYmErC/hTphoiOxogYqGQGt3Ghug3Yhs+s+3jw==}
     peerDependencies:
       marked: '>=4 <12'
     dependencies:
-      marked: 11.0.0
+      marked: 11.0.1
     dev: false
 
-  /marked-smartypants@1.1.5(marked@11.0.0):
+  /marked-smartypants@1.1.5(marked@11.0.1):
     resolution: {integrity: sha512-gp+IpDsthwcXJ/sWT8si7dGWL6Diag3Iy4+OOoMZnhjFAox9z77cWfqQUmwY9oP9XACWZeiBXvWW1TOjTbvwAw==}
     peerDependencies:
       marked: '>=4 <12'
     dependencies:
-      marked: 11.0.0
+      marked: 11.0.1
       smartypants: 0.2.2
     dev: false
 
-  /marked@11.0.0:
-    resolution: {integrity: sha512-2GsW34uXaFEGTQ/+3rCnNC6vUYTAgFuDLGl70v/aWinA5mIJtTrrFAmfbLOfVvgPyxXuDVL9He/7reCK+6j3Sw==}
+  /marked@11.0.1:
+    resolution: {integrity: sha512-P4kDhFEMlvLePBPRwOcMOv6+lYUbhfbSxJFs3Jb4Qx7v6K7l+k8Dxh9CEGfRvK71tL+qIFz5y7Pe4uzt4+/A3A==}
     engines: {node: '>= 18'}
     hasBin: true
     dev: false

@@ -51,12 +51,11 @@ class Cli extends mix(Configurable, Emitter) {
     }
 
 
-    exec() {
-
+    async exec() {
         for (const registerCmd of commands) {
             registerCmd(this._app)
         }
-        this._programm.parse();
+        await this._programm.parseAsync();
     }
 
     theme(theme) {

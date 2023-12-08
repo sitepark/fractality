@@ -13,8 +13,8 @@ export default function (fractal) {
         .option('-t, --theme <package-name>', 'The name of custom UI theme to use, if required')
         .option('-s, --sync', 'Use BrowserSync to sync and reload pages when changes occur')
         .option('-w, --watch', 'Watch the filesystem for changes.')
-        .action((_args, options) => {
-            const server = fractal.web.server(options);
+        .action(async (args) => {
+            const server = fractal.web.server(args);
 
             server.on('ready', () => {
                 const header = 'Fractal web UI server is running!';
@@ -45,12 +45,6 @@ export default function (fractal) {
                 }
             });
 
-            server.on('destroy', () => done());
-            server.on('stopped', () => done());
-
-            server.start(options.sync).catch((e) => {
-                console.error(e);
-                done();
-            });
+            await server.start(args.sync);
         })
 }

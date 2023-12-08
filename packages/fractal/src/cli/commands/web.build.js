@@ -11,8 +11,8 @@ export default function (fractal) {
     cli._programm.command('build')
         .description('Build a static version of the web UI')
         .option('-t, --theme <package-name>', 'The name of custom UI theme to use, if required')
-        .action((_args, options) => {
-            const builder = fractal.web.builder(options);
+        .action(async (args) => {
+            const builder = fractal.web.builder(args);
 
             builder.on('start', () => {
                 console.success('Build started...');
@@ -26,18 +26,17 @@ export default function (fractal) {
                 console.error(err.message, err).persist();
             });
 
-            return builder
-                .build()
-                .then((data) => {
-                    console.persist();
-                    const e = data.errorCount;
-                    console[e ? 'warn' : 'success'](
-                        `Build finished with ${e === 0 ? 'no' : e} error${e == 1 ? '' : 's'}.`,
-                    ).unslog();
-                })
-                .catch((e) => {
-                    console.error(e).unslog().br();
-                });
+            try {
+                const data = await builder.build()
+
+                console.persist();
+                const e = data.errorCount;
+                console[e ? 'warn' : 'success'](
+                    `Build finished with ${e === 0 ? 'no' : e} error${e == 1 ? '' : 's'}.`,
+                ).unslog();
+            } catch(e) {
+                console.error(e).unslog().br();
+            }
         })
 
 };

@@ -273,8 +273,8 @@ importers:
         specifier: ^11.1.0
         version: 11.1.0
       marked-highlight:
-        specifier: ^2.0.9
-        version: 2.0.9(marked@11.1.0)
+        specifier: ^2.1.0
+        version: 2.1.0(marked@11.1.0)
       marked-smartypants:
         specifier: ^1.1.5
         version: 1.1.5(marked@11.1.0)
@@ -7466,8 +7466,8 @@ packages:
     resolution: {integrity: sha512-1I+1qpDt4idfgLQG+BNWmrqku+7/2bi5nLf4YwF8y8zXvmfiTBY3PV3ZibfrjBueCByROpuBjLLFCajqkgYoLQ==}
     dev: true
 
-  /marked-highlight@2.0.9(marked@11.1.0):
-    resolution: {integrity: sha512-HAK1WJSK6CGVDzplOf6layWFz1lHm8Fsjd+SEUYmLhAZmM8TlYmErC/hTphoiOxogYqGQGt3Ghug3Yhs+s+3jw==}
+  /marked-highlight@2.1.0(marked@11.1.0):
+    resolution: {integrity: sha512-peBvgGZZqUw074Vy/N8Y7/6JQhSnR54/T0Ozq2/fAIBzcYfVfExFdQJptIhQxreR1elpwvJRrqhp6S/Prk8prA==}
     peerDependencies:
       marked: '>=4 <12'
     dependencies:

@@ -515,8 +515,8 @@ importers:
         specifier: '>= 1.1.7 < 2'
         version: link:../fractal
       import-sync:
-        specifier: ^2.1.2
-        version: 2.1.2
+        specifier: ^2.2.0
+        version: 2.2.0
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -2046,6 +2046,11 @@ packages:
     resolution: {integrity: sha512-gMsVel9D7f2HLkBma9VbtzZRehRogVRfbr++f06nL2vnCGCNlzOD+/MUov/F4p8myyAHspEhVobgjpX64q5m6A==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
+
+  /@httptoolkit/esm@3.3.0:
+    resolution: {integrity: sha512-gS+TH14750cveYP5p2q/oLyjVV5+qRFZMOpsPzK1KrgacqKc6RLDmt3ioGaMjsn1aianQbROkl4QXDJmO5swPA==}
+    engines: {node: '>=6'}
+    dev: false
 
   /@humanwhocodes/config-array@0.11.13:
     resolution: {integrity: sha512-JSBDMiDKSzQVngfRjOdFXgFfklaXI4K9nLF49Auh21lmBWRLIK3+xTErTWD4KU54pb6coM6ESE7Awz/FNU3zgQ==}
@@ -5205,11 +5210,6 @@ packages:
       - supports-color
     dev: true
 
-  /esm@3.2.25:
-    resolution: {integrity: sha512-U1suiZ2oDVWv4zPO56S0NcR5QriEahGtdN2OR6FiOG4WJvcjBVFB0qI4+eKoWFH483PKGuLuu6V8Z4T5g63UVA==}
-    engines: {node: '>=6'}
-    dev: false
-
   /espree@9.6.1:
     resolution: {integrity: sha512-oruZaFkjorTpF32kDSI5/75ViwGeZginGGy2NoOSg3Q9bnwlnmDm4HLnkl0RE3n+njDXR037aY1+x58Z/zFdwQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
@@ -6433,10 +6433,10 @@ packages:
       resolve-cwd: 3.0.0
     dev: true
 
-  /import-sync@2.1.2:
-    resolution: {integrity: sha512-Zz48pnwt7D6HWI/OV2J8FRCtalVJYWvQiJDEatimu9CcqEpNJNYmij9FfY+PktWHgGzTR+Bs9igYxRbKdyMaTQ==}
+  /import-sync@2.2.0:
+    resolution: {integrity: sha512-RJlt/xfRQUHMy6BE+Le+AiGjIPXGP3RaQ71hVePA+HHTT8hZxGwvboHQ96AdBl1JEp2+U2YsluqtbSe8W1y2Pw==}
     dependencies:
-      esm: 3.2.25
+      '@httptoolkit/esm': 3.3.0
     dev: false
 
   /imurmurhash@0.1.4:

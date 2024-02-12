@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.23.9",
-    "@babel/eslint-parser": "^7.23.3",
+    "@babel/eslint-parser": "^7.23.10",
     "@babel/preset-env": "^7.23.9",
     "@frctl/web": "^0.1.12",
     "autoprefixer": "^10.4.17",

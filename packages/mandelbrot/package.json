@@ -37,7 +37,7 @@
     "css-loader": "^6.10.0",
     "expose-loader": "^5.0.0",
     "file-loader": "^6.2.0",
-    "globby": "^14.0.0",
+    "globby": "^14.0.1",
     "highlight.js": "^11.9.0",
     "jquery": "^3.7.1",
     "jquery-pjax": "^2.0.1",

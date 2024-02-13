@@ -40,7 +40,7 @@
     "eslint-plugin-react": "^7.33.2",
     "husky": "^9.0.10",
     "jest-extended": "^4.0.2",
-    "lerna": "^8.0.2",
+    "lerna": "^8.1.2",
     "lint-staged": "^15.2.2",
     "mock-argv": "^3.0.0",
     "mock-fs": "^5.2.0",

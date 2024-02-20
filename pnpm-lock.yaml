@@ -47,8 +47,8 @@ importers:
         specifier: ^9.5.0
         version: 9.5.0
       js-beautify:
-        specifier: ^1.15.0
-        version: 1.15.0
+        specifier: ^1.15.1
+        version: 1.15.1
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.0
@@ -388,8 +388,8 @@ importers:
         specifier: '>= 1.5 < 2'
         version: link:../fractal
       js-beautify:
-        specifier: ^1.15.0
-        version: 1.15.0
+        specifier: ^1.15.1
+        version: 1.15.1
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -6959,8 +6959,8 @@ packages:
     resolution: {integrity: sha512-m4avr8yL8kmFN8psrbFFFmB/If14iN5o9nw/NgnnM+kybDJpRsAynV2BsfpTYrTRysYUdADVD7CkUUizgkpLfg==}
     dev: true
 
-  /js-beautify@1.15.0:
-    resolution: {integrity: sha512-U1f+LPtn13M0OS0ChNMpM7wA7J47ECqwIcvayrZu+o0FLLt9FckoT6XOO1grhBS2vZjSt79K+vkUuP0o+BIdsA==}
+  /js-beautify@1.15.1:
+    resolution: {integrity: sha512-ESjNzSlt/sWE8sciZH8kBF8BPlwXPwhR6pWKAw8bw4Bwj+iZcnKW6ONWUutJ7eObuBZQpiIb8S7OYspWrKt7rA==}
     engines: {node: '>=14'}
     hasBin: true
     dependencies:

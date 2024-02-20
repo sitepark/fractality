@@ -14,7 +14,7 @@
     "gray-matter": "^4.0.3",
     "handlebars": "^4.7.8",
     "istextorbinary": "^9.5.0",
-    "js-beautify": "^1.15.0",
+    "js-beautify": "^1.15.1",
     "js-yaml": "^4.1.0",
     "liftoff": "^4.0.0",
     "lodash": "^4.17.21",

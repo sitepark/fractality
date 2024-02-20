@@ -50,7 +50,7 @@
     "resolve-url-loader": "^5.0.0",
     "rimraf": "^5.0.5",
     "sass": "^1.71.0",
-    "sass-loader": "^14.1.0",
+    "sass-loader": "^14.1.1",
     "sass-mq": "^6.0.0",
     "webpack": "^5.90.2",
     "webpack-bundle-analyzer": "^4.10.1",

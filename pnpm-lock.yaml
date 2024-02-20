@@ -340,8 +340,8 @@ importers:
         specifier: ^4.7.8
         version: 4.7.8
       inquirer:
-        specifier: ^9.2.14
-        version: 9.2.14
+        specifier: ^9.2.15
+        version: 9.2.15
       liftoff:
         specifier: ^4.0.0
         version: 4.0.0
@@ -6473,8 +6473,8 @@ packages:
       wrap-ansi: 6.2.0
     dev: true
 
-  /inquirer@9.2.14:
-    resolution: {integrity: sha512-4ByIMt677Iz5AvjyKrDpzaepIyMewNvDcvwpVVRZNmy9dLakVoVgdCHZXbK1SlVJra1db0JZ6XkJyHsanpdrdQ==}
+  /inquirer@9.2.15:
+    resolution: {integrity: sha512-vI2w4zl/mDluHt9YEQ/543VTCwPKWiHzKtm9dM2V0NdFcqEexDAjUHzO1oA60HRNaVifGXXM1tRRNluLVHa0Kg==}
     engines: {node: '>=18'}
     dependencies:
       '@ljharb/through': 2.3.12

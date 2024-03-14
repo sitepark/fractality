@@ -1,4 +1,4 @@
-import { components } from '@frctl/adapter-tests';
+import { components } from '@fractality/adapter-tests';
 
 import fractal from '../fractal.config.js';
 

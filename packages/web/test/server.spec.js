@@ -1,4 +1,4 @@
-import app from '../../fractal/src/fractal';
+import app from '../../fractality/src/fractal';
 
 import Theme from '../src/theme';
 

@@ -2,7 +2,7 @@
 
 import _ from 'lodash';
 import path from 'path';
-import { utils } from '@frctl/core';
+import { utils } from '@fractality/core';
 import adapterUtils from '../utils.js';
 
 /**

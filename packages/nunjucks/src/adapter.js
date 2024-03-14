@@ -4,7 +4,7 @@ import _ from 'lodash';
 import nunjucks from 'nunjucks';
 import path from 'path';
 import fs from 'fs';
-import { Adapter } from '@frctl/core';
+import { Adapter } from '@fractality/core';
 import extensions from './extensions/index.js';
 import filters from './filters/index.js';
 import { AsyncNunjucksEnvironment } from './AsyncNunjucksEnvironment.js';

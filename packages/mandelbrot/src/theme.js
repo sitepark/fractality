@@ -2,7 +2,7 @@
 
 import Path from 'path';
 import _ from 'lodash';
-import { Theme } from '@frctl/web';
+import { Theme } from '@fractality/web';
 import { URL, fileURLToPath } from 'url';
 import filters from './filters.js';
 import fsExtra from 'fs-extra';

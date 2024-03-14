@@ -1,19 +1,19 @@
 {
-  "name": "@frctl/react-example",
+  "name": "@fractality/react-example",
   "version": "0.2.11",
   "type": "module",
   "private": true,
   "scripts": {
-    "start": "fractal start",
-    "build": "fractal build"
+    "start": "fractality start",
+    "build": "fractality build"
   },
   "dependencies": {
-    "@frctl/fractal": "^1.5.15",
-    "@frctl/mandelbrot": "^1.10.3",
-    "@frctl/react": "^0.3.7"
+    "@fractality/fractality": "^1.5.15",
+    "@fractality/mandelbrot": "^1.10.3",
+    "@fractality/react": "^0.3.7"
   },
   "devDependencies": {
-    "@frctl/adapter-tests": "workspace:../adapter-tests",
+    "@fractality/adapter-tests": "workspace:../adapter-tests",
     "node-fetch": "^3.3.2",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",

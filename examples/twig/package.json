@@ -1,19 +1,19 @@
 {
-  "name": "@frctl/twig-example",
+  "name": "@fractality/twig-example",
   "version": "0.2.11",
   "type": "module",
   "private": true,
   "scripts": {
-    "start": "fractal start --sync",
-    "build": "fractal build"
+    "start": "fractality start --sync",
+    "build": "fractality build"
   },
   "dependencies": {
-    "@frctl/fractal": "^1.5.15",
-    "@frctl/mandelbrot": "^1.10.3",
-    "@frctl/twig": "^1.2.13"
+    "@fractality/fractality": "^1.5.15",
+    "@fractality/mandelbrot": "^1.10.3",
+    "@fractality/twig": "^1.2.13"
   },
   "devDependencies": {
     "node-fetch": "^3.3.2",
-    "@frctl/adapter-tests": "workspace:../adapter-tests"
+    "@fractality/adapter-tests": "workspace:../adapter-tests"
   }
 }

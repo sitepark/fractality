@@ -1,4 +1,4 @@
-import { collated } from '@frctl/adapter-tests';
+import { collated } from '@fractality/adapter-tests';
 
 import fractal from '../../fractal.config.js';
 

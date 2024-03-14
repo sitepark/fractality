@@ -1,4 +1,4 @@
-import { create } from '../../fractal/src/fractal';
+import { create } from '../../fractality/src/fractal';
 
 import Web from '../src/web';
 

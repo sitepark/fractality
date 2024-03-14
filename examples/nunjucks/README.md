@@ -1,6 +1,6 @@
-# Fractal Nunjucks example
+# Fractality Nunjucks example
 
-This is an example instance of Fractal using the Nunjucks adapter.
+This is an example instance of Fractality using the Nunjucks adapter.
 
 ## Setup
 
@@ -10,7 +10,7 @@ This is an example instance of Fractal using the Nunjucks adapter.
 npm start
 ```
 
-to start Fractal server in development mode, or:
+to start Fractality server in development mode, or:
 
 ```
 npm run build

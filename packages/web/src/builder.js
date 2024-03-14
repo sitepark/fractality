@@ -1,6 +1,6 @@
 'use strict';
 
-import { Log, mixins } from '@frctl/core';
+import { Log, mixins } from '@fractality/core';
 import anymatch from 'anymatch';
 import fs from 'fs-extra';
 import _ from 'lodash';

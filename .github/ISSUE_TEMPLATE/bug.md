@@ -6,7 +6,7 @@ labels: bug, needs-triage
 
 <!--
 Before submitting your issue, please ensure you have:
-    * Checked the Fractal documentation: https://fractal.build/guide
+    * Checked the Fractality documentation: https://fractal.build/guide
     * Checked that your issue isn’t already filed: https://github.com/issues?utf8=%E2%9C%93&q=is%3Aissue+user%3Afrctl
 -->
 
@@ -26,6 +26,6 @@ Before submitting your issue, please ensure you have:
 
 ### Context
 
--   Fractal version: <!-- run `npm list @frctl/fractal` / `yarn list @frctl/fractal` -->
+-   Fractality version: <!-- run `npm list @fractality/fractality` / `yarn list @fractality/fractality` -->
 -   Node version: <!-- run `node -v` -->
 -   OS: <!-- Windows 10, MacOS 10.14.x, Ubuntu 20 -->

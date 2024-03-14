@@ -1,7 +1,7 @@
 'use strict';
 
 import _ from 'lodash';
-import { utils, mixins } from '@frctl/core';
+import { utils, mixins } from '@fractality/core';
 import Server from './server.js';
 import Builder from './builder.js';
 import Theme from './theme.js';
@@ -75,7 +75,7 @@ export default class Web extends mix(Configurable, Emitter) {
         //     }
         // }
         if (!(theme instanceof Theme)) {
-            throw new Error('Fractal themes must inherit from the base Theme class.');
+            throw new Error('Fractality themes must inherit from the base Theme class.');
         }
         const stat = [].concat(this.get('static'));
         for (const s of stat) {

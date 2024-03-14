@@ -4,10 +4,10 @@ import Path from 'path';
 import fs from 'fs';
 import crypto from 'crypto';
 import minimist from 'minimist';
-import linguistLanguages from 'linguist-languages'
+import linguistLanguages from 'linguist-languages';
 import _ from 'lodash';
 
-const languages = Object.values(linguistLanguages)
+const languages = Object.values(linguistLanguages);
 
 export function lang(filePath) {
     const name = Path.extname(filePath).toLowerCase();
@@ -25,12 +25,12 @@ export function lang(filePath) {
                 color: null,
             };
         default: {
-            const result = languages.find(lang => (lang.extensions ?? []).includes(name));
+            const result = languages.find((lang) => (lang.extensions ?? []).includes(name));
             return {
                 name: result?.name || name,
                 mode: result?.aceMode || 'plaintext',
                 scope: result?.tmScope || null,
-                color: result?.color || null
+                color: result?.color || null,
             };
         }
     }

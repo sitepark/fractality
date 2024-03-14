@@ -43,7 +43,7 @@
 -   [ ] Convert to Typescript
 -   [ ] Provide Types for Component-Data
     ```ts
-    import { defineComponent } from '@frctl/fractal';
+    import { defineComponent } from '@fractality/fractal';
     export default defineComponent({
         name: 'button',
     });

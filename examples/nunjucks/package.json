@@ -1,19 +1,19 @@
 {
-  "name": "@frctl/nunjucks-example",
+  "name": "@fractality/nunjucks-example",
   "version": "0.0.10",
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "fractal start --sync",
-    "build": "fractal build"
+    "start": "fractality start --sync",
+    "build": "fractality build"
   },
   "dependencies": {
-    "@frctl/fractal": "^1.5.15",
-    "@frctl/mandelbrot": "^1.10.3",
-    "@frctl/nunjucks": "^2.0.15"
+    "@fractality/fractality": "^1.5.15",
+    "@fractality/mandelbrot": "^1.10.3",
+    "@fractality/nunjucks": "^2.0.15"
   },
   "devDependencies": {
     "node-fetch": "^3.3.2",
-    "@frctl/adapter-tests": "workspace:../adapter-tests"
+    "@fractality/adapter-tests": "workspace:../adapter-tests"
   }
 }

@@ -1,10 +1,10 @@
-# @frctl/mandelbrot
+# @fractality/mandelbrot
 
 The default web UI theme for [Fractal](http://github.com/frctl/fractal).
 
-[![NPM Version](https://img.shields.io/npm/v/@frctl/mandelbrot)](https://www.npmjs.com/package/@frctl/mandelbrot)
+[![NPM Version](https://img.shields.io/npm/v/@fractality/mandelbrot)](https://www.npmjs.com/package/@fractality/mandelbrot)
 
-See the Fractal [documentation](https://fractal.build/guide) for details on [configuration and usage](https://fractal.build/guide/web/default-theme.html).
+See the Fractality [documentation](https://fractal.build/guide) for details on [configuration and usage](https://fractal.build/guide/web/default-theme.html).
 
 In order to get a locale aware date for the 'last updated' text, install the
 [full-icu](https://github.com/unicode-org/full-icu-npm) module.
@@ -31,7 +31,7 @@ You can also build the files once with:
 npm run build
 ```
 
-You can see your changes in one of our [example Fractal instances](https://github.com/frctl/fractal/tree/main/examples).
+You can see your changes in one of our [example Fractality instances](https://github.com/frctl/fractal/tree/main/examples).
 
 ## License
 

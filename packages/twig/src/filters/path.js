@@ -1,7 +1,7 @@
 'use strict';
 
 import _ from 'lodash';
-import { utils } from '@frctl/core';
+import { utils } from '@fractality/core';
 
 export default function (fractal) {
     return function (path) {

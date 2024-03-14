@@ -1,0 +1,44 @@
+'use strict';
+
+/*
+ * Import the path module
+ */
+import path from 'node:path';
+
+/*
+ * import the Fractality module
+ */
+
+import { create } from '@fractality/fractality';
+
+const fractal = create();
+
+export default fractal;
+
+{{#if projectTitle}}
+/*
+ * Give your project a title.
+ */
+fractal.set('project.title', '{{ projectTitle }}');
+{{/if}}
+
+{{#if componentsDir}}
+/*
+ * Tell Fractality where to look for components.
+ */
+fractal.components.set('path', path.join(__dirname, '{{ componentsDir }}'));
+{{/if}}
+
+{{#if docsDir}}
+/*
+ * Tell Fractality where to look for documentation pages.
+ */
+fractal.docs.set('path', path.join(__dirname, '{{ docsDir }}'));
+{{/if}}
+
+{{#if publicDir}}
+/*
+ * Tell the Fractality web preview plugin where to look for static assets.
+ */
+fractal.web.set('static.path', path.join(__dirname, '{{ publicDir }}'));
+{{/if}}

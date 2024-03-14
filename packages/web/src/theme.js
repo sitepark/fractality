@@ -2,7 +2,7 @@
 
 import _ from 'lodash';
 import { pathToRegexp, compile } from 'path-to-regexp';
-import { mixins } from '@frctl/core';
+import { mixins } from '@fractality/core';
 const mix = mixins.mix;
 const Configurable = mixins.configurable;
 const Emitter = mixins.emitter;

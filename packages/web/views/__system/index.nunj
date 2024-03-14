@@ -1,7 +1,7 @@
 {% extends '__system/skeleton.nunj' %}
 
 {% set page = {
-    title: 'Your Fractal project server is up and running!'
+    title: 'Your Fractality project server is up and running!'
 } %}
 
 {% block body %}

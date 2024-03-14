@@ -1,5 +1,5 @@
 {
-  "name": "@frctl/handlebars",
+  "name": "@fractality/handlebars",
   "version": "1.2.15",
   "type": "module",
   "description": "Use Handlebars templates with Fractal.",
@@ -16,13 +16,13 @@
   },
   "homepage": "https://github.com/frctl/fractal/tree/main/packages/handlebars",
   "dependencies": {
-    "@frctl/core": "^0.3.5",
+    "@fractality/core": "^0.3.5",
     "handlebars": "^4.7.8",
     "lodash": "^4.17.21",
     "promised-handlebars": "^2.0.1"
   },
   "peerDependencies": {
-    "@frctl/fractal": "^1.1.0"
+    "@fractality/fractality": "^1.1.0"
   },
   "publishConfig": {
     "access": "public"

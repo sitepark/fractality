@@ -1,6 +1,6 @@
 'use strict';
 
-import * as Fractal from '@frctl/core';
+import * as Fractality from '@fractality/core';
 import _ from 'lodash';
 import Path from 'path';
 import Twig from 'twig';
@@ -18,13 +18,13 @@ class TwigAdapter extends Fractal.Adapter {
         this._config = config;
         this._loaderName = `fractal-${source.name}`;
 
-        source.set('engine', '@frctl/twig');
+        source.set('engine', '@fractality/twig');
 
         let self = this;
 
         Twig.extend(function (Twig) {
             /*
-             * Register a Fractal template loader. Locations can be handles or paths.
+             * Register a Fractality template loader. Locations can be handles or paths.
              */
             Twig.Templates.registerLoader(self._loaderName, function (location, params) {
                 if (params.precompiled) {

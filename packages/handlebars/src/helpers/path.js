@@ -1,6 +1,6 @@
 'use strict';
 
-import { utils } from '@frctl/core';
+import { utils } from '@fractality/core';
 import Handlebars from 'handlebars';
 import _ from 'lodash';
 

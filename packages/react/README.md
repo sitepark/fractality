@@ -5,16 +5,16 @@ An adapter to let you use React templates with Fractal. Not supported for docs.
 ## Installation
 
 ```
-npm install @frctl/react --save-dev
+npm install @fractality/react --save-dev
 ```
 
 ## Usage
 
-Require the adapter in your Fractal configuration file:
+Require the adapter in your Fractality configuration file:
 
 ```js
 // Import the adapter factory:
-import createReactAdapter from '@frctl/react';
+import createReactAdapter from '@fractality/react';
 // Create the adapter instance:
 const reactAdapter = createReactAdapter({
     /* options */
@@ -28,7 +28,7 @@ fractal.components.engine(reactAdapter);
 The adapter exposes a React Context Provider component called PathProvider to allow usage of relative paths in static HTML exports. The rendered components and preview layouts are automatically wrapped with it.
 
 ```js
-import { PathProvider, PathContext, usePath } from '@frctl/react/components';
+import { PathProvider, PathContext, usePath } from '@fractality/react/components';
 
 const Button = (props) => {
     // use via useContext hook

@@ -1,6 +1,6 @@
 'use strict';
 
-import { Log, mixins, utils } from '@frctl/core';
+import { Log, mixins, utils } from '@fractality/core';
 import anymatch from 'anymatch';
 import chokidar from 'chokidar';
 import express from 'express';

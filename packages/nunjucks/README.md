@@ -1,8 +1,8 @@
-# @frctl/nunjucks
+# @fractality/nunjucks
 
-[Nunjucks](http://mozilla.github.io/nunjucks/) template engine adapter for [Fractal](http://github.com/frctl/fractal).
+[Nunjucks](http://mozilla.github.io/nunjucks/) template engine adapter for [Fractal](http://github.com/fractality/fractality).
 
-[![NPM Version](https://img.shields.io/npm/v/@frctl/nunjucks)](https://www.npmjs.com/package/@frctl/nunjucks)
+[![NPM Version](https://img.shields.io/npm/v/@fractality/nunjucks)](https://www.npmjs.com/package/@fractality/nunjucks)
 
 ## 🚨 Breaking changes in v2.0
 
@@ -13,13 +13,13 @@
 ## Installation
 
 ```bash
-npm i @frctl/nunjucks --save
+npm i @fractality/nunjucks --save
 ```
 
 ## Usage
 
 ```javascript
-fractal.components.engine('@frctl/nunjucks'); // register the Nunjucks adapter for your components
+fractal.components.engine('@fractality/nunjucks'); // register the Nunjucks adapter for your components
 fractal.components.set('ext', '.njk'); // look for files with a .njk file extension
 ```
 
@@ -28,7 +28,7 @@ fractal.components.set('ext', '.njk'); // look for files with a .njk file extens
 If you want to register custom [filters](https://mozilla.github.io/nunjucks/api.html#custom-filters), global variables or [extensions](https://mozilla.github.io/nunjucks/api.html#custom-tags) to the underlying Nunjucks engine then you can configure an instance as follows:
 
 ```javascript
-import nunjucksAdapter from '@frctl/nunjucks';
+import nunjucksAdapter from '@fractality/nunjucks';
 const nunj = nunjucksAdapter({
     env: {
         // Nunjucks environment opts: https://mozilla.github.io/nunjucks/api.html#configure
@@ -50,7 +50,7 @@ fractal.components.engine(nunj); /* set as the default template engine for compo
 For example, to register the 'shorten' filter example from the [Nujucks docs](https://mozilla.github.io/nunjucks/api.html#custom-filters):
 
 ```javascript
-import nunjucksAdapter from '@frctl/nunjucks';
+import nunjucksAdapter from '@fractality/nunjucks';
 const nunj = nunjucksAdapter({
     filters: {
         shorten: function (str, count) {
@@ -72,12 +72,12 @@ A message for you: {{ message|shorten(20) }}
 
 ## Including and extending non-component view templates
 
-By default, the Nunjucks adapter expects you to use the Fractal component `@handle` syntax to refer to components to include or extend in your templates.
+By default, the Nunjucks adapter expects you to use the Fractality component `@handle` syntax to refer to components to include or extend in your templates.
 
 However, if you wish to include (or extend) non-component templates, you can also specify a path (or an array of paths) of directories for Nunjucks to search in for non-component templates when configuring your Nunjucks instance. For example:
 
 ```javascript
-import nunjucksAdapter from '@frctl/nunjucks';
+import nunjucksAdapter from '@fractality/nunjucks';
 const nunj = nunjucksAdapter({
     paths: ['path/to/files'],
 });
@@ -167,11 +167,11 @@ The path argument should begin with a slash and be relative to the web root. Dur
 
 The Nunjucks adapter also makes a few special variables available to your templates. They all have names prefixed with an underscore to help prevent clashes with any context data variables that are set by the user.
 
-Note that using these may tie your templates a little more tightly into Fractal so you may choose not to use them for that reason.
+Note that using these may tie your templates a little more tightly into Fractality so you may choose not to use them for that reason.
 
 ### \_config
 
-Contains the full Fractal configuration object. Useful for when you want to refer to a configuration item in your documentation (or components).
+Contains the full Fractality configuration object. Useful for when you want to refer to a configuration item in your documentation (or components).
 
 ```html
 {{ _config.project.title }}

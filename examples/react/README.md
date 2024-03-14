@@ -1,6 +1,6 @@
-# Fractal React example
+# Fractality React example
 
-This is an example instance of Fractal using the React adapter.
+This is an example instance of Fractality using the React adapter.
 
 ## Setup
 
@@ -10,7 +10,7 @@ This is an example instance of Fractal using the React adapter.
 npm start
 ```
 
-to start Fractal server in development mode, or:
+to start Fractality server in development mode, or:
 
 ```
 npm run build

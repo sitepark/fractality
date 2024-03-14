@@ -4,7 +4,7 @@ import _ from 'lodash';
 import React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 
-import { Adapter, utils } from '@frctl/core';
+import { Adapter, utils } from '@fractality/core';
 
 import PathProvider from '../components/path-provider.js';
 import clearModule from './clear-module.js';

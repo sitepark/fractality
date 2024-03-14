@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { usePath } from '@frctl/react/components';
+import { usePath } from '@fractality/react/components';
 
 const Path = () => {
     const path = usePath();

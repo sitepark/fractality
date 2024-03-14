@@ -1,5 +1,5 @@
 {
-  "name": "@frctl/adapter-tests",
+  "name": "@fractality/adapter-tests",
   "version": "0.2.0",
   "type": "module",
   "private": true,

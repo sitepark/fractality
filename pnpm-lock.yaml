@@ -157,17 +157,17 @@ importers:
 
   examples/handlebars:
     dependencies:
-      '@frctl/fractal':
+      '@fractality/fractality':
         specifier: ^1.5.15
-        version: link:../../packages/fractal
-      '@frctl/handlebars':
+        version: link:../../packages/fractality
+      '@fractality/handlebars':
         specifier: ^1.2.15
         version: link:../../packages/handlebars
-      '@frctl/mandelbrot':
+      '@fractality/mandelbrot':
         specifier: ^1.10.3
         version: link:../../packages/mandelbrot
     devDependencies:
-      '@frctl/adapter-tests':
+      '@fractality/adapter-tests':
         specifier: workspace:../adapter-tests
         version: link:../adapter-tests
       node-fetch:
@@ -176,17 +176,17 @@ importers:
 
   examples/nunjucks:
     dependencies:
-      '@frctl/fractal':
+      '@fractality/fractality':
         specifier: ^1.5.15
-        version: link:../../packages/fractal
-      '@frctl/mandelbrot':
+        version: link:../../packages/fractality
+      '@fractality/mandelbrot':
         specifier: ^1.10.3
         version: link:../../packages/mandelbrot
-      '@frctl/nunjucks':
+      '@fractality/nunjucks':
         specifier: ^2.0.15
         version: link:../../packages/nunjucks
     devDependencies:
-      '@frctl/adapter-tests':
+      '@fractality/adapter-tests':
         specifier: workspace:../adapter-tests
         version: link:../adapter-tests
       node-fetch:
@@ -195,17 +195,17 @@ importers:
 
   examples/react:
     dependencies:
-      '@frctl/fractal':
+      '@fractality/fractality':
         specifier: ^1.5.15
-        version: link:../../packages/fractal
-      '@frctl/mandelbrot':
+        version: link:../../packages/fractality
+      '@fractality/mandelbrot':
         specifier: ^1.10.3
         version: link:../../packages/mandelbrot
-      '@frctl/react':
+      '@fractality/react':
         specifier: ^0.3.7
         version: link:../../packages/react
     devDependencies:
-      '@frctl/adapter-tests':
+      '@fractality/adapter-tests':
         specifier: workspace:../adapter-tests
         version: link:../adapter-tests
       node-fetch:
@@ -223,17 +223,17 @@ importers:
 
   examples/twig:
     dependencies:
-      '@frctl/fractal':
+      '@fractality/fractality':
         specifier: ^1.5.15
-        version: link:../../packages/fractal
-      '@frctl/mandelbrot':
+        version: link:../../packages/fractality
+      '@fractality/mandelbrot':
         specifier: ^1.10.3
         version: link:../../packages/mandelbrot
-      '@frctl/twig':
+      '@fractality/twig':
         specifier: ^1.2.13
         version: link:../../packages/twig
     devDependencies:
-      '@frctl/adapter-tests':
+      '@fractality/adapter-tests':
         specifier: workspace:../adapter-tests
         version: link:../adapter-tests
       node-fetch:
@@ -295,18 +295,18 @@ importers:
         specifier: ^5.2.0
         version: 5.2.0
 
-  packages/fractal:
+  packages/fractality:
     dependencies:
-      '@frctl/core':
+      '@fractality/core':
         specifier: ^0.3.5
         version: link:../core
-      '@frctl/handlebars':
+      '@fractality/handlebars':
         specifier: ^1.2.15
         version: link:../handlebars
-      '@frctl/mandelbrot':
+      '@fractality/mandelbrot':
         specifier: ^1.10.3
         version: link:../mandelbrot
-      '@frctl/web':
+      '@fractality/web':
         specifier: ^0.1.12
         version: link:../web
       anymatch:
@@ -366,12 +366,12 @@ importers:
 
   packages/handlebars:
     dependencies:
-      '@frctl/core':
+      '@fractality/core':
         specifier: ^0.3.5
         version: link:../core
-      '@frctl/fractal':
+      '@fractality/fractality':
         specifier: ^1.1.0
-        version: link:../fractal
+        version: link:../fractality
       handlebars:
         specifier: ^4.7.8
         version: 4.7.8
@@ -384,9 +384,9 @@ importers:
 
   packages/mandelbrot:
     dependencies:
-      '@frctl/fractal':
+      '@fractality/fractality':
         specifier: '>= 1.5 < 2'
-        version: link:../fractal
+        version: link:../fractality
       js-beautify:
         specifier: ^1.15.1
         version: 1.15.1
@@ -403,7 +403,7 @@ importers:
       '@babel/preset-env':
         specifier: ^7.24.0
         version: 7.24.0(@babel/core@7.24.0)
-      '@frctl/web':
+      '@fractality/web':
         specifier: ^0.1.12
         version: link:../web
       autoprefixer:
@@ -481,12 +481,12 @@ importers:
 
   packages/nunjucks:
     dependencies:
-      '@frctl/core':
+      '@fractality/core':
         specifier: ^0.3.5
         version: link:../core
-      '@frctl/fractal':
+      '@fractality/fractality':
         specifier: '>= 1.1.0-alpha.0 < 2'
-        version: link:../fractal
+        version: link:../fractality
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -508,12 +508,12 @@ importers:
       '@babel/register':
         specifier: ^7.23.7
         version: 7.23.7(@babel/core@7.24.0)
-      '@frctl/core':
+      '@fractality/core':
         specifier: ^0.3.5
         version: link:../core
-      '@frctl/fractal':
+      '@fractality/fractality':
         specifier: '>= 1.1.7 < 2'
-        version: link:../fractal
+        version: link:../fractality
       import-sync:
         specifier: ^2.2.1
         version: 2.2.1
@@ -538,12 +538,12 @@ importers:
 
   packages/twig:
     dependencies:
-      '@frctl/core':
+      '@fractality/core':
         specifier: ^0.3.5
         version: link:../core
-      '@frctl/fractal':
+      '@fractality/fractality':
         specifier: ^1.1.0-beta.1
-        version: link:../fractal
+        version: link:../fractality
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -553,7 +553,7 @@ importers:
 
   packages/web:
     dependencies:
-      '@frctl/core':
+      '@fractality/core':
         specifier: ^0.3.5
         version: link:../core
       anymatch:
@@ -6950,7 +6950,7 @@ packages:
     hasBin: true
     dependencies:
       async: 3.2.5
-      chalk: 4.1.0
+      chalk: 4.1.2
       filelist: 1.0.4
       minimatch: 3.1.2
     dev: true
@@ -8281,7 +8281,7 @@ packages:
       '@yarnpkg/parsers': 3.0.0-rc.46
       '@zkochan/js-yaml': 0.0.6
       axios: 1.6.7
-      chalk: 4.1.0
+      chalk: 4.1.2
       cli-cursor: 3.1.0
       cli-spinners: 2.6.1
       cliui: 8.0.1
@@ -8486,7 +8486,7 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       bl: 4.1.0
-      chalk: 4.1.0
+      chalk: 4.1.2
       cli-cursor: 3.1.0
       cli-spinners: 2.6.1
       is-interactive: 1.0.0
@@ -10232,14 +10232,6 @@ packages:
       emoji-regex: 9.2.2
       strip-ansi: 7.1.0
 
-  /string-width@7.0.0:
-    resolution: {integrity: sha512-GPQHj7row82Hjo9hKZieKcHIhaAIKOJvFSIZXuCU9OASVZrMNUaZuz++SPVrBjnLsnk4k+z9f2EIypgxf2vNFw==}
-    engines: {node: '>=18'}
-    dependencies:
-      emoji-regex: 10.3.0
-      get-east-asian-width: 1.2.0
-      strip-ansi: 7.1.0
-
   /string-width@7.1.0:
     resolution: {integrity: sha512-SEIJCWiX7Kg4c129n48aDRwLbFb2LJmXXFrWBG4NGaRtMQ3myKPKbwrD1BKqQn74oCoNMBVrfDEr5M9YxCsrkw==}
     engines: {node: '>=18'}
@@ -10247,7 +10239,6 @@ packages:
       emoji-regex: 10.3.0
       get-east-asian-width: 1.2.0
       strip-ansi: 7.1.0
-    dev: true
 
   /string.prototype.matchall@4.0.10:
     resolution: {integrity: sha512-rGXbGmOEosIQi6Qva94HUjgPs9vKW+dkG7Y8Q5O2OYkWL6wFaTRZO8zM4mhP94uX55wgyrXzfS2aGtGzUL7EJQ==}
@@ -11451,7 +11442,7 @@ packages:
     engines: {node: '>=18'}
     dependencies:
       ansi-styles: 6.2.1
-      string-width: 7.0.0
+      string-width: 7.1.0
       strip-ansi: 7.1.0
 
   /wrappy@1.0.2:

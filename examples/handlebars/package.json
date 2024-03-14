@@ -1,19 +1,19 @@
 {
-  "name": "@frctl/handlebars-example",
+  "name": "@fractality/handlebars-example",
   "version": "0.3.12",
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "fractal start --sync",
-    "build": "fractal build"
+    "start": "fractality start --sync",
+    "build": "fractality build"
   },
   "dependencies": {
-    "@frctl/fractal": "^1.5.15",
-    "@frctl/handlebars": "^1.2.15",
-    "@frctl/mandelbrot": "^1.10.3"
+    "@fractality/fractality": "^1.5.15",
+    "@fractality/handlebars": "^1.2.15",
+    "@fractality/mandelbrot": "^1.10.3"
   },
   "devDependencies": {
     "node-fetch": "^3.3.2",
-    "@frctl/adapter-tests": "workspace:../adapter-tests"
+    "@fractality/adapter-tests": "workspace:../adapter-tests"
   }
 }

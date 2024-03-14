@@ -1,6 +1,6 @@
-# Fractal Twig example
+# Fractality Twig example
 
-This is an example instance of Fractal using the Twig adapter.
+This is an example instance of Fractality using the Twig adapter.
 
 ## Setup
 
@@ -10,7 +10,7 @@ This is an example instance of Fractal using the Twig adapter.
 npm start
 ```
 
-to start Fractal server in development mode, or:
+to start Fractality server in development mode, or:
 
 ```
 npm run build

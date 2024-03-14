@@ -1,7 +1,7 @@
-import { render } from '@frctl/adapter-tests';
+import { render } from '@fractality/adapter-tests';
 
 import fractal from '../../fractal.config.js';
-import frctlReact from '@frctl/react';
+import frctlReact from '@fractality/react';
 
 describe('render', () => {
     beforeEach(async () => {

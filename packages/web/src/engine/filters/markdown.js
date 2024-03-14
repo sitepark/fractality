@@ -1,6 +1,6 @@
 'use strict';
 
-import { markdown } from '@frctl/core';
+import { markdown } from '@fractality/core';
 
 export default function () {
     return {

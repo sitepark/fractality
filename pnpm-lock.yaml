@@ -515,8 +515,8 @@ importers:
         specifier: '>= 1.1.7 < 2'
         version: link:../fractal
       import-sync:
-        specifier: ^2.2.0
-        version: 2.2.0
+        specifier: ^2.2.1
+        version: 2.2.1
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -6605,8 +6605,8 @@ packages:
       resolve-cwd: 3.0.0
     dev: true
 
-  /import-sync@2.2.0:
-    resolution: {integrity: sha512-RJlt/xfRQUHMy6BE+Le+AiGjIPXGP3RaQ71hVePA+HHTT8hZxGwvboHQ96AdBl1JEp2+U2YsluqtbSe8W1y2Pw==}
+  /import-sync@2.2.1:
+    resolution: {integrity: sha512-eBu9vl+qyaqlbBdZvOLr3PMwgtQf0Hc+hJsbKh5CGMutstvLCFWAQ0PF8cq3s+LumT/ELhOjqHtpSdUTaGL7cA==}
     dependencies:
       '@httptoolkit/esm': 3.3.0
     dev: false

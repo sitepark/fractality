@@ -515,8 +515,8 @@ importers:
         specifier: '>= 1.1.7 < 2'
         version: link:../fractality
       import-sync:
-        specifier: ^2.2.1
-        version: 2.2.1
+        specifier: ^2.2.2
+        version: 2.2.2
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -6454,8 +6454,8 @@ packages:
       resolve-cwd: 3.0.0
     dev: true
 
-  /import-sync@2.2.1:
-    resolution: {integrity: sha512-eBu9vl+qyaqlbBdZvOLr3PMwgtQf0Hc+hJsbKh5CGMutstvLCFWAQ0PF8cq3s+LumT/ELhOjqHtpSdUTaGL7cA==}
+  /import-sync@2.2.2:
+    resolution: {integrity: sha512-MQ+8aB1LZu0dHqTmpkOJ5DLCqQNVNqbMrH/S9nvHChUSMsAlX6R3ydQhX3R5/YfCU6+qU3cbASiX59hJisMKgg==}
     dependencies:
       '@httptoolkit/esm': 3.3.0
     dev: false

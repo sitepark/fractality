@@ -20,7 +20,7 @@
     "@babel/preset-react": "^7.23.3",
     "@babel/register": "^7.23.7",
     "@fractality/core": "^0.3.5",
-    "import-sync": "^2.2.1",
+    "import-sync": "^2.2.2",
     "lodash": "^4.17.21",
     "parent-module": "^3.1.0",
     "prop-types": "^15.8.1",

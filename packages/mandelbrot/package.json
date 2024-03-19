@@ -27,7 +27,7 @@
     "@fractality/fractality": ">= 1.5 < 2"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.0",
+    "@babel/core": "^7.24.1",
     "@babel/eslint-parser": "^7.23.10",
     "@babel/preset-env": "^7.24.1",
     "@fractality/web": "^0.2.0",

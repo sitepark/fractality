@@ -61,7 +61,7 @@
     "format": "prettier . --write",
     "test": "pnpm run test:unit",
     "test:unit": "vitest run",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "pnpm": {
     "overrides": {

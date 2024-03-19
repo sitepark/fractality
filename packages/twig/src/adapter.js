@@ -4,14 +4,14 @@ import * as Fractality from '@fractality/core';
 import _ from 'lodash';
 import Path from 'path';
 import Twig from 'twig';
-const utils = Fractal.utils;
+const utils = Fractality.utils;
 import adapterUtils from './utils.js';
 import functions from './functions/index.js';
 import tags from './tags/index.js';
 import tests from './tests/index.js';
 import filters from './filters/index.js';
 
-class TwigAdapter extends Fractal.Adapter {
+class TwigAdapter extends Fractality.Adapter {
     constructor(Twig, source, app, config) {
         super(Twig, source);
         this._app = app;

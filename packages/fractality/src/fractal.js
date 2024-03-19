@@ -109,7 +109,7 @@ export class Fractality extends mix(Configurable, Emitter) {
 }
 
 export function create(config) {
-    return new Fractal(config);
+    return new Fractality(config);
 }
 
 export default create;

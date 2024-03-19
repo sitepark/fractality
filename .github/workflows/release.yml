@@ -7,7 +7,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: '0'
-          token: ${{ secrets.ADMIN_TOKEN }}
+          token: ${{ secrets.BOT_PAT }}
       - uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -23,7 +23,7 @@ jobs:
         run: pnpm install
       - run: pnpm lerna version --conventional-commits --create-release github --yes
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.BOT_PAT }}
       - run: pnpm lerna publish from-git --yes --no-verify-access
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

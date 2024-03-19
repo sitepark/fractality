@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.4.0 (2024-03-19)
+
+### Bug Fixes
+
+-   add missing @babel/preset-env dependency ([#860](https://github.com/frctl/fractal/issues/860)) ([abdded2](https://github.com/frctl/fractal/commit/abdded2d4144150978824116a88f08788c2ceedd))
+-   **react:** export utility components from a separate index ([#889](https://github.com/frctl/fractal/issues/889)) ([00ca0ec](https://github.com/frctl/fractal/commit/00ca0ec5b4bfe3570c7b3c818f29d17cdde74dd9))
+-   **react:** fix infinite loop when checking for module dependent paths ([#1058](https://github.com/frctl/fractal/issues/1058)) ([50742dc](https://github.com/frctl/fractal/commit/50742dc6f8db1548da782ca3a70ac1043962ee3d))
+
+### Features
+
+-   add react adapter ([#840](https://github.com/frctl/fractal/issues/840)) ([3d30579](https://github.com/frctl/fractal/commit/3d30579c99c14872420d43d834f04bcb7f36fb94))
+-   react ([c40ac0a](https://github.com/frctl/fractal/commit/c40ac0a1f949a1ddd7c846aef85b11356cf129ab))
+-   **react:** add PathProvider helper component ([#861](https://github.com/frctl/fractal/issues/861)) ([e947d3a](https://github.com/frctl/fractal/commit/e947d3a030e5d1dcfdd94013d6ee2278ed7ea93c))
+-   **react:** allow forcing component to server-side render ([#892](https://github.com/frctl/fractal/issues/892)) ([18a6003](https://github.com/frctl/fractal/commit/18a6003f47f66a4933b9d9d58dd2444ae59b80f3))
+-   update dependencies of react adapter ([526010a](https://github.com/frctl/fractal/commit/526010a046388536b2ccfb196c65f6e8f447eaf4))
+-   update to react 18 ([afac6c4](https://github.com/frctl/fractal/commit/afac6c47b285c88a429358c29dc486db6a9063bf))
+
 ## [0.3.7](https://github.com/frctl/fractal/compare/@frctl/react@0.3.6...@frctl/react@0.3.7) (2022-08-17)
 
 **Note:** Version bump only for package @frctl/react

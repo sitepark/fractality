@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.5.16 (2024-03-19)
+
+### Bug Fixes
+
+-   fix tests ([4c0bad1](https://github.com/frctl/fractal/commit/4c0bad136a096f2a31143b7a18a4062115e406c4))
+
 ## [1.5.15](https://github.com/frctl/fractal/compare/@frctl/fractal@1.5.14...@frctl/fractal@1.5.15) (2023-01-26)
 
 **Note:** Version bump only for package @frctl/fractal

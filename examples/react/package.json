@@ -1,6 +1,6 @@
 {
   "name": "@fractality/react-example",
-  "version": "0.2.11",
+  "version": "0.3.0",
   "type": "module",
   "private": true,
   "scripts": {
@@ -8,9 +8,9 @@
     "build": "fractality build"
   },
   "dependencies": {
-    "@fractality/fractality": "^1.5.15",
-    "@fractality/mandelbrot": "^1.10.3",
-    "@fractality/react": "^0.3.7"
+    "@fractality/fractality": "^1.5.16",
+    "@fractality/mandelbrot": "^1.11.0",
+    "@fractality/react": "^0.4.0"
   },
   "devDependencies": {
     "@fractality/adapter-tests": "workspace:../adapter-tests",

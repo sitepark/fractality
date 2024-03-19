@@ -1,6 +1,6 @@
 {
   "name": "@fractality/mandelbrot",
-  "version": "1.10.3",
+  "version": "1.11.0",
   "type": "module",
   "description": "The default theme for Fractal.",
   "main": "index.js",
@@ -30,7 +30,7 @@
     "@babel/core": "^7.24.0",
     "@babel/eslint-parser": "^7.23.10",
     "@babel/preset-env": "^7.24.0",
-    "@fractality/web": "^0.1.12",
+    "@fractality/web": "^0.2.0",
     "autoprefixer": "^10.4.18",
     "babel-loader": "^9.1.3",
     "copy-webpack-plugin": "^12.0.2",

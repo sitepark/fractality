@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.1.0 (2024-03-19)
+
+### Bug Fixes
+
+-   add relative path to component links in static builds ([#1062](https://github.com/sitepark/fractality/issues/1062)) ([2f84d3b](https://github.com/sitepark/fractality/commit/2f84d3b84498c238d28c2ca1021daf89aff879be))
+
+### Features
+
+-   add support for cjs file extension ([a05bde7](https://github.com/sitepark/fractality/commit/a05bde7c8cb2788e296f5ffda859e46debbbcd39))
+
 ## [0.0.10](https://github.com/frctl/fractal/compare/@frctl/nunjucks-example@0.0.9...@frctl/nunjucks-example@0.0.10) (2023-01-26)
 
 **Note:** Version bump only for package @frctl/nunjucks-example

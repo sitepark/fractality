@@ -1,6 +1,6 @@
 {
   "name": "@fractality/nunjucks",
-  "version": "2.0.15",
+  "version": "2.1.0",
   "type": "module",
   "description": "Nunjucks template adapter for Fractal.",
   "main": "index.js",
@@ -19,7 +19,7 @@
     "@fractality/fractality": ">= 1.1.0-alpha.0 < 2"
   },
   "dependencies": {
-    "@fractality/core": "^0.3.5",
+    "@fractality/core": "^0.4.0",
     "lodash": "^4.17.21",
     "nunjucks": "^3.2.4"
   },

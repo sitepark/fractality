@@ -158,13 +158,13 @@ importers:
   examples/handlebars:
     dependencies:
       '@fractality/fractality':
-        specifier: ^1.5.15
+        specifier: ^1.5.16
         version: link:../../packages/fractality
       '@fractality/handlebars':
-        specifier: ^1.2.15
+        specifier: ^1.3.0
         version: link:../../packages/handlebars
       '@fractality/mandelbrot':
-        specifier: ^1.10.3
+        specifier: ^1.11.0
         version: link:../../packages/mandelbrot
     devDependencies:
       '@fractality/adapter-tests':
@@ -177,13 +177,13 @@ importers:
   examples/nunjucks:
     dependencies:
       '@fractality/fractality':
-        specifier: ^1.5.15
+        specifier: ^1.5.16
         version: link:../../packages/fractality
       '@fractality/mandelbrot':
-        specifier: ^1.10.3
+        specifier: ^1.11.0
         version: link:../../packages/mandelbrot
       '@fractality/nunjucks':
-        specifier: ^2.0.15
+        specifier: ^2.1.0
         version: link:../../packages/nunjucks
     devDependencies:
       '@fractality/adapter-tests':
@@ -196,13 +196,13 @@ importers:
   examples/react:
     dependencies:
       '@fractality/fractality':
-        specifier: ^1.5.15
+        specifier: ^1.5.16
         version: link:../../packages/fractality
       '@fractality/mandelbrot':
-        specifier: ^1.10.3
+        specifier: ^1.11.0
         version: link:../../packages/mandelbrot
       '@fractality/react':
-        specifier: ^0.3.7
+        specifier: ^0.4.0
         version: link:../../packages/react
     devDependencies:
       '@fractality/adapter-tests':
@@ -224,13 +224,13 @@ importers:
   examples/twig:
     dependencies:
       '@fractality/fractality':
-        specifier: ^1.5.15
+        specifier: ^1.5.16
         version: link:../../packages/fractality
       '@fractality/mandelbrot':
-        specifier: ^1.10.3
+        specifier: ^1.11.0
         version: link:../../packages/mandelbrot
       '@fractality/twig':
-        specifier: ^1.2.13
+        specifier: ^1.3.0
         version: link:../../packages/twig
     devDependencies:
       '@fractality/adapter-tests':
@@ -298,16 +298,16 @@ importers:
   packages/fractality:
     dependencies:
       '@fractality/core':
-        specifier: ^0.3.5
+        specifier: ^0.4.0
         version: link:../core
       '@fractality/handlebars':
-        specifier: ^1.2.15
+        specifier: ^1.3.0
         version: link:../handlebars
       '@fractality/mandelbrot':
-        specifier: ^1.10.3
+        specifier: ^1.11.0
         version: link:../mandelbrot
       '@fractality/web':
-        specifier: ^0.1.12
+        specifier: ^0.2.0
         version: link:../web
       anymatch:
         specifier: ^3.1.3
@@ -367,7 +367,7 @@ importers:
   packages/handlebars:
     dependencies:
       '@fractality/core':
-        specifier: ^0.3.5
+        specifier: ^0.4.0
         version: link:../core
       '@fractality/fractality':
         specifier: ^1.1.0
@@ -404,7 +404,7 @@ importers:
         specifier: ^7.24.0
         version: 7.24.0(@babel/core@7.24.0)
       '@fractality/web':
-        specifier: ^0.1.12
+        specifier: ^0.2.0
         version: link:../web
       autoprefixer:
         specifier: ^10.4.18
@@ -482,7 +482,7 @@ importers:
   packages/nunjucks:
     dependencies:
       '@fractality/core':
-        specifier: ^0.3.5
+        specifier: ^0.4.0
         version: link:../core
       '@fractality/fractality':
         specifier: '>= 1.1.0-alpha.0 < 2'
@@ -509,7 +509,7 @@ importers:
         specifier: ^7.23.7
         version: 7.23.7(@babel/core@7.24.0)
       '@fractality/core':
-        specifier: ^0.3.5
+        specifier: ^0.4.0
         version: link:../core
       '@fractality/fractality':
         specifier: '>= 1.1.7 < 2'
@@ -539,7 +539,7 @@ importers:
   packages/twig:
     dependencies:
       '@fractality/core':
-        specifier: ^0.3.5
+        specifier: ^0.4.0
         version: link:../core
       '@fractality/fractality':
         specifier: ^1.1.0-beta.1
@@ -554,7 +554,7 @@ importers:
   packages/web:
     dependencies:
       '@fractality/core':
-        specifier: ^0.3.5
+        specifier: ^0.4.0
         version: link:../core
       anymatch:
         specifier: ^3.1.3

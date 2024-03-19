@@ -1,6 +1,6 @@
 {
   "name": "@fractality/nunjucks-example",
-  "version": "0.0.10",
+  "version": "0.1.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -8,12 +8,12 @@
     "build": "fractality build"
   },
   "dependencies": {
-    "@fractality/fractality": "^1.5.15",
-    "@fractality/mandelbrot": "^1.10.3",
-    "@fractality/nunjucks": "^2.0.15"
+    "@fractality/fractality": "^1.5.16",
+    "@fractality/mandelbrot": "^1.11.0",
+    "@fractality/nunjucks": "^2.1.0"
   },
   "devDependencies": {
-    "node-fetch": "^3.3.2",
-    "@fractality/adapter-tests": "workspace:../adapter-tests"
+    "@fractality/adapter-tests": "workspace:../adapter-tests",
+    "node-fetch": "^3.3.2"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@fractality/fractality",
-  "version": "1.5.15",
+  "version": "1.5.16",
   "type": "module",
   "description": "A tool to help you build and document website component libraries and then integrate them into your projects.",
   "main": "src/fractal.js",
@@ -16,10 +16,10 @@
   },
   "homepage": "https://github.com/frctl/fractal",
   "dependencies": {
-    "@fractality/core": "^0.3.5",
-    "@fractality/handlebars": "^1.2.15",
-    "@fractality/mandelbrot": "^1.10.3",
-    "@fractality/web": "^0.1.12",
+    "@fractality/core": "^0.4.0",
+    "@fractality/handlebars": "^1.3.0",
+    "@fractality/mandelbrot": "^1.11.0",
+    "@fractality/web": "^0.2.0",
     "anymatch": "^3.1.3",
     "chalk": "^5.3.0",
     "chokidar": "^3.6.0",

@@ -45,7 +45,7 @@
     "mark.js": "^8.11.1",
     "mini-css-extract-plugin": "^2.8.1",
     "normalize.css": "^8.0.1",
-    "postcss": "^8.4.35",
+    "postcss": "^8.4.36",
     "postcss-loader": "^8.1.1",
     "resolve-url-loader": "^5.0.0",
     "rimraf": "^5.0.5",

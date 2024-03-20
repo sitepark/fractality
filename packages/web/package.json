@@ -21,7 +21,7 @@
     "chokidar": "^3.6.0",
     "express": "^4.18.3",
     "fs-extra": "^11.2.0",
-    "get-port": "^7.0.0",
+    "get-port": "^7.1.0",
     "js-yaml": "^4.1.0",
     "lodash": "^4.17.21",
     "nunjucks": "^3.2.4",

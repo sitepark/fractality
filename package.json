@@ -8,7 +8,7 @@
     "cli-table3": "^0.6.3",
     "columnify": "^1.6.0",
     "execa": "^8.0.1",
-    "express": "^4.18.3",
+    "express": "^4.19.0",
     "fs-extra": "^11.2.0",
     "get-port": "^7.0.0",
     "gray-matter": "^4.0.3",

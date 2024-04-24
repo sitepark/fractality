@@ -352,8 +352,8 @@ importers:
         specifier: ^6.0.0
         version: 6.0.0
       mime:
-        specifier: ^4.0.1
-        version: 4.0.1
+        specifier: ^4.0.2
+        version: 4.0.2
       semver:
         specifier: ^7.6.0
         version: 7.6.0
@@ -7685,8 +7685,8 @@ packages:
     hasBin: true
     dev: false
 
-  /mime@4.0.1:
-    resolution: {integrity: sha512-5lZ5tyrIfliMXzFtkYyekWbtRXObT9OWa8IwQ5uxTBDHucNNwniRqo0yInflj+iYi5CBa6qxadGzGarDfuEOxA==}
+  /mime@4.0.2:
+    resolution: {integrity: sha512-rSR2L7RhEm0ifwn6lZAa+CcLy7EEl6POovp3QcnFHb/C5P4B+h6u+yCQPQaWzNdecHL8p85zRowrAjpF9F46Og==}
     engines: {node: '>=16'}
     hasBin: true
     dev: false

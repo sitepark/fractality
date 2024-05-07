@@ -35,7 +35,7 @@
     "lodash": "^4.17.21",
     "log-update": "^6.0.0",
     "mime": "^4.0.3",
-    "semver": "^7.6.0",
+    "semver": "^7.6.1",
     "update-notifier": "^7.0.0",
     "vinyl": "^3.0.0"
   },

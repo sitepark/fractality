@@ -7,7 +7,7 @@
     "chokidar": "^3.6.0",
     "cli-table3": "^0.6.4",
     "columnify": "^1.6.0",
-    "execa": "^8.0.1",
+    "execa": "^9.0.1",
     "express": "^4.19.2",
     "fs-extra": "^11.2.0",
     "get-port": "^7.1.0",

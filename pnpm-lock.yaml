@@ -86,8 +86,8 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0
       semver:
-        specifier: ^7.6.1
-        version: 7.6.1
+        specifier: ^7.6.2
+        version: 7.6.2
       throat:
         specifier: ^6.0.2
         version: 6.0.2
@@ -355,8 +355,8 @@ importers:
         specifier: ^4.0.3
         version: 4.0.3
       semver:
-        specifier: ^7.6.1
-        version: 7.6.1
+        specifier: ^7.6.2
+        version: 7.6.2
       update-notifier:
         specifier: ^7.0.0
         version: 7.0.0
@@ -2204,7 +2204,7 @@ packages:
       read-package-json: 6.0.4
       resolve-from: 5.0.0
       rimraf: 4.4.1
-      semver: 7.6.1
+      semver: 7.6.2
       signal-exit: 3.0.7
       slash: 3.0.0
       ssri: 9.0.1
@@ -2277,7 +2277,7 @@ packages:
     resolution: {integrity: sha512-7kZUAaLscfgbwBQRbvdMYaZOWyMEcPTH/tJjnyAWJ/dvvs9Ef+CERx/qJb9GExJpl1qipaDGn7KqHnFGGixd0w==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
     dependencies:
-      semver: 7.6.1
+      semver: 7.6.2
     dev: true
 
   /@npmcli/git@5.0.4:
@@ -2290,7 +2290,7 @@ packages:
       proc-log: 3.0.0
       promise-inflight: 1.0.1
       promise-retry: 2.0.1
-      semver: 7.6.1
+      semver: 7.6.2
       which: 4.0.0
     transitivePeerDependencies:
       - bluebird
@@ -2360,7 +2360,7 @@ packages:
       enquirer: 2.3.6
       ignore: 5.3.1
       nx: 18.0.8
-      semver: 7.6.1
+      semver: 7.6.2
       tmp: 0.2.3
       tslib: 2.6.2
       yargs-parser: 21.1.1
@@ -3820,7 +3820,7 @@ packages:
   /builtins@5.0.1:
     resolution: {integrity: sha512-qwVpFEHNfhYJIzNRBvd2C1kyo6jz3ZSMPyyuR47OPdiKWlbYnZNyDWuyR175qDnAJLiCo5fBBqPb3RiXgWlkOQ==}
     dependencies:
-      semver: 7.6.1
+      semver: 7.6.2
     dev: true
 
   /byte-size@8.1.1:
@@ -4316,7 +4316,7 @@ packages:
       handlebars: 4.7.8
       json-stringify-safe: 5.0.1
       meow: 8.1.2
-      semver: 7.6.1
+      semver: 7.6.2
       split: 1.0.1
     dev: true
 
@@ -4476,7 +4476,7 @@ packages:
       postcss-modules-scope: 3.2.0(postcss@8.4.38)
       postcss-modules-values: 4.0.0(postcss@8.4.38)
       postcss-value-parser: 4.2.0
-      semver: 7.6.1
+      semver: 7.6.2
       webpack: 5.91.0(webpack-cli@5.1.4)
     dev: true
 
@@ -4762,7 +4762,7 @@ packages:
       '@one-ini/wasm': 0.1.1
       commander: 10.0.1
       minimatch: 9.0.1
-      semver: 7.6.1
+      semver: 7.6.2
     dev: false
 
   /ee-first@1.1.1:
@@ -5910,7 +5910,7 @@ packages:
     hasBin: true
     dependencies:
       meow: 8.1.2
-      semver: 7.6.1
+      semver: 7.6.2
     dev: true
 
   /git-up@7.0.0:
@@ -6476,7 +6476,7 @@ packages:
       promzard: 1.0.0
       read: 2.1.0
       read-package-json: 6.0.4
-      semver: 7.6.1
+      semver: 7.6.2
       validate-npm-package-license: 3.0.4
       validate-npm-package-name: 5.0.0
     dev: true
@@ -7196,7 +7196,7 @@ packages:
       read-package-json: 6.0.4
       resolve-from: 5.0.0
       rimraf: 4.4.1
-      semver: 7.6.1
+      semver: 7.6.2
       signal-exit: 3.0.7
       slash: 3.0.0
       ssri: 9.0.1
@@ -7248,7 +7248,7 @@ packages:
       npm-package-arg: 10.1.0
       npm-registry-fetch: 14.0.5
       proc-log: 3.0.0
-      semver: 7.6.1
+      semver: 7.6.2
       sigstore: 1.9.0
       ssri: 10.0.5
     transitivePeerDependencies:
@@ -7505,7 +7505,7 @@ packages:
     resolution: {integrity: sha512-hXdUTZYIVOt1Ex//jAQi+wTZZpUpwBj/0QsOzqegb3rGMMeJiSEu5xLHnYfBrRV4RH2+OCSOO95Is/7x1WJ4bw==}
     engines: {node: '>=10'}
     dependencies:
-      semver: 7.6.1
+      semver: 7.6.2
     dev: true
 
   /make-fetch-happen@11.1.1:
@@ -7996,7 +7996,7 @@ packages:
       make-fetch-happen: 13.0.0
       nopt: 7.2.0
       proc-log: 3.0.0
-      semver: 7.6.1
+      semver: 7.6.2
       tar: 6.1.11
       which: 4.0.0
     transitivePeerDependencies:
@@ -8032,7 +8032,7 @@ packages:
     dependencies:
       hosted-git-info: 4.1.0
       is-core-module: 2.13.1
-      semver: 7.6.1
+      semver: 7.6.2
       validate-npm-package-license: 3.0.4
     dev: true
 
@@ -8042,7 +8042,7 @@ packages:
     dependencies:
       hosted-git-info: 6.1.1
       is-core-module: 2.13.1
-      semver: 7.6.1
+      semver: 7.6.2
       validate-npm-package-license: 3.0.4
     dev: true
 
@@ -8052,7 +8052,7 @@ packages:
     dependencies:
       hosted-git-info: 7.0.1
       is-core-module: 2.13.1
-      semver: 7.6.1
+      semver: 7.6.2
       validate-npm-package-license: 3.0.4
     dev: true
 
@@ -8091,7 +8091,7 @@ packages:
     resolution: {integrity: sha512-W29RiK/xtpCGqn6f3ixfRYGk+zRyr+Ew9F2E20BfXxT5/euLdA/Nm7fO7OeTGuAmTs30cpgInyJ0cYe708YTZw==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
     dependencies:
-      semver: 7.6.1
+      semver: 7.6.2
     dev: true
 
   /npm-normalize-package-bin@1.0.1:
@@ -8109,7 +8109,7 @@ packages:
     dependencies:
       hosted-git-info: 6.1.1
       proc-log: 3.0.0
-      semver: 7.6.1
+      semver: 7.6.2
       validate-npm-package-name: 5.0.0
     dev: true
 
@@ -8119,7 +8119,7 @@ packages:
     dependencies:
       hosted-git-info: 7.0.1
       proc-log: 3.0.0
-      semver: 7.6.1
+      semver: 7.6.2
       validate-npm-package-name: 5.0.0
     dev: true
 
@@ -8128,7 +8128,7 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       hosted-git-info: 3.0.8
-      semver: 7.6.1
+      semver: 7.6.2
       validate-npm-package-name: 3.0.0
     dev: true
 
@@ -8157,7 +8157,7 @@ packages:
       npm-install-checks: 6.3.0
       npm-normalize-package-bin: 3.0.1
       npm-package-arg: 11.0.1
-      semver: 7.6.1
+      semver: 7.6.2
     dev: true
 
   /npm-registry-fetch@14.0.5:
@@ -8267,7 +8267,7 @@ packages:
       npm-run-path: 4.0.1
       open: 8.4.2
       ora: 5.3.0
-      semver: 7.6.1
+      semver: 7.6.2
       string-width: 4.2.3
       strong-log-transformer: 2.1.0
       tar-stream: 2.2.0
@@ -8618,7 +8618,7 @@ packages:
       got: 12.6.1
       registry-auth-token: 5.0.2
       registry-url: 6.0.1
-      semver: 7.6.1
+      semver: 7.6.2
     dev: false
 
   /pacote@17.0.6:
@@ -8888,7 +8888,7 @@ packages:
       cosmiconfig: 9.0.0
       jiti: 1.20.0
       postcss: 8.4.38
-      semver: 7.6.1
+      semver: 7.6.2
       webpack: 5.91.0(webpack-cli@5.1.4)
     transitivePeerDependencies:
       - typescript
@@ -9697,7 +9697,7 @@ packages:
     resolution: {integrity: sha512-0Ju4+6A8iOnpL/Thra7dZsSlOHYAHIeMxfhWQRI1/VLcT3WDBZKKtQt/QkBOsiIN9ZpuvHE6cGZ0x4glCMmfiA==}
     engines: {node: '>=12'}
     dependencies:
-      semver: 7.6.1
+      semver: 7.6.2
     dev: false
 
   /semver@5.7.2:
@@ -9708,8 +9708,8 @@ packages:
     resolution: {integrity: sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==}
     hasBin: true
 
-  /semver@7.6.1:
-    resolution: {integrity: sha512-f/vbBsu+fOiYt+lmwZV0rVwJScl46HppnOA1ZvIuBWKOTlllpyJ3bfVax76/OrhCH38dyxoDIA8K7uB963IYgA==}
+  /semver@7.6.2:
+    resolution: {integrity: sha512-FNAIBWCx9qcRhoHcgcJ0gvU7SN1lYU2ZXuSfl04bSC5OpvDHFyJCjdNHomPXxjQlCBU67YW64PzY7/VIEH7F2w==}
     engines: {node: '>=10'}
     hasBin: true
 
@@ -10923,7 +10923,7 @@ packages:
       is-npm: 6.0.0
       latest-version: 7.0.0
       pupa: 3.1.0
-      semver: 7.6.1
+      semver: 7.6.2
       semver-diff: 4.0.0
       xdg-basedir: 5.1.0
     dev: false

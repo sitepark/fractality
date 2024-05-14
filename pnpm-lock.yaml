@@ -20,8 +20,8 @@ importers:
         specifier: ^3.6.0
         version: 3.6.0
       cli-table3:
-        specifier: ^0.6.4
-        version: 0.6.4
+        specifier: ^0.6.5
+        version: 0.6.5
       columnify:
         specifier: ^1.6.0
         version: 1.6.0
@@ -319,8 +319,8 @@ importers:
         specifier: ^3.6.0
         version: 3.6.0
       cli-table3:
-        specifier: ^0.6.4
-        version: 0.6.4
+        specifier: ^0.6.5
+        version: 0.6.5
       columnify:
         specifier: ^1.6.0
         version: 1.6.0
@@ -4058,8 +4058,8 @@ packages:
     resolution: {integrity: sha512-jHgecW0pxkonBJdrKsqxgRX9AcG+u/5k0Q7WPDfi8AogLAdwxEkyYYNWwZ5GvVFoFx2uiY1eNcSK00fh+1+FyQ==}
     engines: {node: '>=6'}
 
-  /cli-table3@0.6.4:
-    resolution: {integrity: sha512-Lm3L0p+/npIQWNIiyF/nAn7T5dnOwR3xNTHXYEBFBFVPXzCVNZ5lqEC/1eo/EVfpDsQ1I+TX4ORPQgp+UI0CRw==}
+  /cli-table3@0.6.5:
+    resolution: {integrity: sha512-+W/5efTR7y5HRD7gACw9yQjqMVvEMLBHmboM/kPWam+H+Hmyrgjh6YncVKK122YZkXrLudzTuAukUw9FnMf7IQ==}
     engines: {node: 10.* || >= 12.*}
     dependencies:
       string-width: 4.2.3

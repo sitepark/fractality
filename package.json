@@ -16,7 +16,7 @@
     "istextorbinary": "^9.5.0",
     "js-beautify": "^1.15.1",
     "js-yaml": "^4.1.0",
-    "liftoff": "^4.0.0",
+    "liftoff": "^5.0.0",
     "lodash": "^4.17.21",
     "log-update": "^6.0.0",
     "minimist": "^1.2.8",

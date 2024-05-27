@@ -41,7 +41,7 @@
     "husky": "^9.0.11",
     "jest-extended": "^4.0.2",
     "lerna": "^8.1.3",
-    "lint-staged": "^15.2.4",
+    "lint-staged": "^15.2.5",
     "mock-argv": "^4.0.0",
     "mock-fs": "^5.2.0",
     "node-fetch": "^3.3.2",

@@ -461,11 +461,11 @@ importers:
         specifier: ^5.0.7
         version: 5.0.7
       sass:
-        specifier: ^1.77.2
-        version: 1.77.2
+        specifier: ^1.77.3
+        version: 1.77.3
       sass-loader:
         specifier: ^14.2.1
-        version: 14.2.1(sass@1.77.2)(webpack@5.91.0)
+        version: 14.2.1(sass@1.77.3)(webpack@5.91.0)
       sass-mq:
         specifier: ^6.0.0
         version: 6.0.0
@@ -9742,7 +9742,7 @@ packages:
   /safer-buffer@2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
 
-  /sass-loader@14.2.1(sass@1.77.2)(webpack@5.91.0):
+  /sass-loader@14.2.1(sass@1.77.3)(webpack@5.91.0):
     resolution: {integrity: sha512-G0VcnMYU18a4N7VoNDegg2OuMjYtxnqzQWARVWCIVSZwJeiL9kg8QMsuIZOplsJgTzZLF6jGxI3AClj8I9nRdQ==}
     engines: {node: '>= 18.12.0'}
     peerDependencies:
@@ -9764,7 +9764,7 @@ packages:
         optional: true
     dependencies:
       neo-async: 2.6.2
-      sass: 1.77.2
+      sass: 1.77.3
       webpack: 5.91.0(webpack-cli@5.1.4)
     dev: true
 
@@ -9772,8 +9772,8 @@ packages:
     resolution: {integrity: sha512-h4VicIy8lszFlqqggqLIFGt/9wS5fHLPoTXHRjC8Vw6UsA4s4JtDvEeypXbbECfgY336mXyc/cdpbRacH0UzGA==}
     dev: true
 
-  /sass@1.77.2:
-    resolution: {integrity: sha512-eb4GZt1C3avsX3heBNlrc7I09nyT00IUuo4eFhAbeXWU2fvA7oXI53SxODVAA+zgZCk9aunAZgO+losjR3fAwA==}
+  /sass@1.77.3:
+    resolution: {integrity: sha512-WJHo+jmFp0dwRuymPmIovuxHaBntcCyja5hCB0yYY9wWrViEp4kF5Cdai98P72v6FzroPuABqu+ddLMbQWmwzA==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:

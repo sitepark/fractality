@@ -26,7 +26,7 @@
     "cli-table3": "^0.6.5",
     "columnify": "^1.6.0",
     "commander": "^12.1.0",
-    "execa": "^8.0.1",
+    "execa": "^9.3.0",
     "fs-extra": "^11.2.0",
     "gray-matter": "^4.0.3",
     "handlebars": "^4.7.8",

@@ -30,13 +30,13 @@
     "fs-extra": "^11.2.0",
     "gray-matter": "^4.0.3",
     "handlebars": "^4.7.8",
-    "inquirer": "^9.2.23",
+    "inquirer": "^9.3.6",
     "liftoff": "^4.0.0",
     "lodash": "^4.17.21",
-    "log-update": "^6.0.0",
-    "mime": "^4.0.3",
-    "semver": "^7.6.2",
-    "update-notifier": "^7.0.0",
+    "log-update": "^6.1.0",
+    "mime": "^4.0.4",
+    "semver": "^7.6.3",
+    "update-notifier": "^7.2.0",
     "vinyl": "^3.0.0"
   },
   "bin": {

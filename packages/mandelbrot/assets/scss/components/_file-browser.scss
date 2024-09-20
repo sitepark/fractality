@@ -51,7 +51,7 @@
     }
 }
 
-@include mq($from: medium) {
+@media (width >= $mq_medium) {
     .Frame.is-closed {
         .FileBrowser-select-label {
             position: relative;
@@ -61,7 +61,7 @@
     }
 }
 
-@include mq($from: large) {
+@media (width >= $mq_large) {
     .Frame:not(.is-closed) {
         .FileBrowser-select-label {
             position: relative;

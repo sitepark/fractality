@@ -5,18 +5,15 @@
 $width-sidebar: 240px;
 $handle-size: 0.625rem;
 
-$mq-breakpoints: (
-    nav-collapse: 760px,
-    medium: 600px,
-    large: 800px,
-);
+$mq_large: 800px;
+$mq_nav-collapse: 760px;
+$mq_medium: 600px;
 
 // -----------------------------------------------------------------------------
 // Vendor (node_modules)
 // -----------------------------------------------------------------------------
 
 @import "normalize.css/normalize";
-@import "sass-mq/_mq";
 
 // -----------------------------------------------------------------------------
 // Core

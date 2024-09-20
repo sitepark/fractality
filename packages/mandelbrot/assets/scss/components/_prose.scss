@@ -67,10 +67,9 @@
     }
 
     blockquote {
+        opacity: 0.75;
         @include border-inline(start, solid rgba($color-text, 0.25));
         @include padding-inline(start, 1em);
-
-        opacity: 0.75;
     }
 
     pre {

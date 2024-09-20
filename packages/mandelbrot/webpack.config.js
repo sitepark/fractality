@@ -98,6 +98,7 @@ export default {
                     {
                         loader: 'sass-loader',
                         options: {
+                            api: 'modern',
                             sourceMap: true,
                         },
                     },

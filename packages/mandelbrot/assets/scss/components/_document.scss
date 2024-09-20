@@ -1,7 +1,7 @@
 .Document {
     padding: 1.5rem 2rem;
 
-    @include mq($until: nav-collapse) {
+    @media (width < $mq_nav-collapse) {
         padding: 1.25rem 1rem;
     }
 }

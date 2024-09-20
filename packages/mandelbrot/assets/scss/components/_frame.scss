@@ -25,11 +25,10 @@
     flex-grow: 1;
     height: calc(100% - 3rem);
 
-    @include mq($until: nav-collapse) {
-        @include margin-inline(end, $width-sidebar);
-
+    @media (width < $mq_nav-collapse) {
         transform: translate3d(($width-sidebar * -1), 0, 0);
         transition: none;
+        @include margin-inline(end, $width-sidebar);
     }
 }
 
@@ -53,7 +52,7 @@
     max-width: ($width-sidebar * 2);
     background-color: $color-background-offset;
 
-    @include mq($until: nav-collapse) {
+    @media (width < $mq_nav-collapse) {
         max-width: $width-sidebar;
     }
 }

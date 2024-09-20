@@ -7,20 +7,19 @@
 }
 
 .Navigation-panel {
-    @include border-inline(end, 1px solid $color-frame-border);
-
     width: 240px;
     height: 100%;
     overflow: auto;
     padding: 1rem 0;
 
-    @include mq($until: nav-collapse) {
+    @include border-inline(end, 1px solid $color-frame-border);
+    @media (width < $mq_nav-collapse) {
         transition: 0.3s ease transform;
         flex: 1 0 auto;
     }
 
     .Navigation.in-variants-panel & {
-        @include mq($until: nav-collapse) {
+        @media (width < $mq_nav-collapse) {
             transform: translateX(-100%);
 
             [dir="rtl"] & {
@@ -31,7 +30,7 @@
 }
 
 .Navigation-panel--variants {
-    @include mq($from: nav-collapse) {
+    @media (width >= $mq_nav-collapse) {
         display: none;
 
         .Navigation.in-variants-panel & {
@@ -63,7 +62,7 @@
     padding-right: 1rem;
     padding-bottom: 1em;
 
-    @include mq($from: nav-collapse) {
+    @media (width >= $mq_nav-collapse) {
         display: none;
     }
 }

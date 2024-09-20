@@ -19,8 +19,6 @@
 }
 
 .Preview-wrapper {
-    @include offset-inline(start, 0);
-
     position: absolute;
     top: 0;
     bottom: 0;
@@ -31,14 +29,13 @@
     max-width: calc(100% + #{$handle-size});
     background-color: transparent;
 
-    @include mq($until: nav-collapse) {
+    @include offset-inline(start, 0);
+    @media (width < $mq_nav-collapse) {
         width: 100% !important;
     }
 }
 
 .Preview-resizer {
-    @include offset-inline(start, 0);
-
     position: absolute;
     top: 0;
     bottom: 0;
@@ -49,7 +46,8 @@
     min-width: 180px;
     background-color: white;
 
-    @include mq($until: nav-collapse) {
+    @include offset-inline(start, 0);
+    @media (width < $mq_nav-collapse) {
         width: 100% !important; // override any JS-set widths
         min-width: 100%;
         border: 0;
@@ -80,10 +78,6 @@
 }
 
 .Preview-handle {
-    @include border-inline(start, 1px solid $color-frame-border);
-    @include dragHandle;
-    @include offset-inline(end, 0);
-
     position: absolute;
     top: -1px;
     bottom: -1px;
@@ -93,8 +87,11 @@
     background: transparent url("../../img/icon-drag--vertical.svg") no-repeat 50%;
     background-size: 3px 16px;
     cursor: ew-resize;
+    @include dragHandle;
+    @include border-inline(start, 1px solid $color-frame-border);
+    @include offset-inline(end, 0);
 
-    @include mq($until: nav-collapse) {
+    @media (width < $mq_nav-collapse) {
         display: none;
     }
 }

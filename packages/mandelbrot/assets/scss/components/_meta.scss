@@ -56,32 +56,30 @@
     opacity: 0.75;
 }
 
-@include mq($from: medium) {
+@media (width >= $mq_medium) {
     .Frame.is-closed {
         .Meta-item {
             @include padding-inline(start, 10rem);
         }
 
         .Meta-key {
-            @include margin-inline(start, -10rem);
-
             width: 10rem;
             float: left;
+            @include margin-inline(start, -10rem);
         }
     }
 }
 
-@include mq($from: large) {
+@media (width >= $mq_large) {
     .Frame:not(.is-closed) {
         .Meta-item {
             @include padding-inline(start, 10rem);
         }
 
         .Meta-key {
-            @include margin-inline(start, -10rem);
-
             width: 10rem;
             float: left;
+            @include margin-inline(start, -10rem);
         }
     }
 }

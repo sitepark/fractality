@@ -52,7 +52,7 @@
         visibility: hidden;
     }
 
-    @include mq($until: nav-collapse) {
+    @media (width < $mq_nav-collapse) {
         pointer-events: none;
         visibility: hidden;
     }
@@ -111,6 +111,9 @@
 
 @mixin padding-inline($position, $amount) {
     @if $position == start {
+        & {
+            padding-inline-start: $amount;
+        }
         [dir="ltr"] & {
             padding-left: $amount;
         }
@@ -118,11 +121,12 @@
         [dir="rtl"] & {
             padding-right: $amount;
         }
-
-        padding-inline-start: $amount;
     }
 
     @if $position == end {
+        & {
+            padding-inline-end: $amount;
+        }
         [dir="ltr"] & {
             padding-right: $amount;
         }
@@ -130,13 +134,14 @@
         [dir="rtl"] & {
             padding-left: $amount;
         }
-
-        padding-inline-end: $amount;
     }
 }
 
 @mixin margin-inline($position, $amount) {
     @if $position == start {
+        & {
+            margin-inline-start: $amount;
+        }
         [dir="ltr"] & {
             margin-left: $amount;
         }
@@ -144,11 +149,12 @@
         [dir="rtl"] & {
             margin-right: $amount;
         }
-
-        margin-inline-start: $amount;
     }
 
     @if $position == end {
+        & {
+            margin-inline-end: $amount;
+        }
         [dir="ltr"] & {
             margin-right: $amount;
         }
@@ -156,13 +162,14 @@
         [dir="rtl"] & {
             margin-left: $amount;
         }
-
-        margin-inline-end: $amount;
     }
 }
 
 @mixin border-inline($position, $style) {
     @if $position == start {
+        & {
+            border-inline-start: $style;
+        }
         [dir="ltr"] & {
             border-left: $style;
         }
@@ -170,11 +177,12 @@
         [dir="rtl"] & {
             border-right: $style;
         }
-
-        border-inline-start: $style;
     }
 
     @if $position == end {
+        & {
+            border-inline-end: $style;
+        }
         [dir="ltr"] & {
             border-right: $style;
         }
@@ -182,13 +190,14 @@
         [dir="rtl"] & {
             border-left: $style;
         }
-
-        border-inline-end: $style;
     }
 }
 
 @mixin border-inline-color($position, $color) {
     @if $position == start {
+        & {
+            border-inline-start-color: $color;
+        }
         [dir="ltr"] & {
             border-left-color: $color;
         }
@@ -196,11 +205,12 @@
         [dir="rtl"] & {
             border-right-color: $color;
         }
-
-        border-inline-start-color: $color;
     }
 
     @if $position == end {
+        & {
+            border-inline-end-color: $color;
+        }
         [dir="ltr"] & {
             border-right-color: $color;
         }
@@ -208,13 +218,14 @@
         [dir="rtl"] & {
             border-left-color: $color;
         }
-
-        border-inline-end-color: $color;
     }
 }
 
 @mixin offset-inline($position, $value: 0) {
     @if $position == start {
+        & {
+            offset-inline-start: $value;
+        }
         [dir="ltr"] & {
             left: $value;
         }
@@ -222,11 +233,12 @@
         [dir="rtl"] & {
             right: $value;
         }
-
-        offset-inline-start: $value;
     }
 
     @if $position == end {
+        & {
+            offset-inline-end: $value;
+        }
         [dir="ltr"] & {
             right: $value;
         }
@@ -234,7 +246,5 @@
         [dir="rtl"] & {
             left: $value;
         }
-
-        offset-inline-end: $value;
     }
 }

@@ -23,16 +23,15 @@
     align-items: center;
 
     .Pen-preview-size {
-        @include margin-inline(start, auto);
-
         white-space: nowrap;
+        @include margin-inline(start, auto);
     }
 
     .Status {
         @include margin-inline(start, 1rem);
     }
 
-    @include mq($until: nav-collapse) {
+    @media (width < $mq_nav-collapse) {
         margin: 0;
         padding: 0.75rem;
 
@@ -52,13 +51,11 @@
 }
 
 .Pen-title {
-    @include padding-inline(end, 0.5rem);
-
-    @include font(subHeading);
-
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    @include font(subHeading);
+    @include padding-inline(end, 0.5rem);
 }
 
 .Pen-previewLink {
@@ -83,14 +80,12 @@
     max-height: calc(100% - 3.75rem);
     margin: 0 $handle-size;
 
-    @include mq($until: nav-collapse) {
+    @media (width < $mq_nav-collapse) {
         max-height: calc(100% - 4.75rem);
     }
 }
 
 .Pen-handle {
-    @include dragHandle;
-
     flex: 0 0 auto;
     height: $handle-size;
     margin: 0 $handle-size;
@@ -98,7 +93,8 @@
     background-size: 16px 3px;
     cursor: ns-resize;
 
-    @include mq($until: nav-collapse) {
+    @include dragHandle;
+    @media (width < $mq_nav-collapse) {
         display: none;
         height: $handle-size + 1rem;
     }

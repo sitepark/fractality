@@ -33,3 +33,5 @@ jobs:
         run: pnpm test
         env:
           CI: true
+      - name: Build
+        run: pnpm --filter "@fractality/mandelbrot" build

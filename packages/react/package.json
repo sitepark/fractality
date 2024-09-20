@@ -16,7 +16,7 @@
   "homepage": "https://github.com/sitepark/fractality/tree/main/packages/react",
   "dependencies": {
     "@babel/core": "^7.25.2",
-    "@babel/preset-env": "^7.25.3",
+    "@babel/preset-env": "^7.25.4",
     "@babel/preset-react": "^7.24.7",
     "@babel/register": "^7.24.6",
     "@fractality/core": "workspace:../core",
@@ -29,9 +29,9 @@
     "resolve-from": "^5.0.0"
   },
   "devDependencies": {
+    "@fractality/fractality": "workspace:../fractality",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "@fractality/fractality": "workspace:../fractality"
+    "react-dom": "^18.3.1"
   },
   "peerDependencies": {
     "@fractality/fractality": ">= 1.1.7 < 2",

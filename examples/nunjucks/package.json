@@ -8,9 +8,9 @@
     "build": "fractality build"
   },
   "dependencies": {
-    "@fractality/fractality": "^1.5.17",
-    "@fractality/mandelbrot": "^1.12.0",
-    "@fractality/nunjucks": "^2.2.0"
+    "@fractality/fractality": "workspace:../../packages/fractality",
+    "@fractality/mandelbrot": "workspace:../../packages/mandelbrot",
+    "@fractality/nunjucks": "workspace:../../packages/nunjucks"
   },
   "devDependencies": {
     "@fractality/adapter-tests": "workspace:../adapter-tests",

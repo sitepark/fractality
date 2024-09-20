@@ -16,12 +16,15 @@
   },
   "homepage": "https://github.com/sitepark/fractality/tree/main/packages/nunjucks",
   "peerDependencies": {
-    "@fractality/fractality": ">= 1.1.0-alpha.0 < 2"
+    "@fractality/fractality": ">= 1.5 < 2"
   },
   "dependencies": {
-    "@fractality/core": "^0.5.0",
+    "@fractality/core": "workspace:../core",
     "lodash": "^4.17.21",
     "nunjucks": "^3.2.4"
+  },
+  "devDependencies": {
+    "@fractality/fractality": "workspace:../fractality"
   },
   "publishConfig": {
     "access": "public"

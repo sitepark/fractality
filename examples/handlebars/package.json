@@ -8,9 +8,9 @@
     "build": "fractality build"
   },
   "dependencies": {
-    "@fractality/fractality": "^1.5.17",
-    "@fractality/handlebars": "^1.4.0",
-    "@fractality/mandelbrot": "^1.12.0"
+    "@fractality/fractality": "workspace:../../packages/fractality",
+    "@fractality/handlebars": "workspace:../../packages/handlebars",
+    "@fractality/mandelbrot": "workspace:../../packages/mandelbrot"
   },
   "devDependencies": {
     "@fractality/adapter-tests": "workspace:../adapter-tests",

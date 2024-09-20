@@ -1,6 +1,6 @@
 {
   "name": "@fractality/core",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "type": "module",
   "description": "Core module of Fractality.",
   "exports": {

@@ -1,6 +1,5 @@
 'use strict';
 
-import _ from 'lodash';
 import { utils, mixins } from '@fractality/core';
 import Server from './server.js';
 import Builder from './builder.js';

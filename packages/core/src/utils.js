@@ -83,7 +83,7 @@ export function fileExistsSync(path) {
     try {
         fs.accessSync(path, fs.F_OK);
         return true;
-    } catch (e) {
+    } catch (_e) {
         return false;
     }
 }

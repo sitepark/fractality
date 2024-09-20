@@ -14,8 +14,8 @@ export default function renderTag(fractality) {
         expect(render).toBe('Override Context\nVariant Context\n\n');
     });
 
-    it('throws if specified component does not exist', async () => {
-        expect(async () => {
+    it('throws if specified component does not exist', () => {
+        return expect(async () => {
             return await fractality.components.find('@render-tag-comp-2--missing-handle').render();
         }).rejects.toThrow("Could not render component '@render-tag-comp-3' - component not found.");
     });

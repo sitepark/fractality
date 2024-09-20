@@ -1,6 +1,5 @@
 'use strict';
 
-import _ from 'lodash';
 import Path from 'path';
 
 export default function (theme, env, app) {
@@ -84,7 +83,7 @@ export default function (theme, env, app) {
                 const pathify = env.engine.getGlobal('path');
                 url = pathify.call(this, url);
                 return `<a href="${url}">${handle}</a>`;
-            } catch (e) {
+            } catch (_e) {
                 return handle;
             }
         });

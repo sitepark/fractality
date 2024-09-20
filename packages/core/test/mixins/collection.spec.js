@@ -311,12 +311,6 @@ describe('Collection', () => {
             const ret = collection.orderBy('id');
             expect(ret.first()).toEqual(items[0]);
         });
-        it('sorts items by specified key', () => {
-            const collection = new Collection();
-            collection.setItems([items[1], items[0]]);
-            const ret = collection.orderBy('id');
-            expect(ret.first()).toEqual(items[0]);
-        });
         it('sorts items by specified key descending', () => {
             const collection = new Collection();
             collection.setItems([items[0], items[1]]);

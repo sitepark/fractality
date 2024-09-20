@@ -43,7 +43,7 @@ try {
     if (projectPackage.fractal && projectPackage.fractal.main) {
         config.configPath = Path.join(process.cwd(), projectPackage.fractal.main);
     }
-} catch (e) {
+} catch (_e) {
     // don't do anything with the error since not having a package.json
     // is expected when it can't be required
 }

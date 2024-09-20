@@ -7,7 +7,7 @@ export default function highlighter(content, lang) {
     lang = lang ? lang.toLowerCase() : lang;
     try {
         return lang ? hljs.highlight(content, { language: lang }).value : hljs.highlightAuto(content).value;
-    } catch (e) {
+    } catch (_e) {
         return hljs.highlightAuto(content).value;
     }
 }

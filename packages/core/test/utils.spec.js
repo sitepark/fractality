@@ -3,7 +3,6 @@ import mock from 'mock-fs';
 
 import * as utils from '../src/utils';
 import { describe } from 'vitest';
-import { beforeEach } from 'vitest';
 
 describe('Utils', () => {
     describe('.lang()', () => {

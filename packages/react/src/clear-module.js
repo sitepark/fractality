@@ -8,7 +8,7 @@ const require = createRequire(import.meta.url);
 const resolve = (moduleId) => {
     try {
         return resolveFrom(path.dirname(parentModule(__filename)), moduleId);
-    } catch (_) {
+    } catch (_e) {
         /**/
     }
 };

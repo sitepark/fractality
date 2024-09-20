@@ -9,8 +9,8 @@ describe('render-tag', () => {
 
     renderTag(fractality);
 
-    it('throws if specified handle is wrong', async () => {
-        expect(async () => {
+    it('throws if specified handle is wrong', () => {
+        return expect(async () => {
             return await fractality.components.find('@render-tag-comp-2--wrong-handle').render();
         }).rejects.toThrow('You must provide a valid component handle to the render tag.');
     });

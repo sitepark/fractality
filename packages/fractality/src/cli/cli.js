@@ -1,9 +1,7 @@
 'use strict';
 
-import { Log, mixins, utils } from '@fractality/core';
-import chalk from 'chalk';
+import { Log, mixins } from '@fractality/core';
 import chokidar from 'chokidar';
-import _ from 'lodash';
 import Console from './console.js';
 import Notifier from './notifier.js';
 import commands from './commands/index.js';
@@ -12,7 +10,6 @@ import { Command } from 'commander';
 const mix = mixins.mix;
 const Configurable = mixins.configurable;
 const Emitter = mixins.emitter;
-import { URL, fileURLToPath } from 'url';
 
 class Cli extends mix(Configurable, Emitter) {
     /**

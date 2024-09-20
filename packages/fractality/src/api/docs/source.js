@@ -36,11 +36,9 @@ export default class DocSource extends EntitySource {
         });
     }
 
-    async render(page, context, env, opts) {
+    async render(page, context, env) {
         const self = this;
 
-        /* eslint-disable-next-line no-unused-vars */
-        opts = opts || {};
         env = env || {};
 
         if (!page) {

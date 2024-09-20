@@ -77,10 +77,7 @@ class ReactAdapter extends Adapter {
         return wrapperElements.reverse().reduce((currentElement, wrapperObject) => {
             const wrapperComponent = this.getWrapperComponent(wrapperObject.component);
 
-            return React.createElement(wrapperComponent, {
-                ...wrapperObject.props,
-                children: currentElement,
-            });
+            return React.createElement(wrapperComponent, wrapperObject.props, currentElement);
         }, children);
     }
 

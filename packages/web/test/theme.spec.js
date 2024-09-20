@@ -75,7 +75,6 @@ describe('Theme', () => {
                 path: '/',
                 handle: '/',
                 keys: [],
-                // eslint-disable-next-line no-useless-escape
                 matcher: /^\/[\/#\?]?$/i,
             },
         ]);
@@ -90,7 +89,6 @@ describe('Theme', () => {
                 path: '/',
                 handle: 'handle',
                 keys: [],
-                // eslint-disable-next-line no-useless-escape
                 matcher: /^\/[\/#\?]?$/i,
             },
         ]);
@@ -106,7 +104,6 @@ describe('Theme', () => {
                 path: '/',
                 handle: '/',
                 keys: [],
-                // eslint-disable-next-line no-useless-escape
                 matcher: /^\/[\/#\?]?$/i,
             },
         ]);
@@ -139,7 +136,6 @@ describe('Theme', () => {
                 path: '/',
                 handle: '/',
                 keys: [],
-                // eslint-disable-next-line no-useless-escape
                 matcher: /^\/[\/#\?]?$/i,
             },
             params: {},
@@ -163,7 +159,6 @@ describe('Theme', () => {
                         suffix: '',
                     },
                 ],
-                // eslint-disable-next-line no-useless-escape
                 matcher: /^(?:\/([^\/#\?]+?))[\/#\?]?$/i,
             },
             params: {

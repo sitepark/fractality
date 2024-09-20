@@ -63,7 +63,7 @@ export default class Variant extends Entity {
         if (!this._references) {
             try {
                 this._references = this.source._engine.getReferencesForView(this.handle);
-            } catch (e) {
+            } catch (_e) {
                 // older Adapters will throw an error because getReferencesForView is not defined
                 this._references = this._parseReferences();
             }

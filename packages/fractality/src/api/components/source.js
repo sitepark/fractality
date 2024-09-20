@@ -93,7 +93,6 @@ export default class ComponentSource extends EntitySource {
         let source = this;
         filePath = Path.resolve(filePath);
         if (this._fileTree) {
-            /* eslint-disable-next-line no-inner-declarations */
             function findFile(items) {
                 for (const item of items) {
                     if (item.isFile && item.path === filePath) {

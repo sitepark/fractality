@@ -6,7 +6,7 @@ labels: feature-request, needs-triage
 
 <!--
 Before submitting your issue, please ensure you have:
-    * Checked the Fractality documentation: https://fractal.build/guide
+    * Checked the Fractal documentation: https://fractal.build/guide
     * Checked that your request doesn’t exist already: https://github.com/issues?utf8=%E2%9C%93&q=is%3Aissue+user%3Afrctl
 -->
 

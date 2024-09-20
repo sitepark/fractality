@@ -16,7 +16,7 @@ import { URL, fileURLToPath } from 'url';
 
 class Cli extends mix(Configurable, Emitter) {
     /**
-     * @param {import('../fractal.js').Fractal} app
+     * @param {import('../fractal.js').Fractality} app
      */
     constructor(app) {
         super(app);

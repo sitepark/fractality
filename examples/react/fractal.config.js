@@ -7,7 +7,7 @@ import { URL, fileURLToPath } from 'url';
 import createReactAdapter from '@fractality/react';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
-const fractal = create();
+const fractality = create();
 const reactAdapter = createReactAdapter({
     wrapperElements: [
         {
@@ -22,25 +22,25 @@ const reactAdapter = createReactAdapter({
 /*
  * Give your project a title.
  */
-fractal.set('project.title', 'Fractality React example');
+fractality.set('project.title', 'Fractality React example');
 
 /*
  * Tell Fractality where to look for components.
  */
-fractal.components.set('path', path.join(__dirname, 'components'));
-fractal.components.set('ext', '.jsx');
-fractal.components.engine(reactAdapter);
-fractal.components.set('default.context.foo', 'bar');
+fractality.components.set('path', path.join(__dirname, 'components'));
+fractality.components.set('ext', '.jsx');
+fractality.components.engine(reactAdapter);
+fractality.components.set('default.context.foo', 'bar');
 
 /*
  * Tell the Fractality web preview plugin where to look for static assets.
  */
-fractal.web.set('static.path', path.join(__dirname, 'public'));
+fractality.web.set('static.path', path.join(__dirname, 'public'));
 
 /*
  * Tell the Fractality where to output the build files.
  */
-fractal.web.set('builder.dest', path.join(__dirname, 'dist'));
+fractality.web.set('builder.dest', path.join(__dirname, 'dist'));
 
 /*
  * Customize Mandelbrot
@@ -49,6 +49,6 @@ const customTheme = mandelbrot({
     // See https://fractal.build/guide/web/default-theme.html#configuration
 });
 
-fractal.web.theme(customTheme);
+fractality.web.theme(customTheme);
 
-export default fractal;
+export default fractality;

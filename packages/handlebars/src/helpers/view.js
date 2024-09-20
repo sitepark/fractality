@@ -2,9 +2,9 @@
 
 import Handlebars from 'handlebars';
 
-export default function (fractal) {
+export default function (fractality) {
     return function view(handle) {
-        const source = fractal.components;
+        const source = fractality.components;
         let entity = source.find(handle);
         if (!entity) {
             throw new Error(`Could not get view contents for component '${handle}' - component not found.`);

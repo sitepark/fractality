@@ -2,18 +2,18 @@
   "name": "@fractality/react",
   "version": "0.5.0",
   "type": "module",
-  "description": "React template adapter for Fractal.",
+  "description": "React template adapter for Fractality.",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/frctl/fractal.git",
+    "url": "https://github.com/sitepark/fractality.git",
     "directory": "packages/react"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/frctl/fractal/issues"
+    "url": "https://github.com/sitepark/fractality/issues"
   },
-  "homepage": "https://github.com/frctl/fractal/tree/main/packages/react",
+  "homepage": "https://github.com/sitepark/fractality/tree/main/packages/react",
   "dependencies": {
     "@babel/core": "^7.25.2",
     "@babel/preset-env": "^7.25.3",

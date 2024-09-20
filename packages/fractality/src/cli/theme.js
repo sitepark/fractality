@@ -7,7 +7,7 @@ export default class Theme {
     constructor(config) {
         config = config || {};
         this._delimiter = {
-            text: 'fractal ➤',
+            text: 'fractality ➤',
             format: chalk.magenta,
         };
         this._styles = {

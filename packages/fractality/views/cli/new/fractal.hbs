@@ -11,34 +11,34 @@ import path from 'node:path';
 
 import { create } from '@fractality/fractality';
 
-const fractal = create();
+const fractality = create();
 
-export default fractal;
+export default fractality;
 
 {{#if projectTitle}}
 /*
  * Give your project a title.
  */
-fractal.set('project.title', '{{ projectTitle }}');
+fractality.set('project.title', '{{ projectTitle }}');
 {{/if}}
 
 {{#if componentsDir}}
 /*
  * Tell Fractality where to look for components.
  */
-fractal.components.set('path', path.join(__dirname, '{{ componentsDir }}'));
+fractality.components.set('path', path.join(__dirname, '{{ componentsDir }}'));
 {{/if}}
 
 {{#if docsDir}}
 /*
  * Tell Fractality where to look for documentation pages.
  */
-fractal.docs.set('path', path.join(__dirname, '{{ docsDir }}'));
+fractality.docs.set('path', path.join(__dirname, '{{ docsDir }}'));
 {{/if}}
 
 {{#if publicDir}}
 /*
  * Tell the Fractality web preview plugin where to look for static assets.
  */
-fractal.web.set('static.path', path.join(__dirname, '{{ publicDir }}'));
+fractality.web.set('static.path', path.join(__dirname, '{{ publicDir }}'));
 {{/if}}

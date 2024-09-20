@@ -4,10 +4,10 @@ import { utils } from '@fractality/core';
 import Handlebars from 'handlebars';
 import _ from 'lodash';
 
-export default function (fractal) {
+export default function (fractality) {
     return function render(handle) {
         let context;
-        let source = fractal.components;
+        let source = fractality.components;
         const opts = arguments[arguments.length - 1].hash;
         const root = arguments[arguments.length - 1].data.root;
         const merge = opts.merge || false;

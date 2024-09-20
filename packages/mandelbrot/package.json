@@ -2,15 +2,15 @@
   "name": "@fractality/mandelbrot",
   "version": "1.12.0",
   "type": "module",
-  "description": "The default theme for Fractal.",
+  "description": "The default theme for Fractality.",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/frctl/fractal.git",
+    "url": "https://github.com/sitepark/fractality.git",
     "directory": "packages/mandelbrot"
   },
   "bugs": {
-    "url": "https://github.com/frctl/fractal/issues"
+    "url": "https://github.com/sitepark/fractality/issues"
   },
   "author": "Mark Perkins <mark@clearleft.com> (http://clearleft.com/)",
   "license": "MIT",

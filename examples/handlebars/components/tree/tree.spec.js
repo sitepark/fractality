@@ -1,11 +1,11 @@
 import { tree } from '@fractality/adapter-tests';
 
-import fractal from '../../fractal.config.js';
+import fractality from '../../fractal.config.js';
 
 describe('tree', () => {
     beforeEach(async () => {
-        await fractal.load();
+        await fractality.load();
     });
 
-    tree(fractal);
+    tree(fractality);
 });

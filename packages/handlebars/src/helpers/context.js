@@ -2,9 +2,9 @@
 
 import Handlebars from 'handlebars';
 
-export default function (fractal) {
+export default function (fractality) {
     return function context(handle) {
-        const source = fractal.components;
+        const source = fractality.components;
         const entity = source.find(handle);
         if (!entity) {
             throw new Error(`Could not get context for component '${handle}' - component not found.`);

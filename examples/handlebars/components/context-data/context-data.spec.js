@@ -1,16 +1,16 @@
-import fractal from '../../fractal.config.js';
+import fractality from '../../fractal.config.js';
 
 describe('context-data', () => {
     beforeEach(async () => {
-        await fractal.load();
+        await fractality.load();
     });
 
     it('does not modify used component context', async () => {
         const correctContext = { items: [{ foo: 'bar' }] };
-        const initialContext = await fractal.components.find('@context-data-a').variants().default().getContext();
+        const initialContext = await fractality.components.find('@context-data-a').variants().default().getContext();
         expect(initialContext).toEqual(correctContext);
-        await fractal.components.find('@context-data-a').render();
-        const context = await fractal.components.find('@context-data-a').variants().default().getContext();
+        await fractality.components.find('@context-data-a').render();
+        const context = await fractality.components.find('@context-data-a').variants().default().getContext();
         expect(context).toEqual(correctContext);
     });
 });

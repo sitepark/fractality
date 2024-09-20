@@ -1,10 +1,10 @@
 'use strict';
 
 /**
- * @param {import("../../fractal.js").Fractal} fractal
+ * @param {import("../../fractal.js").Fractality} fractality
  */
-export default function (fractal) {
-    const cli = fractal._cli;
+export default function (fractality) {
+    const cli = fractality._cli;
     const console = cli.console;
 
     cli._programm
@@ -12,7 +12,7 @@ export default function (fractal) {
         .description('Build a static version of the web UI')
         .option('-t, --theme <package-name>', 'The name of custom UI theme to use, if required')
         .action(async (args) => {
-            const builder = fractal.web.builder(args);
+            const builder = fractality.web.builder(args);
 
             builder.on('start', () => {
                 console.success('Build started...');

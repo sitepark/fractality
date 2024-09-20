@@ -123,7 +123,7 @@ class ReactAdapter extends Adapter {
     }
 
     getPath(assetPath, root) {
-        const fractal = this._source._app;
+        const fractality = this._source._app;
 
         if (!root || !root.env || root.env.server) {
             return assetPath;
@@ -132,7 +132,7 @@ class ReactAdapter extends Adapter {
         return utils.relUrlPath(
             assetPath,
             _.get(root.env.request || root.request, 'path', '/'),
-            fractal.web.get('builder.urls'),
+            fractality.web.get('builder.urls'),
         );
     }
 }

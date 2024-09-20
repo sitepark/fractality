@@ -1,10 +1,10 @@
 'use strict';
 
 /**
- * @param {import("../../fractal.js").Fractal} fractal
+ * @param {import("../../fractal.js").Fractality} fractality
  */
-export default function (fractal) {
-    const cli = fractal._cli;
+export default function (fractality) {
+    const cli = fractality._cli;
     const console = cli.console;
 
     cli._programm
@@ -16,7 +16,7 @@ export default function (fractal) {
 
             let body = '';
             if (cli.scope === 'project') {
-                body += `Project Fractality version: ${fractal.version}\n`;
+                body += `Project Fractality version: ${fractality.version}\n`;
             }
             body += `CLI helper version:      ${cli.cliPackage.version}`;
 

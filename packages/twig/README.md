@@ -1,6 +1,6 @@
 # @fractality/twig
 
-[Twig](https://github.com/twigjs/twig.js) template enginge adapter for [Fractal](http://github.com/frctl/fractal).
+[Twig](https://github.com/twigjs/twig.js) template enginge adapter for [Fractality](http://github.com/sitepark/fractality).
 
 [![NPM Version](https://img.shields.io/npm/v/@fractality/twig)](https://www.npmjs.com/package/@fractality/twig)
 
@@ -17,8 +17,8 @@ then open your fractal.js file and add following lines:
  * Import the Twig adapter
  */
 import twigAdapter from '@fractality/twig';
-fractal.components.engine(twigAdapter());
-fractal.components.set('ext', '.twig');
+fractality.components.engine(twigAdapter());
+fractality.components.set('ext', '.twig');
 ```
 
 ## Using Twig for docs
@@ -26,7 +26,7 @@ fractal.components.set('ext', '.twig');
 To use Twig for docs, set the docs engine to `@fractality/twig`:
 
 ```js
-fractal.docs.engine(twigAdapter);
+fractality.docs.engine(twigAdapter);
 ```
 
 ## Extending with a custom config
@@ -64,14 +64,14 @@ const twig = twigAdapter({
     strict_variables: true,
 
     // define Twig namespaces, see https://github.com/twigjs/twig.js/wiki#namespaces
-    // this may break some fractal functionality, like including components via their handles and the render tag
+    // this may break some fractality functionality, like including components via their handles and the render tag
     namespaces: {
         Components: './components',
     },
 
     // use twig.js default template loader
     // this will allow including templates via relative paths, like twig.js or PHP Twig does by default
-    // changing this will break including components via their fractal handles
+    // changing this will break including components via their fractality handles
     // changing this will break the custom render tag
     // default is 'fractal'
     method: 'fs',
@@ -159,7 +159,7 @@ An example to use [twig-js-markdown](https://github.com/ianbytchek/twig-js-markd
 
 ```js
 import twigMarkdown from 'twig-markdown';
-const instance = fractal.components.engine(twigAdapter);
+const instance = fractality.components.engine(twigAdapter);
 
 // instance.twig refers to the twig.js instance
 instance.twig.extend(twigMarkdown);

@@ -2,8 +2,8 @@
 
 import render from './render.js';
 
-export default function (fractal, config) {
+export default function (fractality, config) {
     return {
-        render: render(fractal, config),
+        render: render(fractality, config),
     };
 }

@@ -1,6 +1,6 @@
 # @fractality/handlebars
 
-[Handlebars](https://handlebarsjs.com/) template engine adapter for [Fractal](http://github.com/fractality/fractality).
+[Handlebars](https://handlebarsjs.com/) template engine adapter for [Fractalilty](http://github.com/sitepark/fractality).
 
 [![NPM Version](https://img.shields.io/npm/v/@fractality/handlebars)](https://www.npmjs.com/package/@fractality/handlebars)
 
@@ -8,4 +8,4 @@ See the Fractality [view templates guide](http://fractal.build/guide/core-concep
 
 ## License
 
-[MIT](https://github.com/frctl/fractal/blob/main/LICENSE)
+[MIT](https://github.com/sitepark/fractality/blob/main/LICENSE)

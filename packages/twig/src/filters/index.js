@@ -2,8 +2,8 @@
 
 import pathFilter from './path.js';
 
-export default function (fractal) {
+export default function (fractality) {
     return {
-        path: pathFilter(fractal),
+        path: pathFilter(fractality),
     };
 }

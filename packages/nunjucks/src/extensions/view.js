@@ -2,7 +2,7 @@
 
 import nunjucks from 'nunjucks';
 
-export default function (fractal) {
+export default function (fractality) {
     function ViewExtension() {
         this.tags = ['view'];
 
@@ -14,7 +14,7 @@ export default function (fractal) {
         };
 
         this.run = function () {
-            const source = fractal.components;
+            const source = fractality.components;
             const args = Array.from(arguments);
             const callback = args.pop();
             args.shift();

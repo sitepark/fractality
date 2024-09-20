@@ -1,11 +1,11 @@
 import { include } from '@fractality/adapter-tests';
 
-import fractal from '../../fractal.config.js';
+import fractality from '../../fractal.config.js';
 
 describe('include', () => {
     beforeEach(async () => {
-        await fractal.load();
+        await fractality.load();
     });
 
-    include(fractal);
+    include(fractality);
 });

@@ -1,6 +1,6 @@
 'use strict';
 
-export default function (fractal) {
+export default function (fractality) {
     function ContextExtension() {
         this.tags = ['context'];
 
@@ -12,7 +12,7 @@ export default function (fractal) {
         };
 
         this.run = function () {
-            const source = fractal.components;
+            const source = fractality.components;
             const args = Array.from(arguments);
             const callback = args.pop();
             args.shift();

@@ -1,11 +1,11 @@
 import { components } from '@fractality/adapter-tests';
 
-import fractal from '../fractal.config.js';
+import fractality from '../fractal.config.js';
 
 describe('components', () => {
     beforeEach(async () => {
-        await fractal.load();
+        await fractality.load();
     });
 
-    components(fractal);
+    components(fractality);
 });

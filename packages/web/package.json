@@ -1,19 +1,19 @@
 {
   "name": "@fractality/web",
   "version": "0.3.0",
-  "description": "Web module of Fractal.",
+  "description": "Web module of Fractality.",
   "main": "src/index.js",
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/frctl/fractal.git",
+    "url": "https://github.com/sitepark/fractality.git",
     "directory": "packages/web"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/frctl/fractal/issues"
+    "url": "https://github.com/sitepark/fractality/issues"
   },
-  "homepage": "https://github.com/frctl/fractal/tree/main/packages/web",
+  "homepage": "https://github.com/sitepark/fractality/tree/main/packages/web",
   "dependencies": {
     "@fractality/core": "^0.5.0",
     "anymatch": "^3.1.3",

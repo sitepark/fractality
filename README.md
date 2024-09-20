@@ -82,7 +82,7 @@ npm run fractality:start
 ### Installing globally
 
 ```shell
-npm i -g @fractality/fractal
+npm i -g @fractality/fractality
 ```
 
 This will also give you global access to the `fractality` command which you can use to scaffold a new Fractality project with `fractality new`.
@@ -125,7 +125,7 @@ To do some work, run the following commands in root:
 
 ## Testing
 
-Fractal is a project that evolved rapidly and organically from a proof-of-concept prototype into a more stable, mature tool. Because of this it's currently pretty far behind where it should be in terms of test coverage. Any contributions on this front would be most welcome!
+Fractality is a project that evolved rapidly and organically from a proof-of-concept prototype into a more stable, mature tool. Because of this it's currently pretty far behind where it should be in terms of test coverage. Any contributions on this front would be most welcome!
 
 Existing tests can be run using the `npm test` command.
 

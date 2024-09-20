@@ -5,12 +5,12 @@ import contextData from './context-data.js';
 import view from './view.js';
 import path from './path.js';
 
-export default function (fractal) {
+export default function (fractality) {
     return {
-        render: render(fractal),
-        context: context(fractal),
-        contextData: contextData(fractal),
-        view: view(fractal),
-        path: path(fractal),
+        render: render(fractality),
+        context: context(fractality),
+        contextData: contextData(fractality),
+        view: view(fractality),
+        path: path(fractality),
     };
 }

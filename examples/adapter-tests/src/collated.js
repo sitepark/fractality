@@ -1,6 +1,6 @@
-export default function collated(fractal) {
+export default function collated(fractality) {
     it('renders collated components collated', async () => {
-        const render = await fractal.components.find('@collated').render(null, null, { collate: true });
+        const render = await fractality.components.find('@collated').render(null, null, { collate: true });
         expect(render).toMatchSnapshot();
     });
 }

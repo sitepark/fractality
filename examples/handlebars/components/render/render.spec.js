@@ -1,11 +1,11 @@
 import { render } from '@fractality/adapter-tests';
 
-import fractal from '../../fractal.config.js';
+import fractality from '../../fractal.config.js';
 
 describe('render', () => {
     beforeEach(async () => {
-        await fractal.load();
+        await fractality.load();
     });
 
-    render(fractal);
+    render(fractality);
 });

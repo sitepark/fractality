@@ -1,6 +1,6 @@
 # @fractality/mandelbrot
 
-The default web UI theme for [Fractal](http://github.com/frctl/fractal).
+The default web UI theme for [Fractality](http://github.com/sitepark/fractality).
 
 [![NPM Version](https://img.shields.io/npm/v/@fractality/mandelbrot)](https://www.npmjs.com/package/@fractality/mandelbrot)
 
@@ -11,7 +11,7 @@ In order to get a locale aware date for the 'last updated' text, install the
 
 ## Development
 
-[Follow these instructions](https://github.com/frctl/fractal#development) to setup the development environement, then go to the Mandelbrot package directory:
+[Follow these instructions](https://github.com/sitepark/fractality#development) to setup the development environement, then go to the Mandelbrot package directory:
 
 ```
 cd packages/mandelbrot
@@ -31,8 +31,8 @@ You can also build the files once with:
 npm run build
 ```
 
-You can see your changes in one of our [example Fractality instances](https://github.com/frctl/fractal/tree/main/examples).
+You can see your changes in one of our [example Fractality instances](https://github.com/sitepark/fractality/tree/main/examples).
 
 ## License
 
-[MIT](https://github.com/frctl/fractal/blob/main/LICENSE)
+[MIT](https://github.com/sitepark/fractality/blob/main/LICENSE)

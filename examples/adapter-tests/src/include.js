@@ -1,11 +1,11 @@
-export default function include(fractal) {
+export default function include(fractality) {
     it('includes child component', async () => {
-        const render = await fractal.components.find('@include-parent').render();
+        const render = await fractality.components.find('@include-parent').render();
         expect(render).toMatchSnapshot();
     });
 
     it('does not modify _self when including child component', async () => {
-        const render = await fractal.components.find('@include-parent--self').render();
+        const render = await fractality.components.find('@include-parent--self').render();
         expect(render).toMatchSnapshot();
     });
 }

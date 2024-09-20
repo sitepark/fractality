@@ -1,9 +1,9 @@
 'use strict';
 /**
- * @param {import("../../fractal.js").Fractal} fractal
+ * @param {import("../../fractal.js").Fractalilty} fractality
  */
-export default function (fractal) {
-    const cli = fractal._cli;
+export default function (fractality) {
+    const cli = fractality._cli;
     const console = cli.console;
 
     cli._programm
@@ -14,7 +14,7 @@ export default function (fractal) {
         .option('-s, --sync', 'Use BrowserSync to sync and reload pages when changes occur')
         .option('-w, --watch', 'Watch the filesystem for changes.')
         .action(async (args) => {
-            const server = fractal.web.server(args);
+            const server = fractality.web.server(args);
 
             server.on('ready', () => {
                 const header = 'Fractality web UI server is running!';

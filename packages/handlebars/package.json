@@ -2,19 +2,19 @@
   "name": "@fractality/handlebars",
   "version": "1.4.0",
   "type": "module",
-  "description": "Use Handlebars templates with Fractal.",
+  "description": "Use Handlebars templates with Fractality.",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/frctl/fractal.git",
+    "url": "https://github.com/sitepark/fractality.git",
     "directory": "packages/handlebars"
   },
   "author": "Mark Perkins <mark@clearleft.com> (http://clearleft.com/)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/frctl/fractal/issues"
+    "url": "https://github.com/sitepark/fractality/issues"
   },
-  "homepage": "https://github.com/frctl/fractal/tree/main/packages/handlebars",
+  "homepage": "https://github.com/sitepark/fractality/tree/main/packages/handlebars",
   "dependencies": {
     "@fractality/core": "^0.5.0",
     "handlebars": "^4.7.8",

@@ -4,7 +4,7 @@ This is an example instance of Fractality using the default Handlebars adapter.
 
 ## Setup
 
-[Follow these instructions](https://github.com/frctl/fractal#development) to setup the development environement, then run:
+[Follow these instructions](https://github.com/sitepark/fractality#development) to setup the development environement, then run:
 
 ```bash
 npm start

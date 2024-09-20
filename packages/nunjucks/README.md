@@ -1,6 +1,6 @@
 # @fractality/nunjucks
 
-[Nunjucks](http://mozilla.github.io/nunjucks/) template engine adapter for [Fractal](http://github.com/fractality/fractality).
+[Nunjucks](http://mozilla.github.io/nunjucks/) template engine adapter for [Fractality](http://github.com/fractality/fractality).
 
 [![NPM Version](https://img.shields.io/npm/v/@fractality/nunjucks)](https://www.npmjs.com/package/@fractality/nunjucks)
 
@@ -19,8 +19,8 @@ npm i @fractality/nunjucks --save
 ## Usage
 
 ```javascript
-fractal.components.engine('@fractality/nunjucks'); // register the Nunjucks adapter for your components
-fractal.components.set('ext', '.njk'); // look for files with a .njk file extension
+fractality.components.engine('@fractality/nunjucks'); // register the Nunjucks adapter for your components
+fractality.components.set('ext', '.njk'); // look for files with a .njk file extension
 ```
 
 ## Customisation
@@ -44,7 +44,7 @@ const nunj = nunjucksAdapter({
     },
 });
 
-fractal.components.engine(nunj); /* set as the default template engine for components */
+fractality.components.engine(nunj); /* set as the default template engine for components */
 ```
 
 For example, to register the 'shorten' filter example from the [Nujucks docs](https://mozilla.github.io/nunjucks/api.html#custom-filters):
@@ -93,7 +93,7 @@ In this example the file `foo.html` would be searched for in the `path/to/files`
 
 ## Extensions
 
-The following Nunjucks extensions come **automatically pre-installed**. These are often useful when building or documenting Fractal-based component libraries.
+The following Nunjucks extensions come **automatically pre-installed**. These are often useful when building or documenting Fractality-based component libraries.
 
 If you **do not wish** to include these extensions, set `pristine: true` when configuring your Nunjucks adapter instance.
 

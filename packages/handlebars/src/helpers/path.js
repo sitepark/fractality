@@ -4,7 +4,7 @@ import { utils } from '@fractality/core';
 import Handlebars from 'handlebars';
 import _ from 'lodash';
 
-export default function (fractal) {
+export default function (fractality) {
     return function staticPath(path) {
         const options = Array.from(arguments).pop();
         const root = options.data.root;
@@ -32,7 +32,7 @@ export default function (fractal) {
         return utils.relUrlPath(
             path,
             _.get(root._env.request || root._request, 'path', '/'),
-            fractal.web.get('builder.urls'),
+            fractality.web.get('builder.urls'),
         );
     };
 }

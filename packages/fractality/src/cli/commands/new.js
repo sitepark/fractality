@@ -11,10 +11,10 @@ import { URL, fileURLToPath } from 'url';
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
 /**
- * @param {import("../../fractal.js").Fractal} fractal
+ * @param {import("../../fractal.js").Fractality} fractality
  */
-export default function (fractal) {
-    const cli = fractal._cli;
+export default function (fractality) {
+    const cli = fractality._cli;
     const console = cli.console;
 
     cli._programm
@@ -85,11 +85,11 @@ export default function (fractal) {
                     name: utils.slugify(answers.projectTitle),
                     version: '0.1.0',
                     dependencies: {
-                        '@fractality/fractality': `^${fractal.get('version')}`,
+                        '@fractality/fractality': `^${fractality.get('version')}`,
                     },
                     scripts: {
-                        'fractal:start': 'fractal start --sync',
-                        'fractal:build': 'fractal build',
+                        'fractality:start': 'fractality start --sync',
+                        'fractality:build': 'fractality build',
                     },
                 };
 

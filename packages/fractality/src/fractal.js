@@ -15,7 +15,7 @@ const Emitter = mixins.emitter;
 export class Fractality extends mix(Configurable, Emitter) {
     /**
      * Constructor.
-     * @return {Fractal}
+     * @return {Fractality}
      */
     constructor(config) {
         super();

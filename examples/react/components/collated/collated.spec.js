@@ -1,11 +1,11 @@
 import { collated } from '@fractality/adapter-tests';
 
-import fractal from '../../fractal.config.js';
+import fractality from '../../fractal.config.js';
 
 describe('collated', () => {
     beforeEach(async () => {
-        await fractal.load();
+        await fractality.load();
     });
 
-    collated(fractal);
+    collated(fractality);
 });

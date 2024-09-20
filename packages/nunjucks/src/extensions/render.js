@@ -3,7 +3,7 @@
 import nunjucks from 'nunjucks';
 import { utils } from '@fractality/core';
 
-export default function (fractal) {
+export default function (fractality) {
     function RenderExtension() {
         this.tags = ['render'];
 
@@ -15,7 +15,7 @@ export default function (fractal) {
         };
 
         this.run = function () {
-            const source = fractal.components;
+            const source = fractality.components;
             const args = Array.from(arguments);
             const rootContext = args[0].ctx;
             const callback = args.pop();

@@ -1,11 +1,11 @@
 import { renderTag } from '@fractality/adapter-tests';
 
-import fractal from '../../fractal.config.js';
+import fractality from '../../fractal.config.js';
 
 describe('render-tag', () => {
     beforeEach(async () => {
-        await fractal.load();
+        await fractality.load();
     });
 
-    renderTag(fractal);
+    renderTag(fractality);
 });

@@ -3,10 +3,10 @@
 import { utils } from '@fractality/core';
 import _ from 'lodash';
 
-export default function (fractal) {
+export default function (fractality) {
     return function render(handle) {
         let context;
-        let source = fractal.components;
+        let source = fractality.components;
         if (arguments.length >= 3) {
             context = arguments[1];
         } else if (arguments.length == 2) {

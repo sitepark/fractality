@@ -10,7 +10,7 @@ import adapterUtils from '../utils.js';
  *
  *  Format: {% render "@component" with {some: 'values'} %}
  */
-export default function (fractal, config) {
+export default function (fractality, config) {
     return function (Twig) {
         return {
             type: 'rendertag',
@@ -53,7 +53,7 @@ export default function (fractal, config) {
                     throw new Error(`You must provide a valid component handle to the render tag.`);
                 }
 
-                const entity = fractal.components.find(handle);
+                const entity = fractality.components.find(handle);
 
                 if (!entity) {
                     throw new Error(`Could not render component '${handle}' - component not found.`);

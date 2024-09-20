@@ -1,14 +1,14 @@
-export default function docs(fractal) {
+export default function docs(fractality) {
     it('properly loads docs', () => {
-        expect(fractal.docs.find('@index')).toBeDefined();
+        expect(fractality.docs.find('@index')).toBeDefined();
     });
 
     it('properly loads docs front-matter', () => {
-        expect(fractal.docs.find('@index').title).toBe('Project Overview');
+        expect(fractality.docs.find('@index').title).toBe('Project Overview');
     });
 
     it('properly render docs through templating engine', async () => {
-        const render = await fractal.docs.find('@index').render();
+        const render = await fractality.docs.find('@index').render();
         expect(render).toMatchSnapshot();
     });
 }

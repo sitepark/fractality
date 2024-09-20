@@ -1,5 +1,5 @@
 import Source from '../../src/entities/source';
-import fractal from '../__mocks__/fractal';
+import fractality from '../__mocks__/fractal';
 
 const items = [
     {
@@ -16,7 +16,7 @@ describe('EntitySource', () => {
     let source;
 
     beforeEach(() => {
-        source = new Source('foo', fractal);
+        source = new Source('foo', fractality);
     });
 
     describe('.entities()', () => {

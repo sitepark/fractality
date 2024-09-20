@@ -1,11 +1,11 @@
 import { path } from '@fractality/adapter-tests';
 
-import fractal from '../../fractal.config.js';
+import fractality from '../../fractal.config.js';
 
 describe('path', () => {
     beforeEach(async () => {
-        await fractal.load();
+        await fractality.load();
     });
 
-    path(fractal);
+    path(fractality);
 });

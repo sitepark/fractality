@@ -11,35 +11,35 @@ const __dirname = fileURLToPath(new URL('.', import.meta.url));
 /*
  * Require the Fractality module
  */
-const fractal = create();
+const fractality = create();
 
 /*
  * Give your project a title.
  */
-fractal.set('project.title', 'Fractality Nunjucks example');
+fractality.set('project.title', 'Fractality Nunjucks example');
 
 /*
  * Tell Fractality where to look for components.
  */
-fractal.components.set('path', path.join(__dirname, 'components'));
-fractal.components.set('ext', '.njk');
-fractal.components.engine(nunjucks);
+fractality.components.set('path', path.join(__dirname, 'components'));
+fractality.components.set('ext', '.njk');
+fractality.components.engine(nunjucks);
 
 /*
  * Tell Fractality where to look for documentation pages.
  */
-fractal.docs.set('path', path.join(__dirname, 'docs'));
-fractal.docs.engine(nunjucks);
+fractality.docs.set('path', path.join(__dirname, 'docs'));
+fractality.docs.engine(nunjucks);
 
 /*
  * Tell the Fractality web preview plugin where to look for static assets.
  */
-fractal.web.set('static.path', path.join(__dirname, 'public'));
+fractality.web.set('static.path', path.join(__dirname, 'public'));
 
 /*
  * Tell the Fractality where to output the build files.
  */
-fractal.web.set('builder.dest', path.join(__dirname, 'dist'));
+fractality.web.set('builder.dest', path.join(__dirname, 'dist'));
 
 /*
  * Customize Mandelbrot
@@ -48,6 +48,6 @@ const customTheme = mandelbrot({
     // See https://fractal.build/guide/web/default-theme.html#configuration
 });
 
-fractal.web.theme(customTheme);
+fractality.web.theme(customTheme);
 
-export default fractal;
+export default fractality;

@@ -1,6 +1,6 @@
-# React template adapter for Fractal.
+# React template adapter for Fractality.
 
-An adapter to let you use React templates with Fractal. Not supported for docs.
+An adapter to let you use React templates with Fractality. Not supported for docs.
 
 ## Installation
 
@@ -20,7 +20,7 @@ const reactAdapter = createReactAdapter({
     /* options */
 });
 // Register the adapter as engine:
-fractal.components.engine(reactAdapter);
+fractality.components.engine(reactAdapter);
 ```
 
 ### PathProvider
@@ -49,7 +49,7 @@ const Button = (props) => {
 
 ### Client-side rendering
 
-This adapter only handles server-side rendering of the components. If client-side hydration/rendering is needed, this build pipeline has to be setup outside of Fractal.
+This adapter only handles server-side rendering of the components. If client-side hydration/rendering is needed, this build pipeline has to be setup outside of Fractality.
 
 The adapter sets `_adapter.componentName` prop in preview layouts that corresponds to the rendered component name and can be used to hydrate the markup client-side.
 
@@ -109,7 +109,7 @@ const reactAdapter = createReactAdapter({
             },
         },
         {
-            component: '@fractal-component',
+            component: '@fractality-component',
             props: {
                 some: 'prop',
                 yin: 'yang',

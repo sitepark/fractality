@@ -119,7 +119,7 @@ export default class Server extends mix(Emitter) {
         const syncServer = browserSync.create(this._app._config.project.title);
         const bsConfig = utils.defaultsDeep(this._config.syncOptions || {}, {
             logLevel: this._config.debug ? 'debug' : 'silent',
-            logPrefix: 'Fractal',
+            logPrefix: 'Fractality',
             browser: 'default',
             open: false,
             notify: false,

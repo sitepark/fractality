@@ -2,19 +2,19 @@
   "name": "@fractality/nunjucks",
   "version": "2.2.0",
   "type": "module",
-  "description": "Nunjucks template adapter for Fractal.",
+  "description": "Nunjucks template adapter for Fractalility.",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/frctl/fractal.git",
+    "url": "https://github.com/sitepark/fractality.git",
     "directory": "packages/nunjucks"
   },
   "author": "Mark Perkins <mark@clearleft.com> (http://clearleft.com/)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/frctl/fractal/issues"
+    "url": "https://github.com/sitepark/fractality/issues"
   },
-  "homepage": "https://github.com/frctl/fractal/tree/main/packages/nunjucks",
+  "homepage": "https://github.com/sitepark/fractality/tree/main/packages/nunjucks",
   "peerDependencies": {
     "@fractality/fractality": ">= 1.1.0-alpha.0 < 2"
   },

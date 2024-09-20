@@ -6,15 +6,15 @@
   "main": "src/fractal.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/frctl/fractal.git",
-    "directory": "packages/fractal"
+    "url": "https://github.com/sitepark/fractality.git",
+    "directory": "packages/fractality"
   },
   "author": "Mark Perkins <mark@clearleft.com> (http://clearleft.com/)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/frctl/fractal/issues"
+    "url": "https://github.com/sitepark/fractality/issues"
   },
-  "homepage": "https://github.com/frctl/fractal",
+  "homepage": "https://github.com/sitepark/fractality",
   "dependencies": {
     "@fractality/core": "^0.5.0",
     "@fractality/handlebars": "^1.4.0",

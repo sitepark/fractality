@@ -6,14 +6,14 @@
         alt=""
         width="110px">
   </a>
-  <h1 align="center">Fractal</h1>
+  <h1 align="center">Fractality</h1>
 </p>
 
 <br />
 <div align="center">
   <!-- Github Actions -->
-  <a href="https://github.com/frctl/fractal/actions" title="Build status">
-    <img src="https://img.shields.io/github/workflow/status/frctl/fractal/test/main" alt="">
+  <a href="https://github.com/sitepark/fractality/actions" title="Build status">
+    <img src="https://img.shields.io/github/workflow/status/sitepark/fractality/test/main" alt="">
   </a>
   <!-- NPM Version -->
   <a href="https://www.npmjs.com/package/@fractality/fractality" title="Current version">
@@ -28,8 +28,8 @@
     <img src="https://img.shields.io/npm/dm/@fractality/fractality" alt="">
   </a>
   <!-- License -->
-  <a href="https://github.com/frctl/fractal/blob/main/LICENSE" title="MIT license">
-    <img alt="GitHub" src="https://img.shields.io/github/license/frctl/fractal">
+  <a href="https://github.com/sitepark/fractality/blob/main/LICENSE" title="MIT license">
+    <img alt="GitHub" src="https://img.shields.io/github/license/sitepark/fractality">
   </a>
 </div>
 
@@ -37,8 +37,8 @@
 
 Fractality is a tool to help you **build** and **document** website component libraries and design systems.
 
-[Read more here](https://github.com/frctl/fractal#readme)
+[Read more here](https://github.com/sitepark/fractality#readme)
 
 ## License
 
-[MIT](https://github.com/frctl/fractal/blob/main/LICENSE)
+[MIT](https://github.com/sitepark/fractality/blob/main/LICENSE)

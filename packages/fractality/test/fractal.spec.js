@@ -11,7 +11,7 @@ const { readJsonSync } = fsExtra;
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const pkg = readJsonSync(__dirname + '../package.json');
 
-describe('Fractal', () => {
+describe('Fractality', () => {
     let app = create();
     beforeEach(() => {
         app.web;

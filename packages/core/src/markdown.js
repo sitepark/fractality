@@ -8,15 +8,13 @@ import highlighter from './highlighter.js';
 marked.use(markedSmartypants());
 const renderer = new marked.Renderer();
 
-renderer.code = function (code, lang) {
-    const output = highlighter(code, lang);
-    if (output != null) {
-        code = output;
-    }
+renderer.code = function (ctx) {
+    const lang = ctx.lang;
+    const output = highlighter(ctx.text, lang) ?? ctx.text;
     if (!lang) {
-        return `<pre><code class="hljs">${code}</code></pre>`;
+        return `<pre><code class="hljs">${output}</code></pre>`;
     }
-    return `<pre><code class="hljs language-${escape(lang, true)}">${code}</code></pre>`;
+    return `<pre><code class="hljs language-${escape(lang, true)}">${output}</code></pre>`;
 };
 
 /*

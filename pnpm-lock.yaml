@@ -28,9 +28,6 @@ importers:
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
-      path-to-regexp:
-        specifier: ^6.2.2
-        version: 6.3.0
       vinyl:
         specifier: ^3.0.0
         version: 3.0.0
@@ -531,7 +528,7 @@ importers:
         specifier: ^3.2.4
         version: 3.2.4(chokidar@4.0.0)
       path-to-regexp:
-        specifier: ^6.2.2
+        specifier: ^6.3.0
         version: 6.3.0
       throat:
         specifier: ^6.0.2

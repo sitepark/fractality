@@ -1,6 +1,6 @@
 {
   "name": "@fractality/react",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "type": "module",
   "description": "React template adapter for Fractal.",
   "main": "index.js",
@@ -19,7 +19,7 @@
     "@babel/preset-env": "^7.25.3",
     "@babel/preset-react": "^7.24.7",
     "@babel/register": "^7.24.6",
-    "@fractality/core": "^0.4.0",
+    "@fractality/core": "^0.5.0",
     "import-sync": "^2.2.2",
     "lodash": "^4.17.21",
     "parent-module": "^3.1.0",

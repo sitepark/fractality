@@ -1,4 +1,4 @@
-import fractality from '../../fractal.config.js';
+import fractality from '../../fractality.config.js';
 
 describe('context-data', () => {
     beforeEach(async () => {

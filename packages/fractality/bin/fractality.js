@@ -19,6 +19,14 @@ const notifier = updateNotifier({
 const FractalCli = new Liftoff({
     processTitle: 'fractality',
     moduleName: '@fractality/fractality',
+    configFiles: [
+        {
+            name: 'fractality',
+        },
+        {
+            name: 'fractal',
+        },
+    ],
     configName: 'fractal',
     extensions: {
         '.config.js': null,

@@ -1,6 +1,6 @@
 {
   "name": "@fractality/react",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "type": "module",
   "description": "React template adapter for Fractality.",
   "main": "index.js",

@@ -1,6 +1,6 @@
 {
   "name": "@fractality/nunjucks",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "type": "module",
   "description": "Nunjucks template adapter for Fractalility.",
   "main": "index.js",

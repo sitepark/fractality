@@ -6,4 +6,3 @@ dist
 /build/*
 /fractal.js
 .idea/
-.eslintcache

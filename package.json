@@ -33,11 +33,12 @@
     "vinyl": "^3.0.0"
   },
   "devDependencies": {
-    "eslint": "^8.57.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-prettier": "^5.2.1",
-    "eslint-plugin-react": "^7.35.0",
+    "@eslint/js": "^9.10.0",
+    "@typescript-eslint/utils": "^8.6.0",
+    "@vitest/eslint-plugin": "^1.1.4",
+    "eslint": "^9.10.0",
+    "eslint-plugin-react": "^7.36.1",
+    "globals": "^15.9.0",
     "husky": "^9.1.4",
     "jest-extended": "^4.0.2",
     "lerna": "^8.1.8",
@@ -56,7 +57,7 @@
   "scripts": {
     "clean": "lerna clean",
     "bootstrap": "lerna bootstrap --hoist --strict --ci --force-local",
-    "eslint": "eslint . --ignore-path .gitignore",
+    "eslint": "eslint .",
     "stylelint": "stylelint --ignore-path .gitignore \"**/*.scss\"",
     "validate": "npm run eslint && npm run stylelint",
     "format": "prettier . --write",

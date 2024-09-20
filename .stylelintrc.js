@@ -1,9 +1,9 @@
-module.exports = {
-    extends: ['stylelint-config-standard'],
-    plugins: ['stylelint-scss', 'stylelint-prettier'],
+export default {
+    extends: ['stylelint-prettier/recommended'],
+    plugins: ['stylelint-scss'],
+    customSyntax: 'postcss-scss',
     rules: {
         'prettier/prettier': true,
-        indentation: 4,
         'at-rule-no-unknown': null,
         'scss/at-rule-no-unknown': true,
         'no-descending-specificity': null,

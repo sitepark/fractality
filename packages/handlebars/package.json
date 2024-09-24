@@ -1,6 +1,6 @@
 {
   "name": "@fractality/handlebars",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "type": "module",
   "description": "Use Handlebars templates with Fractality.",
   "main": "index.js",

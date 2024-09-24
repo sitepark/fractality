@@ -19,19 +19,19 @@ const notifier = updateNotifier({
 const FractalCli = new Liftoff({
     processTitle: 'fractality',
     moduleName: '@fractality/fractality',
-    configFiles: [
-        {
-            name: 'fractality',
-        },
-        {
-            name: 'fractal',
-        },
-    ],
     configName: 'fractal',
     extensions: {
+        '.config.mjs': null,
+        '.config.cjs': null,
         '.config.js': null,
+        '.mjs': null,
+        '.cjs': null,
         '.js': null,
+        'ity.config.mjs': null,
+        'ity.config.cjs': null,
         'ity.config.js': null,
+        'ity.mjs': null,
+        'ity.cjs': null,
         'ity.js': null,
     },
     // ,

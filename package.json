@@ -15,7 +15,7 @@
     "@typescript-eslint/utils": "^8.7.0",
     "@vitest/eslint-plugin": "^1.1.4",
     "eslint": "^9.11.1",
-    "eslint-plugin-react": "^7.36.1",
+    "eslint-plugin-react": "^7.37.0",
     "globals": "^15.9.0",
     "husky": "^9.1.6",
     "jest-extended": "^4.0.2",

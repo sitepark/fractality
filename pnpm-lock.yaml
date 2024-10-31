@@ -66,8 +66,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
       mock-fs:
-        specifier: ^5.4.0
-        version: 5.4.0
+        specifier: ^5.4.1
+        version: 5.4.1
       node-fetch:
         specifier: ^3.3.2
         version: 3.3.2
@@ -4545,8 +4545,8 @@ packages:
     resolution: {integrity: sha512-2dF2R6YMSZbpip1V1WHKGLNjr/k48uQClqMVb5H3MOvwc9qhYis3/IWbj02qIg/Y8MDXKFF4c5v0rxx2o6xTZw==}
     engines: {node: '>=12.0.0'}
 
-  mock-fs@5.4.0:
-    resolution: {integrity: sha512-3ROPnEMgBOkusBMYQUW2rnT3wZwsgfOKzJDLvx/TZ7FL1WmWvwSwn3j4aDR5fLDGtgcc1WF0Z1y0di7c9L4FKw==}
+  mock-fs@5.4.1:
+    resolution: {integrity: sha512-sz/Q8K1gXXXHR+qr0GZg2ysxCRr323kuN10O7CtQjraJsFDJ4SJ+0I5MzALz7aRp9lHk8Cc/YdsT95h9Ka1aFw==}
     engines: {node: '>=12.0.0'}
 
   modify-values@1.0.1:
@@ -11090,7 +11090,7 @@ snapshots:
 
   mock-fs@5.2.0: {}
 
-  mock-fs@5.4.0: {}
+  mock-fs@5.4.1: {}
 
   modify-values@1.0.1: {}
 

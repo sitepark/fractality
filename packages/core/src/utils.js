@@ -81,7 +81,7 @@ export function stringify(data, indent) {
 
 export function fileExistsSync(path) {
     try {
-        fs.accessSync(path, fs.F_OK);
+        fs.accessSync(path, fs.constants.F_OK);
         return true;
     } catch (_e) {
         return false;

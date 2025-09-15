@@ -12,8 +12,8 @@
 <br />
 <div align="center">
   <!-- Github Actions -->
-  <a href="https://github.com/sitepark/fractality/actions" title="Build status">
-    <img src="https://img.shields.io/github/workflow/status/sitepark/fractality/test/main" alt="">
+  <a href="https://github.com/sitepark/fractality/actions/workflows/test.yml" title="Build status">
+    <img src="https://github.com/sitepark/fractality/actions/workflows/test.yml/badge.svg" alt="">
   </a>
   <!-- NPM Version -->
   <a href="https://www.npmjs.com/package/@fractality/fractality" title="Current version">

@@ -11,11 +11,10 @@
 
 <br />
 <div align="center">
-  <!-- Github Actions
-  <a href="https://github.com/fractality/fractality/actions" title="Build status">
-    <img src="https://img.shields.io/github/workflow/status/fractality/fractality/test/main" alt="">
+  <!-- Github Actions -->
+  <a href="https://github.com/sitepark/fractality/actions/workflows/test.yml" title="Build status">
+    <img src="https://github.com/sitepark/fractality/actions/workflows/test.yml/badge.svg" alt="">
   </a>
-  -->
   <!-- NPM Version -->
   <a href="https://www.npmjs.com/package/@fractality/fractality" title="Current version">
     <img src="https://img.shields.io/npm/v/@fractality/fractality.svg" alt="">

@@ -33,5 +33,6 @@ jobs:
         run: pnpm test
         env:
           CI: true
+          NODE_OPTIONS: '--trace-deprecation'
       - name: Build
         run: pnpm --filter "@fractality/mandelbrot" build

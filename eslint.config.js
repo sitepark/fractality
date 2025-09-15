@@ -2,8 +2,10 @@ import globals from 'globals';
 import pluginJs from '@eslint/js';
 import pluginReact from 'eslint-plugin-react';
 import vitest from '@vitest/eslint-plugin';
+import { defineConfig, globalIgnores } from 'eslint/config';
 
-export default [
+export default defineConfig([
+    globalIgnores(['**/dist/**']),
     {
         files: ['**/*.{js,mjs,cjs,jsx}'],
         plugins: {
@@ -46,4 +48,4 @@ export default [
             },
         },
     },
-];
+]);

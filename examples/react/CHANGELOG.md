@@ -11,31 +11,31 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   add relative path to component links in static builds ([#1062](https://github.com/sitepark/fractality/issues/1062)) ([2f84d3b](https://github.com/sitepark/fractality/commit/2f84d3b84498c238d28c2ca1021daf89aff879be))
--   **react:** export utility components from a separate index ([#889](https://github.com/sitepark/fractality/issues/889)) ([00ca0ec](https://github.com/sitepark/fractality/commit/00ca0ec5b4bfe3570c7b3c818f29d17cdde74dd9))
--   try to resolve file preview to a component ([#1044](https://github.com/sitepark/fractality/issues/1044)) ([f5b915a](https://github.com/sitepark/fractality/commit/f5b915a927cbd3261d81609ad8360781c677bb35))
+- add relative path to component links in static builds ([#1062](https://github.com/sitepark/fractality/issues/1062)) ([2f84d3b](https://github.com/sitepark/fractality/commit/2f84d3b84498c238d28c2ca1021daf89aff879be))
+- **react:** export utility components from a separate index ([#889](https://github.com/sitepark/fractality/issues/889)) ([00ca0ec](https://github.com/sitepark/fractality/commit/00ca0ec5b4bfe3570c7b3c818f29d17cdde74dd9))
+- try to resolve file preview to a component ([#1044](https://github.com/sitepark/fractality/issues/1044)) ([f5b915a](https://github.com/sitepark/fractality/commit/f5b915a927cbd3261d81609ad8360781c677bb35))
 
 ### Features
 
--   add react adapter ([#840](https://github.com/sitepark/fractality/issues/840)) ([3d30579](https://github.com/sitepark/fractality/commit/3d30579c99c14872420d43d834f04bcb7f36fb94))
--   add support for cjs file extension ([a05bde7](https://github.com/sitepark/fractality/commit/a05bde7c8cb2788e296f5ffda859e46debbbcd39))
--   react ([c40ac0a](https://github.com/sitepark/fractality/commit/c40ac0a1f949a1ddd7c846aef85b11356cf129ab))
--   **react:** add PathProvider helper component ([#861](https://github.com/sitepark/fractality/issues/861)) ([e947d3a](https://github.com/sitepark/fractality/commit/e947d3a030e5d1dcfdd94013d6ee2278ed7ea93c))
+- add react adapter ([#840](https://github.com/sitepark/fractality/issues/840)) ([3d30579](https://github.com/sitepark/fractality/commit/3d30579c99c14872420d43d834f04bcb7f36fb94))
+- add support for cjs file extension ([a05bde7](https://github.com/sitepark/fractality/commit/a05bde7c8cb2788e296f5ffda859e46debbbcd39))
+- react ([c40ac0a](https://github.com/sitepark/fractality/commit/c40ac0a1f949a1ddd7c846aef85b11356cf129ab))
+- **react:** add PathProvider helper component ([#861](https://github.com/sitepark/fractality/issues/861)) ([e947d3a](https://github.com/sitepark/fractality/commit/e947d3a030e5d1dcfdd94013d6ee2278ed7ea93c))
 
 # 0.3.0 (2024-03-19)
 
 ### Bug Fixes
 
--   add relative path to component links in static builds ([#1062](https://github.com/sitepark/fractality/issues/1062)) ([2f84d3b](https://github.com/sitepark/fractality/commit/2f84d3b84498c238d28c2ca1021daf89aff879be))
--   **react:** export utility components from a separate index ([#889](https://github.com/sitepark/fractality/issues/889)) ([00ca0ec](https://github.com/sitepark/fractality/commit/00ca0ec5b4bfe3570c7b3c818f29d17cdde74dd9))
--   try to resolve file preview to a component ([#1044](https://github.com/sitepark/fractality/issues/1044)) ([f5b915a](https://github.com/sitepark/fractality/commit/f5b915a927cbd3261d81609ad8360781c677bb35))
+- add relative path to component links in static builds ([#1062](https://github.com/sitepark/fractality/issues/1062)) ([2f84d3b](https://github.com/sitepark/fractality/commit/2f84d3b84498c238d28c2ca1021daf89aff879be))
+- **react:** export utility components from a separate index ([#889](https://github.com/sitepark/fractality/issues/889)) ([00ca0ec](https://github.com/sitepark/fractality/commit/00ca0ec5b4bfe3570c7b3c818f29d17cdde74dd9))
+- try to resolve file preview to a component ([#1044](https://github.com/sitepark/fractality/issues/1044)) ([f5b915a](https://github.com/sitepark/fractality/commit/f5b915a927cbd3261d81609ad8360781c677bb35))
 
 ### Features
 
--   add react adapter ([#840](https://github.com/sitepark/fractality/issues/840)) ([3d30579](https://github.com/sitepark/fractality/commit/3d30579c99c14872420d43d834f04bcb7f36fb94))
--   add support for cjs file extension ([a05bde7](https://github.com/sitepark/fractality/commit/a05bde7c8cb2788e296f5ffda859e46debbbcd39))
--   react ([c40ac0a](https://github.com/sitepark/fractality/commit/c40ac0a1f949a1ddd7c846aef85b11356cf129ab))
--   **react:** add PathProvider helper component ([#861](https://github.com/sitepark/fractality/issues/861)) ([e947d3a](https://github.com/sitepark/fractality/commit/e947d3a030e5d1dcfdd94013d6ee2278ed7ea93c))
+- add react adapter ([#840](https://github.com/sitepark/fractality/issues/840)) ([3d30579](https://github.com/sitepark/fractality/commit/3d30579c99c14872420d43d834f04bcb7f36fb94))
+- add support for cjs file extension ([a05bde7](https://github.com/sitepark/fractality/commit/a05bde7c8cb2788e296f5ffda859e46debbbcd39))
+- react ([c40ac0a](https://github.com/sitepark/fractality/commit/c40ac0a1f949a1ddd7c846aef85b11356cf129ab))
+- **react:** add PathProvider helper component ([#861](https://github.com/sitepark/fractality/issues/861)) ([e947d3a](https://github.com/sitepark/fractality/commit/e947d3a030e5d1dcfdd94013d6ee2278ed7ea93c))
 
 ## [0.2.11](https://github.com/frctl/fractal/compare/@frctl/react-example@0.2.10...@frctl/react-example@0.2.11) (2023-01-26)
 
@@ -61,13 +61,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   add relative path to component links in static builds ([#1062](https://github.com/frctl/fractal/issues/1062)) ([2f84d3b](https://github.com/frctl/fractal/commit/2f84d3b84498c238d28c2ca1021daf89aff879be))
+- add relative path to component links in static builds ([#1062](https://github.com/frctl/fractal/issues/1062)) ([2f84d3b](https://github.com/frctl/fractal/commit/2f84d3b84498c238d28c2ca1021daf89aff879be))
 
 ## [0.2.5](https://github.com/frctl/fractal/compare/@frctl/react-example@0.2.4...@frctl/react-example@0.2.5) (2021-07-12)
 
 ### Bug Fixes
 
--   try to resolve file preview to a component ([#1044](https://github.com/frctl/fractal/issues/1044)) ([f5b915a](https://github.com/frctl/fractal/commit/f5b915a927cbd3261d81609ad8360781c677bb35))
+- try to resolve file preview to a component ([#1044](https://github.com/frctl/fractal/issues/1044)) ([f5b915a](https://github.com/frctl/fractal/commit/f5b915a927cbd3261d81609ad8360781c677bb35))
 
 ## [0.2.4](https://github.com/frctl/fractal/compare/@frctl/react-example@0.2.3...@frctl/react-example@0.2.4) (2021-05-20)
 
@@ -85,16 +85,16 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **react:** export utility components from a separate index ([#889](https://github.com/frctl/fractal/issues/889)) ([00ca0ec](https://github.com/frctl/fractal/commit/00ca0ec5b4bfe3570c7b3c818f29d17cdde74dd9))
+- **react:** export utility components from a separate index ([#889](https://github.com/frctl/fractal/issues/889)) ([00ca0ec](https://github.com/frctl/fractal/commit/00ca0ec5b4bfe3570c7b3c818f29d17cdde74dd9))
 
 # [0.2.0](https://github.com/frctl/fractal/compare/@frctl/react-example@0.1.0...@frctl/react-example@0.2.0) (2021-02-14)
 
 ### Features
 
--   **react:** add PathProvider helper component ([#861](https://github.com/frctl/fractal/issues/861)) ([e947d3a](https://github.com/frctl/fractal/commit/e947d3a030e5d1dcfdd94013d6ee2278ed7ea93c))
+- **react:** add PathProvider helper component ([#861](https://github.com/frctl/fractal/issues/861)) ([e947d3a](https://github.com/frctl/fractal/commit/e947d3a030e5d1dcfdd94013d6ee2278ed7ea93c))
 
 # 0.1.0 (2021-02-07)
 
 ### Features
 
--   add react adapter ([#840](https://github.com/frctl/fractal/issues/840)) ([3d30579](https://github.com/frctl/fractal/commit/3d30579c99c14872420d43d834f04bcb7f36fb94))
+- add react adapter ([#840](https://github.com/frctl/fractal/issues/840)) ([3d30579](https://github.com/frctl/fractal/commit/3d30579c99c14872420d43d834f04bcb7f36fb94))

@@ -6,9 +6,9 @@
 
 ## 🚨 Breaking changes in v2.0
 
--   `render` tag - Arrays in context data are **no longer merged** with those in the default component context
--   **Autoescaping** - this is now **disabled by default**. Preview templates will need to be updated to mark the `yield` output as safe using the Nunjucks `safe` filter: `{{ yield | safe }}`. Alternatively this can be enabled globally again using the environment options when [configuring the adapter](#customisation) (not recommended).
--   **Nunjucks version** - bumped to 3.x
+- `render` tag - Arrays in context data are **no longer merged** with those in the default component context
+- **Autoescaping** - this is now **disabled by default**. Preview templates will need to be updated to mark the `yield` output as safe using the Nunjucks `safe` filter: `{{ yield | safe }}`. Alternatively this can be enabled globally again using the environment options when [configuring the adapter](#customisation) (not recommended).
+- **Nunjucks version** - bumped to 3.x
 
 ## Installation
 

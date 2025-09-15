@@ -11,38 +11,38 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **handlebars:** fix render tag resolving escaped component handles to context object ([#884](https://github.com/sitepark/fractality/issues/884)) ([467d942](https://github.com/sitepark/fractality/commit/467d942f089d81b955e4ce514d3c69bd1ce9c177))
+- **handlebars:** fix render tag resolving escaped component handles to context object ([#884](https://github.com/sitepark/fractality/issues/884)) ([467d942](https://github.com/sitepark/fractality/commit/467d942f089d81b955e4ce514d3c69bd1ce9c177))
 
 ### Features
 
--   add react adapter ([#840](https://github.com/sitepark/fractality/issues/840)) ([3d30579](https://github.com/sitepark/fractality/commit/3d30579c99c14872420d43d834f04bcb7f36fb94))
--   add support for cjs file extension ([a05bde7](https://github.com/sitepark/fractality/commit/a05bde7c8cb2788e296f5ffda859e46debbbcd39))
--   **react:** add PathProvider helper component ([#861](https://github.com/sitepark/fractality/issues/861)) ([e947d3a](https://github.com/sitepark/fractality/commit/e947d3a030e5d1dcfdd94013d6ee2278ed7ea93c))
+- add react adapter ([#840](https://github.com/sitepark/fractality/issues/840)) ([3d30579](https://github.com/sitepark/fractality/commit/3d30579c99c14872420d43d834f04bcb7f36fb94))
+- add support for cjs file extension ([a05bde7](https://github.com/sitepark/fractality/commit/a05bde7c8cb2788e296f5ffda859e46debbbcd39))
+- **react:** add PathProvider helper component ([#861](https://github.com/sitepark/fractality/issues/861)) ([e947d3a](https://github.com/sitepark/fractality/commit/e947d3a030e5d1dcfdd94013d6ee2278ed7ea93c))
 
 # 0.3.0 (2024-03-19)
 
 ### Bug Fixes
 
--   **handlebars:** fix render tag resolving escaped component handles to context object ([#884](https://github.com/sitepark/fractality/issues/884)) ([467d942](https://github.com/sitepark/fractality/commit/467d942f089d81b955e4ce514d3c69bd1ce9c177))
+- **handlebars:** fix render tag resolving escaped component handles to context object ([#884](https://github.com/sitepark/fractality/issues/884)) ([467d942](https://github.com/sitepark/fractality/commit/467d942f089d81b955e4ce514d3c69bd1ce9c177))
 
 ### Features
 
--   add react adapter ([#840](https://github.com/sitepark/fractality/issues/840)) ([3d30579](https://github.com/sitepark/fractality/commit/3d30579c99c14872420d43d834f04bcb7f36fb94))
--   add support for cjs file extension ([a05bde7](https://github.com/sitepark/fractality/commit/a05bde7c8cb2788e296f5ffda859e46debbbcd39))
--   **react:** add PathProvider helper component ([#861](https://github.com/sitepark/fractality/issues/861)) ([e947d3a](https://github.com/sitepark/fractality/commit/e947d3a030e5d1dcfdd94013d6ee2278ed7ea93c))
+- add react adapter ([#840](https://github.com/sitepark/fractality/issues/840)) ([3d30579](https://github.com/sitepark/fractality/commit/3d30579c99c14872420d43d834f04bcb7f36fb94))
+- add support for cjs file extension ([a05bde7](https://github.com/sitepark/fractality/commit/a05bde7c8cb2788e296f5ffda859e46debbbcd39))
+- **react:** add PathProvider helper component ([#861](https://github.com/sitepark/fractality/issues/861)) ([e947d3a](https://github.com/sitepark/fractality/commit/e947d3a030e5d1dcfdd94013d6ee2278ed7ea93c))
 
 # [0.2.0](https://github.com/frctl/fractal/compare/@frctl/adapter-tests@0.1.0...@frctl/adapter-tests@0.2.0) (2021-02-14)
 
 ### Bug Fixes
 
--   **handlebars:** fix render tag resolving escaped component handles to context object ([#884](https://github.com/frctl/fractal/issues/884)) ([467d942](https://github.com/frctl/fractal/commit/467d942f089d81b955e4ce514d3c69bd1ce9c177))
+- **handlebars:** fix render tag resolving escaped component handles to context object ([#884](https://github.com/frctl/fractal/issues/884)) ([467d942](https://github.com/frctl/fractal/commit/467d942f089d81b955e4ce514d3c69bd1ce9c177))
 
 ### Features
 
--   **react:** add PathProvider helper component ([#861](https://github.com/frctl/fractal/issues/861)) ([e947d3a](https://github.com/frctl/fractal/commit/e947d3a030e5d1dcfdd94013d6ee2278ed7ea93c))
+- **react:** add PathProvider helper component ([#861](https://github.com/frctl/fractal/issues/861)) ([e947d3a](https://github.com/frctl/fractal/commit/e947d3a030e5d1dcfdd94013d6ee2278ed7ea93c))
 
 # 0.1.0 (2021-02-07)
 
 ### Features
 
--   add react adapter ([#840](https://github.com/frctl/fractal/issues/840)) ([3d30579](https://github.com/frctl/fractal/commit/3d30579c99c14872420d43d834f04bcb7f36fb94))
+- add react adapter ([#840](https://github.com/frctl/fractal/issues/840)) ([3d30579](https://github.com/frctl/fractal/commit/3d30579c99c14872420d43d834f04bcb7f36fb94))

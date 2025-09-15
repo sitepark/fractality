@@ -11,5 +11,5 @@ This is some documentation for the project. Still to do:
 
 {% for item in items %}
 
--   {{ item }}
-    {% endfor %}
+- {{ item }}
+  {% endfor %}

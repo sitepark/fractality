@@ -26,6 +26,6 @@ Before submitting your issue, please ensure you have:
 
 ### Context
 
--   Fractality version: <!-- run `npm list @fractality/fractality` / `yarn list @fractality/fractality` -->
--   Node version: <!-- run `node -v` -->
--   OS: <!-- Windows 10, MacOS 10.14.x, Ubuntu 20 -->
+- Fractality version: <!-- run `npm list @fractality/fractality` / `yarn list @fractality/fractality` -->
+- Node version: <!-- run `node -v` -->
+- OS: <!-- Windows 10, MacOS 10.14.x, Ubuntu 20 -->

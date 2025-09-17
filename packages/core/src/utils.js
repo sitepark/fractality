@@ -4,7 +4,7 @@ import Path from 'path';
 import fs from 'fs';
 import crypto from 'crypto';
 import minimist from 'minimist';
-import linguistLanguages from 'linguist-languages';
+import * as linguistLanguages from 'linguist-languages';
 import _ from 'lodash';
 
 const languages = Object.values(linguistLanguages);

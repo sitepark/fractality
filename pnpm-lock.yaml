@@ -232,8 +232,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
       mock-fs:
-        specifier: ^5.2.0
-        version: 5.2.0
+        specifier: ^5.5.0
+        version: 5.5.0
 
   packages/fractality:
     dependencies:
@@ -4723,10 +4723,6 @@ packages:
   mock-argv@4.0.0:
     resolution: {integrity: sha512-dOI1AcjmDq1ef9giRc/jpmSdsl7Qtv0eahZnwpukBv7DOeWS6PEEqJpjGiA7J1dPUV2NbRqC7ejRmy9+e4UX9g==}
     engines: {node: '>=18'}
-
-  mock-fs@5.2.0:
-    resolution: {integrity: sha512-2dF2R6YMSZbpip1V1WHKGLNjr/k48uQClqMVb5H3MOvwc9qhYis3/IWbj02qIg/Y8MDXKFF4c5v0rxx2o6xTZw==}
-    engines: {node: '>=12.0.0'}
 
   mock-fs@5.5.0:
     resolution: {integrity: sha512-d/P1M/RacgM3dB0sJ8rjeRNXxtapkPCUnMGmIN0ixJ16F/E4GUZCvWcSGfWGz8eaXYvn1s9baUwNjI4LOPEjiA==}
@@ -11529,8 +11525,6 @@ snapshots:
   mkdirp@1.0.4: {}
 
   mock-argv@4.0.0: {}
-
-  mock-fs@5.2.0: {}
 
   mock-fs@5.5.0: {}
 

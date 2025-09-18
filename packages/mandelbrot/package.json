@@ -34,7 +34,7 @@
     "@fractality/web": "workspace:../web",
     "autoprefixer": "^10.4.20",
     "babel-loader": "^10.0.0",
-    "caniuse-lite": "^1.0.30001662",
+    "caniuse-lite": "^1.0.30001743",
     "copy-webpack-plugin": "^12.0.2",
     "css-loader": "^7.1.2",
     "expose-loader": "^5.0.0",

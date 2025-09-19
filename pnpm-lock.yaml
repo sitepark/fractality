@@ -216,8 +216,8 @@ importers:
         specifier: ^2.1.4
         version: 2.1.4(marked@14.1.4)
       marked-smartypants:
-        specifier: ^1.1.8
-        version: 1.1.8(marked@14.1.4)
+        specifier: ^1.1.10
+        version: 1.1.10(marked@14.1.4)
       minimist:
         specifier: ^1.2.8
         version: 1.2.8
@@ -4477,10 +4477,10 @@ packages:
     peerDependencies:
       marked: '>=4 <15'
 
-  marked-smartypants@1.1.8:
-    resolution: {integrity: sha512-2n8oSjL2gSkH6M0dSdRIyLgqqky03iKQkdmoaylmIzwIhYTW204S7ry6zP2iqwSl0zSlJH2xmWgxlZ/4XB1CdQ==}
+  marked-smartypants@1.1.10:
+    resolution: {integrity: sha512-XGK59M2nhy3Jpa0kdWSXQuKn908VkKbqK1IqF8Rk5QV619OWBs2/rkcg/PVhpKkADlRKJSYe6XqDMZMkZywT4g==}
     peerDependencies:
-      marked: '>=4 <15'
+      marked: '>=4 <17'
 
   marked@14.1.4:
     resolution: {integrity: sha512-vkVZ8ONmUdPnjCKc5uTRvmkRbx4EAi2OkTOXmfTDhZz3OFqMNBM1oTTWwTr4HY4uAEojhzPf+Fy8F1DWa3Sndg==}
@@ -11205,7 +11205,7 @@ snapshots:
     dependencies:
       marked: 14.1.4
 
-  marked-smartypants@1.1.8(marked@14.1.4):
+  marked-smartypants@1.1.10(marked@14.1.4):
     dependencies:
       marked: 14.1.4
       smartypants: 0.2.2

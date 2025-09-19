@@ -20,7 +20,7 @@
     "browser-sync": "^3.0.4",
     "chokidar": "^4.0.3",
     "express": "^4.21.0",
-    "fs-extra": "^11.2.0",
+    "fs-extra": "^11.3.2",
     "get-port": "^7.1.0",
     "js-yaml": "^4.1.0",
     "lodash": "^4.17.21",

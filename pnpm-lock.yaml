@@ -363,8 +363,8 @@ importers:
         specifier: ^7.1.2
         version: 7.1.2(webpack@5.101.3)
       expose-loader:
-        specifier: ^5.0.0
-        version: 5.0.0(webpack@5.101.3)
+        specifier: ^5.0.1
+        version: 5.0.1(webpack@5.101.3)
       globby:
         specifier: ^14.1.0
         version: 14.1.0
@@ -3283,8 +3283,8 @@ packages:
   exponential-backoff@3.1.2:
     resolution: {integrity: sha512-8QxYTVXUkuy7fIIoitQkPwGonB8F3Zj8eEO8Sqg9Zv/bkI7RJAzowee4gr81Hak/dUTpA2Z7VfQgoijjPNlUZA==}
 
-  expose-loader@5.0.0:
-    resolution: {integrity: sha512-BtUqYRmvx1bEY5HN6eK2I9URUZgNmN0x5UANuocaNjXSgfoDlkXt+wyEMe7i5DzDNh2BKJHPc5F4rBwEdSQX6w==}
+  expose-loader@5.0.1:
+    resolution: {integrity: sha512-5YPZuszN/eWND/B+xuq5nIpb/l5TV1HYmdO6SubYtHv+HenVw9/6bn33Mm5reY8DNid7AVtbARvyUD34edfCtg==}
     engines: {node: '>= 18.12.0'}
     peerDependencies:
       webpack: ^5.0.0
@@ -9825,7 +9825,7 @@ snapshots:
 
   exponential-backoff@3.1.2: {}
 
-  expose-loader@5.0.0(webpack@5.101.3):
+  expose-loader@5.0.1(webpack@5.101.3):
     dependencies:
       webpack: 5.101.3(webpack-cli@5.1.4)
 

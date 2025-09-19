@@ -23,7 +23,7 @@
     "chokidar": "^4.0.3",
     "fs-extra": "^11.3.2",
     "globby": "^14.1.0",
-    "highlight.js": "^11.10.0",
+    "highlight.js": "^11.11.1",
     "istextorbinary": "^9.5.0",
     "js-yaml": "^4.1.0",
     "linguist-languages": "^9.0.0",

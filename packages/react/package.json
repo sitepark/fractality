@@ -18,7 +18,7 @@
     "@babel/core": "^7.28.4",
     "@babel/preset-env": "^7.25.4",
     "@babel/preset-react": "^7.27.1",
-    "@babel/register": "^7.24.6",
+    "@babel/register": "^7.28.3",
     "@fractality/core": "workspace:../core",
     "import-sync": "^2.2.2",
     "lodash": "^4.17.21",

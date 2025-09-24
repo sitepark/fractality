@@ -29,7 +29,7 @@
   "devDependencies": {
     "@babel/core": "^7.28.4",
     "@babel/eslint-parser": "^7.28.4",
-    "@babel/preset-env": "^7.25.4",
+    "@babel/preset-env": "^7.28.3",
     "@fractality/fractality": "workspace:../fractality",
     "@fractality/web": "workspace:../web",
     "autoprefixer": "^10.4.21",

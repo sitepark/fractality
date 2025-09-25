@@ -13,7 +13,6 @@
     "@fractality/twig": "workspace:../../packages/twig"
   },
   "devDependencies": {
-    "@fractality/adapter-tests": "workspace:../adapter-tests",
-    "node-fetch": "^3.3.2"
+    "@fractality/adapter-tests": "workspace:../adapter-tests"
   }
 }

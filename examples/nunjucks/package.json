@@ -13,7 +13,6 @@
     "@fractality/nunjucks": "workspace:../../packages/nunjucks"
   },
   "devDependencies": {
-    "@fractality/adapter-tests": "workspace:../adapter-tests",
-    "node-fetch": "^3.3.2"
+    "@fractality/adapter-tests": "workspace:../adapter-tests"
   }
 }

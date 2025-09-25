@@ -100,7 +100,7 @@ export default class Server extends mix(Emitter) {
     }
 
     use() {
-        this._server.use.apply(this._server, Array.from(arguments));
+        this._server.use(...arguments);
     }
 
     stop() {
@@ -203,7 +203,6 @@ export default class Server extends mix(Emitter) {
         Log.debug(`Request for '${req.url}'`);
 
         const match = this._theme.matchRoute(req.path);
-
         if (!match) {
             return next(new WebError(404, `No matching route found for ${req.path}`));
         }
@@ -279,7 +278,7 @@ export default class Server extends mix(Emitter) {
             this._server.use(`/${_.trimStart(s.mount, '/')}`, express.static(s.path));
         });
 
-        this._server.get(':path(*)', this._onRequest.bind(this));
+        this._server.get('*path', this._onRequest.bind(this));
 
         this._server.use(this._onError.bind(this));
     }

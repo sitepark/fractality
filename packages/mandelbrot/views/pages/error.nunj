@@ -1,7 +1,7 @@
 {% extends "layouts/doc.nunj" %}
 
 {% set page = {
-    title: ('Not found' if error.status == '404' else error.name) | default('An error has occurred')
+    title: ('Not found' if error.status == 404 else error.name) | default('An error has occurred')
 } %}
 
 {% block docContent %}
@@ -12,7 +12,7 @@
         {{ error.message | default('No more information is available.') | markdown }}
     </div>
 
-    {% if error.stack and error.status != '404' %}
+    {% if error.stack and error.status != 404 %}
     <code class="Code Error-stack">
         <pre>{{ error.stack }}</pre>
     </code>

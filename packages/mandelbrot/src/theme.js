@@ -200,7 +200,7 @@ export default function (options) {
     );
 
     theme.addRoute(
-        '/docs/:path([^?]+?)',
+        '/docs{/*path}',
         {
             handle: 'page',
             view: 'pages/doc.nunj',

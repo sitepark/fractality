@@ -70,12 +70,11 @@ describe('Theme', () => {
     it('adds route and resolver for path without handle', () => {
         const theme = new Theme();
         theme.addRoute('/', {});
-        expect(theme.routes()).toEqual([
+        expect(theme.routes()).toMatchObject([
             {
                 path: '/',
                 handle: '/',
-                keys: [],
-                matcher: /^\/[\/#\?]?$/i,
+                matcher: expect.any(Function),
             },
         ]);
         expect(theme.resolvers()).toEqual({ '/': [null] });
@@ -84,12 +83,11 @@ describe('Theme', () => {
     it('adds route and resolver for path with handle', () => {
         const theme = new Theme();
         theme.addRoute('/', { handle: 'handle' });
-        expect(theme.routes()).toEqual([
+        expect(theme.routes()).toMatchObject([
             {
                 path: '/',
                 handle: 'handle',
-                keys: [],
-                matcher: /^\/[\/#\?]?$/i,
+                matcher: expect.any(Function),
             },
         ]);
         expect(theme.resolvers()).toEqual({ handle: [null] });
@@ -99,12 +97,11 @@ describe('Theme', () => {
         const theme = new Theme();
         const resolver = vi.fn();
         theme.addRoute('/', {}, resolver);
-        expect(theme.routes()).toEqual([
+        expect(theme.routes()).toMatchObject([
             {
                 path: '/',
                 handle: '/',
-                keys: [],
-                matcher: /^\/[\/#\?]?$/i,
+                matcher: expect.any(Function),
             },
         ]);
         expect(theme.resolvers()).toEqual({ '/': [resolver] });
@@ -131,35 +128,25 @@ describe('Theme', () => {
         // add 404 as first route to match the second route in routes for coverage
         theme.addRoute('/404', {});
         theme.addRoute('/', {});
-        expect(theme.matchRoute('/')).toEqual({
+        expect(theme.matchRoute('/')).toMatchObject({
             route: {
                 path: '/',
                 handle: '/',
-                keys: [],
-                matcher: /^\/[\/#\?]?$/i,
+                matcher: expect.any(Function),
             },
             params: {},
         });
     });
 
-    it('returns route with params if route has keys', () => {
+    it('returns route with params if route has params', () => {
         const theme = new Theme();
         // add 404 as first route to match the second route in routes for coverage
         theme.addRoute('/:name', {});
-        expect(theme.matchRoute('/test')).toEqual({
+        expect(theme.matchRoute('/test')).toMatchObject({
             route: {
                 path: '/:name',
                 handle: '/:name',
-                keys: [
-                    {
-                        modifier: '',
-                        name: 'name',
-                        pattern: '[^\\/#\\?]+?',
-                        prefix: '/',
-                        suffix: '',
-                    },
-                ],
-                matcher: /^(?:\/([^\/#\?]+?))[\/#\?]?$/i,
+                matcher: expect.any(Function),
             },
             params: {
                 name: 'test',

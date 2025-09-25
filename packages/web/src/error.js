@@ -2,7 +2,7 @@
 
 export default class WebError extends Error {
     constructor(statusCode, message) {
-        statusCode = (statusCode || '500').toString();
+        statusCode = statusCode || 500;
         message = message || `${statusCode} error`;
         super(message);
         this.name = 'Web Error';

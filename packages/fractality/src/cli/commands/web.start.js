@@ -38,7 +38,7 @@ export default function (fractality) {
             });
 
             server.on('error', (err) => {
-                if (err.status === '404') {
+                if (err.status === 404) {
                     console.warn(`404: ${err.message}`);
                 } else {
                     console.error(err.message, err);

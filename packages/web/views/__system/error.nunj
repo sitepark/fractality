@@ -2,7 +2,7 @@
 
 {% set page = {
     type: 'error',
-    title: 'Not found' if frctl.error.status == '404' else frctl.error.name
+    title: 'Not found' if frctl.error.status == 404 else frctl.error.name
 } %}
 
 {% block body %}
@@ -12,7 +12,7 @@
     {{ frctl.error.message | markdown }}
     </div>
 
-    {% if frctl.error.stack and frctl.error.status != '404' %}
+    {% if frctl.error.stack and frctl.error.status != 404 %}
     <code class="Error-stack">
         <pre>{{ frctl.error.stack }}</pre>
     </code>

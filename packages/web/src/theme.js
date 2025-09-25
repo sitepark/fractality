@@ -1,7 +1,7 @@
 'use strict';
 
 import _ from 'lodash';
-import { pathToRegexp, compile } from 'path-to-regexp';
+import { compile, match } from 'path-to-regexp';
 import { mixins } from '@fractality/core';
 const mix = mixins.mix;
 const Configurable = mixins.configurable;
@@ -81,13 +81,10 @@ export default class Theme extends mix(Configurable, Emitter) {
     }
 
     addRoute(path, opts, resolvers) {
-        const keys = [];
         opts.path = path;
         opts.handle = opts.handle || path;
-        opts.matcher = pathToRegexp(path, keys);
+        opts.matcher = match(path);
         this.addResolver(opts.handle, resolvers || null);
-        // pathToRegexp mutates keys variable
-        opts.keys = keys;
         this._routes.set(opts.handle, _.clone(opts));
         return this;
     }
@@ -107,16 +104,11 @@ export default class Theme extends mix(Configurable, Emitter) {
 
     matchRoute(urlPath) {
         for (const route of this._routes.values()) {
-            const match = route.matcher.exec(urlPath);
+            const match = route.matcher(urlPath);
             if (match) {
-                match.shift();
-                const params = {};
-                for (let i = 0; i < route.keys.length; i++) {
-                    params[route.keys[i].name] = match[i];
-                }
                 return {
                     route: route,
-                    params: params,
+                    params: match.params,
                 };
             }
         }

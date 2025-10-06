@@ -33,8 +33,8 @@ importers:
         version: 3.0.1
     devDependencies:
       '@eslint/js':
-        specifier: ^9.36.0
-        version: 9.36.0
+        specifier: ^9.37.0
+        version: 9.37.0
       '@typescript-eslint/utils':
         specifier: ^8.45.0
         version: 8.45.0(eslint@9.36.0(jiti@2.6.0))(typescript@5.9.2)

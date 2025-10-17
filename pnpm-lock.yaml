@@ -192,14 +192,14 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       marked:
-        specifier: ^16.4.0
-        version: 16.4.0
+        specifier: ^16.4.1
+        version: 16.4.1
       marked-highlight:
         specifier: ^2.2.2
-        version: 2.2.2(marked@16.4.0)
+        version: 2.2.2(marked@16.4.1)
       marked-smartypants:
         specifier: ^1.1.10
-        version: 1.1.10(marked@16.4.0)
+        version: 1.1.10(marked@16.4.1)
       minimist:
         specifier: ^1.2.8
         version: 1.2.8
@@ -4474,8 +4474,8 @@ packages:
     peerDependencies:
       marked: '>=4 <17'
 
-  marked@16.4.0:
-    resolution: {integrity: sha512-CTPAcRBq57cn3R8n3hwc2REddc28hjR7RzDXQ+lXLmMJYqn20BaI2cGw6QjgZGIgVfp2Wdfw4aMzgNteQ6qJgQ==}
+  marked@16.4.1:
+    resolution: {integrity: sha512-ntROs7RaN3EvWfy3EZi14H4YxmT6A5YvywfhO+0pm+cH/dnSQRmdAmoFIc3B9aiwTehyk7pESH4ofyBY+V5hZg==}
     engines: {node: '>= 20'}
     hasBin: true
 
@@ -11134,16 +11134,16 @@ snapshots:
 
   mark.js@8.11.1: {}
 
-  marked-highlight@2.2.2(marked@16.4.0):
+  marked-highlight@2.2.2(marked@16.4.1):
     dependencies:
-      marked: 16.4.0
+      marked: 16.4.1
 
-  marked-smartypants@1.1.10(marked@16.4.0):
+  marked-smartypants@1.1.10(marked@16.4.1):
     dependencies:
-      marked: 16.4.0
+      marked: 16.4.1
       smartypants: 0.2.2
 
-  marked@16.4.0: {}
+  marked@16.4.1: {}
 
   math-intrinsics@1.1.0: {}
 

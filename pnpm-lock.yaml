@@ -57,8 +57,8 @@ importers:
         specifier: ^9.0.0
         version: 9.0.0(@types/node@24.7.0)
       lint-staged:
-        specifier: ^16.2.5
-        version: 16.2.5
+        specifier: ^16.2.6
+        version: 16.2.6
       mock-argv:
         specifier: ^4.0.0
         version: 4.0.0
@@ -4333,8 +4333,8 @@ packages:
   linguist-languages@9.0.0:
     resolution: {integrity: sha512-8sexSk1Qotkqy9l4J8X/EDRLvrB8QrYjx41YI3Qr7PrvMqdfYb0zKUI6AOhfnjD/uaDHE87s9Nbu9zWikcGRVw==}
 
-  lint-staged@16.2.5:
-    resolution: {integrity: sha512-o36wH3OX0jRWqDw5dOa8a8x6GXTKaLM+LvhRaucZxez0IxA+KNDUCiyjBfNgsMNmchwSX6urLSL7wShcUqAang==}
+  lint-staged@16.2.6:
+    resolution: {integrity: sha512-s1gphtDbV4bmW1eylXpVMk2u7is7YsrLl8hzrtvC70h4ByhcMLZFY01Fx05ZUDNuv1H8HO4E+e2zgejV1jVwNw==}
     engines: {node: '>=20.17'}
     hasBin: true
 
@@ -10955,7 +10955,7 @@ snapshots:
 
   linguist-languages@9.0.0: {}
 
-  lint-staged@16.2.5:
+  lint-staged@16.2.6:
     dependencies:
       commander: 14.0.1
       listr2: 9.0.5

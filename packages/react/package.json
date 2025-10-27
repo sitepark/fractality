@@ -17,7 +17,7 @@
   "dependencies": {
     "@babel/core": "^7.28.4",
     "@babel/preset-env": "^7.28.3",
-    "@babel/preset-react": "^7.27.1",
+    "@babel/preset-react": "^7.28.5",
     "@babel/register": "^7.28.3",
     "@fractality/core": "workspace:../core",
     "import-sync": "^2.2.2",

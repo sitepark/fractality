@@ -16,7 +16,7 @@
   "homepage": "https://github.com/sitepark/fractality/tree/main/packages/react",
   "dependencies": {
     "@babel/core": "^7.28.5",
-    "@babel/preset-env": "^7.28.3",
+    "@babel/preset-env": "^7.28.5",
     "@babel/preset-react": "^7.28.5",
     "@babel/register": "^7.28.3",
     "@fractality/core": "workspace:../core",

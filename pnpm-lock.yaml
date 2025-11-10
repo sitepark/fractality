@@ -195,8 +195,8 @@ importers:
         specifier: ^16.4.1
         version: 16.4.1
       marked-highlight:
-        specifier: ^2.2.2
-        version: 2.2.2(marked@16.4.1)
+        specifier: ^2.2.3
+        version: 2.2.3(marked@16.4.1)
       marked-smartypants:
         specifier: ^1.1.11
         version: 1.1.11(marked@16.4.1)
@@ -4435,10 +4435,10 @@ packages:
   mark.js@8.11.1:
     resolution: {integrity: sha512-1I+1qpDt4idfgLQG+BNWmrqku+7/2bi5nLf4YwF8y8zXvmfiTBY3PV3ZibfrjBueCByROpuBjLLFCajqkgYoLQ==}
 
-  marked-highlight@2.2.2:
-    resolution: {integrity: sha512-KlHOP31DatbtPPXPaI8nx1KTrG3EW0Z5zewCwpUj65swbtKOTStteK3sNAjBqV75Pgo3fNEVNHeptg18mDuWgw==}
+  marked-highlight@2.2.3:
+    resolution: {integrity: sha512-FCfZRxW/msZAiasCML4isYpxyQWKEEx44vOgdn5Kloae+Qc3q4XR7WjpKKf8oMLk7JP9ZCRd2vhtclJFdwxlWQ==}
     peerDependencies:
-      marked: '>=4 <17'
+      marked: '>=4 <18'
 
   marked-smartypants@1.1.11:
     resolution: {integrity: sha512-Jt0eq/6rf9oXDfEKPzQ0z7UzVWcEAK3L6QBBQzbwV8bT304OvPVLTqpH3yvkSung9foOM4s120TMHEHP76Metg==}
@@ -11065,7 +11065,7 @@ snapshots:
 
   mark.js@8.11.1: {}
 
-  marked-highlight@2.2.2(marked@16.4.1):
+  marked-highlight@2.2.3(marked@16.4.1):
     dependencies:
       marked: 16.4.1
 

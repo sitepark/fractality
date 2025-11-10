@@ -434,8 +434,8 @@ importers:
         specifier: workspace:../core
         version: link:../core
       import-sync:
-        specifier: ^2.2.2
-        version: 2.2.2
+        specifier: ^2.2.3
+        version: 2.2.3
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -1310,8 +1310,8 @@ packages:
     resolution: {integrity: sha512-43/qtrDUokr7LJqoF2c3+RInu/t4zfrpYdoSDfYyhg52rwLV6TnOvdG4fXm7IkSB3wErkcmJS9iEhjVtOSEjjA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@httptoolkit/esm@3.3.0':
-    resolution: {integrity: sha512-gS+TH14750cveYP5p2q/oLyjVV5+qRFZMOpsPzK1KrgacqKc6RLDmt3ioGaMjsn1aianQbROkl4QXDJmO5swPA==}
+  '@httptoolkit/esm@3.3.2':
+    resolution: {integrity: sha512-mpB6FdMtn+c17RA6b6PDdsJXBLHG4P8ZJFK7sjS4IZn689kcOwjt90Ct+oxTaYo9pvCSb/GeTSjYEzoBv+bnbQ==}
     engines: {node: '>=6'}
 
   '@humanfs/core@0.19.1':
@@ -3824,8 +3824,8 @@ packages:
     engines: {node: '>=8'}
     hasBin: true
 
-  import-sync@2.2.2:
-    resolution: {integrity: sha512-MQ+8aB1LZu0dHqTmpkOJ5DLCqQNVNqbMrH/S9nvHChUSMsAlX6R3ydQhX3R5/YfCU6+qU3cbASiX59hJisMKgg==}
+  import-sync@2.2.3:
+    resolution: {integrity: sha512-ZnF84+eGjetsXwYEuFZADO4eCYr1ngBo6UK476Oq4q6dkiDM1TN+6D5iQ5/e3erCyjo7O6xT3xHE6xdtCgDYhw==}
 
   imurmurhash@0.1.4:
     resolution: {integrity: sha512-JmXMZ6wuvDmLiHEml9ykzqO6lwFbof0GG4IkcGaENdCRDDmMVnny7s5HsIgHCbaq0w2MyPhDqkhTUgS2LU2PHA==}
@@ -7466,7 +7466,7 @@ snapshots:
       '@eslint/core': 0.17.0
       levn: 0.4.1
 
-  '@httptoolkit/esm@3.3.0': {}
+  '@httptoolkit/esm@3.3.2': {}
 
   '@humanfs/core@0.19.1': {}
 
@@ -10377,9 +10377,9 @@ snapshots:
       pkg-dir: 4.2.0
       resolve-cwd: 3.0.0
 
-  import-sync@2.2.2:
+  import-sync@2.2.3:
     dependencies:
-      '@httptoolkit/esm': 3.3.0
+      '@httptoolkit/esm': 3.3.2
 
   imurmurhash@0.1.4: {}
 

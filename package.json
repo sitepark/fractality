@@ -19,7 +19,7 @@
     "husky": "^9.1.7",
     "jest-extended": "^7.0.0",
     "lerna": "^9.0.1",
-    "lint-staged": "^16.2.6",
+    "lint-staged": "^16.2.7",
     "mock-argv": "^4.0.0",
     "mock-fs": "^5.5.0",
     "postcss-scss": "^4.0.9",

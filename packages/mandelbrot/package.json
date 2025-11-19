@@ -52,7 +52,7 @@
     "rimraf": "^6.1.2",
     "sass": "^1.79.2",
     "sass-loader": "^16.0.6",
-    "webpack": "^5.102.1",
+    "webpack": "^5.103.0",
     "webpack-bundle-analyzer": "^5.0.1",
     "webpack-cli": "^6.0.1"
   },

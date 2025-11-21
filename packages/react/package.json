@@ -19,7 +19,7 @@
     "@babel/preset-env": "^7.28.5",
     "@babel/preset-react": "^7.28.5",
     "@babel/register": "^7.28.3",
-    "@fractality/core": "workspace:../core",
+    "@fractality/core": "link:../core",
     "import-sync": "^2.2.3",
     "lodash": "^4.17.21",
     "parent-module": "^3.2.0",
@@ -29,7 +29,7 @@
     "resolve-from": "^5.0.0"
   },
   "devDependencies": {
-    "@fractality/fractality": "workspace:../fractality",
+    "@fractality/fractality": "link:../fractality",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
   },

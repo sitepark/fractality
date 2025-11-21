@@ -16,13 +16,13 @@
   },
   "homepage": "https://github.com/sitepark/fractality/tree/main/packages/handlebars",
   "dependencies": {
-    "@fractality/core": "workspace:../core",
+    "@fractality/core": "link:../core",
     "handlebars": "^4.7.8",
     "lodash": "^4.17.21",
     "promised-handlebars": "^2.0.1"
   },
   "devDependencies": {
-    "@fractality/fractality": "workspace:../fractality"
+    "@fractality/fractality": "link:../fractality"
   },
   "peerDependencies": {
     "@fractality/fractality": ">= 1.5 < 2"

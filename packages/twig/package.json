@@ -16,12 +16,12 @@
   },
   "homepage": "https://github.com/sitepark/fractality/tree/main/packages/twig",
   "dependencies": {
-    "@fractality/core": "workspace:../core",
+    "@fractality/core": "link:../core",
     "lodash": "^4.17.21",
     "twig": "^1.17.1"
   },
   "devDependencies": {
-    "@fractality/fractality": "workspace:../fractality"
+    "@fractality/fractality": "link:../fractality"
   },
   "peerDependencies": {
     "@fractality/fractality": ">= 1.5 < 2"

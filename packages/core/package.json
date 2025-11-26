@@ -20,7 +20,7 @@
   "homepage": "https://github.com/sitepark/fractality/tree/main/packages/core",
   "dependencies": {
     "anymatch": "^3.1.3",
-    "chokidar": "^4.0.3",
+    "chokidar": "^5.0.0",
     "fs-extra": "^11.3.2",
     "globby": "^16.0.0",
     "highlight.js": "^11.11.1",

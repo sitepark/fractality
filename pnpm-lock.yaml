@@ -60,8 +60,8 @@ importers:
         specifier: ^16.2.7
         version: 16.2.7
       mock-argv:
-        specifier: ^4.0.0
-        version: 4.0.0
+        specifier: ^5.0.0
+        version: 5.0.0
       mock-fs:
         specifier: ^5.5.0
         version: 5.5.0
@@ -211,8 +211,8 @@ importers:
         version: 4.7.0
     devDependencies:
       mock-argv:
-        specifier: ^4.0.0
-        version: 4.0.0
+        specifier: ^5.0.0
+        version: 5.0.0
       mock-fs:
         specifier: ^5.5.0
         version: 5.5.0
@@ -4815,9 +4815,9 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
-  mock-argv@4.0.0:
-    resolution: {integrity: sha512-dOI1AcjmDq1ef9giRc/jpmSdsl7Qtv0eahZnwpukBv7DOeWS6PEEqJpjGiA7J1dPUV2NbRqC7ejRmy9+e4UX9g==}
-    engines: {node: '>=18'}
+  mock-argv@5.0.0:
+    resolution: {integrity: sha512-BG0WxaL717vnSb62+utsoNZ/O5syD//Jqwl6NR7OL/su6yoQOJjAx+lLejg4zdgK3/hiWaF1InJ3qHxxJhvfEw==}
+    engines: {node: '>=22'}
 
   mock-fs@5.5.0:
     resolution: {integrity: sha512-d/P1M/RacgM3dB0sJ8rjeRNXxtapkPCUnMGmIN0ixJ16F/E4GUZCvWcSGfWGz8eaXYvn1s9baUwNjI4LOPEjiA==}
@@ -11553,7 +11553,7 @@ snapshots:
 
   mkdirp@1.0.4: {}
 
-  mock-argv@4.0.0: {}
+  mock-argv@5.0.0: {}
 
   mock-fs@5.5.0: {}
 

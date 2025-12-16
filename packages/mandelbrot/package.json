@@ -32,7 +32,7 @@
     "@babel/preset-env": "^7.28.5",
     "@fractality/fractality": "link:../fractality",
     "@fractality/web": "link:../web",
-    "autoprefixer": "^10.4.22",
+    "autoprefixer": "^10.4.23",
     "babel-loader": "^10.0.0",
     "caniuse-lite": "^1.0.30001760",
     "copy-webpack-plugin": "^13.0.1",

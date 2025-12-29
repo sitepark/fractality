@@ -81,8 +81,8 @@ importers:
         specifier: ^5.0.3
         version: 5.0.3(prettier@3.7.4)(stylelint@16.26.1(typescript@5.9.3))
       stylelint-scss:
-        specifier: ^6.13.0
-        version: 6.13.0(stylelint@16.26.1(typescript@5.9.3))
+        specifier: ^6.14.0
+        version: 6.14.0(stylelint@16.26.1(typescript@5.9.3))
       vitest:
         specifier: ^4.0.16
         version: 4.0.16(@types/node@25.0.3)(jiti@2.6.1)(sass@1.93.2)(terser@5.44.1)(yaml@2.8.1)
@@ -6112,8 +6112,8 @@ packages:
       prettier: '>=3.0.0'
       stylelint: '>=16.0.0'
 
-  stylelint-scss@6.13.0:
-    resolution: {integrity: sha512-kZPwFUJkfup2gP1enlrS2h9U5+T5wFoqzJ1n/56AlpwSj28kmFe7ww/QFydvPsg5gLjWchAwWWBLtterynZrOw==}
+  stylelint-scss@6.14.0:
+    resolution: {integrity: sha512-ZKmHMZolxeuYsnB+PCYrTpFce0/QWX9i9gh0hPXzp73WjuIMqUpzdQaBCrKoLWh6XtCFSaNDErkMPqdjy1/8aA==}
     engines: {node: '>=18.12.0'}
     peerDependencies:
       stylelint: ^16.8.2
@@ -13051,7 +13051,7 @@ snapshots:
       prettier-linter-helpers: 1.0.0
       stylelint: 16.26.1(typescript@5.9.3)
 
-  stylelint-scss@6.13.0(stylelint@16.26.1(typescript@5.9.3)):
+  stylelint-scss@6.14.0(stylelint@16.26.1(typescript@5.9.3)):
     dependencies:
       css-tree: 3.1.0
       is-plain-object: 5.0.0

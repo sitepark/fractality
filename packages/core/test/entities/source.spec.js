@@ -1,5 +1,5 @@
 import Source from '../../src/entities/source';
-import fractality from '../__mocks__/fractal';
+import { vi } from 'vitest';
 
 const items = [
     {
@@ -16,7 +16,31 @@ describe('EntitySource', () => {
     let source;
 
     beforeEach(() => {
-        source = new Source('foo', fractality);
+        const config = {
+            get: vi.fn((key) => {
+                if (key === 'foo') {
+                    return {
+                        statuses: {
+                            wip: 'wip',
+                            ready: 'ready',
+                        },
+                        default: {
+                            status: 'wip',
+                        },
+                        path: './fooPath',
+                        engine: {
+                            register: () => {
+                                return {
+                                    foo: 'bar',
+                                    load: vi.fn(),
+                                };
+                            },
+                        },
+                    };
+                }
+            }),
+        };
+        source = new Source('foo', config);
     });
 
     describe('.entities()', () => {

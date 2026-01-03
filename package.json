@@ -12,7 +12,7 @@
   "devDependencies": {
     "@eslint/js": "^9.39.2",
     "@typescript-eslint/utils": "^8.51.0",
-    "@vitest/eslint-plugin": "^1.6.4",
+    "@vitest/eslint-plugin": "^1.6.5",
     "eslint": "^9.39.2",
     "eslint-plugin-react": "^7.37.5",
     "globals": "^17.0.0",
@@ -20,7 +20,7 @@
     "jest-extended": "^7.0.0",
     "lerna": "^9.0.3",
     "lint-staged": "^16.2.7",
-    "mock-argv": "^4.0.0",
+    "mock-argv": "^5.0.0",
     "mock-fs": "^5.5.0",
     "postcss-scss": "^4.0.9",
     "prettier": "^3.7.4",

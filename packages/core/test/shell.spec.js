@@ -34,7 +34,7 @@ describe('Shell', () => {
         expect(() => shell.cd()).not.toThrow();
     });
 
-    it.skip('can create a file', async () => {
+    it.todo('can create a file', async () => {
         shell.touch('test-file.md');
         const stats = await fs.stat(path.join(process.cwd(), 'test-file.md'));
         expect(stats.isFile()).toBe(true);

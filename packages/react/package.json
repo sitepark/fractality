@@ -24,8 +24,8 @@
     "lodash": "^4.17.21",
     "parent-module": "^3.2.0",
     "prop-types": "^15.8.1",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
     "resolve-from": "^5.0.0"
   },
   "devDependencies": {

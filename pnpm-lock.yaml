@@ -394,11 +394,11 @@ importers:
         specifier: ^5.104.1
         version: 5.104.1(webpack-cli@6.0.1)
       webpack-bundle-analyzer:
-        specifier: ^5.1.0
-        version: 5.1.0
+        specifier: ^5.1.1
+        version: 5.1.1
       webpack-cli:
         specifier: ^6.0.1
-        version: 6.0.1(webpack-bundle-analyzer@5.1.0)(webpack@5.104.1)
+        version: 6.0.1(webpack-bundle-analyzer@5.1.1)(webpack@5.104.1)
 
   packages/nunjucks:
     dependencies:
@@ -6517,8 +6517,8 @@ packages:
   wcwidth@1.0.1:
     resolution: {integrity: sha512-XHPEwS0q6TaxcvG85+8EYkbiCux2XtWG2mkc47Ng2A77BQu9+DqIOJldST4HgPkuea7dvKSj5VgX3P1d4rW8Tg==}
 
-  webpack-bundle-analyzer@5.1.0:
-    resolution: {integrity: sha512-WAWwIoIUx4yC2AEBqXbDkcmh/LzAaenv0+nISBflP5l+XIXO9/x6poWarGA3RTrfavk9H3oWQ64Wm0z26/UGKA==}
+  webpack-bundle-analyzer@5.1.1:
+    resolution: {integrity: sha512-UzoaIA0Aigo5lUvoUkIkSoHtUK5rBJh9e2vW3Eqct0jc/L8hcruBCz/jsXEvB1hDU1G3V94jo2EJqPcFKeSSeQ==}
     engines: {node: '>= 20.9.0'}
     hasBin: true
 
@@ -8733,17 +8733,17 @@ snapshots:
   '@webpack-cli/configtest@3.0.1(webpack-cli@6.0.1)(webpack@5.104.1)':
     dependencies:
       webpack: 5.104.1(webpack-cli@6.0.1)
-      webpack-cli: 6.0.1(webpack-bundle-analyzer@5.1.0)(webpack@5.104.1)
+      webpack-cli: 6.0.1(webpack-bundle-analyzer@5.1.1)(webpack@5.104.1)
 
   '@webpack-cli/info@3.0.1(webpack-cli@6.0.1)(webpack@5.104.1)':
     dependencies:
       webpack: 5.104.1(webpack-cli@6.0.1)
-      webpack-cli: 6.0.1(webpack-bundle-analyzer@5.1.0)(webpack@5.104.1)
+      webpack-cli: 6.0.1(webpack-bundle-analyzer@5.1.1)(webpack@5.104.1)
 
   '@webpack-cli/serve@3.0.1(webpack-cli@6.0.1)(webpack@5.104.1)':
     dependencies:
       webpack: 5.104.1(webpack-cli@6.0.1)
-      webpack-cli: 6.0.1(webpack-bundle-analyzer@5.1.0)(webpack@5.104.1)
+      webpack-cli: 6.0.1(webpack-bundle-analyzer@5.1.1)(webpack@5.104.1)
 
   '@xtuc/ieee754@1.2.0': {}
 
@@ -13452,7 +13452,7 @@ snapshots:
     dependencies:
       defaults: 1.0.4
 
-  webpack-bundle-analyzer@5.1.0:
+  webpack-bundle-analyzer@5.1.1:
     dependencies:
       '@discoveryjs/json-ext': 0.5.7
       acorn: 8.15.0
@@ -13469,7 +13469,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  webpack-cli@6.0.1(webpack-bundle-analyzer@5.1.0)(webpack@5.104.1):
+  webpack-cli@6.0.1(webpack-bundle-analyzer@5.1.1)(webpack@5.104.1):
     dependencies:
       '@discoveryjs/json-ext': 0.6.3
       '@webpack-cli/configtest': 3.0.1(webpack-cli@6.0.1)(webpack@5.104.1)
@@ -13486,7 +13486,7 @@ snapshots:
       webpack: 5.104.1(webpack-cli@6.0.1)
       webpack-merge: 6.0.1
     optionalDependencies:
-      webpack-bundle-analyzer: 5.1.0
+      webpack-bundle-analyzer: 5.1.1
 
   webpack-merge@6.0.1:
     dependencies:
@@ -13524,7 +13524,7 @@ snapshots:
       watchpack: 2.5.0
       webpack-sources: 3.3.3
     optionalDependencies:
-      webpack-cli: 6.0.1(webpack-bundle-analyzer@5.1.0)(webpack@5.104.1)
+      webpack-cli: 6.0.1(webpack-bundle-analyzer@5.1.1)(webpack@5.104.1)
     transitivePeerDependencies:
       - '@swc/core'
       - esbuild

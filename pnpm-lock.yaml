@@ -428,8 +428,8 @@ importers:
         specifier: ^7.28.5
         version: 7.28.5(@babel/core@7.28.6)
       '@babel/register':
-        specifier: ^7.28.3
-        version: 7.28.3(@babel/core@7.28.6)
+        specifier: ^7.28.6
+        version: 7.28.6(@babel/core@7.28.6)
       '@fractality/core':
         specifier: link:../core
         version: link:../core
@@ -1050,8 +1050,8 @@ packages:
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
-  '@babel/register@7.28.3':
-    resolution: {integrity: sha512-CieDOtd8u208eI49bYl4z1J22ySFw87IGwE+IswFEExH7e3rLgKb0WNQeumnacQ1+VoDJLYI5QFA3AJZuyZQfA==}
+  '@babel/register@7.28.6':
+    resolution: {integrity: sha512-pgcbbEl/dWQYb6L6Yew6F94rdwygfuv+vJ/tXfwIOYAfPB6TNWpXUMEtEq3YuTeHRdvMIhvz13bkT9CNaS+wqA==}
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
@@ -7551,7 +7551,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@babel/register@7.28.3(@babel/core@7.28.6)':
+  '@babel/register@7.28.6(@babel/core@7.28.6)':
     dependencies:
       '@babel/core': 7.28.6
       clone-deep: 4.0.1

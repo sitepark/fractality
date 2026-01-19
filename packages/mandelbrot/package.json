@@ -40,7 +40,7 @@
     "expose-loader": "^5.0.1",
     "globby": "^16.1.0",
     "highlight.js": "^11.11.1",
-    "jquery": "^3.7.1",
+    "jquery": "^4.0.0",
     "jquery-pjax": "^2.0.1",
     "jquery-resizable-dom": "^0.35.0",
     "mark.js": "^8.11.1",

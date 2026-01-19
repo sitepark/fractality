@@ -186,8 +186,8 @@ importers:
         specifier: ^4.1.1
         version: 4.1.1
       linguist-languages:
-        specifier: ^9.2.0
-        version: 9.2.0
+        specifier: ^9.3.1
+        version: 9.3.1
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -4580,8 +4580,8 @@ packages:
     resolution: {integrity: sha512-cNOjgCnLB+FnvWWtyRTzmB3POJ+cXxTA81LoW7u8JdmhfXzriropYwpjShnz1QLLWsQwY7nIxoDmcPTwphDK9w==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
-  linguist-languages@9.2.0:
-    resolution: {integrity: sha512-s13kOULTt5LvuijOcR5U/WSuR+K+VOH/Od77oaQFnoAEIDIFAW4FKYv7zAdcGfyw8RR3vFuTlCjFf96th4J+NQ==}
+  linguist-languages@9.3.1:
+    resolution: {integrity: sha512-Mum2sqg3MyhgKfpulFhKZMAK/1VnV6m9vCV8YQCSqWs+pbKouKn9EqRshZjVWUaJjl6NTTDcYJk/1+C02siXEQ==}
 
   lint-staged@16.2.7:
     resolution: {integrity: sha512-lDIj4RnYmK7/kXMya+qJsmkRFkGolciXjrsZ6PC25GdTfWOAWetR0ZbsNXRAj1EHHImRSalc+whZFg56F5DVow==}
@@ -6243,10 +6243,12 @@ packages:
   tar@6.2.1:
     resolution: {integrity: sha512-DZ4yORTwrbTj/7MZYq2w+/ZFdI6OZ/f9SFHR+71gIVUZhOQPHzVCLpvRnPgyaMpfWxxk/4ONva3GQSyNIKRv6A==}
     engines: {node: '>=10'}
+    deprecated: Old versions of tar are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exhorbitant rates) by contacting i@izs.me
 
   tar@7.5.2:
     resolution: {integrity: sha512-7NyxrTE4Anh8km8iEy7o0QYPs+0JKBTj5ZaqHg6B39erLg0qYXN3BijtShwbsNSvQ+LN75+KV+C4QR/f6Gwnpg==}
     engines: {node: '>=18'}
+    deprecated: Old versions of tar are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exhorbitant rates) by contacting i@izs.me
 
   teex@1.0.1:
     resolution: {integrity: sha512-eYE6iEI62Ni1H8oIa7KlDU6uQBtqr4Eajni3wX7rpfXD8ysFx8z0+dri+KWEPWpBsxXfxu58x/0jvTVT1ekOSg==}
@@ -11371,7 +11373,7 @@ snapshots:
 
   lines-and-columns@2.0.3: {}
 
-  linguist-languages@9.2.0: {}
+  linguist-languages@9.3.1: {}
 
   lint-staged@16.2.7:
     dependencies:

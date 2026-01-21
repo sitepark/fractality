@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@fractality/core": "link:../core",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "nunjucks": "^3.2.4"
   },
   "devDependencies": {

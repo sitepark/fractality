@@ -6,7 +6,7 @@
     "anymatch": "^3.1.3",
     "fs-extra": "^11.3.3",
     "js-yaml": "^4.1.1",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "vinyl": "^3.0.1"
   },
   "devDependencies": {

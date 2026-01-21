@@ -23,7 +23,7 @@
     "fs-extra": "^11.3.3",
     "get-port": "^7.1.0",
     "js-yaml": "^4.1.1",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "nunjucks": "^3.2.4",
     "path-to-regexp": "^8.3.0",
     "throat": "^6.0.2"

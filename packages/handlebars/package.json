@@ -18,7 +18,7 @@
   "dependencies": {
     "@fractality/core": "link:../core",
     "handlebars": "^4.7.8",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "promised-handlebars": "^2.0.1"
   },
   "devDependencies": {

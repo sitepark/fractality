@@ -18,7 +18,7 @@
     "globals": "^17.3.0",
     "husky": "^9.1.7",
     "jest-extended": "^7.0.0",
-    "lerna": "^9.0.3",
+    "lerna": "^9.0.4",
     "lint-staged": "^16.2.7",
     "mock-argv": "^5.0.0",
     "mock-fs": "^5.5.0",

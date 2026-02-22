@@ -2,6 +2,7 @@
 
 import _ from 'lodash';
 import React from 'react';
+import { createRequire } from 'node:module';
 import * as ReactDOMServer from 'react-dom/server';
 
 import { Adapter, utils } from '@fractality/core';
@@ -10,7 +11,6 @@ import PathProvider from '../components/path-provider.js';
 import clearModule from './clear-module.js';
 
 import registerBabel from '@babel/register';
-import importSync from 'import-sync';
 
 /*
  * React Adapter
@@ -172,7 +172,8 @@ export default function (config = {}) {
 }
 
 const requireModule = (path) => {
-    let component = importSync(path);
+    const require = createRequire(import.meta.url);
+    let component = require(path);
 
     return component.default || component;
 };

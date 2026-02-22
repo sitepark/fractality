@@ -17,11 +17,11 @@
   "scripts": {
     "clean": "rimraf dist",
     "start": "webpack --mode development --watch",
-    "prebuild": "npm run clean",
+    "prebuild": "pnpm run clean",
     "build": "webpack --mode production",
     "build:analyze": "webpack --mode production --analyze",
-    "prepack": "npm run build",
-    "test": "npm run build"
+    "prepack": "pnpm run build",
+    "test": "pnpm run build"
   },
   "peerDependencies": {
     "@fractality/fractality": ">= 1.5 < 2"

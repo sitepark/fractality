@@ -7,13 +7,13 @@ This is an example instance of Fractality using the default Handlebars adapter.
 [Follow these instructions](https://github.com/sitepark/fractality#development) to setup the development environement, then run:
 
 ```bash
-npm start
+pnpm start
 ```
 
 to start Fractality server in development mode, or:
 
 ```
-npm run build
+pnpm run build
 ```
 
 to build a static version in the `dist` folder.

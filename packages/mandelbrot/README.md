@@ -28,7 +28,7 @@ To start Gulp in watch mode and automatically recompile Mandelbrot’s CSS & JS 
 You can also build the files once with:
 
 ```
-npm run build
+pnpm run build
 ```
 
 You can see your changes in one of our [example Fractality instances](https://github.com/sitepark/fractality/tree/main/examples).

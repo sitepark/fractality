@@ -75,13 +75,13 @@ e.g.
 then
 
 ```shell
-npm run fractality:start
+pnpm run fractality:start
 ```
 
 ### Installing globally
 
 ```shell
-npm i -g @fractality/fractality
+pnpm i -g @fractality/fractality
 ```
 
 This will also give you global access to the `fractality` command which you can use to scaffold a new Fractality project with `fractality new`.

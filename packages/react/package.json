@@ -15,16 +15,16 @@
   },
   "homepage": "https://github.com/sitepark/fractality/tree/main/packages/react",
   "dependencies": {
-    "@babel/core": "^7.28.6",
-    "@babel/preset-env": "^7.28.6",
+    "@babel/core": "^7.29.0",
+    "@babel/preset-env": "^7.29.0",
     "@babel/preset-react": "^7.28.5",
     "@babel/register": "^7.28.6",
     "@fractality/core": "link:../core",
     "lodash": "^4.17.23",
     "parent-module": "^3.2.0",
     "prop-types": "^15.8.1",
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
     "resolve-from": "^5.0.0"
   },
   "devDependencies": {

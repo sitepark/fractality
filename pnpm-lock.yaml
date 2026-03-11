@@ -468,8 +468,8 @@ importers:
         specifier: ^4.17.23
         version: 4.17.23
       twig:
-        specifier: ^1.17.1
-        version: 1.17.1
+        specifier: ^2.0.0
+        version: 2.0.0
     devDependencies:
       '@fractality/fractality':
         specifier: link:../fractality
@@ -4554,9 +4554,9 @@ packages:
     resolution: {integrity: sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw==}
     engines: {node: '>=10'}
 
-  locutus@2.0.39:
-    resolution: {integrity: sha512-v2iub44UtGpbIv+pFkkYhZ+JsbIM0bJsQcQ1+VayUNGVA/YhM8+CkBiRACcpuuE9Q0xI1pgNzGNwzZDCp1MCww==}
-    engines: {node: '>= 10', yarn: '>= 1'}
+  locutus@3.0.10:
+    resolution: {integrity: sha512-F/C16ccWteU0TDnxZ+eqsBh0DoL86EGamIoK8QXr6oHiEpp3UdX1epQaAykb9bBJ1sFOGkBVoDSDSJp8BlVtNA==}
+    engines: {node: '>= 22', yarn: '>= 1'}
 
   lodash.debounce@4.0.8:
     resolution: {integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==}
@@ -4749,9 +4749,6 @@ packages:
   minimatch@10.2.4:
     resolution: {integrity: sha512-oRjTw/97aTBN0RHbYCdtF1MQfvusSIBQM0IZEgzl6426+8jSC0nF1a/GmnVLpfB9yyr6g6FTqWqiZVbxrtaCIg==}
     engines: {node: 18 || 20 || >=22}
-
-  minimatch@3.0.8:
-    resolution: {integrity: sha512-6FsRAQsxQ61mw+qP1ZzbL9Bc78x2p5OqNgNpnoAFLTrX8n5Kxph0CsnhmKKNXTWjXqU5L0pGPR7hYk+XWZr60Q==}
 
   minimatch@3.1.3:
     resolution: {integrity: sha512-M2GCs7Vk83NxkUyQV1bkABc4yxgz9kILhHImZiBPAZ9ybuvCb0/H7lEl5XvIg3g+9d4eNotkZA5IWwYl0tibaA==}
@@ -6254,9 +6251,9 @@ packages:
     resolution: {integrity: sha512-50QV99kCKH5P/Vs4E2Gzp7BopNV+KzTXqWeaxrfu5IQJBOULRsTIS9seSsOVT8ZnGXzCyx55nYWAi4qJzpZKEQ==}
     engines: {node: ^20.17.0 || >=22.9.0}
 
-  twig@1.17.1:
-    resolution: {integrity: sha512-atxccyr/BHtb1gPMA7Lvki0OuU17XBqHsNH9lzDHt9Rr1293EVZOosSZabEXz/DPVikIW8ZDqSkEddwyJnQN2w==}
-    engines: {node: '>=10'}
+  twig@2.0.0:
+    resolution: {integrity: sha512-XKeIPEdmyEhM+HV8wB/6KIijnS+KHKSQaXH35lDFi2kTpEKJV3Ms5ksFbt89iNRgumfLIVqmVRh80MNWw/Hisw==}
+    engines: {node: '>=20'}
     hasBin: true
 
   type-check@0.4.0:
@@ -7595,7 +7592,15 @@ snapshots:
     dependencies:
       '@eslint/object-schema': 2.1.7
       debug: 4.4.3
-      minimatch: 3.1.3
+      minimatch: 3.1.5
+    transitivePeerDependencies:
+      - supports-color
+
+  '@eslint/config-array@0.21.2':
+    dependencies:
+      '@eslint/object-schema': 2.1.7
+      debug: 4.4.3
+      minimatch: 3.1.5
     transitivePeerDependencies:
       - supports-color
 
@@ -7624,7 +7629,21 @@ snapshots:
       ignore: 5.3.2
       import-fresh: 3.3.1
       js-yaml: 4.1.1
-      minimatch: 3.1.3
+      minimatch: 3.1.5
+      strip-json-comments: 3.1.1
+    transitivePeerDependencies:
+      - supports-color
+
+  '@eslint/eslintrc@3.3.5':
+    dependencies:
+      ajv: 6.14.0
+      debug: 4.4.3
+      espree: 10.4.0
+      globals: 14.0.0
+      ignore: 5.3.2
+      import-fresh: 3.3.1
+      js-yaml: 4.1.1
+      minimatch: 3.1.5
       strip-json-comments: 3.1.1
     transitivePeerDependencies:
       - supports-color
@@ -11196,7 +11215,7 @@ snapshots:
     dependencies:
       p-locate: 5.0.0
 
-  locutus@2.0.39: {}
+  locutus@3.0.10: {}
 
   lodash.debounce@4.0.8: {}
 
@@ -11385,10 +11404,6 @@ snapshots:
   minimatch@10.2.4:
     dependencies:
       brace-expansion: 5.0.4
-
-  minimatch@3.0.8:
-    dependencies:
-      brace-expansion: 1.1.12
 
   minimatch@3.1.3:
     dependencies:
@@ -12375,7 +12390,7 @@ snapshots:
   resp-modifier@6.0.2:
     dependencies:
       debug: 2.6.9
-      minimatch: 3.1.3
+      minimatch: 3.1.5
     transitivePeerDependencies:
       - supports-color
 
@@ -13138,11 +13153,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  twig@1.17.1:
+  twig@2.0.0:
     dependencies:
       '@babel/runtime': 7.28.6
-      locutus: 2.0.39
-      minimatch: 3.0.8
+      locutus: 3.0.10
+      minimatch: 10.2.4
       walk: 2.3.15
 
   type-check@0.4.0:

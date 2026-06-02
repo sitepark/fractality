@@ -4,32 +4,32 @@
   "type": "module",
   "dependencies": {
     "anymatch": "^3.1.3",
-    "fs-extra": "^11.3.4",
-    "js-yaml": "^4.1.1",
-    "lodash": "^4.17.23",
+    "fs-extra": "^11.3.5",
+    "js-yaml": "^4.2.0",
+    "lodash": "^4.18.1",
     "vinyl": "^3.0.1"
   },
   "devDependencies": {
-    "@babel/preset-react": "^7.28.5",
+    "@babel/preset-react": "^7.29.7",
     "@eslint/js": "^9.39.4",
-    "@typescript-eslint/utils": "^8.57.0",
-    "@vitest/eslint-plugin": "^1.6.10",
-    "eslint": "^9.39.3",
+    "@typescript-eslint/utils": "^8.60.0",
+    "@vitest/eslint-plugin": "^1.6.19",
+    "eslint": "^9.39.4",
     "eslint-plugin-react": "^7.37.5",
-    "globals": "^17.4.0",
+    "globals": "^17.6.0",
     "husky": "^9.1.7",
     "jest-extended": "^7.0.0",
-    "lerna": "^9.0.6",
-    "lint-staged": "^16.3.3",
+    "lerna": "^9.0.7",
+    "lint-staged": "^17.0.7",
     "mock-argv": "^5.0.0",
     "mock-fs": "^5.5.0",
     "postcss-scss": "^4.0.9",
-    "prettier": "^3.8.1",
+    "prettier": "^3.8.3",
     "stylelint": "^16.26.1",
     "stylelint-config-standard": "^39.0.1",
     "stylelint-prettier": "^5.0.3",
-    "stylelint-scss": "^7.0.0",
-    "vitest": "^4.0.18"
+    "stylelint-scss": "^7.1.1",
+    "vitest": "^4.1.8"
   },
   "scripts": {
     "clean": "lerna clean",
@@ -41,17 +41,5 @@
     "test": "pnpm run test:unit",
     "test:unit": "vitest run",
     "prepare": "husky"
-  },
-  "pnpm": {
-    "overrides": {
-      "loader-utils@>=2.0.0 <2.0.4": ">=2.0.4",
-      "loader-utils@>=2.0.0 <2.0.3": ">=2.0.3",
-      "axios@>=0.8.1 <1.6.0": ">=1.6.0"
-    },
-    "onlyBuiltDependencies": [
-      "@parcel/watcher",
-      "esbuild",
-      "nx"
-    ]
   }
 }

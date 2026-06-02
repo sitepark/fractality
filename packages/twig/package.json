@@ -17,8 +17,8 @@
   "homepage": "https://github.com/sitepark/fractality/tree/main/packages/twig",
   "dependencies": {
     "@fractality/core": "link:../core",
-    "lodash": "^4.17.23",
-    "twig": "^2.0.0"
+    "lodash": "^4.18.1",
+    "twig": "^3.0.0"
   },
   "devDependencies": {
     "@fractality/fractality": "link:../fractality"

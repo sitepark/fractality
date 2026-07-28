@@ -184,8 +184,8 @@ importers:
         specifier: ^4.2.0
         version: 4.2.0
       linguist-languages:
-        specifier: ^9.3.2
-        version: 9.3.2
+        specifier: ^9.4.0
+        version: 9.4.0
       lodash:
         specifier: ^4.18.1
         version: 4.18.1
@@ -4384,8 +4384,8 @@ packages:
     resolution: {integrity: sha512-cNOjgCnLB+FnvWWtyRTzmB3POJ+cXxTA81LoW7u8JdmhfXzriropYwpjShnz1QLLWsQwY7nIxoDmcPTwphDK9w==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
-  linguist-languages@9.3.2:
-    resolution: {integrity: sha512-AyYYwY2N7iG+tT+yAZmZbf+2PxVIbYfGtzDeT2qh4K/H8EvGbKCmeEdyzwTEGKK6PYcaaNqWv6aYYbCeN5LMTA==}
+  linguist-languages@9.4.0:
+    resolution: {integrity: sha512-mYnFVrsWg5Bex0Kl5EDcXhrjXZ5DqMlBDXo7EUWLMTLDpxbuHvgBb2aOvGWC5ZmMJ2HXEKJiuFie9NEs8NUMXg==}
 
   lint-staged@17.0.7:
     resolution: {integrity: sha512-JrSobt+tW3rH8IOMi8tDZd3foorM5yPEkLD/V2NxobgHrFfHWGee4MOLVuZeScgxftEwbHrPHIFA/ZL+nUJeuA==}
@@ -10898,7 +10898,7 @@ snapshots:
 
   lines-and-columns@2.0.3: {}
 
-  linguist-languages@9.3.2: {}
+  linguist-languages@9.4.0: {}
 
   lint-staged@17.0.7:
     dependencies:

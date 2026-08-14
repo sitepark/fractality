@@ -9,8 +9,15 @@ import chalk from 'chalk';
 import updateNotifier from 'update-notifier';
 import { create } from '../src/fractal.js';
 import fsExtra from 'fs-extra';
+import { URL, fileURLToPath } from 'url';
 const { readJsonSync } = fsExtra;
-const cliPackage = readJsonSync('./package.json');
+
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
+
+// This is the CLI's own manifest, not the project's — the project's is read
+// from process.cwd() further down. Resolve it against __dirname so it doesn't
+// depend on where the CLI happens to be invoked from.
+const cliPackage = readJsonSync(Path.join(__dirname, '..', 'package.json'));
 
 const notifier = updateNotifier({
     pkg: cliPackage,

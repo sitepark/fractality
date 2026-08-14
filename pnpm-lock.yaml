@@ -337,7 +337,7 @@ importers:
         specifier: ^7.1.1
         version: 7.1.1(rolldown@1.2.4)
       sass:
-        specifier: ~1.102.0
+        specifier: ^1.102.0
         version: 1.102.0
       vite:
         specifier: ^8.2.1

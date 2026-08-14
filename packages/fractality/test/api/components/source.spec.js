@@ -34,4 +34,10 @@ describe('ComponentSource', () => {
             expect(components.getHeritable('foo')).toEqual(_.keys(app.get('components.default')));
         });
     });
+
+    describe('._getWrapper()', () => {
+        it('resolves to undefined instead of throwing when the wrapper file does not exist', async () => {
+            await expect(components._getWrapper('does-not-exist.hbs')).resolves.toBeUndefined();
+        });
+    });
 });

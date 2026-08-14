@@ -13,7 +13,7 @@ const skinNames = globbySync('./assets/scss/skins/*.scss', { cwd: packageRoot })
 
 describe('mandelbrot dist build', () => {
     beforeAll(() => {
-        execSync('pnpm exec webpack --mode production', { cwd: packageRoot, stdio: 'pipe' });
+        execSync('pnpm exec vite build', { cwd: packageRoot, stdio: 'pipe' });
     }, 60000);
 
     it('builds a skin stylesheet for every skin under assets/scss/skins', () => {

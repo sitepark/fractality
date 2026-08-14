@@ -41,15 +41,19 @@ export default {
 
             if (_.isString(item) && _.startsWith(item, '@@')) {
                 const entity = source.find(item.substring(1));
-                return resolve(entity.context).then((entityContext) => {
-                    const fullRenderedComponent = source
-                        .engine()
-                        .render(entity.viewPath, entity.content, entityContext, {
-                            self: entity.toJSON(),
-                            env: {},
-                        });
-                    return fullRenderedComponent;
-                });
+                if (entity) {
+                    return resolve(entity.context).then((entityContext) => {
+                        const fullRenderedComponent = source
+                            .engine()
+                            .render(entity.viewPath, entity.content, entityContext, {
+                                self: entity.toJSON(),
+                                env: {},
+                            });
+                        return fullRenderedComponent;
+                    });
+                }
+                Log.warn(`Could not resolve context reference for ${item}`);
+                return null;
             }
 
             if (_.isString(item) && _.startsWith(item, '@')) {

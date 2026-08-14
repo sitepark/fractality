@@ -117,7 +117,7 @@ export function defaultsDeep() {
         .forEach((item) => {
             _.mergeWith(output, item, (objectValue, sourceValue) => {
                 if (_.isArray(sourceValue)) {
-                    return sourceValue;
+                    return _.cloneDeep(sourceValue);
                 }
                 if (!_.isPlainObject(sourceValue) || !_.isPlainObject(objectValue)) {
                     return sourceValue;

@@ -252,6 +252,15 @@ describe('Utils', () => {
             expect(utils.defaultsDeep(target, defaults).items).toEqual(target.items);
         });
 
+        it('Does not let a mutation of a merged array bleed back into the source object', () => {
+            let source = { items: ['one', 'two'] };
+            let result = utils.defaultsDeep({}, source);
+
+            result.items.push('three');
+
+            expect(source.items).toEqual(['one', 'two']);
+        });
+
         it('Returns the default value if the target property is undefined', () => {
             let target = { anotherItem: 'foo', nullItem: null, undefinedItem: undefined };
             let defaults = { item: ['one', 'three', 'four'], nullItem: 'not null', undefinedItem: 'not undefined' };

@@ -1,10 +1,13 @@
+@use "../core/mixins";
+@use "../theme";
+
 .Error-stack {
     margin-top: 1.5rem;
 
     pre {
-        @include font(code);
+        @include mixins.font(code);
 
-        color: rgba($color-text, 0.75);
+        color: rgba(theme.$color-text, 0.75);
     }
 }
 
@@ -14,13 +17,13 @@
     padding: 0.75rem;
 
     .Error-title {
-        @include font(label);
+        @include mixins.font(label);
 
         color: #b00;
     }
 
     .Error-message {
-        @include font(caption);
+        @include mixins.font(caption);
     }
 
     .Error-stack {

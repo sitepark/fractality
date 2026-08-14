@@ -1,0 +1,15 @@
+// -----------------------------------------------------------------------------
+// Config
+// -----------------------------------------------------------------------------
+//
+// Layout constants shared by the core styles and the components. These live in
+// their own module rather than in `core/_all.scss` because that file is an
+// aggregator: it loads `mixins`, which needs these values. Keeping them here
+// avoids the `all` -> `mixins` -> `all` module loop that would otherwise create.
+
+$width-sidebar: 240px;
+$handle-size: 0.625rem;
+
+$mq_large: 800px;
+$mq_nav-collapse: 760px;
+$mq_medium: 600px;

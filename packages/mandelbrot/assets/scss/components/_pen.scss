@@ -1,3 +1,7 @@
+@use "../core/config";
+@use "../core/mixins";
+@use "../theme";
+
 .Pen {
     display: flex;
     flex-direction: column;
@@ -24,14 +28,14 @@
 
     .Pen-preview-size {
         white-space: nowrap;
-        @include margin-inline(start, auto);
+        @include mixins.margin-inline(start, auto);
     }
 
     .Status {
-        @include margin-inline(start, 1rem);
+        @include mixins.margin-inline(start, 1rem);
     }
 
-    @media (width < $mq_nav-collapse) {
+    @media (width < config.$mq_nav-collapse) {
         margin: 0;
         padding: 0.75rem;
 
@@ -54,18 +58,18 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    @include font(subHeading);
-    @include padding-inline(end, 0.5rem);
+    @include mixins.font(subHeading);
+    @include mixins.padding-inline(end, 0.5rem);
 }
 
 .Pen-previewLink {
-    @include link-default($color-heading, none);
+    @include mixins.link-default(theme.$color-heading, none);
 
     svg {
         --fill: rgb(var(--skin-links));
 
-        fill: $color-link;
-        fill: var(--fill, $color-link);
+        fill: theme.$color-link;
+        fill: var(--fill, theme.$color-link);
         opacity: 0.75;
     }
 
@@ -78,25 +82,25 @@
     flex: 0 0 auto;
     height: 50%;
     max-height: calc(100% - 3.75rem);
-    margin: 0 $handle-size;
+    margin: 0 config.$handle-size;
 
-    @media (width < $mq_nav-collapse) {
+    @media (width < config.$mq_nav-collapse) {
         max-height: calc(100% - 4.75rem);
     }
 }
 
 .Pen-handle {
     flex: 0 0 auto;
-    height: $handle-size;
-    margin: 0 $handle-size;
+    height: config.$handle-size;
+    margin: 0 config.$handle-size;
     background: transparent url("../../img/icon-drag--horizontal.svg") no-repeat 50% 50%;
     background-size: 16px 3px;
     cursor: ns-resize;
 
-    @include dragHandle;
-    @media (width < $mq_nav-collapse) {
+    @include mixins.dragHandle;
+    @media (width < config.$mq_nav-collapse) {
         display: none;
-        height: $handle-size + 1rem;
+        height: config.$handle-size + 1rem;
     }
 }
 
@@ -110,7 +114,7 @@
     flex: 1 1 auto;
     position: relative;
     overflow: hidden;
-    margin: $handle-size;
+    margin: config.$handle-size;
     margin-top: 0;
-    border: 1px solid $color-frame-border;
+    border: 1px solid theme.$color-frame-border;
 }

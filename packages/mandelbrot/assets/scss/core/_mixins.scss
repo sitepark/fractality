@@ -1,3 +1,6 @@
+@use "../theme";
+@use "config";
+
 @use "sass:math";
 
 @mixin link-default($color, $decoration) {
@@ -40,11 +43,11 @@
     transition: all 0.15s ease-out;
 
     &:hover {
-        background-color: $color-ui-hover;
+        background-color: theme.$color-ui-hover;
     }
 
     &:active {
-        background-color: $color-ui-active;
+        background-color: theme.$color-ui-active;
     }
 
     &.is-disabled {
@@ -52,7 +55,7 @@
         visibility: hidden;
     }
 
-    @media (width < $mq_nav-collapse) {
+    @media (width < config.$mq_nav-collapse) {
         pointer-events: none;
         visibility: hidden;
     }
@@ -94,7 +97,7 @@
     }
 
     @if $preset == code {
-        font-family: $font-family-monospace;
+        font-family: theme.$font-family-monospace;
         font-size: 0.875rem;
         line-height: #{math.div(24, 14)};
     }

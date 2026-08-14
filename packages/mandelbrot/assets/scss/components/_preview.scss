@@ -1,7 +1,11 @@
+@use "../core/config";
+@use "../core/mixins";
+@use "../theme";
+
 .Preview {
     position: relative;
-    background-color: $color-background-offset;
-    border: 1px solid $color-frame-border;
+    background-color: theme.$color-background-offset;
+    border: 1px solid theme.$color-frame-border;
 
     &.is-disabled {
         .Preview-overlay {
@@ -24,13 +28,13 @@
     bottom: 0;
     height: 100%;
     width: 100%;
-    width: calc(100% + #{$handle-size});
+    width: calc(100% + #{config.$handle-size});
     min-width: 200px;
-    max-width: calc(100% + #{$handle-size});
+    max-width: calc(100% + #{config.$handle-size});
     background-color: transparent;
 
-    @include offset-inline(start, 0);
-    @media (width < $mq_nav-collapse) {
+    @include mixins.offset-inline(start, 0);
+    @media (width < config.$mq_nav-collapse) {
         width: 100% !important;
     }
 }
@@ -42,12 +46,12 @@
     width: 100%;
     height: 100%;
     overflow: auto;
-    max-width: calc(100% - #{$handle-size} + 1px);
+    max-width: calc(100% - #{config.$handle-size} + 1px);
     min-width: 180px;
     background-color: white;
 
-    @include offset-inline(start, 0);
-    @media (width < $mq_nav-collapse) {
+    @include mixins.offset-inline(start, 0);
+    @media (width < config.$mq_nav-collapse) {
         width: 100% !important; // override any JS-set widths
         min-width: 100%;
         border: 0;
@@ -59,7 +63,7 @@
 }
 
 .Preview-iframe {
-    @include trbl(0);
+    @include mixins.trbl(0);
 
     position: absolute;
     z-index: 0;
@@ -68,7 +72,7 @@
 }
 
 .Preview-overlay {
-    @include trbl(0);
+    @include mixins.trbl(0);
 
     display: none;
     position: absolute;
@@ -83,15 +87,15 @@
     bottom: -1px;
     z-index: 100;
     height: calc(100% + 2px);
-    width: $handle-size;
+    width: config.$handle-size;
     background: transparent url("../../img/icon-drag--vertical.svg") no-repeat 50%;
     background-size: 3px 16px;
     cursor: ew-resize;
-    @include dragHandle;
-    @include border-inline(start, 1px solid $color-frame-border);
-    @include offset-inline(end, 0);
+    @include mixins.dragHandle;
+    @include mixins.border-inline(start, 1px solid theme.$color-frame-border);
+    @include mixins.offset-inline(end, 0);
 
-    @media (width < $mq_nav-collapse) {
+    @media (width < config.$mq_nav-collapse) {
         display: none;
     }
 }

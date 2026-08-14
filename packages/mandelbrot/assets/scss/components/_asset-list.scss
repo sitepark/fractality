@@ -1,3 +1,6 @@
+@use "../core/mixins";
+@use "../theme";
+
 .AssetList {
     list-style: none;
     max-width: 900px;
@@ -10,13 +13,13 @@
 }
 
 .AssetList-name {
-    color: rgba($color-text, 0.5);
+    color: rgba(theme.$color-text, 0.5);
 
     strong {
         --color: rgb(var(--skin-links));
 
-        color: $color-link;
-        color: var(--color, $color-link);
+        color: theme.$color-link;
+        color: var(--color, theme.$color-link);
         font-weight: normal;
     }
 }
@@ -30,7 +33,7 @@
 
     &:hover {
         .AssetList-path {
-            color: rgba($color-text, 0.75);
+            color: rgba(theme.$color-text, 0.75);
         }
 
         .AssetList-icon {
@@ -42,7 +45,7 @@
 }
 
 .AssetList-icon {
-    @include margin-inline(end, 0.5rem);
+    @include mixins.margin-inline(end, 0.5rem);
 
     svg {
         fill: #ccc;

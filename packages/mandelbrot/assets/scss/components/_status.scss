@@ -1,3 +1,5 @@
+@use "../core/mixins";
+
 .Status,
 .Status-dots {
     display: flex;
@@ -13,11 +15,11 @@
 }
 
 .Status-dot + .Status-dot {
-    @include margin-inline(start, 3px);
+    @include mixins.margin-inline(start, 3px);
 }
 
 .Status-label {
-    @include font(label);
+    @include mixins.font(label);
 
     display: inline-block;
     border-radius: 2rem;
@@ -27,11 +29,11 @@
 }
 
 .Status-label + .Status-label {
-    @include margin-inline(start, 0.25rem);
+    @include mixins.margin-inline(start, 0.25rem);
 }
 
 .Status--labelled {
     .Status-label {
-        @include margin-inline(end, 0.75rem);
+        @include mixins.margin-inline(end, 0.75rem);
     }
 }

@@ -19,12 +19,12 @@
     "@fractality/fractality": ">= 1.5 < 2"
   },
   "dependencies": {
-    "@fractality/core": "link:../core",
+    "@fractality/core": "workspace:*",
     "lodash": "^4.18.1",
     "nunjucks": "^3.2.4"
   },
   "devDependencies": {
-    "@fractality/fractality": "link:../fractality"
+    "@fractality/fractality": "workspace:*"
   },
   "publishConfig": {
     "access": "public"

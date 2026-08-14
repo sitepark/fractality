@@ -24,7 +24,7 @@ export default defineConfig(({ mode }) => ({
                 // requested name, which would silently drop one skin's output entirely.
                 // This makes every skin's compiled CSS genuinely unique so that can't happen.
                 additionalData: (source, filename) => {
-                    if (!filename.includes(`${path.sep}scss${path.sep}skins${path.sep}`)) {
+                    if (path.basename(path.dirname(filename)) !== 'skins') {
                         return source;
                     }
                     const name = path.basename(filename, '.scss');

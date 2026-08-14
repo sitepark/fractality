@@ -4,6 +4,25 @@
   "type": "module",
   "description": "React template adapter for Fractality.",
   "main": "index.js",
+  "exports": {
+    ".": {
+      "default": "./index.js"
+    },
+    "./components": {
+      "types": "./components/index.d.ts",
+      "default": "./components/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "components",
+    "index.js",
+    "CHANGELOG.md"
+  ],
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/sitepark/fractality.git",

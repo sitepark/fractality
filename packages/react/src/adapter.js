@@ -82,22 +82,26 @@ class ReactAdapter extends Adapter {
     }
 
     render(path, str, context, meta = {}) {
-        setEnv('_self', meta.self, context);
-        setEnv('_target', meta.target, context);
-        setEnv('_env', meta.env, context);
-        setEnv('_config', this._app.config(), context);
+        try {
+            setEnv('_self', meta.self, context);
+            setEnv('_target', meta.target, context);
+            setEnv('_env', meta.env, context);
+            setEnv('_config', this._app.config(), context);
 
-        const component = requireModule(path);
+            const component = requireModule(path);
 
-        if (this.options.ssr || meta.env.ssr || meta.self.meta.ssr) {
-            const element = React.createElement(component, context);
-            const parentElements = this.renderParentElements(element, meta);
-            const html = this._renderMethod(parentElements);
+            if (this.options.ssr || meta.env.ssr || meta.self.meta.ssr) {
+                const element = React.createElement(component, context);
+                const parentElements = this.renderParentElements(element, meta);
+                const html = this._renderMethod(parentElements);
 
-            return Promise.resolve(html);
+                return Promise.resolve(html);
+            }
+
+            return Promise.resolve('');
+        } catch (err) {
+            return Promise.reject(err);
         }
-
-        return Promise.resolve('');
     }
 
     renderLayout(path, str, context, meta = {}) {

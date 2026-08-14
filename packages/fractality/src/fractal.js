@@ -81,7 +81,7 @@ export class Fractality extends mix(Configurable, Emitter) {
             throw new Error('Plugins must be a function');
         }
         const boundPlugin = plugin.bind(this);
-        boundPlugin(module.exports.core);
+        boundPlugin(core);
         return this;
     }
 

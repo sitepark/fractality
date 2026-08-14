@@ -1,6 +1,6 @@
 import { Web } from '@fractality/web';
 
-import { create } from '../src/fractal';
+import { create, core } from '../src/fractal';
 import Cli from '../src/cli';
 import ComponentSource from '../src/api/components';
 import DocSource from '../src/api/docs/source';
@@ -54,6 +54,23 @@ describe('Fractality', () => {
     describe('.version', () => {
         it('matches the version number set in the package.json file', () => {
             expect(app.version).toEqual(pkg.version);
+        });
+    });
+
+    describe('.extend()', () => {
+        it('calls the plugin, bound to the app, with the core API namespace', () => {
+            let receivedApp;
+            let receivedCore;
+            app.extend(function (coreApi) {
+                receivedApp = this;
+                receivedCore = coreApi;
+            });
+            expect(receivedApp).toBe(app);
+            expect(receivedCore).toBe(core);
+        });
+
+        it('throws when the plugin is not a function', () => {
+            expect(() => app.extend('not-a-function')).toThrow('Plugins must be a function');
         });
     });
 });

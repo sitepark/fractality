@@ -8,12 +8,12 @@
     "build": "fractality build"
   },
   "dependencies": {
-    "@fractality/fractality": "link:../../packages/fractality",
-    "@fractality/mandelbrot": "link:../../packages/mandelbrot",
-    "@fractality/react": "link:../../packages/react"
+    "@fractality/fractality": "workspace:*",
+    "@fractality/mandelbrot": "workspace:*",
+    "@fractality/react": "workspace:*"
   },
   "devDependencies": {
-    "@fractality/adapter-tests": "link:../adapter-tests",
+    "@fractality/adapter-tests": "workspace:*",
     "prop-types": "^15.8.1",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"

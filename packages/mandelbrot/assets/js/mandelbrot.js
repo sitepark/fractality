@@ -1,6 +1,6 @@
 'use strict';
 
-import 'jquery';
+import './jquery-global.js';
 import 'jquery-pjax';
 
 import events from './events.js';

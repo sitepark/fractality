@@ -34,19 +34,19 @@ export default function (fractality) {
                 context = utils.defaultsDeep(context, defaultContext);
             }
 
-            source.resolve(context).then((context) => {
-                // fix env for rendered components
-                let env = JSON.parse(JSON.stringify(rootContext._env));
-                context._env = env;
-                entity
-                    .render(context)
-                    .then((html) => {
+            source
+                .resolve(context)
+                .then((context) => {
+                    // fix env for rendered components
+                    let env = JSON.parse(JSON.stringify(rootContext._env));
+                    context._env = env;
+                    return entity.render(context).then((html) => {
                         callback(null, new nunjucks.runtime.SafeString(html));
-                    })
-                    .catch((err) => {
-                        callback(err);
                     });
-            });
+                })
+                .catch((err) => {
+                    callback(err);
+                });
         };
     }
 

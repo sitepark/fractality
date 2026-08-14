@@ -5,28 +5,20 @@ import { Readable } from 'readable-stream';
 export default class PromiseStream extends Readable {
     constructor(p) {
         super({ objectMode: true });
-        this._data = Promise.resolve(p);
-        this._fulfilledOnInit = this._data.isFulfilled();
-        if (!this._fulfilledOnInit) {
-            this._data.then((items) => {
-                items.forEach((i) => this.push(i));
-            });
-        }
+        this._settled = false;
+        this._data = Promise.resolve(p).then((items) => {
+            items.forEach((i) => this.push(i));
+            this._settled = true;
+        });
         this._data.catch((err) => {
+            this._settled = true;
             this.emit('error', err);
         });
     }
 
     _read() {
-        if (this._fulfilledOnInit) {
-            this._data.value().forEach((i) => this.push(i));
+        if (this._settled) {
             this.push(null);
-            return;
-        }
-        if (this._data.isFulfilled()) {
-            this._data.finally(() => {
-                this.push(null);
-            });
         }
     }
 }

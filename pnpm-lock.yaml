@@ -192,9 +192,6 @@ importers:
       marked:
         specifier: ^18.0.9
         version: 18.0.9
-      marked-highlight:
-        specifier: ^2.2.4
-        version: 2.2.4(marked@18.0.9)
       marked-smartypants:
         specifier: ^1.1.12
         version: 1.1.12(marked@18.0.9)
@@ -4307,11 +4304,6 @@ packages:
 
   mark.js@8.11.1:
     resolution: {integrity: sha512-1I+1qpDt4idfgLQG+BNWmrqku+7/2bi5nLf4YwF8y8zXvmfiTBY3PV3ZibfrjBueCByROpuBjLLFCajqkgYoLQ==}
-
-  marked-highlight@2.2.4:
-    resolution: {integrity: sha512-PZxisNMJDduSjc0q6uvjsnqqHCXc9s0eyzxDO9sB1eNGJnd/H1/Fu+z6g/liC1dfJdFW4SftMwMlLvsBhUPrqQ==}
-    peerDependencies:
-      marked: '>=4 <19'
 
   marked-smartypants@1.1.12:
     resolution: {integrity: sha512-Z0QL2GpihbSeG5aaCrQxMEoqvngMftF/gq1SrdlCnbecUSrX3HYgPtCZzCW+OyNe2ideQqaFdxfGryqQX1MBDA==}
@@ -10469,10 +10461,6 @@ snapshots:
   map-obj@4.3.0: {}
 
   mark.js@8.11.1: {}
-
-  marked-highlight@2.2.4(marked@18.0.9):
-    dependencies:
-      marked: 18.0.9
 
   marked-smartypants@1.1.12(marked@18.0.9):
     dependencies:

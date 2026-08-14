@@ -4,6 +4,20 @@
   "description": "Web module of Fractality.",
   "main": "src/index.js",
   "type": "module",
+  "exports": {
+    ".": {
+      "default": "./src/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "views",
+    "CHANGELOG.md"
+  ],
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/sitepark/fractality.git",

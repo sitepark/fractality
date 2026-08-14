@@ -4,6 +4,22 @@
   "type": "module",
   "description": "The default theme for Fractality.",
   "main": "index.js",
+  "exports": {
+    ".": {
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "views",
+    "src",
+    "index.js",
+    "CHANGELOG.md"
+  ],
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/sitepark/fractality.git",
@@ -12,6 +28,7 @@
   "bugs": {
     "url": "https://github.com/sitepark/fractality/issues"
   },
+  "homepage": "https://github.com/sitepark/fractality/tree/main/packages/mandelbrot",
   "author": "Mark Perkins <mark@clearleft.com> (http://clearleft.com/)",
   "license": "MIT",
   "scripts": {
@@ -20,8 +37,7 @@
     "prebuild": "pnpm run clean",
     "build": "vite build",
     "build:analyze": "vite build --mode analyze",
-    "prepack": "pnpm run build",
-    "test": "pnpm run build"
+    "prepack": "pnpm run build"
   },
   "peerDependencies": {
     "@fractality/fractality": ">= 1.5 < 2",

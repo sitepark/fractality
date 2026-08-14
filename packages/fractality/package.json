@@ -4,6 +4,19 @@
   "type": "module",
   "description": "A tool to help you build and document website component libraries and then integrate them into your projects.",
   "main": "src/fractal.js",
+  "exports": {
+    ".": {
+      "default": "./src/fractal.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "bin",
+    "src",
+    "views",
+    "config.js",
+    "CHANGELOG.md"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/sitepark/fractality.git",

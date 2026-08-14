@@ -19,7 +19,7 @@
     "@babel/preset-env": "^7.29.7",
     "@babel/preset-react": "^7.29.7",
     "@babel/register": "^7.29.7",
-    "@fractality/core": "link:../core",
+    "@fractality/core": "workspace:*",
     "lodash": "^4.18.1",
     "parent-module": "^3.2.0",
     "prop-types": "^15.8.1",
@@ -28,14 +28,14 @@
     "resolve-from": "^5.0.0"
   },
   "devDependencies": {
-    "@fractality/fractality": "link:../fractality",
+    "@fractality/fractality": "workspace:*",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
   },
   "peerDependencies": {
     "@fractality/fractality": ">= 1.1.7 < 2",
-    "react": ">= 16.8.0 < 18",
-    "react-dom": ">= 16.8.0 < 18"
+    "react": ">= 18.0.0 < 20",
+    "react-dom": ">= 18.0.0 < 20"
   },
   "publishConfig": {
     "access": "public"

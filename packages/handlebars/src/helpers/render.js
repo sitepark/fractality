@@ -35,9 +35,6 @@ export default function (fractality) {
         let env = JSON.parse(JSON.stringify(root._env));
         _.set(context, '_env', env);
 
-        return entity
-            .render(context)
-            .then((html) => new Handlebars.SafeString(html))
-            .catch(() => {});
+        return entity.render(context).then((html) => new Handlebars.SafeString(html));
     };
 }

@@ -15,6 +15,22 @@ const skins = globbySync('./assets/scss/skins/*.scss').reduce((acc, file) => {
 }, {});
 
 export default defineConfig(({ mode }) => ({
+    resolve: {
+        // jQuery 4's `exports` map sends an ESM `import` to dist-module/jquery.module.js
+        // but a bundler's `require` to the classic dist/jquery.js, so jquery-global.js and
+        // the CommonJS jQuery plugins each ended up with their own copy. The plugins then
+        // registered $.fn.resizable on the copy that never became window.$, and every call
+        // threw "resizable is not a function".
+        //
+        // Pin both to the classic build: it is the one the plugins can consume, since it
+        // exports the jQuery function itself. The ESM build only has named exports, so
+        // aliasing there instead hands the CommonJS plugins a module namespace object and
+        // they throw on `$.fn` while the bundle is still initialising.
+        alias: {
+            jquery: path.resolve('./node_modules/jquery/dist/jquery.js'),
+        },
+        dedupe: ['jquery'],
+    },
     css: {
         preprocessorOptions: {
             scss: {

@@ -35,7 +35,9 @@ export default class Tree {
             }
         }
 
-        this._state = $.unique(this._state);
+        // `$.unique` was removed in jQuery 4, and only ever guaranteed correct results
+        // for DOM nodes anyway — this is a list of collection ids.
+        this._state = [...new Set(this._state)];
         this._applyState();
 
         events.trigger('scroll-sidebar');

@@ -45,4 +45,14 @@ describe('mandelbrot dist build', () => {
         expect(bundle).toContain('pjax:click');
         expect(bundle).toMatch(/resizable/i);
     });
+
+    it('bundles exactly one copy of jquery, so plugins register on the instance that becomes window.$', () => {
+        const bundle = readFileSync(Path.join(distDir, 'js', 'mandelbrot.js'), 'utf8');
+
+        // jQuery 4's `exports` map resolves an ESM `import` and a bundler `require` to two
+        // different builds. When both were bundled, jquery-resizable-dom registered
+        // $.fn.resizable on the copy that never became window.$ and every call threw.
+        // noConflict is defined exactly once per jQuery copy.
+        expect(bundle.match(/noConflict/g)).toHaveLength(1);
+    });
 });

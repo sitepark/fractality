@@ -1,6 +1,6 @@
 'use strict';
 
-import yaml from 'js-yaml';
+import * as yaml from 'js-yaml';
 import _ from 'lodash';
 import Path from 'path';
 import fs from 'fs-extra';

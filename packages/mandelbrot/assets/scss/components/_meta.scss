@@ -1,3 +1,7 @@
+@use "../core/config";
+@use "../core/mixins";
+@use "../theme";
+
 .Meta {
     a {
         text-decoration: none;
@@ -10,21 +14,21 @@
     padding-bottom: 1rem;
 
     &:not(:last-child) {
-        border-bottom: 1px solid rgba($color-frame-border, 0.15);
+        border-bottom: 1px solid rgba(theme.$color-frame-border, 0.15);
     }
 }
 
 .Meta-key {
-    @include font(label);
+    @include mixins.font(label);
 
     display: block;
     padding-right: 0.5rem;
     padding-bottom: 0.25rem;
-    color: $color-sidebar-heading;
+    color: theme.$color-sidebar-heading;
 }
 
 .Meta-value {
-    @include font(caption);
+    @include mixins.font(caption);
 
     display: block;
     min-width: 10rem;
@@ -56,30 +60,30 @@
     opacity: 0.75;
 }
 
-@media (width >= $mq_medium) {
+@media (width >= config.$mq_medium) {
     .Frame.is-closed {
         .Meta-item {
-            @include padding-inline(start, 10rem);
+            @include mixins.padding-inline(start, 10rem);
         }
 
         .Meta-key {
             width: 10rem;
             float: left;
-            @include margin-inline(start, -10rem);
+            @include mixins.margin-inline(start, -10rem);
         }
     }
 }
 
-@media (width >= $mq_large) {
+@media (width >= config.$mq_large) {
     .Frame:not(.is-closed) {
         .Meta-item {
-            @include padding-inline(start, 10rem);
+            @include mixins.padding-inline(start, 10rem);
         }
 
         .Meta-key {
             width: 10rem;
             float: left;
-            @include margin-inline(start, -10rem);
+            @include mixins.margin-inline(start, -10rem);
         }
     }
 }

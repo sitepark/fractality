@@ -1,3 +1,6 @@
+@use "../core/mixins";
+@use "../theme";
+
 .Tree-header {
     display: flex;
     align-items: center;
@@ -7,10 +10,10 @@
 }
 
 .Tree-title {
-    @include font(label);
+    @include mixins.font(label);
 
     flex: 1 1 auto;
-    color: $color-sidebar-heading;
+    color: theme.$color-sidebar-heading;
 }
 
 .Tree-collapse {
@@ -18,7 +21,7 @@
     margin-left: 0.5rem;
     line-height: 0;
     padding: 0;
-    color: $color-sidebar-heading;
+    color: theme.$color-sidebar-heading;
     opacity: 0.75;
 
     &:hover,
@@ -53,7 +56,7 @@
 }
 
 .Tree-collectionLabel {
-    @include font(caption);
+    @include mixins.font(caption);
 
     display: block;
     position: relative;
@@ -62,7 +65,7 @@
     padding-bottom: 0.375rem;
     touch-action: manipulation;
     user-select: none;
-    color: $color-text;
+    color: theme.$color-text;
 
     [dir="ltr"] & {
         text-align: left;
@@ -73,7 +76,7 @@
     }
 
     &:hover {
-        background-color: $color-ui-hover;
+        background-color: theme.$color-ui-hover;
     }
 
     &::before {
@@ -92,7 +95,7 @@
 }
 
 .Tree-item {
-    @include font(caption);
+    @include mixins.font(caption);
 }
 
 .Tree-entityLink {
@@ -103,37 +106,37 @@
     text-decoration: none;
 
     &:hover {
-        background-color: $color-ui-hover;
+        background-color: theme.$color-ui-hover;
     }
 
     .Tree-item.is-current & {
-        background-color: $color-ui-active;
+        background-color: theme.$color-ui-active;
     }
 
     .Status {
-        @include margin-inline(start, 0.25rem);
+        @include mixins.margin-inline(start, 0.25rem);
     }
 }
 
 @for $i from 1 through 8 {
     .Tree-depth-#{$i} {
         .Tree-collectionLabel {
-            @include padding-inline(start, (($i - 1) * 1rem));
+            @include mixins.padding-inline(start, (($i - 1) * 1rem));
 
             &::before {
-                @include offset-inline(start, (($i - 2) + 0.25rem));
+                @include mixins.offset-inline(start, (($i - 2) + 0.25rem));
             }
         }
 
         .Tree-entityLink {
-            @include padding-inline(start, ($i * 1rem));
-            @include padding-inline(end, ($i * 1rem));
+            @include mixins.padding-inline(start, ($i * 1rem));
+            @include mixins.padding-inline(end, ($i * 1rem));
         }
     }
 }
 
 .Tree-aside {
-    @include font(caption);
+    @include mixins.font(caption);
 
     margin: 0 1rem 0;
     padding-top: 0.375rem;

@@ -1,3 +1,7 @@
+@use "../core/config";
+@use "../core/mixins";
+@use "../theme";
+
 .FileBrowser {
     position: static;
     flex-basis: 100%;
@@ -6,11 +10,11 @@
 .FileBrowser-selectWrapper {
     margin: -0.75rem -0.75rem 0.75rem -0.75rem;
     padding: 0.5rem 0.75rem;
-    background-color: rgba($color-frame-border, 0.05);
+    background-color: rgba(theme.$color-frame-border, 0.05);
 }
 
 .FileBrowser-select-label {
-    @include font(label);
+    @include mixins.font(label);
 
     display: block;
     width: auto;
@@ -23,7 +27,7 @@
     appearance: none;
     min-width: 15em;
     padding: 0.3125rem 2rem 0.3125rem 0.5625rem;
-    border: 1px solid $color-frame-border;
+    border: 1px solid theme.$color-frame-border;
     border-radius: 3px;
     height: 36px;
     cursor: pointer;
@@ -51,7 +55,7 @@
     }
 }
 
-@media (width >= $mq_medium) {
+@media (width >= config.$mq_medium) {
     .Frame.is-closed {
         .FileBrowser-select-label {
             position: relative;
@@ -61,7 +65,7 @@
     }
 }
 
-@media (width >= $mq_large) {
+@media (width >= config.$mq_large) {
     .Frame:not(.is-closed) {
         .FileBrowser-select-label {
             position: relative;

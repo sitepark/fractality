@@ -1,3 +1,6 @@
+@use "../theme";
+@use "mixins";
+
 @use "sass:math";
 
 *,
@@ -9,20 +12,20 @@
 ::selection {
     --background-color: rgba(var(--skin-links), 0.2);
 
-    background-color: rgba($color-link, 0.2);
-    background-color: var(--background-color, rgba($color-link, 0.2));
+    background-color: rgba(theme.$color-link, 0.2);
+    background-color: var(--background-color, rgba(theme.$color-link, 0.2));
 }
 
 html {
     position: relative;
     height: 100%;
     width: 100%;
-    background: $color-background;
+    background: theme.$color-background;
     box-sizing: border-box;
     font-size: 16px;
     line-height: math.div(24, 16);
-    font-family: $font-family-sans-serif;
-    color: $color-text;
+    font-family: theme.$font-family-sans-serif;
+    color: theme.$color-text;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
 }
@@ -79,20 +82,20 @@ ul {
 a {
     --color: rgba(var(--skin-links), 0.9);
 
-    color: rgba($color-link, 0.9);
-    color: var(--color, rgba($color-link, 0.9));
+    color: rgba(theme.$color-link, 0.9);
+    color: var(--color, rgba(theme.$color-link, 0.9));
     transition: all 0.15s ease-out;
 
     &:active {
-        color: $color-link;
-        color: var(--color, rgba($color-link, 0.9));
+        color: theme.$color-link;
+        color: var(--color, rgba(theme.$color-link, 0.9));
     }
 
     &:hover {
         --color: rgb(var(--skin-links));
 
-        color: $color-link;
-        color: var(--color, $color-link);
+        color: theme.$color-link;
+        color: var(--color, theme.$color-link);
     }
 }
 
@@ -102,7 +105,7 @@ a {
 
 code,
 pre {
-    font-family: $font-family-monospace;
+    font-family: theme.$font-family-monospace;
     font-size: 0.875rem; //14px
     line-height: math.div(24, 14);
 }
@@ -124,17 +127,17 @@ svg {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: rgba($color-text, 0.1);
+    background: rgba(theme.$color-text, 0.1);
     border: 0 none transparent;
     border-radius: 0;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: rgba($color-text, 0.2);
+    background: rgba(theme.$color-text, 0.2);
 }
 
 ::-webkit-scrollbar-thumb:active {
-    background: rgba($color-text, 0.3);
+    background: rgba(theme.$color-text, 0.3);
 }
 
 ::-webkit-scrollbar-track {
@@ -161,26 +164,26 @@ h3,
 h4,
 h5,
 h6 {
-    color: $color-heading;
+    color: theme.$color-heading;
     font-weight: bold;
 }
 
 h1 {
-    @include font(title);
+    @include mixins.font(title);
 }
 
 h2 {
-    @include font(heading);
+    @include mixins.font(heading);
 }
 
 h3 {
-    @include font(subHeading);
+    @include mixins.font(subHeading);
 }
 
 h4,
 h5,
 h6 {
-    @include font(body);
+    @include mixins.font(body);
 
     font-weight: bold;
 }
@@ -188,6 +191,6 @@ h6 {
 mark {
     --background-color: rgba(var(--skin-links), 0.3);
 
-    background-color: rgba($color-link, 0.3);
-    background-color: var(--background-color, rgba($color-link, 0.3));
+    background-color: rgba(theme.$color-link, 0.3);
+    background-color: var(--background-color, rgba(theme.$color-link, 0.3));
 }

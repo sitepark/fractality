@@ -1,7 +1,7 @@
-$color-header-background: #bbb;
-$color-header-content: #111;
-$color-link: #28f;
-
-@import "../theme";
-@import "../core/all";
-@import "../components/all";
+@use "../theme" with (
+    $color-link: #28f,
+    $color-header-background: #bbb,
+    $color-header-content: #111
+);
+@use "../core/all" as core;
+@use "../components/all" as components;

@@ -1,3 +1,7 @@
+@use "../core/config";
+@use "../core/mixins";
+@use "../theme";
+
 .Frame {
     display: flex;
     flex-direction: column;
@@ -25,15 +29,15 @@
     flex-grow: 1;
     height: calc(100% - 3rem);
 
-    @media (width < $mq_nav-collapse) {
-        transform: translate3d(($width-sidebar * -1), 0, 0);
+    @media (width < config.$mq_nav-collapse) {
+        transform: translate3d((config.$width-sidebar * -1), 0, 0);
         transition: none;
-        @include margin-inline(end, $width-sidebar);
+        @include mixins.margin-inline(end, config.$width-sidebar);
     }
 }
 
 .Frame-inner {
-    @include trbl(0);
+    @include mixins.trbl(0);
 
     position: absolute;
     height: 100%;
@@ -48,12 +52,12 @@
 
 .Frame-panel--sidebar {
     flex: 0 0 auto;
-    min-width: $width-sidebar;
-    max-width: ($width-sidebar * 2);
-    background-color: $color-background-offset;
+    min-width: config.$width-sidebar;
+    max-width: (config.$width-sidebar * 2);
+    background-color: theme.$color-background-offset;
 
-    @media (width < $mq_nav-collapse) {
-        max-width: $width-sidebar;
+    @media (width < config.$mq_nav-collapse) {
+        max-width: config.$width-sidebar;
     }
 }
 

@@ -327,7 +327,6 @@ export default class ComponentSource extends EntitySource {
                     }));
                 })
                 .catch((err) => {
-                    console.error(e);
                     Log.warn(err);
                     return undefined;
                 });

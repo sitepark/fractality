@@ -24,7 +24,8 @@
     "test": "pnpm run build"
   },
   "peerDependencies": {
-    "@fractality/fractality": ">= 1.5 < 2"
+    "@fractality/fractality": ">= 1.5 < 2",
+    "@fractality/web": ">= 0.3 < 1"
   },
   "devDependencies": {
     "@fractality/fractality": "workspace:*",
@@ -45,6 +46,7 @@
     "vite-plugin-static-copy": "^4.1.1"
   },
   "dependencies": {
+    "fs-extra": "^11.4.0",
     "lodash": "^4.18.1"
   },
   "publishConfig": {

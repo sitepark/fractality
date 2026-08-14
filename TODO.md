@@ -21,7 +21,7 @@
     - [ ] `@babel/core`/`@babel/preset-env`/`@babel/preset-react`/`@babel/register` 7 → 8 (used by `@fractality/react` and `@fractality/mandelbrot`)
     - [ ] `lerna` 9 → 10
     - [ ] `chalk` 5 → 6 (check ESM-only requirements against `@fractality/fractality`'s CLI usage)
-    - [ ] `execa` 9 → 10
+    - [x] `execa` 9 → 10 (2026-08-14) — no code changes needed: the only call site is `execa('npm', ['install'])` in `packages/fractality/src/cli/commands/new.js`, and none of v10's breaking changes apply to it (removed `execaCommand`/`execaCommandSync`, subprocess no longer a `ChildProcess` — Node APIs moved to `subprocess.nodeChildProcess`, `stdio: [..., 'ipc']` replaced by `ipc: true`, `input`/`inputFile` now takes priority over inherited stdin). v10 requires Node >= 22, which `@fractality/fractality` already declares and CI already matches (22, 24)
     - [ ] `js-yaml` 4 → 5
     - [ ] `sass` in `@fractality/mandelbrot` is pinned with `~1.79.6` (currently 5+ minor versions behind latest `1.102.0`) — check if the `~` pin was deliberate (Sass has made breaking changes to `@import`/legacy JS API around this range) before loosening it
 - Migrate Examples

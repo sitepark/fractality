@@ -99,6 +99,10 @@ export class Fractality extends mix(Configurable, Emitter) {
         return Promise.all(this._sources().map((s) => s.load()));
     }
 
+    whenIdle() {
+        return Promise.all(this._sources().map((s) => s.whenIdle()));
+    }
+
     _sources() {
         return [this.components, this.docs].concat(this.assets.sources());
     }

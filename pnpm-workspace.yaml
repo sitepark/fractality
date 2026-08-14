@@ -4,3 +4,5 @@ packages:
 allowBuilds:
   '@parcel/watcher': true
   nx: true
+minimumReleaseAgeExclude:
+  - rollup-plugin-visualizer@7.1.1

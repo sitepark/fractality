@@ -7,22 +7,6 @@ settings:
 importers:
 
   .:
-    dependencies:
-      anymatch:
-        specifier: ^3.1.3
-        version: 3.1.3
-      fs-extra:
-        specifier: ^11.4.0
-        version: 11.4.0
-      js-yaml:
-        specifier: ^4.3.1
-        version: 4.3.1
-      lodash:
-        specifier: ^4.18.1
-        version: 4.18.1
-      vinyl:
-        specifier: ^3.0.1
-        version: 3.0.1
     devDependencies:
       '@babel/preset-react':
         specifier: ^7.29.7
@@ -90,49 +74,49 @@ importers:
   examples/handlebars:
     dependencies:
       '@fractality/fractality':
-        specifier: link:../../packages/fractality
+        specifier: workspace:*
         version: link:../../packages/fractality
       '@fractality/handlebars':
-        specifier: link:../../packages/handlebars
+        specifier: workspace:*
         version: link:../../packages/handlebars
       '@fractality/mandelbrot':
-        specifier: link:../../packages/mandelbrot
+        specifier: workspace:*
         version: link:../../packages/mandelbrot
     devDependencies:
       '@fractality/adapter-tests':
-        specifier: link:../adapter-tests
+        specifier: workspace:*
         version: link:../adapter-tests
 
   examples/nunjucks:
     dependencies:
       '@fractality/fractality':
-        specifier: link:../../packages/fractality
+        specifier: workspace:*
         version: link:../../packages/fractality
       '@fractality/mandelbrot':
-        specifier: link:../../packages/mandelbrot
+        specifier: workspace:*
         version: link:../../packages/mandelbrot
       '@fractality/nunjucks':
-        specifier: link:../../packages/nunjucks
+        specifier: workspace:*
         version: link:../../packages/nunjucks
     devDependencies:
       '@fractality/adapter-tests':
-        specifier: link:../adapter-tests
+        specifier: workspace:*
         version: link:../adapter-tests
 
   examples/react:
     dependencies:
       '@fractality/fractality':
-        specifier: link:../../packages/fractality
+        specifier: workspace:*
         version: link:../../packages/fractality
       '@fractality/mandelbrot':
-        specifier: link:../../packages/mandelbrot
+        specifier: workspace:*
         version: link:../../packages/mandelbrot
       '@fractality/react':
-        specifier: link:../../packages/react
+        specifier: workspace:*
         version: link:../../packages/react
     devDependencies:
       '@fractality/adapter-tests':
-        specifier: link:../adapter-tests
+        specifier: workspace:*
         version: link:../adapter-tests
       prop-types:
         specifier: ^15.8.1
@@ -147,17 +131,17 @@ importers:
   examples/twig:
     dependencies:
       '@fractality/fractality':
-        specifier: link:../../packages/fractality
+        specifier: workspace:*
         version: link:../../packages/fractality
       '@fractality/mandelbrot':
-        specifier: link:../../packages/mandelbrot
+        specifier: workspace:*
         version: link:../../packages/mandelbrot
       '@fractality/twig':
-        specifier: link:../../packages/twig
+        specifier: workspace:*
         version: link:../../packages/twig
     devDependencies:
       '@fractality/adapter-tests':
-        specifier: link:../adapter-tests
+        specifier: workspace:*
         version: link:../adapter-tests
 
   packages/core:

@@ -2,6 +2,10 @@
   "name": "fractality",
   "private": true,
   "type": "module",
+  "packageManager": "pnpm@11.21.0",
+  "engines": {
+    "node": ">=22.13.0"
+  },
   "dependencies": {
     "anymatch": "^3.1.3",
     "fs-extra": "^11.4.0",
@@ -33,7 +37,6 @@
   },
   "scripts": {
     "clean": "lerna clean",
-    "bootstrap": "lerna bootstrap --hoist --strict --ci --force-local",
     "eslint": "eslint .",
     "stylelint": "stylelint --ignore-path .gitignore \"**/*.scss\"",
     "validate": "pnpm run eslint && pnpm run stylelint",

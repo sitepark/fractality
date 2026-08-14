@@ -191,6 +191,13 @@ export default class Server extends mix(Emitter) {
     }
 
     _onRequest(req, res, next) {
+        this._app
+            .whenIdle()
+            .then(() => this._handleRequest(req, res, next))
+            .catch((err) => next(err));
+    }
+
+    _handleRequest(req, res, next) {
         this._engine.setGlobal('env', {
             server: true,
             address: this._urls.server,

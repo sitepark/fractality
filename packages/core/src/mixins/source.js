@@ -51,6 +51,16 @@ export default mixin(
                 return !!this._monitor;
             }
 
+            /**
+             * Resolves once any in-progress rebuild (parsing plus context
+             * resolution) has finished, so callers never read a tree that's
+             * only partially rebuilt.
+             * @return {Promise}
+             */
+            whenIdle() {
+                return this._loading || Promise.resolve(this);
+            }
+
             get fullPath() {
                 return this.get('path') ? Path.resolve(this.get('path')) : null;
             }

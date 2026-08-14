@@ -73,4 +73,28 @@ describe('Fractality', () => {
             expect(() => app.extend('not-a-function')).toThrow('Plugins must be a function');
         });
     });
+
+    describe('.whenIdle()', () => {
+        it('resolves when nothing is rebuilding', async () => {
+            await expect(app.whenIdle()).resolves.toBeDefined();
+        });
+
+        it('stays pending while any source is still rebuilding', async () => {
+            let resolveBuild;
+            app.components._loading = new Promise((resolve) => {
+                resolveBuild = resolve;
+            });
+
+            const notYetIdle = Symbol('not yet idle');
+            const outcome = await Promise.race([
+                app.whenIdle().then(() => 'idle'),
+                new Promise((resolve) => setTimeout(() => resolve(notYetIdle), 50)),
+            ]);
+            expect(outcome).toBe(notYetIdle);
+
+            resolveBuild();
+            await expect(app.whenIdle()).resolves.toBeDefined();
+            app.components._loading = false;
+        });
+    });
 });

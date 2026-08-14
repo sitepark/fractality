@@ -1,7 +1,7 @@
 'use strict';
 
 import _ from 'lodash';
-import yaml from 'js-yaml';
+import * as yaml from 'js-yaml';
 
 export default function () {
     return {

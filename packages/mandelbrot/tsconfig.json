@@ -1,0 +1,18 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "lib": ["es2023", "dom", "dom.iterable"],
+    "jsx": "react-jsx",
+    "types": ["vite/client"],
+    "moduleResolution": "bundler",
+    "module": "esnext",
+    "allowImportingTsExtensions": true,
+    "paths": {
+      "@fractality/web/contract": ["../web/src/contract/index.ts"],
+      "@fractality/web/addressing": ["../web/src/payload/paths.ts"],
+      "@fractality/web/shell": ["../web/src/shell/config.ts"]
+    }
+  },
+  "include": ["frame/src/**/*.ts", "frame/src/**/*.tsx"]
+}

@@ -81,4 +81,11 @@ export default defineConfig([
             },
         },
     },
+    {
+        // The Frame compiles with the automatic JSX runtime, so React is not in
+        // scope and must not be required to be. Scoped to the Frame: the legacy
+        // theme JavaScript in this package is not JSX at all.
+        files: ['packages/mandelbrot/frame/**/*.{ts,tsx}'],
+        ...pluginReact.configs.flat['jsx-runtime'],
+    },
 ]);

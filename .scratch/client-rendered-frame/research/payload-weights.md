@@ -161,21 +161,18 @@ it unless `file://` is a first-class target.
 The shell was built concretely from the real `<head>` of a built page plus a root div, a module
 script tag and a `<noscript>`: **998 bytes raw, 523 gzipped**.
 
-| Component              |           Size | Note                                     |
-| ---------------------- | -------------: | ---------------------------------------- |
-| Shell × 3797 routes    |        3.61 MB | byte-identical copies                    |
-| Tree payload (shape C) |        0.20 MB | fetched once, cached                     |
-| Entity payloads        |       17.08 MB | **51% of the total — the dominant term** |
-| `components/preview`   |        6.05 MB | unchanged, still engine-rendered         |
-| `components/render`    |        6.05 MB | unchanged, still engine-rendered         |
-| `themes/`              |        0.68 MB |                                          |
-| Frame JS bundle        | _not measured_ | no bundle exists yet — see below         |
-| **Total**              |   **~33.7 MB** | vs 9.01 GB → **~267×**                   |
+| Component              |          Size | Note                                     |
+| ---------------------- | ------------: | ---------------------------------------- |
+| Shell × 3797 routes    |       3.61 MB | byte-identical copies                    |
+| Tree payload (shape C) |       0.20 MB | fetched once, cached                     |
+| Entity payloads        |      17.08 MB | **51% of the total — the dominant term** |
+| `components/preview`   |       6.05 MB | unchanged, still engine-rendered         |
+| `components/render`    |       6.05 MB | unchanged, still engine-rendered         |
+| `themes/`              |       0.68 MB |                                          |
+| Frame JS bundle        | 61 KB gzipped | **measured 2026-08-17** — see below      |
+| **Total**              |  **~33.7 MB** | vs 9.01 GB → **~267×**                   |
 
-**The one unmeasured figure.** The Frame's React bundle cannot be measured because it has not been
-built. Order of magnitude is ~150–300 KB gzipped for React 19 + the Frame, i.e. below 1% of the CSR
-total and roughly one-tenth of a single one of today's detail pages. It does not move the
-conclusion, but it is an estimate and is labelled as one.
+**The one estimate, now measured.** At the time of writing this could not be measured because no bundle existed. The walking-skeleton Frame has since been built (React 19 + nav + Pen + Browser, Vite, production mode): **194 KB raw / 61 KB gzipped**, with a 410-byte Shell. That is comfortably inside the ~150–300 KB estimated here and remains well under 1% of the CSR total, so the conclusion is unchanged. Note it will grow as the Frame gains the features the skeleton omits — search, resizable panels, syntax highlighting — and highlight.js in particular is not in it yet.
 
 **Note what CSR moves rather than deletes.** The entity payloads (17.08 MB) are new files; that
 content lives inside the detail pages today. The saving is not "content removed", it is "the tree

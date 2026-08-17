@@ -85,6 +85,23 @@ attribute. Dropping it took the payload from 96.7 K to 22.6 K gzipped.
 Measured at 3810 nodes: **209 K raw / 22.6 K gzipped / 16.3 K brotli.** Lazy subtree loading was
 considered and is **not needed** at this scale.
 
+> **Amended during implementation (2026-08-17).** Two things this section did not anticipate,
+> both found by driving the builders against a real library:
+>
+> - **Status keys are namespaced by root** — `components:ready`, not `ready`. Components and docs
+>   carry separate, independently configurable status sets that share key names. The shipped
+>   defaults agree on label and colour and differ only in `description`, which the contract does not
+>   carry, so a flat table looks harmless right up until a project configures one set differently
+>   and the other silently inherits it. Lookups are scoped to a root as well, so status resolution
+>   cannot match across sets. Note a resolved status carries **no key at all** — the entity holds
+>   the value while the key exists only in config, so the table is built from config and entities
+>   are matched back to it.
+> - **`tags` needs sanitising.** Core resolves an untagged component's tags to `[null]`, not `[]`.
+>   This is long-standing rather than new: mandelbrot's navigation macro works around the same thing
+>   in the template layer with `item.tags | dump | replace("null,", "")`, a workaround with nowhere
+>   to live once the tree is data. Non-string entries are dropped and the field is omitted entirely
+>   when nothing survives.
+
 ### 3.2 Entity payload and panel payloads
 
 Granularity is **per Component**, with variants inlined — the Pen's variant switcher is local state,

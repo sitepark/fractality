@@ -3,7 +3,7 @@
 Part of [the map](../map.md)
 
 Type: research
-Status: resolved
+Status: resolved — **partly superseded**, see `## Standing after the CSR reversal` below
 Blocked by: —
 
 ## Question
@@ -76,3 +76,52 @@ merely permitted, and "SSG + hydration" is confirmed viable. One unstated bounda
 confirmation: under prebuilt, "Vite in middleware mode" applies to the _theme author's_ repo, not
 the consumer's, so consumers get no Frame HMR (Storybook's same trade). Ticket 05 should not be
 decided before 03 lands.
+
+## Standing after the CSR reversal
+
+On 2026-08-17 the map dropped SSG + hydration for pure CSR. This ticket was researched against the
+old constraint, so the answer above and
+[the findings document](../research/react-ssg-in-theme-package.md) are **not wholesale valid any
+more**. Neither was rewritten — the research was sound for the question it was asked, and it is
+cheaper to read it with this filter than to re-derive it. Nothing below was re-run; it is a
+re-reading of what the ticket already established.
+
+**Still standing, and load-bearing:**
+
+- **The packaging inversion works.** §3.2's probe stands on its own: prebuilt theme output drove a
+  build from a consumer directory containing no `node_modules` at all. CSR needs _strictly less_
+  than what was proven — a client bundle and a shell, with no SSR bundle to ship or load — so the
+  proof covers the easier case a fortiori. This is what keeps ticket 05 a question about extension
+  points rather than about feasibility.
+- **`base: './'` is mandatory.** Measured, not inferred: default `base: '/'` bakes `url(/css/…)`
+  into built CSS and breaks the runtime-configurable `static.mount` at `src/theme.js:24-26`. Under
+  CSR this gets _more_ important, not less — a shell copied to `dist/components/detail/button.html`
+  resolves its own relative asset URLs from a different depth than one at `dist/index.html`, so
+  either the shell's asset URLs are root-absolute against a known mount or the copies are not in
+  fact byte-identical. **That tension is new and unresolved; it belongs to ticket 05.**
+- **`theme.addLoadPath()` view overriding dies**, and it dies to the hard cutover rather than to
+  anything about rendering. Ticket 06 owns it.
+- **Custom skins do not regress** — mandelbrot's `files` array never shipped `assets/`.
+- **Storybook's prebuilt manager (#18550) is the architectural precedent**, Frame/Preview mapping
+  one-to-one. Storybook's manager is itself client-rendered, so the precedent fits the CSR model
+  better than it fit the SSG one.
+- **Consumers get no Frame HMR** (node_modules is unwatchable). Unchanged by CSR; still ticket 05's
+  call, corroborated independently by ticket 03.
+
+**Lapsed — do not carry into the ADR or the spec:**
+
+- Everything about the prerender API: `prerender` / `prerenderToNodeStream` vs `renderToString`,
+  the client-render-fallback marker, Suspense requirements. There is no prerender.
+- The two-build client + SSR split, `vite build --ssr`, `ssr.noExternal: true`, and the question of
+  which pass emits CSS. There is one Vite build, the client one.
+- The hydration payload convention (`<script type="application/json">` vs `window.__DATA__`, the
+  CSP step-13/step-21 argument, `nonce` unavailability). Nothing is inlined for hydration; data
+  arrives by `fetch`. The CSP reasoning may still be worth a glance if anything is ever inlined into
+  the shell, but nothing currently is.
+- All of Q5's hydration-mismatch discipline. One item survives in changed form and must not be lost
+  with the rest: `theme.js:99-116`'s `new Date()` + `toLocaleDateString` still needs formatting at
+  **build time**, not because of mismatch but because the payload carries source of truth, not
+  presentation — and the client has no filesystem to re-derive it from. Route that to ticket 04.
+- `react-dom/static` as a reason to choose React over Preact. The remaining reasons (ESM interop
+  proven in `packages/react/src/adapter.js`; the `preact/compat` dual-package hazard) carry that
+  decision by themselves — the ADR must say so rather than reciting a lapsed rationale.

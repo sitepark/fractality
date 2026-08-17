@@ -63,3 +63,20 @@ node_modules is unwatchable — so middleware mode's value there narrows to the 
 tension with ticket 02's prebuilt-bundle crux, for **ticket 05** to settle. (b) Middleware mode
 opens a second HTTP server on port **24678** unless the host passes its own `http.Server` as
 `server.ws.server`. `map.md` not edited.
+
+## Standing after the CSR reversal
+
+On 2026-08-17 the map dropped SSG + hydration for pure CSR. **This ticket survives essentially
+intact** — it researched the dev server, and the dev server was never the isomorphic part. Q1, Q3,
+Q4 and Q5, and both flagged caveats, stand unchanged.
+
+The one change is in **Q2**. Dev mode no longer has an SSR entry to load, so `ssrLoadModule` and its
+`vite.environments.ssr.runner.import()` successor drop out of the design entirely. What remains of
+Q2 is the part that was always the important half and is now the whole of it: **`transformIndexHtml`
+is called on the Frame's shell HTML and never on the Preview's**, and that single rule is what keeps
+the user's patterns out of Vite's module graph. Dev serves the same shell the static build copies,
+with `/@vite/client` injected.
+
+Q4's HMR split also gets marginally simpler to reason about: with no hydration, a Frame reload has
+no prerendered markup to reconcile against, so the namespaced-event + `contentWindow.location.reload()`
+mechanism is the only reload path that needs to exist.

@@ -118,6 +118,17 @@ not navigation. The payload is then split **by Panel**:
 **The rule is general: each Panel's data is its own payload.** A theme's custom Panel loads its data
 exactly the way a built-in Panel does.
 
+> **Amended during implementation (2026-08-17).** The detail route resolves for **variant** handles
+> as well as component ones, so a Shell can land on `/components/detail/button--variant-1.html` —
+> and §4.1's rule derives the payload path from that location. Granularity is still per component,
+> but the **core payload is emitted under every handle that routes to it**, so the derivation always
+> hits a real file. Panel payloads are _not_ duplicated: they are the bulk, and the client addresses
+> them using the core payload's `handle`, which is always the component's.
+>
+> The alternative was having the client strip a `--variant` suffix, trading duplication for handle
+> parsing in the browser. Measured at the real library's ratio (3797 handles across 1365 components)
+> the duplication costs **~1.1 MB of a ~33.7 MB build**, and every copy is byte-identical.
+
 Measured distribution that drove this: `notes` 42.9%, view source 30.9%, `context` 22.2%, identity
 and references 3.9%. Splitting only `context` would have left 78% of the weight in the
 every-navigation fetch. Total bytes on disk are unchanged (~17 MB at 1365 components); what changes

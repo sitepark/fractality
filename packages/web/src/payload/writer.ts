@@ -5,6 +5,7 @@ import { buildContextPayload, buildEntityPayload, buildNotesPayload, buildViewPa
 import { payloadPathFor } from './paths.js';
 import { buildStatusTable } from './status.js';
 import { buildTreePayload } from './tree.js';
+import { componentsByHandle } from '../build/routes.js';
 import type { SourceApp, SourceComponent } from './source-types.js';
 
 export interface WritePayloadsOptions {
@@ -47,6 +48,7 @@ export async function writePayloads(app: SourceApp, options: WritePayloadsOption
     const { dest, detailRoute = '/components/detail', treeFile = '/tree.json' } = options;
 
     const statuses = buildStatusTable(app);
+    const byHandle = componentsByHandle(app);
     const components = app.components
         .flatten()
         .toArray()
@@ -58,13 +60,24 @@ export async function writePayloads(app: SourceApp, options: WritePayloadsOption
     const entities: string[] = [];
     const panels: string[] = [];
 
+    // The detail route resolves for variant handles as well as component ones,
+    // so a Shell can land on /components/detail/button--variant-1.html. Deriving
+    // the payload path from that location must hit a real file, so the core
+    // payload is emitted under every handle that routes to this component.
+    //
+    // The alternative — having the client strip a `--variant` suffix — would
+    // trade a little duplication for handle parsing in the browser, and the core
+    // payload is the small one. Panel payloads are *not* duplicated: they are the
+    // bulk, and the client addresses them from the core payload's `handle`, which
+    // is always the component's.
+    for (const [handle, component] of byHandle) {
+        const file = toDiskPath(dest, payloadPathFor(`${detailRoute}/${handle}`));
+        await writeJson(file, buildEntityPayload(component, statuses));
+        entities.push(file);
+    }
+
     for (const component of components) {
         const route = `${detailRoute}/${component.handle}`;
-
-        const entityFile = toDiskPath(dest, payloadPathFor(route));
-        await writeJson(entityFile, buildEntityPayload(component, statuses));
-        entities.push(entityFile);
-
         for (const [panel, build] of [
             ['notes', buildNotesPayload],
             ['context', buildContextPayload],

@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 
 import { create } from '../../../fractality/src/fractal.js';
 import { writePayloads } from '../../src/payload/writer.js';
+import { entityHandles } from '../../src/build/routes.js';
 import { payloadPathFor } from '../../src/payload/paths.js';
 import type { SourceApp } from '../../src/payload/source-types.js';
 import type { EntityPayload, TreePayload } from '../../src/contract/index.js';
@@ -46,10 +47,17 @@ describe('writePayloads', () => {
         expect(Object.keys(tree.status).length).toBeGreaterThan(0);
     });
 
-    it('writes a core payload plus one per panel for every component', () => {
-        expect(result.entities.length).toBeGreaterThan(0);
-        // notes, context, view
-        expect(result.panels.length).toBe(result.entities.length * 3);
+    it('writes a core payload per routable handle and panels per component', () => {
+        // Not the same count: the detail route resolves for variant handles too,
+        // so the core payload is emitted under each of them while the panel
+        // payloads — the bulk — are written once per component.
+        const components = app.components
+            .flatten()
+            .toArray()
+            .filter((c) => !c.isHidden);
+        expect(result.entities.length).toBe(entityHandles(app).length);
+        expect(result.panels.length).toBe(components.length * 3);
+        expect(result.entities.length).toBeGreaterThan(components.length);
     });
 
     it('places payloads as siblings of the route they back', () => {
@@ -77,18 +85,18 @@ describe('writePayloads', () => {
         expect(entity.variants.length).toBeGreaterThan(1);
     });
 
-    it('moves the bulk of the data off the per-navigation path', async () => {
-        // The justification for splitting at all. Asserted in aggregate rather
-        // than per component: a core payload carries one entry per variant, so a
-        // variant-heavy component with a two-line template can have a core larger
-        // than its own view payload. The measured ~470 B core was an average over
-        // 1365 real components, not a per-component guarantee.
-        const sizeOf = async (files: string[]): Promise<number> => {
-            const sizes = await Promise.all(files.map((f) => readFile(f, 'utf8')));
-            return sizes.reduce((total, contents) => total + contents.length, 0);
-        };
-        const [coreBytes, panelBytes] = await Promise.all([sizeOf(result.entities), sizeOf(result.panels)]);
-        expect(panelBytes).toBeGreaterThan(coreBytes);
+    it('emits identical bytes for every handle routing to the same component', async () => {
+        // What makes duplicating the core payload across variant handles cheap.
+        // Measured at the real library's ratio (3797 handles / 1365 components)
+        // the duplication costs ~1.1 MB of a ~33.7 MB build.
+        //
+        // Deliberately not asserted as a byte ratio against the panel payloads:
+        // that holds at real scale but inverts on a fixture whose templates are
+        // two lines long and whose components average two variants.
+        const render = result.entities.filter((f) => /render(--[^/\\]+)?\.json$/.test(f));
+        expect(render.length).toBeGreaterThan(1);
+        const bodies = await Promise.all(render.map((f) => readFile(f, 'utf8')));
+        for (const body of bodies) expect(body).toBe(bodies[0]);
     });
 
     it('keeps core payload size independent of content volume', async () => {

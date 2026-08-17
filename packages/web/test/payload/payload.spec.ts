@@ -22,16 +22,28 @@ const example = path.join(__dirname, '..', '..', '..', '..', 'examples', 'handle
  * fixtures would assert only that the test author and the implementation agree.
  * Feeding them real entities is what makes the seam observable at all.
  */
-let app: SourceApp;
+/**
+ * `create()` returns an object whose `set`/`flatten`/`load` are supplied by
+ * `mixwith` class factories at runtime, which TypeScript cannot see — the exact
+ * reason the type boundary stops before core. Narrowing it once here keeps that
+ * cast in a single visible place instead of scattering `any` through the specs.
+ */
+interface TestApp extends SourceApp {
+    components: SourceApp['components'] & { set(key: string, value: unknown): void };
+    docs: SourceApp['docs'] & { set(key: string, value: unknown): void };
+    load(): Promise<unknown>;
+}
+
+let app: TestApp;
 let components: SourceComponent[];
 
 beforeAll(async () => {
-    const instance = create();
+    const instance = create() as unknown as TestApp;
     instance.components.set('path', path.join(example, 'components'));
     instance.docs.set('path', path.join(example, 'docs'));
     await instance.load();
-    app = instance as unknown as SourceApp;
-    components = instance.components.flatten().toArray() as unknown as SourceComponent[];
+    app = instance;
+    components = instance.components.flatten().toArray();
 }, 30000);
 
 const find = (handle: string): SourceComponent => {

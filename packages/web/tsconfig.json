@@ -2,7 +2,10 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "rootDir": "src",
-    "outDir": "dist"
+    "outDir": "dist",
+    // Declared per package rather than in the base config: this is the Node-side
+    // package, while a theme's Frame code will want DOM instead.
+    "types": ["node"]
   },
   "include": ["src/**/*.ts"]
 }

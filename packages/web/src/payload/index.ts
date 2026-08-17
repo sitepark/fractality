@@ -7,5 +7,9 @@
 export { buildTreePayload } from './tree.js';
 export { buildContextPayload, buildEntityPayload, buildNotesPayload, buildViewPayload } from './entity.js';
 export { buildStatusTable } from './status.js';
+export { BUILTIN_PANELS, extPanel, payloadPathFor } from './paths.js';
+export type { BuiltinPanel, ExtPanel, PanelSegment } from './paths.js';
+export { writePayloads } from './writer.js';
+export type { WritePayloadsOptions, WritePayloadsResult } from './writer.js';
 export type { StatusRoot, StatusTable } from './status.js';
 export type * from './source-types.js';

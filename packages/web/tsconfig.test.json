@@ -1,0 +1,20 @@
+{
+  // Tests are TypeScript too, and vitest transpiles them with esbuild — which
+  // checks nothing. Without this config they would be typechecked by nobody.
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    // Inherited from the base config, and TypeScript validates declaration
+    // emit even under `noEmit` — which makes it report TS2883 against core's
+    // JavaScript, a package this config exists precisely not to check.
+    "declaration": false,
+    "rootDir": "../..",
+    // Specs drive the real, untyped JavaScript library across the seam, so
+    // module resolution needs allowJs. `checkJs` stays off: what ADR 0006's
+    // boundary protects is that core is never *type-checked*, and that holds.
+    "allowJs": true,
+    "checkJs": false,
+    "types": ["node", "vitest/globals"]
+  },
+  "include": ["src/**/*.ts", "test/**/*.ts"]
+}

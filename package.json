@@ -9,7 +9,6 @@
   "devDependencies": {
     "@babel/preset-react": "^8.0.1",
     "@eslint/js": "^10.0.1",
-    "@typescript-eslint/utils": "^8.67.0",
     "@vitest/eslint-plugin": "^1.6.27",
     "eslint": "^10.8.1",
     "eslint-plugin-react": "^7.37.5",
@@ -26,13 +25,16 @@
     "stylelint-config-standard": "^40.0.0",
     "stylelint-prettier": "^5.0.3",
     "stylelint-scss": "^7.2.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.67.0",
     "vitest": "^4.1.10"
   },
   "scripts": {
     "clean": "lerna clean",
     "eslint": "eslint .",
     "stylelint": "stylelint --ignore-path .gitignore \"**/*.scss\"",
-    "validate": "pnpm run eslint && pnpm run stylelint",
+    "typecheck": "tsc --noEmit -p packages/web/tsconfig.json",
+    "validate": "pnpm run eslint && pnpm run stylelint && pnpm run typecheck",
     "format": "prettier . --write",
     "test": "pnpm run test:unit",
     "test:unit": "vitest run",

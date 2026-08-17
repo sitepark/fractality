@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "strict": true,
+
+    // Node ESM. Under nodenext, relative imports are written with a `.js`
+    // extension even though the file on disk is `.ts` — see docs/specs/client-rendered-frame.md §10.
+    // `rewriteRelativeImportExtensions` was deliberately not used.
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "target": "es2023",
+    "lib": ["es2023"],
+
+    // The published declarations are public API (docs/adr/0006).
+    "declaration": true,
+
+    // Self-contained maps, so a stack trace still points at readable source
+    // without publishing a parallel src/ tree alongside dist/.
+    "sourceMap": true,
+    "inlineSources": true,
+
+    // The type boundary stops at the payload contract: @fractality/core and the
+    // adapters stay JavaScript. Turning this on would pull core in and walk into
+    // the mixwith class-factory layer the boundary exists to avoid.
+    "allowJs": false,
+    "checkJs": false,
+
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "verbatimModuleSyntax": true,
+    "skipLibCheck": true
+  }
+}

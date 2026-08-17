@@ -32,7 +32,17 @@ export interface SourceResourceCollection {
     toArray(): SourceResource[];
 }
 
-export interface SourceVariant {
+export interface RenderOptions {
+    /** Wrap in the user's own `@preview` layout, if their library has one. */
+    preview?: boolean;
+    collate?: boolean;
+}
+
+export interface Renderable {
+    render(context: unknown, env: unknown, opts: RenderOptions): Promise<string>;
+}
+
+export interface SourceVariant extends Renderable {
     handle: string;
     label: string;
     name: string;
@@ -51,7 +61,7 @@ export interface SourceVariantCollection {
     size: number;
 }
 
-export interface SourceComponent {
+export interface SourceComponent extends Renderable {
     handle: string;
     label: string;
     title: string;

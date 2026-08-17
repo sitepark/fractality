@@ -226,6 +226,25 @@ Two passes, one command.
 
 Filesystem-bound work resolves here: `getPreviewContent()`, file reads, file sizes and mtimes.
 
+> **Amended during implementation (2026-08-17).** Preview rendering needs **no theme view**, which
+> was not obvious from this section. `entity.render(…, { preview: true })` wraps the pattern in the
+> _user's_ own `@preview` layout, not in anything the theme supplies — today's `render.nunj` only
+> adds error handling around it. So both documents are the Adapter's output written straight to
+> disk, and dropping the engine costs nothing here.
+>
+> Two consequences that had to be decided rather than inherited:
+>
+> - **The error document becomes `@fractality/web`'s.** A pattern failing to render is ordinary
+>   during development and must not abort the build or leave a blank iframe; today the theme renders
+>   it through a nunjucks error macro. With the engine gone the package owns it, and it stays
+>   deliberately plain — it is the only markup `@fractality/web` generates and it belongs to no
+>   theme. The message comes from a user template, so it is escaped.
+> - **Errors are collected, not thrown.** One broken pattern must not take down a build of
+>   thousands; `buildStatic` returns them for the caller to report.
+>
+> A variant handle renders **that variant**, not its component — rendering the component would
+> silently emit the default variant under every variant URL.
+
 **`dist/` is not relocatable after building.** The Shell's asset links are root-absolute from the
 configured mount, where today they are relativised per page. This is a regression; §9 covers it.
 

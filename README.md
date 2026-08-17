@@ -115,18 +115,25 @@ We use [conventional commits](https://www.conventionalcommits.org/), which means
 
 ### Development
 
-This repository is a monorepo managed by Lerna. There is only one lockfile in root. This means that all packages must be installed in root, manually added to the packages' package.json files and then bootstrapped with lerna.
+This repository is a [pnpm workspaces](https://pnpm.io/workspaces) monorepo. There is a single lockfile in root, and the packages under [packages](./packages) and [examples](./examples) reference each other through the `workspace:*` protocol, so pnpm links them from your working tree — no separate bootstrap step is needed. Lerna is only used to version and publish releases from CI.
 
-To do some work, run the following commands in root:
+You need Node.js >= 22.13.0. The pnpm version is pinned via the `packageManager` field, so enable [corepack](https://nodejs.org/api/corepack.html) (`corepack enable`) or install the matching pnpm yourself.
 
-1. `npm ci`
-2. `npm run bootstrap`
+To get started, run `pnpm install` in root. That is the whole setup.
+
+Useful scripts, all run from root:
+
+- `pnpm test` — run the test suite
+- `pnpm validate` — lint JavaScript (ESLint) and SCSS (Stylelint)
+- `pnpm format` — format everything with Prettier
+
+Prettier also runs automatically on staged files via a Husky pre-commit hook, so formatting is taken care of for you. The linters are not part of the hook — run `pnpm validate` yourself before pushing.
 
 ## Testing
 
 Fractality is a project that evolved rapidly and organically from a proof-of-concept prototype into a more stable, mature tool. Because of this it's currently pretty far behind where it should be in terms of test coverage. Any contributions on this front would be most welcome!
 
-Existing tests can be run using the `npm test` command.
+Existing tests can be run using the `pnpm test` command.
 
 ## Contributors ✨
 

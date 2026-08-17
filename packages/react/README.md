@@ -16,9 +16,7 @@ Require the adapter in your Fractality configuration file:
 // Import the adapter factory:
 import createReactAdapter from '@fractality/react';
 // Create the adapter instance:
-const reactAdapter = createReactAdapter({
-    /* options */
-});
+const reactAdapter = createReactAdapter({/* options */});
 // Register the adapter as engine:
 fractality.components.engine(reactAdapter);
 ```

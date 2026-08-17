@@ -480,6 +480,9 @@ importers:
       throat:
         specifier: ^6.0.2
         version: 6.0.2
+      vite:
+        specifier: ^8.2.1
+        version: 8.2.1(@types/node@26.2.0)(jiti@2.7.0)(sass@1.102.0)(terser@5.48.0)(yaml@2.9.0)
 
 packages:
 

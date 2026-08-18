@@ -28,7 +28,7 @@ const entity: EntityPayload = {
     title: 'Button',
     status: 'components:ready',
     viewPath: 'forms/button/button.hbs',
-    references: [],
+    references: ['icon'],
     referencedBy: [],
     resources: [],
     variants: [
@@ -59,6 +59,23 @@ const payloads: Record<string, unknown> = {
         title: 'Project Overview',
         path: '',
         content: '# Hello\n\nSome **documentation**.',
+    },
+    '/components/detail/button.view.json': {
+        contractVersion: 1,
+        handle: 'button',
+        variants: [
+            {
+                handle: 'button--default',
+                content: '<button class="Button">{{ text }}</button>\n{{> @icon }}',
+                lang: 'html',
+            },
+        ],
+    },
+    '/components/detail/button.context.json': {
+        contractVersion: 1,
+        handle: 'button',
+        context: { text: 'Click me' },
+        variants: [],
     },
     '/components/detail/button.notes.json': {
         contractVersion: 1,
@@ -198,5 +215,67 @@ describe('documentation pages', () => {
         // Rendered client-side: the payload carries Markdown, not HTML.
         expect(prose?.querySelector('h1')?.textContent).toBe('Hello');
         expect(prose?.querySelector('strong')?.textContent).toBe('documentation');
+    });
+});
+
+describe('code panels', () => {
+    const openPanel = async (container: HTMLElement, name: string) => {
+        await waitFor(() => expect(container.querySelector('.Browser-tabs')).not.toBeNull());
+        const tab = [...container.querySelectorAll('.Browser-tab a')].find(
+            (a) => a.textContent?.toLowerCase() === name,
+        ) as HTMLElement;
+        tab.click();
+    };
+
+    it('highlights view source, lazily', async () => {
+        const { container } = await mount();
+        await openPanel(container, 'view');
+
+        await waitFor(() => {
+            const pre = container.querySelector('.Browser-code pre');
+            expect(pre?.innerHTML).toContain('hljs-');
+        });
+    });
+
+    it('turns @references into links, after highlighting', async () => {
+        // linkRefs consumed highlight's output in the template layer too.
+        // Running it first would have the highlighter escape the anchors.
+        const { container } = await mount();
+        await openPanel(container, 'view');
+
+        await waitFor(() => {
+            const link = container.querySelector('.Browser-code a');
+            expect(link?.getAttribute('href')).toBe('/components/detail/icon');
+            expect(link?.textContent).toBe('@icon');
+        });
+    });
+
+    it('escapes source rather than letting a template become markup', async () => {
+        const { container } = await mount();
+        await openPanel(container, 'view');
+
+        await waitFor(() => {
+            const pre = container.querySelector('.Browser-code pre') as HTMLElement;
+            // The template contains a <button> tag; it must render as text.
+            expect(pre.querySelector('button')).toBeNull();
+            expect(pre.textContent).toContain('<button');
+        });
+    });
+
+    it('highlights context as json', async () => {
+        const { container } = await mount();
+        await openPanel(container, 'context');
+
+        await waitFor(() => {
+            const pre = container.querySelector('.Browser-code pre');
+            expect(pre?.textContent).toContain('Click me');
+            expect(pre?.innerHTML).toContain('hljs-');
+        });
+    });
+
+    it('renders notes as Markdown rather than as source', async () => {
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Browser-notes')).not.toBeNull());
+        await waitFor(() => expect(container.querySelector('.Browser-notes p')?.textContent).toContain('Some notes.'));
     });
 });

@@ -392,6 +392,17 @@ Shell's `<head>`, which must exist before any JavaScript runs.
 
 **Client side:** `highlight`, `linkRefs`, `markdown`, `format`, `fileSize`.
 
+> **Amended during implementation (2026-08-18).** Highlighting used to run
+> server-side in `@fractality/core`, where the library's size cost nothing. Moving it
+> to the browser puts it on every user who opens a code panel, and this section did
+> not cost that: highlight.js's full build is **~307 KB gzipped**, several times the
+> rest of the Frame. The Frame therefore registers a curated language set —
+> the template languages the adapters cover, plus what component source and config
+> are written in — loaded as a dynamic import on first use: **35.8 KB gzipped**,
+> with the initial chunk unaffected. Anything outside that set renders as escaped
+> plain text, which is a legible panel rather than a failure. "Lazily" was in the
+> plan; the size of the thing being loaded lazily was not.
+
 Two couplings drove this and must not be undone:
 
 - **`linkRefs` consumes `highlight`'s output.** `panel-view.nunj:3` pipes

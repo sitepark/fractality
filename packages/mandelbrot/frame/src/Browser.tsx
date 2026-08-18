@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import type { EntityPayload } from '@fractality/web/contract';
 import { fetchContext, fetchNotes, fetchView } from './api.js';
 import { frctl } from './frctl.js';
+import { highlight } from './highlight.js';
+import { renderMarkdown } from './markdown.js';
 
 const PANELS = ['notes', 'context', 'view', 'resources', 'info'] as const;
 type Panel = (typeof PANELS)[number];
@@ -20,6 +22,7 @@ const label = (panel: Panel): string => {
  */
 export function Browser({ entity }: { entity: EntityPayload }) {
     const [open, setOpen] = useState<Panel>('notes');
+    /** Rendered HTML for the open panel, or null while it is still loading. */
     const [body, setBody] = useState<string | null>(null);
 
     const needsFetch = open === 'notes' || open === 'context' || open === 'view';
@@ -32,14 +35,17 @@ export function Browser({ entity }: { entity: EntityPayload }) {
         const load = async (): Promise<string> => {
             if (open === 'notes') {
                 const payload = await fetchNotes(entity.handle);
-                return payload.notes ?? '';
+                return payload.notes ? renderMarkdown(payload.notes) : '';
             }
             if (open === 'context') {
                 const payload = await fetchContext(entity.handle);
-                return JSON.stringify(payload.context, null, 2);
+                // Formatted here rather than at build time: the payload carries
+                // the real object, so the panel chooses how to present it.
+                return highlight(JSON.stringify(payload.context, null, 2), 'json');
             }
             const payload = await fetchView(entity.handle);
-            return payload.variants[0]?.content ?? '';
+            const variant = payload.variants[0];
+            return highlight(variant?.content ?? '', variant?.lang ?? '', entity.references);
         };
 
         load().then(
@@ -133,10 +139,7 @@ function Panel({ panel, entity, body }: { panel: Panel; entity: EntityPayload; b
             <div className="Browser-panel Browser-notes" id="browser-panel-notes">
                 <div className="Prose Prose--condensed">
                     {body ? (
-                        // Raw Markdown for now. Rendering it client-side is the
-                        // next step; the payload deliberately carries source
-                        // rather than HTML so the Frame decides how to present it.
-                        <pre>{body}</pre>
+                        <div dangerouslySetInnerHTML={{ __html: body }} />
                     ) : (
                         <p className="Browser-isEmptyNote">No notes defined.</p>
                     )}
@@ -147,8 +150,14 @@ function Panel({ panel, entity, body }: { panel: Panel; entity: EntityPayload; b
 
     return (
         <div className="Browser-panel Browser-code" id={`browser-panel-${panel}`}>
-            <code className="Code hljs">
-                <pre>{body}</pre>
+            <code className={`Code Code--lang-${panel === 'context' ? 'json' : 'view'} hljs`}>
+                {/*
+                    Highlighted markup, produced client-side from source the
+                    payload carries. The source is the project's own templates
+                    and data — the same trust boundary as the Preview, which
+                    already executes them.
+                */}
+                <pre dangerouslySetInnerHTML={{ __html: body }} />
             </code>
         </div>
     );

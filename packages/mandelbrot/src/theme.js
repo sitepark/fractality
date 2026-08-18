@@ -2,7 +2,7 @@
 
 import Path from 'path';
 import _ from 'lodash';
-import { Theme } from '@fractality/web';
+import { Theme, CONTRACT_VERSION } from '@fractality/web';
 import { URL, fileURLToPath } from 'url';
 import fsExtra from 'fs-extra';
 const { readJsonSync } = fsExtra;
@@ -122,6 +122,8 @@ export default function (options) {
     config.favicon = config.favicon || `/${config.static.mount}/favicon.ico`;
 
     const theme = new Theme(config);
+
+    theme.setContractVersion(CONTRACT_VERSION);
 
     theme.addStatic(Path.join(__dirname, '..', 'dist'), `/${config.static.mount}`);
 

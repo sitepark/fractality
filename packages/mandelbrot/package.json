@@ -42,7 +42,7 @@
   },
   "peerDependencies": {
     "@fractality/fractality": ">= 1.5 < 2",
-    "@fractality/web": ">= 0.3 < 1"
+    "@fractality/web": ">= 1 < 2"
   },
   "devDependencies": {
     "@fractality/fractality": "workspace:*",

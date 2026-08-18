@@ -68,7 +68,15 @@ export default class Builder extends mix(Emitter) {
         // that reports success and emits almost nothing.
         await this._app.load();
 
-        const shell = await readFile(shellPath, 'utf8');
+        const shell = await readFile(shellPath, 'utf8').catch(() => {
+            // A theme ships its Shell as build output, so this is what a user
+            // sees when the theme has not been built — a far more common
+            // situation than a misconfigured one, and ENOENT does not say it.
+            throw new WebError(
+                `The theme's Shell is missing at ${shellPath}. The theme has probably not been ` +
+                    'built — run its build, or reinstall it so its published output is present.',
+            );
+        });
         const result = await buildStatic({
             app: this._app,
             dest,

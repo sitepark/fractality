@@ -38,6 +38,7 @@ export default class Theme extends mix(Configurable, Emitter) {
     private _routes = new Map<string, RouteDefinition>();
     private _resolvers: Record<string, RouteResolver[]> = {};
     private _shellPath: string | null = null;
+    private _contractVersion: number | null = null;
 
     constructor(options?: Record<string, unknown>) {
         super();
@@ -52,6 +53,23 @@ export default class Theme extends mix(Configurable, Emitter) {
     options!: (options: Record<string, unknown>) => unknown;
     setOption!: (key: string, value: unknown) => unknown;
     getOption!: (key: string) => unknown;
+
+    /**
+     * The version of the data contract this theme was written against.
+     *
+     * Declared explicitly rather than defaulted, and that is the point: a theme
+     * built for an older major never calls this, so its absence is what
+     * identifies it. Defaulting it to the current version would make every old
+     * theme claim compatibility with a contract it has never seen.
+     */
+    setContractVersion(version: number): this {
+        this._contractVersion = version;
+        return this;
+    }
+
+    contractVersion(): number | null {
+        return this._contractVersion;
+    }
 
     /**
      * The Shell HTML this theme boots its Frame from, as a file path.

@@ -71,6 +71,12 @@ export async function writePreviews(app: SourceApp, options: WritePreviewsOption
     const files: string[] = [];
     const errors: PreviewError[] = [];
 
+    // A pattern that fails renders both its documents the same way, so recording
+    // one error per route reported every failure twice. Deduplicated on handle
+    // and message, which still separates a preview that fails differently from
+    // its render — the case the two routes exist to distinguish.
+    const seen = new Set<string>();
+
     const all = routedEntities(app);
     const total = all.length * 2;
 
@@ -89,7 +95,12 @@ export async function writePreviews(app: SourceApp, options: WritePreviewsOption
             } catch (error: unknown) {
                 const message = error instanceof Error ? error.message : String(error);
                 await write(file, errorDocument(handle, message));
-                errors.push({ handle, route, message });
+
+                const key = `${handle}\u0000${message}`;
+                if (!seen.has(key)) {
+                    seen.add(key);
+                    errors.push({ handle, route, message });
+                }
             }
             files.push(file);
             onProgress?.(files.length, total);

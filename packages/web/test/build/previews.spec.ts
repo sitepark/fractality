@@ -73,6 +73,15 @@ describe('writePreviews', () => {
         expect(result.errors.every((e) => typeof e.message === 'string')).toBe(true);
     });
 
+    it('reports a failing pattern once, not once per document it writes', () => {
+        // Each pattern renders two documents, preview and render, and a broken
+        // one fails identically in both — so the build reported every failure
+        // twice before this. Deduplicated on handle and message, which still
+        // separates a preview failing differently from its render.
+        const keys = result.errors.map((e) => `${e.handle}\u0000${e.message}`);
+        expect(new Set(keys).size).toBe(keys.length);
+    });
+
     it('writes a readable error document where a pattern failed', async () => {
         const failure = result.errors[0]!;
         const file = path.join(dest, failure.route.replace(/^\//, ''), `${failure.handle}.html`);

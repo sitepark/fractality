@@ -1,6 +1,6 @@
 import { cp, mkdir, readFile, rm } from 'node:fs/promises';
 import path from 'node:path';
-import { Log, mixins } from '@fractality/core';
+import { mixins } from '@fractality/core';
 
 import { buildStatic, type BuildStaticResult } from './build/index.js';
 import type { Loadable, SourceApp } from './payload/source-types.js';
@@ -94,7 +94,9 @@ export default class Builder extends mix(Emitter) {
         }
 
         for (const error of result.previewErrors) {
-            Log.error(`Failed to render ${error.handle}: ${error.message}`);
+            // Emitted, not logged. The CLI subscribes to 'error' and prints it;
+            // doing both printed every failure twice, once as
+            // "Failed to render X: …" and again as "X: …".
             this.emit('error', new WebError(`${error.handle}: ${error.message}`));
         }
 

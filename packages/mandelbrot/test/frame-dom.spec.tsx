@@ -744,6 +744,35 @@ describe('resizing the preview', () => {
         expect(container.querySelector('.Preview-resizer')?.getAttribute('style')).toBeNull();
     });
 
+    it('cannot be dragged wider than the panel it sits in', async () => {
+        // An inline width beats a stylesheet max-width, so the cap has to be
+        // enforced during the drag — otherwise the preview runs off its panel.
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Preview-handle')).not.toBeNull());
+
+        const wrapper = container.querySelector('.Preview-wrapper') as HTMLElement;
+        const panel = wrapper.parentElement as HTMLElement;
+        Object.defineProperty(panel, 'offsetWidth', { value: 600, configurable: true });
+
+        await drag(container.querySelector('.Preview-handle')!, 100, 5000);
+
+        await waitFor(() => {
+            const width = parseInt(wrapper.style.width, 10);
+            expect(width).toBeLessThanOrEqual(600 + 12);
+        });
+        expect(wrapper.style.maxWidth).toBe('');
+    });
+
+    it('cannot be dragged narrower than its minimum', async () => {
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Preview-handle')).not.toBeNull());
+
+        const wrapper = container.querySelector('.Preview-wrapper') as HTMLElement;
+        await drag(container.querySelector('.Preview-handle')!, 900, -5000);
+
+        await waitFor(() => expect(parseInt(wrapper.style.width, 10)).toBeGreaterThanOrEqual(180));
+    });
+
     it('masks the iframe while dragging, which otherwise swallows the pointer', async () => {
         const { container } = await mount();
         await waitFor(() => expect(container.querySelector('.Preview-handle')).not.toBeNull());

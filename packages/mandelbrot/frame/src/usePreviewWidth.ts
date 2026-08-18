@@ -1,6 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { read, write } from './storage.js';
 
+/** Matches `$handle-size` in the theme's SCSS. */
+const HANDLE = 12;
+
+/** Matches `.Preview-resizer`'s own `min-width`. */
+const MIN = 180;
+
 export interface PreviewWidth {
     /**
      * Style for `.Preview-wrapper`.
@@ -56,7 +62,15 @@ export function usePreviewWidth(): PreviewWidth {
         const onMove = (event: PointerEvent) => {
             const delta = event.clientX - origin.current.x;
             const next = origin.current.width + (rtl ? -delta : delta);
-            setWidth(Math.max(180, next));
+
+            // Clamped against the panel the wrapper sits in. The stylesheet caps
+            // it at `calc(100% + $handle-size)`, but an inline width beats a
+            // stylesheet max-width, so the bound has to be enforced here or the
+            // preview drags off the edge of its own panel.
+            const available = ref.current?.parentElement?.offsetWidth;
+            const max = available ? available + HANDLE : Infinity;
+
+            setWidth(Math.min(max, Math.max(MIN, next)));
         };
         const onUp = () => setDragging(false);
 
@@ -79,7 +93,9 @@ export function usePreviewWidth(): PreviewWidth {
         // Null means "as wide as the panel allows": no inline width at all, so
         // the stylesheet's `calc(100% + $handle-size)` applies. That is the
         // default and what a double-click restores.
-        style: width === null ? {} : { width, maxWidth: width },
+        // No inline max-width: that would override the stylesheet's own cap,
+        // which is the backstop for anything the drag clamp does not catch.
+        style: width === null ? {} : { width },
         dragging,
         onPointerDown,
         onDoubleClick,

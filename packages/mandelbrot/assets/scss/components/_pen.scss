@@ -118,3 +118,58 @@
     margin-top: 0;
     border: 1px solid theme.$color-frame-border;
 }
+
+/**
+ * The variant switcher.
+ *
+ * A segmented control rather than a second row of tabs: the Browser below is
+ * already a tab strip, and two identical strips stacked read as one confused
+ * control. Switching variants also does not navigate — it swaps what the
+ * Preview shows — so it deliberately looks like a control rather than like the
+ * navigation above it.
+ */
+.Pen-variants {
+    display: flex;
+    flex: 0 0 auto;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    padding: 0 0.75rem 0.75rem;
+}
+
+.Pen-variant {
+    @include mixins.font(caption);
+    @include mixins.padding-inline(start, 0.625rem);
+    @include mixins.padding-inline(end, 0.625rem);
+
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    border: 1px solid theme.$color-frame-border;
+    border-radius: 1rem;
+    background-color: transparent;
+    color: theme.$color-text;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease;
+
+    &:hover {
+        background-color: theme.$color-ui-hover;
+    }
+
+    &:focus-visible {
+        // The skin's accent when one is configured, so a custom palette is not
+        // ignored by the focus ring.
+        outline: 2px solid rgb(var(--skin-links, 34 136 255));
+        outline-offset: 1px;
+    }
+
+    &[aria-pressed="true"] {
+        --active-color: rgb(var(--skin-links));
+
+        border-color: theme.$color-link;
+        border-color: var(--active-color, theme.$color-link);
+        background-color: theme.$color-ui-active;
+        font-weight: bolder;
+    }
+}

@@ -268,6 +268,8 @@ rather than per-route, which is what keeps the Shell copies byte-identical.
 - i18n label overrides — theme defaults compile into the theme bundle, since they are the theme's own
   strings; only a consumer's overrides ride here
 - theming custom properties (§7.3)
+- the `panels` list — which Browser panels to show, in order (§7.2). Passed through uninterpreted:
+  what a panel name means, and what to do with one the theme has no panel for, is the theme's call
 - `env`
 
 ---
@@ -335,6 +337,11 @@ if left where it is.
 
 **`transformIndexHtml` is called on the Frame's Shell HTML and never on the Preview's.** That single
 rule is what keeps the user's patterns out of Vite's module graph.
+
+The live-reload subscription is injected into Preview documents only, never into render documents.
+A Preview can be opened as a window of its own and needs to hear about rebuilds; a render document
+is the component's bare markup, which the Browser's HTML panel reads as _data_ and shows to the user
+as their own output — a script in there would look like something they wrote.
 
 Pass the host's own `http.Server` as `server.ws.server`, or middleware mode opens a second HTTP
 server on port 24678.

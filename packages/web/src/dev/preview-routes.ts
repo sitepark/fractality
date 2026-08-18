@@ -70,7 +70,11 @@ export function previewRoutes(options: PreviewRoutesOptions): Router {
 
             match.entity.render(null, {}, { preview, collate: true }).then(
                 (markup: string) => {
-                    res.type('html').send(withLiveReload(markup));
+                    // Only the Preview. The render route is the component's bare
+                    // markup, which the Browser's HTML panel reads as data — a
+                    // subscription script in there would be shown to the user as
+                    // part of their own component's output.
+                    res.type('html').send(preview ? withLiveReload(markup) : markup);
                 },
                 (error: unknown) => {
                     // A user's template failing is ordinary during development.

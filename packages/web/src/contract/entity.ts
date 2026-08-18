@@ -14,6 +14,11 @@ export interface VariantSummary {
     isDefault: boolean;
     status?: StatusKey;
     previewUrl: string;
+    /**
+     * The component's bare rendered markup, without the user's preview layout.
+     * What the Browser's HTML panel shows.
+     */
+    renderUrl: string;
 }
 
 /** A file belonging to a component — a stylesheet, a script, a README. */

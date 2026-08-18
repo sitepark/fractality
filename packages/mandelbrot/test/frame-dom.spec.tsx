@@ -57,6 +57,7 @@ const entity: EntityPayload = {
             name: 'default',
             isDefault: true,
             previewUrl: '/components/preview/button--default',
+            renderUrl: '/components/render/button--default',
         },
         {
             handle: 'button--primary',
@@ -64,6 +65,7 @@ const entity: EntityPayload = {
             name: 'primary',
             isDefault: false,
             previewUrl: '/components/preview/button--primary',
+            renderUrl: '/components/render/button--primary',
         },
     ],
 };
@@ -84,6 +86,7 @@ const tabsEntity: EntityPayload = {
             name: 'default',
             isDefault: true,
             previewUrl: '/components/preview/tabs--default',
+            renderUrl: '/components/render/tabs--default',
         },
         {
             handle: 'tabs--pill',
@@ -91,6 +94,7 @@ const tabsEntity: EntityPayload = {
             name: 'pill',
             isDefault: false,
             previewUrl: '/components/preview/tabs--pill',
+            renderUrl: '/components/render/tabs--pill',
         },
     ],
 };
@@ -135,6 +139,7 @@ const payloads: Record<string, unknown> = {
                 name: 'default',
                 isDefault: true,
                 previewUrl: '/components/preview/field',
+                renderUrl: '/components/render/field',
             },
         ],
     },
@@ -188,6 +193,16 @@ beforeEach(() => {
     vi.stubGlobal(
         'fetch',
         vi.fn((url: string) => {
+            // Render documents are served as text, not JSON — the HTML panel
+            // reads the same artefact the build writes for each component.
+            if (url.startsWith('/components/render/')) {
+                return Promise.resolve({
+                    ok: true,
+                    status: 200,
+                    text: () => Promise.resolve('<button class="Button">Click me</button>'),
+                });
+            }
+
             const body = payloads[url];
             return Promise.resolve({
                 ok: body !== undefined,
@@ -293,7 +308,9 @@ describe('the Frame renders the markup the stylesheet expects', () => {
     it('labels browser tabs from theme config', async () => {
         const { container } = await mount();
         await waitFor(() => expect(container.querySelector('.Browser-tabs')).not.toBeNull());
-        expect(container.querySelector('.Browser-tab--notes.is-active')).not.toBeNull();
+        // The first panel opens by default, as it did when the template layer
+        // rendered the tabs.
+        expect(container.querySelector('.Browser-tab--html.is-active')).not.toBeNull();
         expect(screen.getByText('Notes')).toBeTruthy();
     });
 });
@@ -412,6 +429,10 @@ describe('code panels', () => {
 
     it('renders notes as Markdown rather than as source', async () => {
         const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Browser-tabs')).not.toBeNull());
+        (
+            [...container.querySelectorAll('.Browser-tab a')].find((a) => a.textContent === 'Notes') as HTMLElement
+        ).click();
         await waitFor(() => expect(container.querySelector('.Browser-notes')).not.toBeNull());
         await waitFor(() => expect(container.querySelector('.Browser-notes p')?.textContent).toContain('Some notes.'));
     });
@@ -939,5 +960,80 @@ describe('the search box', () => {
         panel.scrollTop = 0;
         fireEvent.scroll(panel);
         await waitFor(() => expect(search.classList.contains('is-stuck')).toBe(false));
+    });
+});
+
+describe('the HTML panel', () => {
+    const openPanel = async (container: HTMLElement, name: string) => {
+        await waitFor(() => expect(container.querySelector('.Browser-tabs')).not.toBeNull());
+        const tab = [...container.querySelectorAll('.Browser-tab a')].find(
+            (a) => a.textContent?.toLowerCase() === name,
+        ) as HTMLElement;
+        tab.click();
+    };
+
+    it('shows the component markup, highlighted and escaped', async () => {
+        const { container } = await mount();
+        await openPanel(container, 'html');
+
+        await waitFor(() => {
+            const pre = container.querySelector('.Browser-code pre') as HTMLElement;
+            expect(pre.innerHTML).toContain('hljs-');
+            // Rendered markup shown as source: the button must be text, not a
+            // live element inside the panel.
+            expect(pre.querySelector('button')).toBeNull();
+            expect(pre.textContent).toContain('<button');
+        });
+    });
+
+    it('follows the variant being previewed', async () => {
+        window.history.pushState(null, '', '/components/detail/tabs--pill');
+        const { container } = await mount();
+        await openPanel(container, 'html');
+
+        await waitFor(() => expect(container.querySelector('.Browser-code')).not.toBeNull());
+        const calls = (globalThis.fetch as unknown as { mock: { calls: string[][] } }).mock.calls;
+        expect(calls.some(([url]) => url === '/components/render/tabs--pill')).toBe(true);
+    });
+});
+
+describe('the panels config', () => {
+    const tabs = (container: HTMLElement) =>
+        [...container.querySelectorAll('.Browser-tab a')].map((a) => a.textContent);
+
+    it('shows the configured panels, in the configured order', async () => {
+        window.frctl = { ...window.frctl!, panels: ['view', 'notes'] };
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Browser-tabs')).not.toBeNull());
+
+        expect(tabs(container)).toEqual(['View', 'Notes']);
+        // The first configured panel opens, not the first implemented one.
+        expect(container.querySelector('.Browser-tab--view.is-active')).not.toBeNull();
+    });
+
+    it('drops names it has no panel for rather than rendering empty tabs', async () => {
+        window.frctl = { ...window.frctl!, panels: ['notes', 'третий', 'info'] };
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Browser-tabs')).not.toBeNull());
+
+        expect(tabs(container)).toEqual(['Notes', 'Info']);
+    });
+
+    it('falls back to every panel when the config names none of them', async () => {
+        // A typo should not leave the Browser with no tabs at all.
+        window.frctl = { ...window.frctl!, panels: ['nonsense'] };
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Browser-tabs')).not.toBeNull());
+
+        expect(tabs(container)).toHaveLength(6);
+    });
+
+    it('ignores a remembered panel the config no longer lists', async () => {
+        localStorage.setItem('browser.panel', JSON.stringify('context'));
+        window.frctl = { ...window.frctl!, panels: ['notes', 'info'] };
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Browser-tabs')).not.toBeNull());
+
+        expect(container.querySelector('.Browser-tab--notes.is-active')).not.toBeNull();
     });
 });

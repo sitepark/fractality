@@ -132,6 +132,7 @@ export default class Server extends mix(Emitter) {
             styles: ([] as string[]).concat((this._theme.get('styles') as string[]) ?? []),
             favicon: (this._theme.get('favicon') as string) ?? undefined,
             labels: (this._theme.get('labels') as Record<string, unknown>) ?? undefined,
+            panels: (this._theme.get('panels') as string[]) ?? undefined,
         };
     }
 }

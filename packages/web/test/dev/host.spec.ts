@@ -117,6 +117,15 @@ describe('createDevHost', () => {
         expect(html).toContain(host.liveReloadRoute);
     });
 
+    it('leaves the render document as bare component markup', async () => {
+        // The Browser's HTML panel reads this route as data and shows it to the
+        // user as their own component's output. An injected subscription script
+        // would appear in that panel as though they had written it.
+        const html = await fetch(`${origin}/components/render/render`).then((r) => r.text());
+        expect(html).not.toContain('EventSource');
+        expect(html).not.toContain('/@vite/client');
+    });
+
     it('still keeps Vite out of the Preview', async () => {
         // The injected script is ours, not a bundler's: the user's templates
         // must not enter Vite's module graph.

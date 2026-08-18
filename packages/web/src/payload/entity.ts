@@ -53,6 +53,7 @@ export function buildEntityPayload(component: SourceComponent, statuses: StatusT
             name: variant.name,
             isDefault: variant.isDefault,
             previewUrl: `/components/preview/${addressable ? variant.handle : component.handle}`,
+            renderUrl: `/components/render/${addressable ? variant.handle : component.handle}`,
         };
         const status = statuses.keyOf('components', variant.status);
         if (status) summary.status = status;

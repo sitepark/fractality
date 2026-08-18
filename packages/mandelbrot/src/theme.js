@@ -68,6 +68,7 @@ export default function (options) {
             },
             panels: {
                 html: 'HTML',
+                view: 'View',
                 context: 'Context',
                 resources: 'Resources',
                 info: 'Info',

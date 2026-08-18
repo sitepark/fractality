@@ -1,13 +1,33 @@
 import { useEffect, useState } from 'react';
-import type { EntityPayload } from '@fractality/web/contract';
-import { fetchContext, fetchNotes, fetchView } from './api.js';
-import { frctl } from './frctl.js';
+import type { EntityPayload, VariantSummary } from '@fractality/web/contract';
+import { fetchContext, fetchNotes, fetchRendered, fetchView } from './api.js';
+import { frctl, resolveRouteUrl } from './frctl.js';
 import { highlight } from './highlight.js';
 import { read, write } from './storage.js';
 import { renderMarkdown } from './markdown.js';
 
-const PANELS = ['notes', 'context', 'view', 'resources', 'info'] as const;
-type Panel = (typeof PANELS)[number];
+// Every panel this theme implements. Order matches the historic default; which
+// of them are actually shown is the consumer's `panels` config.
+const IMPLEMENTED = ['html', 'view', 'context', 'resources', 'info', 'notes'] as const;
+type Panel = (typeof IMPLEMENTED)[number];
+
+const isPanel = (name: string): name is Panel => (IMPLEMENTED as readonly string[]).includes(name);
+
+/**
+ * The panels to show, in the consumer's order.
+ *
+ * A configured name this theme has no panel for is dropped rather than being
+ * rendered as an empty tab — `panels` is passed through uninterpreted by
+ * `@fractality/web`, so deciding what a name means is the theme's job. A config
+ * naming nothing we implement falls back to the full set: an empty Browser is a
+ * worse answer to a typo than the default one.
+ */
+// Typed as non-empty, because the fallback guarantees it and the default open
+// panel is PANELS[0].
+const PANELS: readonly [Panel, ...Panel[]] = (() => {
+    const configured = Array.isArray(frctl.panels) ? frctl.panels.filter(isPanel) : [];
+    return configured.length ? (configured as [Panel, ...Panel[]]) : IMPLEMENTED;
+})();
 
 const label = (panel: Panel): string => {
     const labels = (frctl.labels?.panels ?? {}) as Record<string, string>;
@@ -26,14 +46,20 @@ const label = (panel: Panel): string => {
  * reason the entity payload is split by panel at all — a navigation costs a few
  * hundred bytes rather than the component's whole notes, context and source.
  */
-export function Browser({ entity }: { entity: EntityPayload }) {
+export function Browser({ entity, variant }: { entity: EntityPayload; variant?: VariantSummary }) {
     // Persisted because the Pen remounts on navigation: without this, every
-    // component you opened would reset you to the first tab.
-    const [open, setOpen] = useState<Panel>(() => read<Panel>('browser.panel', 'notes'));
+    // component you opened would reset you to the first tab. The fallback is
+    // the first panel, as it was when the template layer rendered the tabs.
+    // A panel remembered from before the consumer narrowed `panels` would leave
+    // the Browser showing a body with no tab to match it.
+    const [open, setOpen] = useState<Panel>(() => {
+        const remembered = read<Panel>('browser.panel', PANELS[0]);
+        return PANELS.includes(remembered) ? remembered : PANELS[0];
+    });
     /** Rendered HTML for the open panel, or null while it is still loading. */
     const [body, setBody] = useState<string | null>(null);
 
-    const needsFetch = open === 'notes' || open === 'context' || open === 'view';
+    const needsFetch = open === 'notes' || open === 'context' || open === 'view' || open === 'html';
 
     useEffect(() => {
         if (!needsFetch) return;
@@ -41,6 +67,13 @@ export function Browser({ entity }: { entity: EntityPayload }) {
         setBody(null);
 
         const load = async (): Promise<string> => {
+            if (open === 'html') {
+                // The variant currently shown, so the panel and the Preview
+                // agree about what is being looked at.
+                const url = variant?.renderUrl ?? entity.variants[0]?.renderUrl;
+                if (!url) return '';
+                return highlight(await fetchRendered(resolveRouteUrl(url)), 'html');
+            }
             if (open === 'notes') {
                 const payload = await fetchNotes(entity.handle);
                 return payload.notes ? renderMarkdown(payload.notes) : '';
@@ -52,8 +85,8 @@ export function Browser({ entity }: { entity: EntityPayload }) {
                 return highlight(JSON.stringify(payload.context, null, 2), 'json');
             }
             const payload = await fetchView(entity.handle);
-            const variant = payload.variants[0];
-            return highlight(variant?.content ?? '', variant?.lang ?? '', entity.references);
+            const source = payload.variants[0];
+            return highlight(source?.content ?? '', source?.lang ?? '', entity.references);
         };
 
         load().then(
@@ -64,7 +97,7 @@ export function Browser({ entity }: { entity: EntityPayload }) {
         return () => {
             cancelled = true;
         };
-    }, [entity.handle, open, needsFetch]);
+    }, [entity.handle, open, needsFetch, variant?.renderUrl]);
 
     return (
         <div className="Browser">
@@ -159,7 +192,7 @@ function Panel({ panel, entity, body }: { panel: Panel; entity: EntityPayload; b
 
     return (
         <div className="Browser-panel Browser-code is-active" id={`browser-panel-${panel}`}>
-            <code className={`Code Code--lang-${panel === 'context' ? 'json' : 'view'} hljs`}>
+            <code className={`Code Code--lang-${panel === 'context' ? 'json' : panel} hljs`}>
                 {/*
                     Highlighted markup, produced client-side from source the
                     payload carries. The source is the project's own templates

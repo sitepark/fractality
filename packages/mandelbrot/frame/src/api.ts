@@ -73,6 +73,19 @@ export const fetchDoc = (pathname: string): Promise<DocPayload> => {
 export const fetchAsset = (pathname: string): Promise<AssetPayload> =>
     getJson<AssetPayload>(payloadPathFor(pathname.replace(/\/+$/, '')));
 
+/**
+ * A component's rendered markup, fetched as text rather than JSON.
+ *
+ * Reuses the render document the build already writes and the dev server
+ * already serves, instead of duplicating the same markup into a payload of its
+ * own — it is the one artefact nothing else in the Frame was consuming.
+ */
+export async function fetchRendered(url: string): Promise<string> {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`${res.status} fetching ${url}`);
+    return res.text();
+}
+
 export const fetchNotes = (handle: string): Promise<NotesPayload> => getJson<NotesPayload>(panelUrl(handle, 'notes'));
 
 export const fetchContext = (handle: string): Promise<ContextPayload> =>

@@ -32,6 +32,14 @@ export interface FrctlConfig {
     favicon?: string;
     /** Consumer overrides only — a theme's own label defaults live in its bundle. */
     labels?: Record<string, unknown>;
+    /**
+     * Which panels the Browser shows, in order.
+     *
+     * Global rather than per-route, which is why it belongs here: the same list
+     * applies to every component. A theme decides what a name means and ignores
+     * ones it does not implement, so this is passed through uninterpreted.
+     */
+    panels?: string[];
     /** Custom-property theming, resolved to final values at site build. */
     theming?: Record<string, string>;
 }

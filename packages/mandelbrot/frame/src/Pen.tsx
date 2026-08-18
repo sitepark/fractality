@@ -150,7 +150,7 @@ export function Pen({ entity, statuses, selected }: PenProps) {
             />
 
             <div className="Pen-panel Pen-info">
-                <Browser entity={entity} />
+                <Browser entity={entity} variant={variant} />
             </div>
         </div>
     );

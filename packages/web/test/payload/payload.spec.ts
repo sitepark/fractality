@@ -158,6 +158,9 @@ describe('buildEntityPayload', () => {
             for (const variant of buildEntityPayload(component, statuses).variants) {
                 const handle = variant.previewUrl.replace('/components/preview/', '');
                 expect(routed.has(handle)).toBe(true);
+                // The render document the HTML panel reads is addressed by the
+                // same rule, so it must name the same handle as the Preview.
+                expect(variant.renderUrl).toBe(`/components/render/${handle}`);
             }
         }
     });

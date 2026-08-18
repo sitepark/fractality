@@ -1,29 +1,117 @@
 name: Release
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: 'Bump versions and build, but publish nothing and push nothing'
+        type: boolean
+        default: false
+
+# Never let two releases interleave: they would race on tags and versions.
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
 jobs:
   release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          # Conventional-commit changelogs need the full history and all tags
+          # to work out what changed since each package's last release.
+          fetch-depth: 0
+
       - name: Install pnpm
         uses: pnpm/action-setup@v6.0.10
         with:
           run_install: false
+
       - name: Install Node.js
         uses: actions/setup-node@v7
         with:
           node-version: 24
           registry-url: 'https://registry.npmjs.org'
           cache: 'pnpm'
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-      - run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-      - run: pnpm lerna version --conventional-commits --no-private --create-release github --yes
-        env:
-          GH_TOKEN: ${{ secrets.BOT_PAT }}
-      - run: pnpm lerna publish from-git --yes --no-verify-access
+
+      # Fail here, before anything is bumped, tagged or written. An expired or
+      # under-scoped token otherwise surfaces as an opaque "E404 Not found" from
+      # the publish step, long after the version commit and tags already exist.
+      - name: Verify npm authentication
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          if ! whoami=$(npm whoami 2>&1); then
+            echo "::error::npm authentication failed: ${whoami}"
+            echo "::error::Rotate the NPM_TOKEN secret (npm granular tokens expire; 90 days max)."
+            exit 1
+          fi
+          echo "Authenticated to npm as ${whoami}"
+
+      - name: Validate
+        run: pnpm run validate
+
+      - name: Test
+        run: pnpm test
+        env:
+          CI: true
+
+      - name: Configure git
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+
+      - name: Record released tags
+        run: git tag > /tmp/tags-before
+
+      # --no-push is the crux: version, changelog and tags stay local until the
+      # packages are actually on npm. A failed publish leaves the remote
+      # untouched, so re-running the workflow is a clean retry.
+      - name: Bump versions and write changelogs
+        run: pnpm lerna version --conventional-commits --no-private --no-push --yes
+
+      - name: Show pending release
+        run: |
+          comm -13 /tmp/tags-before <(git tag) | tee /tmp/tags-new
+          test -s /tmp/tags-new || {
+            echo "::error::lerna found nothing to release."
+            exit 1
+          }
+
+      # from-package (not from-git) compares each package.json version against
+      # the registry and publishes only what is missing, so it is idempotent and
+      # self-healing: a partially published release is completed by re-running.
+      - name: Publish to npm
+        if: ${{ !inputs.dry-run }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: pnpm lerna publish from-package --yes
+
+      # Only now is it safe to move the remote: npm and git cannot diverge.
+      - name: Push version commit and tags
+        if: ${{ !inputs.dry-run }}
+        run: git push --follow-tags origin HEAD:main
+
+      - name: Create GitHub releases
+        if: ${{ !inputs.dry-run }}
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PAT || secrets.GITHUB_TOKEN }}
+        run: node scripts/create-github-releases.mjs < /tmp/tags-new
+
+      - name: Report dry run
+        if: ${{ inputs.dry-run }}
+        run: |
+          {
+            echo '### Dry run — nothing published or pushed'
+            echo
+            echo 'Would have released:'
+            echo
+            sed 's/^/- /' /tmp/tags-new
+          } >> "$GITHUB_STEP_SUMMARY"

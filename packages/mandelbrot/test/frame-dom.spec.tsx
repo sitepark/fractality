@@ -3,7 +3,7 @@
 // jsdom rather than happy-dom: the Frame renders a Preview iframe, and happy-dom
 // attempts to load its src — either over the network, or loudly refusing to —
 // which buries real failures in stack traces. jsdom leaves subresources alone.
-import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import type { EntityPayload, TreePayload } from '@fractality/web/contract';
 
 const tree: TreePayload = {
@@ -14,7 +14,10 @@ const tree: TreePayload = {
             handle: 'forms',
             label: 'Forms',
             isCollection: true,
-            children: [{ handle: 'button', label: 'Button', status: 'components:ready' }],
+            children: [
+                { handle: 'button', label: 'Button', status: 'components:ready' },
+                { handle: 'field', label: 'Field', tags: ['form-control'] },
+            ],
         },
     ],
     docs: [{ handle: 'index', label: 'Overview' }],
@@ -277,5 +280,56 @@ describe('code panels', () => {
         const { container } = await mount();
         await waitFor(() => expect(container.querySelector('.Browser-notes')).not.toBeNull());
         await waitFor(() => expect(container.querySelector('.Browser-notes p')?.textContent).toContain('Some notes.'));
+    });
+});
+
+describe('search', () => {
+    const type = async (container: HTMLElement, value: string) => {
+        const input = container.querySelector('.Search-input') as HTMLInputElement;
+        fireEvent.change(input, { target: { value } });
+    };
+
+    it('filters the tree rather than marking the rendered DOM', async () => {
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Search-input')).not.toBeNull());
+
+        await type(container, 'field');
+        await waitFor(() => {
+            const labels = [...container.querySelectorAll('.Tree-entityLink span')].map((el) => el.textContent);
+            expect(labels).toContain('Field');
+            expect(labels).not.toContain('Button');
+        });
+    });
+
+    it('matches on tags as well as labels', async () => {
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Search-input')).not.toBeNull());
+
+        await type(container, 'form-control');
+        await waitFor(() => {
+            const labels = [...container.querySelectorAll('.Tree-entityLink span')].map((el) => el.textContent);
+            expect(labels).toEqual(['Field']);
+        });
+    });
+
+    it('drops a collection whose children all filter out', async () => {
+        // Keeping it would show an empty branch, which reads as a broken filter.
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Search-input')).not.toBeNull());
+
+        await type(container, 'nothing-matches-this');
+        await waitFor(() => expect(container.querySelectorAll('.Tree-collection')).toHaveLength(0));
+    });
+
+    it('restores the full tree when the query is cleared', async () => {
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Search-input')).not.toBeNull());
+
+        await type(container, 'field');
+        await waitFor(() => expect(container.querySelectorAll('.Tree-entityLink')).toHaveLength(1));
+
+        const clear = container.querySelector('.Search-clearButton') as HTMLElement;
+        clear.click();
+        await waitFor(() => expect(container.querySelectorAll('.Tree-entityLink').length).toBeGreaterThan(1));
     });
 });

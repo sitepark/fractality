@@ -1,12 +1,19 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import type { TreeNode, TreePayload } from '@fractality/web/contract';
 import { StatusDot } from './Status.js';
+import { Search } from './Search.js';
+import { filterTree } from './search.js';
 
 interface NavProps {
     tree: TreePayload;
     current: string;
     onNavigate: (href: string) => void;
 }
+
+/**
+ * While a search is active, collections start expanded: a match hidden inside a
+ * collapsed branch is indistinguishable from no match at all.
+ */
 
 interface BranchProps {
     nodes: TreeNode[];
@@ -20,6 +27,8 @@ interface BranchProps {
      * only when someone clicks it.
      */
     hrefFor: (handle: string) => string;
+    /** Set while filtering, so matches inside collapsed collections stay visible. */
+    forceOpen: boolean;
 }
 
 /**
@@ -29,8 +38,17 @@ interface BranchProps {
  * toggling a class. Same markup and the same `aria-expanded`, so the stylesheet
  * and assistive technology both see what they did before.
  */
-function Collection({ node, statuses, current, depth, onNavigate, hrefFor }: BranchProps & { node: TreeNode }) {
+function Collection({
+    node,
+    statuses,
+    current,
+    depth,
+    onNavigate,
+    hrefFor,
+    forceOpen,
+}: BranchProps & { node: TreeNode }) {
     const [open, setOpen] = useState(true);
+    const expanded = forceOpen || open;
     const id = `tree-collection-${node.handle}`;
 
     return (
@@ -38,13 +56,13 @@ function Collection({ node, statuses, current, depth, onNavigate, hrefFor }: Bra
             <button
                 type="button"
                 className="Tree-collectionLabel"
-                aria-expanded={open}
+                aria-expanded={expanded}
                 aria-controls={`${id}-items`}
                 onClick={() => setOpen((was) => !was)}
             >
                 {node.label}
             </button>
-            {open ? (
+            {expanded ? (
                 <ul className="Tree-collectionItems" id={`${id}-items`}>
                     <Branch
                         nodes={node.children ?? []}
@@ -53,6 +71,7 @@ function Collection({ node, statuses, current, depth, onNavigate, hrefFor }: Bra
                         depth={depth + 1}
                         onNavigate={onNavigate}
                         hrefFor={hrefFor}
+                        forceOpen={forceOpen}
                     />
                 </ul>
             ) : null}
@@ -60,7 +79,7 @@ function Collection({ node, statuses, current, depth, onNavigate, hrefFor }: Bra
     );
 }
 
-function Branch({ nodes, statuses, current, depth, onNavigate, hrefFor }: BranchProps) {
+function Branch({ nodes, statuses, current, depth, onNavigate, hrefFor, forceOpen }: BranchProps) {
     return (
         <>
             {nodes.map((node) => {
@@ -75,6 +94,7 @@ function Branch({ nodes, statuses, current, depth, onNavigate, hrefFor }: Branch
                             depth={depth}
                             onNavigate={onNavigate}
                             hrefFor={hrefFor}
+                            forceOpen={forceOpen}
                         />
                     );
                 }
@@ -119,6 +139,7 @@ function Tree({
     current,
     onNavigate,
     hrefFor,
+    forceOpen,
 }: Omit<BranchProps, 'depth'> & { label: string }) {
     if (!nodes.length) return null;
     return (
@@ -135,6 +156,7 @@ function Tree({
                         depth={2}
                         onNavigate={onNavigate}
                         hrefFor={hrefFor}
+                        forceOpen={forceOpen}
                     />
                 </ul>
             </div>
@@ -144,24 +166,31 @@ function Tree({
 
 /** Mirrors `views/partials/navigation/navigation.nunj`. */
 export function Nav({ tree, current, onNavigate }: NavProps) {
+    const [query, setQuery] = useState('');
+    const filtered = useMemo(() => filterTree(tree, query), [tree, query]);
+    const searching = query.trim().length > 0;
+
     return (
         <nav className="Navigation">
             <div className="Navigation-panel Navigation-panel--main">
+                <Search value={query} onChange={setQuery} />
                 <Tree
                     label="Components"
-                    nodes={tree.components}
+                    nodes={filtered.components}
                     statuses={tree.status}
                     current={current}
                     onNavigate={onNavigate}
                     hrefFor={(handle) => `/components/detail/${handle}`}
+                    forceOpen={searching}
                 />
                 <Tree
                     label="Documentation"
-                    nodes={tree.docs}
+                    nodes={filtered.docs}
                     statuses={tree.status}
                     current={current}
                     onNavigate={onNavigate}
                     hrefFor={(handle) => `/docs/${handle}`}
+                    forceOpen={searching}
                 />
             </div>
         </nav>

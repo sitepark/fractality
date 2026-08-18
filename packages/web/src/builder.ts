@@ -116,6 +116,8 @@ export default class Builder extends mix(Emitter) {
             themeMount: mount,
             siteRoot: '',
             treeFile: '/tree.json',
+            styles: ([] as string[]).concat((this._theme.get('styles') as string[]) ?? []),
+            favicon: (this._theme.get('favicon') as string) ?? undefined,
             labels: (this._theme.get('labels') as Record<string, unknown>) ?? undefined,
         };
     }

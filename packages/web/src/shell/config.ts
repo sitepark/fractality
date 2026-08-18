@@ -22,6 +22,14 @@ export interface FrctlConfig {
     siteRoot: string;
     /** Where the tree payload sits, relative to `siteRoot`. */
     treeFile: string;
+    /**
+     * Stylesheet URLs the theme wants linked into the Shell, already
+     * root-absolute. The theme owns its own appearance, so these are passed
+     * through rather than interpreted.
+     */
+    styles?: string[];
+    /** Favicon URL, root-absolute. */
+    favicon?: string;
     /** Consumer overrides only — a theme's own label defaults live in its bundle. */
     labels?: Record<string, unknown>;
     /** Custom-property theming, resolved to final values at site build. */

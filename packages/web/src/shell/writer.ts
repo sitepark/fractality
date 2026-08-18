@@ -25,6 +25,9 @@ export interface WriteShellsResult {
     bytes: number;
 }
 
+const escapeAttribute = (value: string): string =>
+    value.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+
 const ABSOLUTE = /^(?:[a-z][a-z0-9+.-]*:|\/\/|\/|#|data:)/i;
 
 /**
@@ -63,7 +66,17 @@ export function prepareShell({ shell, config }: PrepareShellOptions): string {
         },
     );
 
-    const block = `<script>window.frctl=${serialiseFrctlConfig(config)};</script>`;
+    // The theme's own stylesheets, linked rather than inlined so they cache
+    // across every route. These are already root-absolute (a theme builds them
+    // from its configured mount), so they are passed through untouched — the
+    // rewriting above is only for the relative URLs a Vite build emits.
+    const links = (config.styles ?? [])
+        .map((href) => `<link rel="stylesheet" href="${escapeAttribute(href)}">`)
+        .join('');
+
+    const favicon = config.favicon ? `<link rel="shortcut icon" href="${escapeAttribute(config.favicon)}">` : '';
+
+    const block = `${links}${favicon}<script>window.frctl=${serialiseFrctlConfig(config)};</script>`;
 
     if (/<\/head>/i.test(rewritten)) {
         return rewritten.replace(/<\/head>/i, `${block}</head>`);

@@ -69,6 +69,50 @@ describe('prepareShell', () => {
         expect(html).toContain('\\u2028');
     });
 
+    it("links the theme's own stylesheets and favicon", () => {
+        const html = prepareShell({
+            shell: SHELL,
+            config: {
+                ...config,
+                styles: ['/themes/mandelbrot/css/default.css', '/custom/extra.css'],
+                favicon: '/themes/mandelbrot/favicon.ico',
+            },
+        });
+        expect(html).toContain('<link rel="stylesheet" href="/themes/mandelbrot/css/default.css">');
+        expect(html).toContain('<link rel="stylesheet" href="/custom/extra.css">');
+        expect(html).toContain('<link rel="shortcut icon" href="/themes/mandelbrot/favicon.ico">');
+    });
+
+    it('passes theme style urls through without rewriting them', () => {
+        // A theme builds these from its own configured mount, so they are
+        // already root-absolute. Running them through the mount rewrite would
+        // prefix them a second time.
+        const html = prepareShell({
+            shell: SHELL,
+            config: { ...config, styles: ['/themes/mandelbrot/css/default.css'] },
+        });
+        expect(html).not.toContain('/themes/mandelbrot/themes/');
+    });
+
+    it('escapes a style url rather than letting it break out of the attribute', () => {
+        const html = prepareShell({
+            shell: SHELL,
+            config: { ...config, styles: ['/x.css" onload="alert(1)'] },
+        });
+        expect(html).not.toContain('onload="alert(1)"');
+        expect(html).toContain('&quot;');
+    });
+
+    it('injects nothing when a theme declares no styles or favicon', () => {
+        // Counted rather than matched: the fixture Shell has its own favicon
+        // link, so a plain "does not contain" assertion would be testing the
+        // fixture rather than the injection.
+        const before = (SHELL.match(/shortcut icon/g) ?? []).length;
+        const html = prepareShell({ shell: SHELL, config });
+        expect((html.match(/shortcut icon/g) ?? []).length).toBe(before);
+        expect(html).not.toContain('href="undefined"');
+    });
+
     it('keeps the noscript notice, since no-JS is unsupported', () => {
         expect(prepareShell({ shell: SHELL, config })).toContain('<noscript>');
     });

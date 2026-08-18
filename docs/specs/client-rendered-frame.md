@@ -20,9 +20,10 @@ payload**, **ext slot**.
 **In scope.** `@fractality/web`'s rendering model, its public data contract, its dev server and
 static builder, and its packaging as a TypeScript package.
 
-**Out of scope.** Mandelbrot's view-by-view rewrite into React components (~30 `.nunj` files, plus
-Pen, Browser, resizable panels, tree and search) is a separate effort that _starts_ from this
-document. Removing jQuery falls out of that rewrite. The template adapters
+**Out of scope when written, since done.** Mandelbrot's view-by-view rewrite into React components
+(~30 `.nunj` files, plus Pen, Browser, resizable panels, tree and search) was a separate effort that
+started from this document and has since landed: the `.nunj` views, `assets/js/` and jQuery are all
+deleted. Removing jQuery falls out of that rewrite. The template adapters
 (nunjucks/handlebars/twig/react) are unchanged — they keep rendering the user's patterns exactly as
 they do now, behind the Preview iframe.
 

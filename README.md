@@ -129,6 +129,10 @@ Useful scripts, all run from root:
 
 Prettier also runs automatically on staged files via a Husky pre-commit hook, so formatting is taken care of for you. The linters are not part of the hook — run `pnpm validate` yourself before pushing.
 
+### Releasing
+
+Versions and changelogs are derived from [Conventional Commits](https://www.conventionalcommits.org), so please write your commit messages accordingly — `fix(core): …`, `feat(web): …`. See [Releasing](docs/RELEASING.md) for how a release is cut.
+
 ## Testing
 
 Fractality is a project that evolved rapidly and organically from a proof-of-concept prototype into a more stable, mature tool. Because of this it's currently pretty far behind where it should be in terms of test coverage. Any contributions on this front would be most welcome!

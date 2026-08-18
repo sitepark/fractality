@@ -7,8 +7,10 @@ import fs from 'fs-extra';
 import * as utils from './utils.js';
 import Log from './log.js';
 import { URL, fileURLToPath } from 'url';
+import { createRequire } from 'node:module';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
+const require = createRequire(import.meta.url);
 
 export default {
     parse(data, format) {
@@ -42,10 +44,7 @@ export default {
         if (format === 'js' || format === 'javascript') {
             try {
                 filePath = Path.relative(__dirname, filePath);
-                // TODO: This is a problem with ESM and import syntax
-                // delete require.cache[require.resolve(filePath)]; // Always fetch a fresh copy
-                // let data = require(filePath);
-                // Using Cache-Bustim parameter for now
+                delete require.cache[require.resolve(filePath)];
 
                 let data = (await import(`${filePath}?t=${Date.now()}`)).default;
                 if (typeof data === 'function') {

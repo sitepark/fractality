@@ -16,6 +16,18 @@
     // the frame, since that is what this sits on.
     background-color: theme.$color-background-offset;
 
+    // Declared on the base rule, not on .is-stuck, so it eases both ways —
+    // a transition living only on the modifier animates the arrival and snaps
+    // on the way out. Named rather than `all`, so nothing else here animates by
+    // accident.
+    transition: box-shadow 0.2s ease;
+
+    // Honour a reduced-motion preference: this is decoration, and the shadow's
+    // job is done just as well by appearing instantly.
+    @media (prefers-reduced-motion: reduce) {
+        transition: none;
+    }
+
     // Only once it is actually stuck. There is no `:stuck` selector, so the
     // Frame sets this from the panel's scroll position — the element is pinned
     // to `top: 0`, so stuck is exactly `scrollTop > 0`.

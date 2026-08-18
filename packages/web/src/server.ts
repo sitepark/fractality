@@ -77,18 +77,24 @@ export default class Server extends mix(Emitter) {
             this._app.watch();
         }
 
-        const shell = await readFile(shellPath, 'utf8').catch(() => {
-            // A theme ships its Shell as build output, so this is what a user
-            // sees when the theme has not been built — a far more common
-            // situation than a misconfigured one, and ENOENT does not say it.
-            throw new WebError(
-                `The theme's Shell is missing at ${shellPath}. The theme has probably not been ` +
-                    'built — run its build, or reinstall it so its published output is present.',
-            );
-        });
+        const readShell = async (): Promise<string> =>
+            readFile(shellPath, 'utf8').catch(() => {
+                // A theme ships its Shell as build output, so this is what a user
+                // sees when the theme has not been built — a far more common
+                // situation than a misconfigured one, and ENOENT does not say it.
+                throw new WebError(
+                    `The theme's Shell is missing at ${shellPath}. The theme has probably not ` +
+                        'been built — run its build, or reinstall it so its published output ' +
+                        'is present.',
+                );
+            });
+
+        // Read once now so a missing Shell fails at start-up rather than on the
+        // first request, and re-read per request so a theme rebuild is picked up.
+        await readShell();
         const host = await createDevHost({
             app: this._app,
-            shell,
+            shell: readShell,
             config: this._frctlConfig(shellPath),
             staticMounts: this._theme.static(),
         });

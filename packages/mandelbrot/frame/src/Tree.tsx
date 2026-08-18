@@ -2,6 +2,7 @@ import { useCallback, useMemo, useState } from 'react';
 import type { TreeNode, TreePayload } from '@fractality/web/contract';
 import { StatusDot } from './Status.js';
 import { read, write } from './storage.js';
+import { CollapseIcon } from './Icons.js';
 
 export interface TreeProps {
     label: string;
@@ -152,7 +153,7 @@ export function Tree({ label, nodes, ...rest }: TreeProps) {
                             aria-label={anyOpen ? 'Collapse tree' : 'Expand tree'}
                             onClick={() => persist(anyOpen ? new Set(handles) : new Set())}
                         >
-                            {anyOpen ? '⌃' : '⌄'}
+                            <CollapseIcon />
                         </button>
                     ) : null}
                 </div>

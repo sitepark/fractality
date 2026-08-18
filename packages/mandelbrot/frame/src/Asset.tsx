@@ -1,5 +1,6 @@
 import type { AssetPayload } from '@fractality/web/contract';
 import { renderMarkdown } from './markdown.js';
+import { AssetIcon } from './Icons.js';
 
 /** Mirrors `views/pages/assets.nunj`. */
 export function Asset({ asset }: { asset: AssetPayload }) {
@@ -21,6 +22,9 @@ export function Asset({ asset }: { asset: AssetPayload }) {
                             project's own static files, served directly.
                         */}
                         <a className="AssetList-link" href={file.url}>
+                            <span className="AssetList-icon">
+                                <AssetIcon />
+                            </span>
                             <span className="AssetList-name">
                                 {file.path.slice(0, -file.name.length)}
                                 <strong>{file.name}</strong>

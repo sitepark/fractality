@@ -12,8 +12,15 @@ import { previewRoutes } from './preview-routes.js';
 
 export interface DevHostOptions {
     app: SourceApp & IdleGateable & Watchable;
-    /** The Shell HTML as the theme built it. */
-    shell: string;
+    /**
+     * The Shell HTML as the theme built it.
+     *
+     * A function is re-read on every request, so rebuilding the theme is picked
+     * up without restarting the server. Holding a string captured at start-up
+     * meant a rebuild left the Shell pointing at a bundle hash that no longer
+     * existed, and the Frame stopped loading entirely.
+     */
+    shell: string | (() => Promise<string>);
     config: FrctlConfig;
     /** Vite's root. A theme author's source tree; irrelevant for a prebuilt theme. */
     root?: string;
@@ -91,7 +98,8 @@ export async function createDevHost(options: DevHostOptions): Promise<DevHost> {
     // makes a deep link work without the server knowing the route table.
     host.use(async (req, res, next) => {
         try {
-            const html = prepareShell({ shell, config });
+            const current = typeof shell === 'string' ? shell : await shell();
+            const html = prepareShell({ shell: current, config });
             res.status(200)
                 .type('html')
                 .send(await vite.transformIndexHtml(req.originalUrl, html));

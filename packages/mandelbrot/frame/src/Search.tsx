@@ -1,4 +1,5 @@
 import { frctl } from './frctl.js';
+import { CloseIcon } from './Icons.js';
 
 interface SearchProps {
     value: string;
@@ -33,7 +34,7 @@ export function Search({ value, onChange }: SearchProps) {
                     hidden={!value}
                     onClick={() => onChange('')}
                 >
-                    ×
+                    <CloseIcon />
                 </button>
             </form>
         </div>

@@ -553,3 +553,23 @@ describe('the tree collapse control', () => {
         await waitFor(() => expect(second.container.querySelector('.Tree-collection.is-closed')).not.toBeNull());
     });
 });
+
+describe('icon buttons', () => {
+    it('renders real svg icons, not text glyphs', async () => {
+        // .Tree-collapse and .Search-clearButton set line-height: 0 and size an
+        // svg child explicitly — they were written around inline SVG. A text
+        // character in either gets a zero-height line box and renders
+        // invisibly: the control is present, focusable and clickable, and looks
+        // like it was never built.
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Tree-collapse')).not.toBeNull());
+
+        for (const selector of ['.Tree-collapse', '.Header-navToggle', '.Search-clearButton']) {
+            const button = container.querySelector(selector);
+            if (!button) throw new Error(`${selector} is not rendered`);
+            if (!button.querySelector('svg')) {
+                throw new Error(`${selector} renders no svg — it would be invisible`);
+            }
+        }
+    });
+});

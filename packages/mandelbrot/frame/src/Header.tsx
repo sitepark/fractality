@@ -1,4 +1,5 @@
 import { frctl } from './frctl.js';
+import { BurgerIcon, CloseIcon } from './Icons.js';
 
 interface HeaderProps {
     onToggleSidebar: () => void;
@@ -20,8 +21,12 @@ export function Header({ onToggleSidebar }: HeaderProps) {
                     Both icons render; the stylesheet shows one and hides the
                     other depending on `.Frame.is-closed`.
                 */}
-                <div className="Header-navToggleIcon Header-navToggleIcon--open">×</div>
-                <div className="Header-navToggleIcon Header-navToggleIcon--closed">☰</div>
+                <div className="Header-navToggleIcon Header-navToggleIcon--open">
+                    <CloseIcon />
+                </div>
+                <div className="Header-navToggleIcon Header-navToggleIcon--closed">
+                    <BurgerIcon />
+                </div>
             </button>
             <a href="/" className="Header-title">
                 {title}

@@ -1,4 +1,5 @@
 import path from 'node:path';
+import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 
 import { create } from '../../../fractality/src/fractal.js';
@@ -161,4 +162,35 @@ describe('createDevHost', () => {
         expect(next).toContain('event: rebuild');
         await reader.cancel();
     });
+});
+
+describe('the Shell is re-read per request', () => {
+    it('picks up a rebuilt theme without a server restart', async () => {
+        // The Shell used to be captured at start-up. Rebuilding the theme
+        // changes its bundle hash, so the served Shell went on pointing at a
+        // file that no longer existed and the Frame stopped loading at all —
+        // which looks like every feature breaking at once.
+        const { mkdtemp, writeFile, rm } = await import('node:fs/promises');
+        const { tmpdir } = await import('node:os');
+
+        const dir = await mkdtemp(path.join(tmpdir(), 'fractality-shell-'));
+        const file = path.join(dir, 'index.html');
+        await writeFile(file, '<html><head></head><body><div id="frame">v1</div></body></html>');
+
+        const local = await createDevHost({
+            app: instance,
+            shell: () => readFile(file, 'utf8'),
+            config,
+            root: example,
+        });
+        const port = await local.listen();
+
+        expect(await (await fetch(`http://127.0.0.1:${port}/anything`)).text()).toContain('v1');
+
+        await writeFile(file, '<html><head></head><body><div id="frame">v2</div></body></html>');
+        expect(await (await fetch(`http://127.0.0.1:${port}/anything`)).text()).toContain('v2');
+
+        await local.close();
+        await rm(dir, { recursive: true, force: true });
+    }, 30000);
 });

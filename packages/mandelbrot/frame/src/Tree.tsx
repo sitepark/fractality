@@ -15,6 +15,23 @@ export interface TreeProps {
     forceOpen: boolean;
 }
 
+/**
+ * The collections between the root and `target`.
+ *
+ * These are expanded by default: a tree that starts collapsed must still show
+ * where you are, or a deep link opens on a nav that hides its own current item.
+ */
+export function pathTo(nodes: TreeNode[], target: string, trail: string[] = []): string[] | null {
+    for (const node of nodes) {
+        if (node.handle === target) return trail;
+        if (node.children?.length) {
+            const found = pathTo(node.children, target, [...trail, node.handle]);
+            if (found) return found;
+        }
+    }
+    return null;
+}
+
 /** Every collection handle in a tree, so "collapse all" can close them in one go. */
 function collectionHandles(nodes: TreeNode[], into: string[] = []): string[] {
     for (const node of nodes) {
@@ -29,18 +46,18 @@ function collectionHandles(nodes: TreeNode[], into: string[] = []): string[] {
 interface BranchProps extends Omit<TreeProps, 'label' | 'nodes'> {
     nodes: TreeNode[];
     depth: number;
-    closed: ReadonlySet<string>;
-    onToggle: (handle: string) => void;
+    isExpanded: (handle: string) => boolean;
+    onToggle: (handle: string, expanded: boolean) => void;
 }
 
-function Branch({ nodes, depth, closed, onToggle, ...rest }: BranchProps) {
+function Branch({ nodes, depth, isExpanded, onToggle, ...rest }: BranchProps) {
     const { statuses, current, onNavigate, hrefFor, forceOpen } = rest;
 
     return (
         <>
             {nodes.map((node) => {
                 if (node.children?.length) {
-                    const expanded = forceOpen || !closed.has(node.handle);
+                    const expanded = forceOpen || isExpanded(node.handle);
                     const id = `tree-collection-${node.handle}`;
 
                     return (
@@ -54,7 +71,7 @@ function Branch({ nodes, depth, closed, onToggle, ...rest }: BranchProps) {
                                 className="Tree-collectionLabel"
                                 aria-expanded={expanded}
                                 aria-controls={`${id}-items`}
-                                onClick={() => onToggle(node.handle)}
+                                onClick={() => onToggle(node.handle, expanded)}
                             >
                                 {node.label}
                             </button>
@@ -63,7 +80,7 @@ function Branch({ nodes, depth, closed, onToggle, ...rest }: BranchProps) {
                                     <Branch
                                         nodes={node.children}
                                         depth={depth + 1}
-                                        closed={closed}
+                                        isExpanded={isExpanded}
                                         onToggle={onToggle}
                                         {...rest}
                                     />
@@ -116,27 +133,38 @@ function Branch({ nodes, depth, closed, onToggle, ...rest }: BranchProps) {
  */
 export function Tree({ label, nodes, ...rest }: TreeProps) {
     const key = `tree.${label}.state`;
-    const [closed, setClosed] = useState<ReadonlySet<string>>(() => new Set(read<string[]>(key, [], 'session')));
+
+    // Explicit choices only. A collection with no entry falls back to the
+    // default — open if it is on the path to the current item, closed otherwise
+    // — so navigating reveals where you are without overriding a collection you
+    // deliberately opened or closed.
+    const [explicit, setExplicit] = useState<Record<string, boolean>>(() =>
+        read<Record<string, boolean>>(key, {}, 'session'),
+    );
 
     const persist = useCallback(
-        (next: ReadonlySet<string>) => {
-            setClosed(next);
-            write(key, [...next], 'session');
+        (next: Record<string, boolean>) => {
+            setExplicit(next);
+            write(key, next, 'session');
         },
         [key],
     );
 
     const toggle = useCallback(
-        (handle: string) => {
-            const next = new Set(closed);
-            if (!next.delete(handle)) next.add(handle);
-            persist(next);
-        },
-        [closed, persist],
+        (handle: string, expanded: boolean) => persist({ ...explicit, [handle]: !expanded }),
+        [explicit, persist],
     );
 
     const handles = useMemo(() => collectionHandles(nodes), [nodes]);
-    const anyOpen = handles.some((handle) => !closed.has(handle));
+
+    const onCurrentPath = useMemo(() => new Set(pathTo(nodes, rest.current) ?? []), [nodes, rest.current]);
+
+    const isExpanded = useCallback(
+        (handle: string) => explicit[handle] ?? onCurrentPath.has(handle),
+        [explicit, onCurrentPath],
+    );
+
+    const anyOpen = handles.some(isExpanded);
 
     if (!nodes.length) return null;
 
@@ -151,14 +179,14 @@ export function Tree({ label, nodes, ...rest }: TreeProps) {
                             className="Tree-collapse"
                             title={anyOpen ? 'Collapse tree' : 'Expand tree'}
                             aria-label={anyOpen ? 'Collapse tree' : 'Expand tree'}
-                            onClick={() => persist(anyOpen ? new Set(handles) : new Set())}
+                            onClick={() => persist(Object.fromEntries(handles.map((handle) => [handle, !anyOpen])))}
                         >
                             <CollapseIcon />
                         </button>
                     ) : null}
                 </div>
                 <ul className="Tree-items Tree-depth-1">
-                    <Branch nodes={nodes} depth={2} closed={closed} onToggle={toggle} {...rest} />
+                    <Branch nodes={nodes} depth={2} isExpanded={isExpanded} onToggle={toggle} {...rest} />
                 </ul>
             </div>
         </div>

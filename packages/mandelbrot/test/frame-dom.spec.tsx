@@ -29,6 +29,12 @@ const tree: TreePayload = {
                 },
             ],
         },
+        {
+            handle: 'media',
+            label: 'Media',
+            isCollection: true,
+            children: [{ handle: 'image', label: 'Image' }],
+        },
     ],
     docs: [{ handle: 'index', label: 'Overview' }],
     assets: [],
@@ -609,8 +615,8 @@ describe('the tree collapse control', () => {
         await waitFor(() => expect(container.querySelector('.Tree-collection')).not.toBeNull());
 
         const tree = treeOf(container);
-        expect(tree.querySelectorAll('.Tree-collection.is-closed')).toHaveLength(0);
-
+        // Something is open — the current item's branch — so the button offers
+        // "collapse" and one click should close every collection.
         (tree.querySelector('.Tree-collapse') as HTMLElement).click();
 
         await waitFor(() => {
@@ -778,5 +784,71 @@ describe('resizing the preview', () => {
         // jsdom gives an iframe a real contentWindow, so this exercises the same
         // path a browser does rather than the element fallback.
         await waitFor(() => expect(readout.textContent).toMatch(/^\d+ × \d+$/));
+    });
+});
+
+describe('what the tree starts expanded', () => {
+    const collectionNamed = (container: HTMLElement, label: string) =>
+        [...container.querySelectorAll('.Tree-collection')].find(
+            (li) => li.querySelector('.Tree-collectionLabel')?.textContent === label,
+        ) as HTMLElement;
+
+    it('collapses collections that do not contain the current item', async () => {
+        // Current is `button`, inside Forms. Tabs is elsewhere in the tree.
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Tree-collection')).not.toBeNull());
+
+        expect(collectionNamed(container, 'Tabs').classList.contains('is-closed')).toBe(true);
+        expect(collectionNamed(container, 'Media').classList.contains('is-closed')).toBe(true);
+    });
+
+    it('opens the path to the current item, so a deep link shows where it is', async () => {
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Tree-collection')).not.toBeNull());
+
+        const forms = collectionNamed(container, 'Forms');
+        expect(forms.classList.contains('is-closed')).toBe(false);
+        expect(forms.querySelector('.Tree-entity.is-current')).not.toBeNull();
+    });
+
+    it('reveals the new path when navigating elsewhere', async () => {
+        window.history.pushState(null, '', '/components/detail/tabs--pill');
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Tree-collection')).not.toBeNull());
+
+        // Tabs sits inside Forms, so both are on the path and both open. Media
+        // is a sibling of Forms and stays closed.
+        expect(collectionNamed(container, 'Tabs').classList.contains('is-closed')).toBe(false);
+        expect(collectionNamed(container, 'Forms').classList.contains('is-closed')).toBe(false);
+        expect(collectionNamed(container, 'Media').classList.contains('is-closed')).toBe(true);
+    });
+
+    it('lets an explicit choice override the default, in both directions', async () => {
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Tree-collection')).not.toBeNull());
+
+        // Open one the default would have closed.
+        const tabs = collectionNamed(container, 'Tabs');
+        (tabs.querySelector('.Tree-collectionLabel') as HTMLElement).click();
+        await waitFor(() => expect(tabs.classList.contains('is-closed')).toBe(false));
+
+        // Close the one containing the current item.
+        const forms = collectionNamed(container, 'Forms');
+        (forms.querySelector('.Tree-collectionLabel') as HTMLElement).click();
+        await waitFor(() => expect(forms.classList.contains('is-closed')).toBe(true));
+    });
+
+    it('still expands everything while searching', async () => {
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Search-input')).not.toBeNull());
+
+        fireEvent.change(container.querySelector('.Search-input') as HTMLInputElement, {
+            target: { value: 'pill' },
+        });
+
+        await waitFor(() => {
+            const shown = container.querySelectorAll('.Tree-collection.is-closed');
+            expect(shown).toHaveLength(0);
+        });
     });
 });

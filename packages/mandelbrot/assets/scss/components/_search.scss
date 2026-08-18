@@ -2,8 +2,19 @@
 @use "../theme";
 
 .Navigation-search {
-    padding-left: 1rem;
-    padding-right: 1rem;
+    // Sticky within .Navigation-panel, which is the scrolling element. The
+    // panel has 1rem of vertical padding, so the negative top margin and the
+    // matching padding pull the sticky box up over it — without that, a strip of
+    // panel background shows above the input as the tree scrolls under it.
+    position: sticky;
+    z-index: 1;
+    top: 0;
+    margin-top: -1rem;
+    padding: 1rem;
+
+    // Opaque, or the tree scrolls through it. Matches the sidebar rather than
+    // the frame, since that is what this sits on.
+    background-color: theme.$color-background-offset;
 }
 
 .Search {

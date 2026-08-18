@@ -905,3 +905,19 @@ describe('opening the preview in its own window', () => {
         );
     });
 });
+
+describe('the search box', () => {
+    it('sits inside the scrolling panel, ahead of the trees', async () => {
+        // Structural precondition for the sticky rule: sticky positions against
+        // the nearest scrolling ancestor, so the search has to live inside
+        // .Navigation-panel rather than beside it. jsdom computes no layout, so
+        // this asserts the containment the CSS depends on, not the stickiness.
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Search-input')).not.toBeNull());
+
+        const panel = container.querySelector('.Navigation-panel--main') as HTMLElement;
+        const search = panel.querySelector('.Navigation-search');
+        expect(search).not.toBeNull();
+        expect(panel.firstElementChild).toBe(search);
+    });
+});

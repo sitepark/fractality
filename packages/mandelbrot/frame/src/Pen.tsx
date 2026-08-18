@@ -1,5 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useResizable } from './useResizable.js';
+import { usePreviewWidth } from './usePreviewWidth.js';
+import { usePreviewSize } from './usePreviewSize.js';
 import { read, write } from './storage.js';
 import type { EntityPayload, TreePayload } from '@fractality/web/contract';
 import { resolveRouteUrl } from './frctl.js';
@@ -52,6 +54,10 @@ export function Pen({ entity, statuses, selected }: PenProps) {
             return !was;
         });
 
+    const previewWidth = usePreviewWidth();
+    const iframe = useRef<HTMLIFrameElement | null>(null);
+    const size = usePreviewSize(iframe, previewWidth.dragging);
+
     const previewUrl = variant ? resolveRouteUrl(variant.previewUrl) : undefined;
 
     return (
@@ -62,6 +68,7 @@ export function Pen({ entity, statuses, selected }: PenProps) {
                         {entity.title}
                     </a>
                 </h1>
+                <span className="Pen-preview-size">{size}</span>
                 <StatusTag status={entity.status ? statuses[entity.status] : undefined} />
             </div>
 
@@ -81,21 +88,39 @@ export function Pen({ entity, statuses, selected }: PenProps) {
                 </div>
             ) : null}
 
-            <div className="Pen-panel Pen-preview Preview" style={{ height: collapsed ? '100%' : preview.size }}>
+            <div
+                className={`Pen-panel Pen-preview Preview${previewWidth.dragging ? ' is-resizing is-disabled' : ''}`}
+                style={{ height: collapsed ? '100%' : preview.size }}
+            >
                 <div className="Preview-wrapper">
-                    <div className="Preview-resizer">
+                    <div className="Preview-resizer" ref={previewWidth.ref} style={previewWidth.style}>
                         {previewUrl ? (
                             <iframe
                                 className="Preview-iframe"
                                 title={`Preview of ${variant?.label ?? entity.label}`}
                                 src={previewUrl}
                                 frameBorder="0"
+                                ref={iframe}
                                 // An iframe swallows pointer events, which would
                                 // end a drag the moment the pointer crossed it.
-                                style={{ pointerEvents: preview.dragging ? 'none' : undefined }}
+                                style={{
+                                    pointerEvents: preview.dragging || previewWidth.dragging ? 'none' : undefined,
+                                }}
                             />
                         ) : null}
                     </div>
+
+                    <div
+                        className="Preview-handle"
+                        role="separator"
+                        aria-orientation="vertical"
+                        aria-label="Resize preview width"
+                        onPointerDown={previewWidth.onPointerDown}
+                        onDoubleClick={previewWidth.onDoubleClick}
+                    />
+                    {/* The stylesheet shows this while resizing, so the cursor
+                        stays correct over the iframe. */}
+                    <div className="Preview-overlay" />
                 </div>
             </div>
 

@@ -32,7 +32,10 @@ export function useResizable({ key, fallback, min = 80, max = Infinity }: Option
     const onPointerDown = useCallback(
         (event: React.PointerEvent<HTMLElement>) => {
             event.preventDefault();
-            event.currentTarget.setPointerCapture(event.pointerId);
+            // Capture keeps the drag alive when the pointer crosses the iframe.
+            // Guarded because it is optional: without it the window listeners below
+            // still track the drag, and jsdom does not implement it at all.
+            event.currentTarget.setPointerCapture?.(event.pointerId);
             origin.current = { y: event.clientY, size };
             setDragging(true);
         },

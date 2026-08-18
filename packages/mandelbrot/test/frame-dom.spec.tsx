@@ -203,6 +203,11 @@ const mount = async () => {
     // Rendered into a real `#frame.Frame` root, because that element is the
     // mount point in production and some styling hangs off classes toggled on
     // it rather than on anything the App renders.
+    // Cleared first: testing-library only removes containers it created itself,
+    // so a container passed in accumulates. A stale #frame left in the document
+    // is what `document.getElementById('frame')` would find, making assertions
+    // about the mount point meaningless.
+    document.body.innerHTML = '';
     const container = document.createElement('div');
     container.id = 'frame';
     container.className = 'Frame';
@@ -696,5 +701,75 @@ describe('opening a variant directly', () => {
                 '/components/preview/tabs--default',
             ),
         );
+    });
+});
+
+describe('resizing the preview', () => {
+    // Awaited between steps: the window move/up listeners are attached by an
+    // effect that runs after the pointerdown commits, so firing all three
+    // synchronously misses the move entirely — the drag looks inert.
+    const drag = async (handle: Element, from: number, to: number) => {
+        fireEvent.pointerDown(handle, { clientX: from, pointerId: 1 });
+        await waitFor(() => expect(document.querySelector('.Preview')?.className).toContain('is-resizing'));
+        fireEvent.pointerMove(window, { clientX: to, pointerId: 1 });
+        fireEvent.pointerUp(window, { clientX: to, pointerId: 1 });
+    };
+
+    it('renders the handle and overlay the stylesheet resizes with', async () => {
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Preview')).not.toBeNull());
+        expect(container.querySelector('.Preview-handle')).not.toBeNull();
+        expect(container.querySelector('.Preview-overlay')).not.toBeNull();
+    });
+
+    it('narrows the preview when the handle is dragged inward', async () => {
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Preview-handle')).not.toBeNull());
+
+        const resizer = container.querySelector('.Preview-resizer') as HTMLElement;
+        await drag(container.querySelector('.Preview-handle')!, 800, 500);
+
+        await waitFor(() => expect(resizer.style.width).toMatch(/^\d+px$/));
+    });
+
+    it('masks the iframe while dragging, which otherwise swallows the pointer', async () => {
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Preview-handle')).not.toBeNull());
+
+        const frame = container.querySelector('.Preview-iframe') as HTMLElement;
+        fireEvent.pointerDown(container.querySelector('.Preview-handle')!, {
+            clientX: 800,
+            pointerId: 1,
+        });
+
+        await waitFor(() => expect(frame.style.pointerEvents).toBe('none'));
+        expect(container.querySelector('.Preview')?.className).toContain('is-resizing');
+
+        fireEvent.pointerUp(window, { clientX: 800, pointerId: 1 });
+        await waitFor(() => expect(frame.style.pointerEvents).toBe(''));
+    });
+
+    it('restores full width on a double click, as before', async () => {
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Preview-handle')).not.toBeNull());
+
+        const resizer = container.querySelector('.Preview-resizer') as HTMLElement;
+        await drag(container.querySelector('.Preview-handle')!, 800, 400);
+        await waitFor(() => expect(resizer.style.width).toMatch(/^\d+px$/));
+
+        fireEvent.doubleClick(container.querySelector('.Preview-handle')!);
+        await waitFor(() => expect(resizer.style.width).toContain('calc('));
+    });
+
+    it('reports the preview viewport size', async () => {
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Pen-preview-size')).not.toBeNull());
+
+        const readout = container.querySelector('.Pen-preview-size') as HTMLElement;
+        fireEvent.load(container.querySelector('.Preview-iframe')!);
+
+        // jsdom gives an iframe a real contentWindow, so this exercises the same
+        // path a browser does rather than the element fallback.
+        await waitFor(() => expect(readout.textContent).toMatch(/^\d+ × \d+$/));
     });
 });

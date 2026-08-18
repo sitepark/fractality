@@ -67,7 +67,7 @@ e.g.
 
 ```json
 "scripts": {
-    "fractality:start": "fractality start --sync",
+    "fractality:start": "fractality start",
     "fractality:build": "fractality build"
 }
 ```

@@ -76,7 +76,7 @@ export default function (fractality) {
                     '@fractality/fractality': `^${fractality.get('version')}`,
                 },
                 scripts: {
-                    'fractality:start': 'fractality start --sync',
+                    'fractality:start': 'fractality start',
                     'fractality:build': 'fractality build',
                 },
             };

@@ -4,7 +4,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "start": "fractality start --sync",
+    "start": "fractality start",
     "build": "fractality build"
   },
   "dependencies": {

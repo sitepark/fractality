@@ -15,6 +15,15 @@
     // Opaque, or the tree scrolls through it. Matches the sidebar rather than
     // the frame, since that is what this sits on.
     background-color: theme.$color-background-offset;
+
+    // Only once it is actually stuck. There is no `:stuck` selector, so the
+    // Frame sets this from the panel's scroll position — the element is pinned
+    // to `top: 0`, so stuck is exactly `scrollTop > 0`.
+    &.is-stuck {
+        box-shadow:
+            inset 0 -1px 0 0 theme.$color-frame-border,
+            0 2px 4px rgba(black, 0.08);
+    }
 }
 
 .Search {

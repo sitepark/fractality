@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { TreePayload } from '@fractality/web/contract';
 import { Search } from './Search.js';
 import { Tree } from './Tree.js';
@@ -13,6 +13,23 @@ interface NavProps {
 /** Mirrors `views/partials/navigation/navigation.nunj`. */
 export function Nav({ tree, current, onNavigate }: NavProps) {
     const [query, setQuery] = useState('');
+
+    // The search box is pinned to the top of this panel, so "stuck" is exactly
+    // "the panel has scrolled". There is no CSS selector for it, and reading the
+    // scroll position is both cheaper and more precise here than an
+    // IntersectionObserver sentinel would be.
+    const panel = useRef<HTMLDivElement | null>(null);
+    const [stuck, setStuck] = useState(false);
+
+    useEffect(() => {
+        const element = panel.current;
+        if (!element) return;
+
+        const onScroll = () => setStuck(element.scrollTop > 0);
+        onScroll();
+        element.addEventListener('scroll', onScroll, { passive: true });
+        return () => element.removeEventListener('scroll', onScroll);
+    }, []);
     const filtered = useMemo(() => filterTree(tree, query), [tree, query]);
 
     // While filtering, collections are forced open: a match hidden inside a
@@ -28,8 +45,8 @@ export function Nav({ tree, current, onNavigate }: NavProps) {
 
     return (
         <nav className="Navigation">
-            <div className="Navigation-panel Navigation-panel--main">
-                <Search value={query} onChange={setQuery} />
+            <div className="Navigation-panel Navigation-panel--main" ref={panel}>
+                <Search value={query} onChange={setQuery} stuck={stuck} />
                 <Tree
                     label="Components"
                     nodes={filtered.components}

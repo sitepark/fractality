@@ -920,4 +920,24 @@ describe('the search box', () => {
         expect(search).not.toBeNull();
         expect(panel.firstElementChild).toBe(search);
     });
+
+    it('gains a shadow only once the panel has scrolled', async () => {
+        // There is no `:stuck` selector, so the class is driven from the panel's
+        // scroll position. Asserting the class rather than the shadow: jsdom
+        // computes no layout, and the shadow itself lives in the stylesheet.
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Navigation-search')).not.toBeNull());
+
+        const panel = container.querySelector('.Navigation-panel--main') as HTMLElement;
+        const search = container.querySelector('.Navigation-search') as HTMLElement;
+        expect(search.classList.contains('is-stuck')).toBe(false);
+
+        panel.scrollTop = 120;
+        fireEvent.scroll(panel);
+        await waitFor(() => expect(search.classList.contains('is-stuck')).toBe(true));
+
+        panel.scrollTop = 0;
+        fireEvent.scroll(panel);
+        await waitFor(() => expect(search.classList.contains('is-stuck')).toBe(false));
+    });
 });

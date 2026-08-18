@@ -9,6 +9,7 @@ export interface WritePreviewsOptions {
     dest: string;
     previewRoute?: string;
     renderRoute?: string;
+    onProgress?: (completed: number, total: number) => void;
 }
 
 export interface PreviewError {
@@ -65,12 +66,15 @@ async function write(file: string, contents: string): Promise<void> {
  * build of thousands.
  */
 export async function writePreviews(app: SourceApp, options: WritePreviewsOptions): Promise<WritePreviewsResult> {
-    const { dest, previewRoute = '/components/preview', renderRoute = '/components/render' } = options;
+    const { dest, previewRoute = '/components/preview', renderRoute = '/components/render', onProgress } = options;
 
     const files: string[] = [];
     const errors: PreviewError[] = [];
 
-    for (const { handle, entity } of routedEntities(app)) {
+    const all = routedEntities(app);
+    const total = all.length * 2;
+
+    for (const { handle, entity } of all) {
         for (const [route, preview] of [
             [previewRoute, true],
             [renderRoute, false],
@@ -88,6 +92,7 @@ export async function writePreviews(app: SourceApp, options: WritePreviewsOption
                 errors.push({ handle, route, message });
             }
             files.push(file);
+            onProgress?.(files.length, total);
         }
     }
 

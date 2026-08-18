@@ -110,6 +110,11 @@ export const isCollection = (item: SourceTreeItem): item is SourceCollection =>
 export const isComponent = (item: SourceTreeItem): item is SourceComponent =>
     (item as SourceComponent).isComponent === true;
 
+/** Loading is what turns a configured app into a populated tree. */
+export interface Loadable {
+    load(): Promise<unknown>;
+}
+
 /** The subset of a loaded Fractality app the payload builders touch. */
 export interface SourceApp {
     get(path: string): unknown;

@@ -3,6 +3,7 @@ import { writeShells } from '../shell/writer.js';
 import type { FrctlConfig } from '../shell/config.js';
 import type { SourceApp } from '../payload/source-types.js';
 import { writePreviews, type PreviewError } from './previews.js';
+import { routedEntities } from './entities.js';
 import { staticRoutes } from './routes.js';
 
 export interface BuildStaticOptions {
@@ -13,6 +14,8 @@ export interface BuildStaticOptions {
     shell: string;
     config: FrctlConfig;
     detailRoute?: string;
+    /** Reports units written, so a CLI can show progress over a long build. */
+    onProgress?: (completed: number, total: number) => void;
 }
 
 export interface BuildStaticResult {
@@ -34,16 +37,37 @@ export interface BuildStaticResult {
  * Adapters. No theme view is rendered anywhere.
  */
 export async function buildStatic(options: BuildStaticOptions): Promise<BuildStaticResult> {
-    const { app, dest, shell, config, detailRoute } = options;
+    const { app, dest, shell, config, detailRoute, onProgress } = options;
 
     const routes = staticRoutes(app, { detailRoute });
+    const entities = routedEntities(app);
+
+    // One total across all three phases, computed up front. Reporting each phase
+    // against its own running count showed "N of N" every time, which reads as a
+    // finished build that wrote almost nothing.
+    const components = app.components
+        .flatten()
+        .toArray()
+        .filter((component) => !component.isHidden).length;
+    const total = routes.length + 1 + entities.length + components * 3 + entities.length * 2;
+    let completed = 0;
+    const advance = (by: number) => {
+        completed += by;
+        onProgress?.(completed, total);
+    };
+
     const shells = await writeShells({ dest, routes, shell, config });
-    const payloads = await writePayloads(app, {
+    advance(shells.files.length);
+
+    const payloads = await writePayloads(app, { dest, detailRoute, treeFile: config.treeFile });
+    advance(1 + payloads.entities.length + payloads.panels.length);
+
+    const before = completed;
+    const previews = await writePreviews(app, {
         dest,
-        detailRoute,
-        treeFile: config.treeFile,
+        onProgress: (done) => onProgress?.(before + done, total),
     });
-    const previews = await writePreviews(app, { dest });
+    completed = before + previews.files.length;
 
     return {
         routes: routes.length,

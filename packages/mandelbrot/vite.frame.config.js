@@ -4,7 +4,6 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
-const web = path.resolve(__dirname, '../web/src');
 
 export default defineConfig({
     root: path.resolve(__dirname, 'frame'),
@@ -17,19 +16,6 @@ export default defineConfig({
     base: './',
 
     plugins: [react()],
-
-    resolve: {
-        alias: {
-            // Interim. @fractality/web still publishes raw JavaScript, so its
-            // TypeScript contract cannot be imported through its exports map yet.
-            // Vite reads the source directly; the packaging flip (§10) replaces
-            // these with real subpath exports. A test asserts the Frame and the
-            // server agree on the addressing rule regardless.
-            '@fractality/web/contract': path.join(web, 'contract/index.ts'),
-            '@fractality/web/addressing': path.join(web, 'payload/paths.ts'),
-            '@fractality/web/shell': path.join(web, 'shell/config.ts'),
-        },
-    },
 
     build: {
         outDir: path.resolve(__dirname, 'dist/frame'),

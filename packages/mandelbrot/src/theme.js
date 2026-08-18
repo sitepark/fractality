@@ -4,7 +4,6 @@ import Path from 'path';
 import _ from 'lodash';
 import { Theme } from '@fractality/web';
 import { URL, fileURLToPath } from 'url';
-import filters from './filters.js';
 import fsExtra from 'fs-extra';
 const { readJsonSync } = fsExtra;
 
@@ -69,7 +68,6 @@ export default function (options) {
             },
             panels: {
                 html: 'HTML',
-                view: 'View',
                 context: 'Context',
                 resources: 'Resources',
                 info: 'Info',
@@ -123,15 +121,18 @@ export default function (options) {
         .map((url) => (url === 'default' ? `/${config.static.mount}/js/mandelbrot.js` : url));
     config.favicon = config.favicon || `/${config.static.mount}/favicon.ico`;
 
-    const theme = new Theme(Path.join(__dirname, '..', 'views'), config);
-
-    theme.setErrorView('pages/error.nunj');
+    const theme = new Theme(config);
 
     theme.addStatic(Path.join(__dirname, '..', 'dist'), `/${config.static.mount}`);
 
+    // The Shell the Frame boots from. This replaces every view-rendering entry
+    // point the theme used to have: @fractality/web copies this across the route
+    // table and injects the global config, and the Frame renders from the data
+    // contract.
+    theme.setShell(Path.join(__dirname, '..', 'dist', 'frame', 'index.html'));
+
     theme.addRoute('/', {
         handle: 'overview',
-        view: 'pages/doc.nunj',
     });
 
     theme.addRoute('/docs', {
@@ -150,7 +151,6 @@ export default function (options) {
         '/assets/:name',
         {
             handle: 'asset-source',
-            view: 'pages/assets.nunj',
         },
         function (app) {
             return app.assets.visible().map((asset) => ({ name: asset.name }));
@@ -161,7 +161,6 @@ export default function (options) {
         '/components/preview/:handle',
         {
             handle: 'preview',
-            view: 'pages/components/preview.nunj',
         },
         getHandles,
     );
@@ -170,7 +169,6 @@ export default function (options) {
         '/components/render/:handle',
         {
             handle: 'render',
-            view: 'pages/components/render.nunj',
         },
         getHandles,
     );
@@ -179,7 +177,6 @@ export default function (options) {
         '/components/detail/:handle',
         {
             handle: 'component',
-            view: 'pages/components/detail.nunj',
         },
         getHandles,
     );
@@ -203,7 +200,6 @@ export default function (options) {
         '/docs{/*path}',
         {
             handle: 'page',
-            view: 'pages/doc.nunj',
         },
         function (app) {
             return app.docs
@@ -212,10 +208,6 @@ export default function (options) {
                 .map((page) => ({ path: page.path }));
         },
     );
-
-    theme.on('init', function (env, app) {
-        filters(theme, env, app);
-    });
 
     let handles = null;
 

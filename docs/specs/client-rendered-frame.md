@@ -1,6 +1,7 @@
 # Implementation spec: the client-rendered Frame
 
-Status: **approved, not implemented.** Target: the next major of `@fractality/web` (1.0.0).
+Status: **implemented on `next-major`** (2026-08-18), except where noted in §11. Target release: the
+next major of `@fractality/web` (1.0.0).
 
 Decisions behind this document: [ADR 0005](../adr/0005-client-render-the-frame.md) (rendering model)
 and [ADR 0006](../adr/0006-compile-and-publish-web-from-typescript.md) (TypeScript and the build
@@ -226,6 +227,13 @@ Two passes, one command.
 
 Filesystem-bound work resolves here: `getPreviewContent()`, file reads, file sizes and mtimes.
 
+> **Amended during implementation (2026-08-18).** The Shell's asset prefix is derived from **where
+> the Shell sits inside a static mount**, not from the mount itself. mandelbrot mounts `dist/` at
+> `/themes/mandelbrot` but builds its Frame into `dist/frame/`, so using the mount alone produced
+> `/themes/mandelbrot/assets/…` for files served from `/themes/mandelbrot/frame/assets/…` — a build
+> that succeeds, looks correct, and 404s every asset. Only running the real CLI surfaced it; the
+> fixture tests had the Shell at the mount root, where the two coincide.
+>
 > **Amended during implementation (2026-08-17).** Preview rendering needs **no theme view**, which
 > was not obvious from this section. `entity.render(…, { preview: true })` wraps the pattern in the
 > _user's_ own `@preview` layout, not in anything the theme supplies — today's `render.nunj` only

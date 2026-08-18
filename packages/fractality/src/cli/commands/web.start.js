@@ -11,7 +11,6 @@ export default function (fractality) {
         .description('Start a development server')
         .option('-p, --port <number>', 'The port to run the server on.')
         .option('-t, --theme <package-name>', 'The name of custom UI theme to use, if required')
-        .option('-s, --sync', 'Use BrowserSync to sync and reload pages when changes occur')
         .option('-w, --watch', 'Watch the filesystem for changes.')
         .action(async (args) => {
             const server = fractality.web.server(args);
@@ -21,18 +20,8 @@ export default function (fractality) {
                 const footer = cli.isInteractive()
                     ? "Use the 'stop' command to stop the server."
                     : 'Use ^C to stop the server.';
-                const serverUrl = server.urls.server;
                 const format = (str) => console.theme.format(str, 'success', true);
-                let body = '';
-
-                if (!server.isSynced) {
-                    body += `Local URL: ${format(serverUrl)}`;
-                } else {
-                    const syncUrls = server.urls.sync;
-                    body += `Local URL:      ${format(syncUrls.local)}`;
-                    body += `\nNetwork URL:    ${format(syncUrls.external)}`;
-                    body += `\nBrowserSync UI: ${format(syncUrls.ui)}`;
-                }
+                const body = `Local URL: ${format(server.urls.server)}`;
 
                 return console.box(header, body, footer).persist();
             });
@@ -45,6 +34,6 @@ export default function (fractality) {
                 }
             });
 
-            await server.start(args.sync);
+            await server.start();
         });
 }

@@ -118,6 +118,7 @@ beforeEach(() => {
     // between tests otherwise — one test clicking "view" would open the next
     // one on it.
     localStorage.clear();
+    sessionStorage.clear();
 
     window.frctl = {
         env: 'server',
@@ -463,5 +464,92 @@ describe('the sidebar toggle', () => {
         await waitFor(() => expect(container.querySelector('.Header-navToggle')).not.toBeNull());
         expect(container.querySelector('.Header-navToggleIcon--open')).not.toBeNull();
         expect(container.querySelector('.Header-navToggleIcon--closed')).not.toBeNull();
+    });
+});
+
+describe('collapsing a collection', () => {
+    it('hides its children and marks it is-closed', async () => {
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Tree-collection')).not.toBeNull());
+
+        const collection = container.querySelector('.Tree-collection') as HTMLElement;
+        const toggle = collection.querySelector('.Tree-collectionLabel') as HTMLElement;
+
+        expect(collection.querySelector('.Tree-collectionItems')).not.toBeNull();
+        expect(toggle.getAttribute('aria-expanded')).toBe('true');
+
+        toggle.click();
+
+        await waitFor(() => {
+            expect(collection.classList.contains('is-closed')).toBe(true);
+            expect(collection.querySelector('.Tree-collectionItems')).toBeNull();
+            expect(toggle.getAttribute('aria-expanded')).toBe('false');
+        });
+    });
+
+    it('expands again on a second click', async () => {
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Tree-collection')).not.toBeNull());
+
+        const collection = container.querySelector('.Tree-collection') as HTMLElement;
+        const toggle = collection.querySelector('.Tree-collectionLabel') as HTMLElement;
+
+        toggle.click();
+        await waitFor(() => expect(collection.classList.contains('is-closed')).toBe(true));
+
+        toggle.click();
+        await waitFor(() => {
+            expect(collection.classList.contains('is-closed')).toBe(false);
+            expect(collection.querySelector('.Tree-collectionItems')).not.toBeNull();
+        });
+    });
+});
+
+describe('the tree collapse control', () => {
+    const treeOf = (container: HTMLElement) => container.querySelector('.Tree') as HTMLElement;
+
+    it('collapses every collection in the tree at once', async () => {
+        // The old theme had this in the Tree header and it was never rebuilt.
+        // It cannot work with each collection owning its own open flag — nothing
+        // outside a collection can close it — which is why the state is lifted.
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Tree-collection')).not.toBeNull());
+
+        const tree = treeOf(container);
+        expect(tree.querySelectorAll('.Tree-collection.is-closed')).toHaveLength(0);
+
+        (tree.querySelector('.Tree-collapse') as HTMLElement).click();
+
+        await waitFor(() => {
+            const all = tree.querySelectorAll('.Tree-collection');
+            const shut = tree.querySelectorAll('.Tree-collection.is-closed');
+            expect(all.length).toBeGreaterThan(0);
+            expect(shut).toHaveLength(all.length);
+        });
+    });
+
+    it('expands them all again', async () => {
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Tree-collapse')).not.toBeNull());
+
+        const tree = treeOf(container);
+        (tree.querySelector('.Tree-collapse') as HTMLElement).click();
+        await waitFor(() => expect(tree.querySelectorAll('.Tree-collection.is-closed').length).toBeGreaterThan(0));
+
+        (tree.querySelector('.Tree-collapse') as HTMLElement).click();
+        await waitFor(() => expect(tree.querySelectorAll('.Tree-collection.is-closed')).toHaveLength(0));
+    });
+
+    it('remembers collapsed collections across a reload', async () => {
+        // sessionStorage, under the key the previous theme used, so tree
+        // expansion survives a refresh as it did before.
+        const first = await mount();
+        await waitFor(() => expect(first.container.querySelector('.Tree-collectionLabel')).not.toBeNull());
+        (first.container.querySelector('.Tree-collectionLabel') as HTMLElement).click();
+        await waitFor(() => expect(first.container.querySelector('.Tree-collection.is-closed')).not.toBeNull());
+        cleanup();
+
+        const second = await mount();
+        await waitFor(() => expect(second.container.querySelector('.Tree-collection.is-closed')).not.toBeNull());
     });
 });

@@ -54,6 +54,11 @@ export default defineConfig(({ mode }) => ({
     },
     build: {
         outDir: path.resolve('./dist'),
+        // The Frame is built separately into dist/frame by vite.frame.config.js.
+        // Vite empties outDir by default, so leaving this on makes this build
+        // delete the Frame — silently, and depending only on which build ran
+        // last. `prebuild` already does the cleaning.
+        emptyOutDir: false,
         rollupOptions: {
             input: {
                 mandelbrot: path.resolve('./assets/js/mandelbrot.js'),

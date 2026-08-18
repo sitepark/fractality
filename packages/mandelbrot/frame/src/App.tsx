@@ -83,6 +83,14 @@ export function App() {
         document.title = title ? `${title} | Fractality` : 'Fractality';
     }, [entity, doc, asset]);
 
+    // `is-closed` belongs on the .Frame root, which is the mount point rather
+    // than an element this component renders — and three stylesheets key off it
+    // (the header icon swap, the file browser and the meta layout). Setting it on
+    // anything else, or under any other name, silently does nothing.
+    useEffect(() => {
+        document.getElementById('frame')?.classList.toggle('is-closed', !sidebarOpen);
+    }, [sidebarOpen]);
+
     const navigate = useCallback((href: string) => {
         // pushState keeps the real URL, so a deep link, a refresh and a bookmark
         // all still work: the Shell exists at that path on disk.
@@ -96,7 +104,7 @@ export function App() {
                 <Header onToggleSidebar={() => setSidebarOpen((was) => !was)} />
             </div>
 
-            <div className={`Frame-body${sidebarOpen ? '' : ' is-sidebar-closed'}`}>
+            <div className="Frame-body">
                 <div className="Frame-panel Frame-panel--main">
                     <div className="Frame-inner">
                         {error ? (

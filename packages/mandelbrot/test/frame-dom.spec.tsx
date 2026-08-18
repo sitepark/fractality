@@ -149,7 +149,14 @@ afterEach(() => {
 
 const mount = async () => {
     const { App } = await import('../frame/src/App.js');
-    return render(<App />);
+    // Rendered into a real `#frame.Frame` root, because that element is the
+    // mount point in production and some styling hangs off classes toggled on
+    // it rather than on anything the App renders.
+    const container = document.createElement('div');
+    container.id = 'frame';
+    container.className = 'Frame';
+    document.body.appendChild(container);
+    return render(<App />, { container });
 };
 
 /**
@@ -248,6 +255,38 @@ describe('documentation pages', () => {
         // Rendered client-side: the payload carries Markdown, not HTML.
         expect(prose?.querySelector('h1')?.textContent).toBe('Hello');
         expect(prose?.querySelector('strong')?.textContent).toBe('documentation');
+    });
+});
+
+describe('panel visibility', () => {
+    const PANELS = ['notes', 'context', 'view', 'resources', 'info'];
+
+    it('marks the rendered panel is-active, which is what makes it visible', async () => {
+        // .Browser-panel is display:none unless it carries is-active. A panel
+        // rendered without it is in the DOM and invisible — every tab looked
+        // empty even though its content was there.
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Browser-panel')).not.toBeNull());
+        expect(container.querySelector('.Browser-panel.is-active')).not.toBeNull();
+    });
+
+    it('shows content for every tab', async () => {
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Browser-tabs')).not.toBeNull());
+
+        for (const name of PANELS) {
+            const tab = [...container.querySelectorAll('.Browser-tab a')].find(
+                (a) => a.textContent?.toLowerCase() === name,
+            ) as HTMLElement;
+            expect(tab, `tab ${name} exists`).toBeTruthy();
+            tab.click();
+
+            await waitFor(() => {
+                const panel = container.querySelector('.Browser-panel.is-active');
+                expect(panel, `panel ${name} is active`).not.toBeNull();
+                expect(panel?.textContent?.trim().length, `panel ${name} has content`).toBeGreaterThan(0);
+            });
+        }
     });
 });
 
@@ -398,5 +437,31 @@ describe('navigating between components', () => {
         link.click();
 
         await waitFor(() => expect(container.querySelector('.Pen-title')?.textContent).toContain('Field'));
+    });
+});
+
+describe('the sidebar toggle', () => {
+    it('toggles is-closed on the Frame root, which is what the stylesheet keys off', async () => {
+        // Three stylesheets match `.Frame.is-closed` — the header icon swap, the
+        // file browser and the meta layout. A class on any other element, or
+        // under any other name, silently does nothing.
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Header-navToggle')).not.toBeNull());
+
+        const frame = document.getElementById('frame')!;
+        expect(frame.classList.contains('is-closed')).toBe(false);
+
+        (container.querySelector('.Header-navToggle') as HTMLElement).click();
+        await waitFor(() => expect(frame.classList.contains('is-closed')).toBe(true));
+
+        (container.querySelector('.Header-navToggle') as HTMLElement).click();
+        await waitFor(() => expect(frame.classList.contains('is-closed')).toBe(false));
+    });
+
+    it('renders both toggle icons, since the stylesheet swaps between them', async () => {
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Header-navToggle')).not.toBeNull());
+        expect(container.querySelector('.Header-navToggleIcon--open')).not.toBeNull();
+        expect(container.querySelector('.Header-navToggleIcon--closed')).not.toBeNull();
     });
 });

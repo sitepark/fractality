@@ -16,6 +16,11 @@ export function Header({ onToggleSidebar }: HeaderProps) {
                 onClick={onToggleSidebar}
                 aria-label="Toggle navigation"
             >
+                {/*
+                    Both icons render; the stylesheet shows one and hides the
+                    other depending on `.Frame.is-closed`.
+                */}
+                <div className="Header-navToggleIcon Header-navToggleIcon--open">×</div>
                 <div className="Header-navToggleIcon Header-navToggleIcon--closed">☰</div>
             </button>
             <a href="/" className="Header-title">

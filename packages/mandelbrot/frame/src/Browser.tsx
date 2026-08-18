@@ -17,6 +17,11 @@ const label = (panel: Panel): string => {
 /**
  * The tabbed panel beneath the Preview. Mirrors `views/partials/browser/`.
  *
+ * Only the open panel is rendered, where the template layer rendered all of them
+ * and toggled visibility. Either way the stylesheet decides what is visible:
+ * `.Browser-panel` is `display: none` unless it also carries `is-active`, so a
+ * rendered panel without that class is present in the DOM and invisible.
+ *
  * Panels that need data fetch it the first time they are opened, which is the
  * reason the entity payload is split by panel at all — a navigation costs a few
  * hundred bytes rather than the component's whole notes, context and source.
@@ -93,7 +98,7 @@ export function Browser({ entity }: { entity: EntityPayload }) {
 function Panel({ panel, entity, body }: { panel: Panel; entity: EntityPayload; body: string | null }) {
     if (panel === 'info') {
         return (
-            <div className="Browser-panel Browser-info" id="browser-panel-info">
+            <div className="Browser-panel Browser-info is-active" id="browser-panel-info">
                 <dl className="Meta">
                     <dt className="Meta-term">Handle</dt>
                     <dd className="Meta-description">@{entity.handle}</dd>
@@ -118,7 +123,7 @@ function Panel({ panel, entity, body }: { panel: Panel; entity: EntityPayload; b
 
     if (panel === 'resources') {
         return (
-            <div className="Browser-panel Browser-resources" id="browser-panel-resources">
+            <div className="Browser-panel Browser-resources is-active" id="browser-panel-resources">
                 {entity.resources.length ? (
                     <ul className="FileBrowser-items">
                         {entity.resources.map((resource) => (
@@ -135,12 +140,12 @@ function Panel({ panel, entity, body }: { panel: Panel; entity: EntityPayload; b
     }
 
     if (body === null) {
-        return <div className="Browser-panel" id={`browser-panel-${panel}`} />;
+        return <div className="Browser-panel is-active" id={`browser-panel-${panel}`} />;
     }
 
     if (panel === 'notes') {
         return (
-            <div className="Browser-panel Browser-notes" id="browser-panel-notes">
+            <div className="Browser-panel Browser-notes is-active" id="browser-panel-notes">
                 <div className="Prose Prose--condensed">
                     {body ? (
                         <div dangerouslySetInnerHTML={{ __html: body }} />
@@ -153,7 +158,7 @@ function Panel({ panel, entity, body }: { panel: Panel; entity: EntityPayload; b
     }
 
     return (
-        <div className="Browser-panel Browser-code" id={`browser-panel-${panel}`}>
+        <div className="Browser-panel Browser-code is-active" id={`browser-panel-${panel}`}>
             <code className={`Code Code--lang-${panel === 'context' ? 'json' : 'view'} hljs`}>
                 {/*
                     Highlighted markup, produced client-side from source the

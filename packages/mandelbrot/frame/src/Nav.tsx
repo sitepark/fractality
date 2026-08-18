@@ -52,7 +52,7 @@ function Collection({
     const id = `tree-collection-${node.handle}`;
 
     return (
-        <li className={`Tree-item Tree-collection Tree-depth-${depth}`} id={id}>
+        <li className={`Tree-item Tree-collection Tree-depth-${depth}${expanded ? '' : ' is-closed'}`} id={id}>
             <button
                 type="button"
                 className="Tree-collectionLabel"

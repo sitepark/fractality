@@ -100,6 +100,14 @@ describe('writePreviews', () => {
         expect(body).not.toMatch(/<script/i);
     });
 
+    it('injects no live-reload script into a static build', async () => {
+        // There is no server to subscribe to. Shipping the dev server's
+        // subscription in a built site would leave every Preview holding open a
+        // request to an endpoint that does not exist.
+        const html = await readFile(path.join(dest, 'components', 'render', 'render.html'), 'utf8');
+        expect(html).not.toContain('EventSource');
+    });
+
     it('renders patterns without involving any theme view', async () => {
         // The engine and its views are gone; what lands here is the adapter's
         // output for the user's own template.

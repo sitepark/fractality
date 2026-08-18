@@ -852,3 +852,27 @@ describe('what the tree starts expanded', () => {
         });
     });
 });
+
+describe('opening the preview in its own window', () => {
+    it('links the Pen title to the preview, targeted at a new window', async () => {
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Pen-previewLink')).not.toBeNull());
+
+        const link = container.querySelector('.Pen-previewLink') as HTMLAnchorElement;
+        expect(link.getAttribute('href')).toBe('/components/preview/button--default');
+        expect(link.getAttribute('target')).toBe('_blank');
+        // Without noopener the opened window can reach back through window.opener.
+        expect(link.getAttribute('rel')).toContain('noopener');
+        expect(link.querySelector('svg')).not.toBeNull();
+    });
+
+    it('points at the variant currently shown, not the default', async () => {
+        window.history.pushState(null, '', '/components/detail/tabs--pill');
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Pen-previewLink')).not.toBeNull());
+
+        expect(container.querySelector('.Pen-previewLink')?.getAttribute('href')).toBe(
+            '/components/preview/tabs--pill',
+        );
+    });
+});

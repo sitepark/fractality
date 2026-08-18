@@ -108,6 +108,22 @@ describe('createDevHost', () => {
         expect(html).toContain('/@vite/client');
     });
 
+    it('gives a Preview its own live-reload subscription', async () => {
+        // A Preview can be opened as a window of its own, outside the Frame.
+        // browser-sync used to inject an equivalent into everything it served;
+        // without this a detached Preview would never reload.
+        const html = await fetch(`${origin}/components/preview/render`).then((r) => r.text());
+        expect(html).toContain('EventSource');
+        expect(html).toContain(host.liveReloadRoute);
+    });
+
+    it('still keeps Vite out of the Preview', async () => {
+        // The injected script is ours, not a bundler's: the user's templates
+        // must not enter Vite's module graph.
+        const html = await fetch(`${origin}/components/preview/render`).then((r) => r.text());
+        expect(html).not.toContain('/@vite/client');
+    });
+
     it('reports a pattern render failure inside the iframe, not as a server error', async () => {
         const res = await fetch(`${origin}/components/preview/render-error-broken`);
         expect(res.status).toBe(200);

@@ -3,12 +3,36 @@ import { Router, type RequestHandler } from 'express';
 import { routedEntities } from '../build/entities.js';
 import type { SourceApp } from '../payload/source-types.js';
 import { gateOnIdle, type IdleGateable } from './gate.js';
+import { LIVE_RELOAD_ROUTE } from './live-reload.js';
 
 export interface PreviewRoutesOptions {
     app: SourceApp & IdleGateable;
     previewRoute?: string;
     renderRoute?: string;
+    /**
+     * Where the live-reload stream lives, or false to inject nothing.
+     *
+     * Only the dev server injects this. The static build writes the adapter's
+     * output untouched — there is no server to subscribe to.
+     */
+    liveReloadRoute?: string | false;
 }
+
+/**
+ * Reloads a Preview when the library rebuilds.
+ *
+ * Needed because a Preview can be opened as a window of its own, outside the
+ * Frame, and nothing else would tell it. browser-sync used to inject an
+ * equivalent into every page it served; with that gone, the document has to
+ * carry its own subscription.
+ *
+ * Inside the Frame's iframe this is redundant — the Frame remounts it on the
+ * same signal — but harmless, and there is no way to tell the two apart: they
+ * are the same URL.
+ */
+const liveReloadScript = (route: string): string =>
+    `<script>(function(){try{var s=new EventSource(${JSON.stringify(route)});` +
+    `s.addEventListener('rebuild',function(){location.reload()});}catch(e){}})()</script>`;
 
 const escapeHtml = (value: string): string =>
     value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -25,7 +49,15 @@ const escapeHtml = (value: string): string =>
  * Specified in docs/specs/client-rendered-frame.md §8.1.
  */
 export function previewRoutes(options: PreviewRoutesOptions): Router {
-    const { app, previewRoute = '/components/preview', renderRoute = '/components/render' } = options;
+    const {
+        app,
+        previewRoute = '/components/preview',
+        renderRoute = '/components/render',
+        liveReloadRoute = LIVE_RELOAD_ROUTE,
+    } = options;
+
+    const withLiveReload = (markup: string): string =>
+        liveReloadRoute === false ? markup : markup + liveReloadScript(liveReloadRoute);
 
     const router = Router();
     router.use(gateOnIdle(app));
@@ -38,7 +70,7 @@ export function previewRoutes(options: PreviewRoutesOptions): Router {
 
             match.entity.render(null, {}, { preview, collate: true }).then(
                 (markup: string) => {
-                    res.type('html').send(markup);
+                    res.type('html').send(withLiveReload(markup));
                 },
                 (error: unknown) => {
                     // A user's template failing is ordinary during development.

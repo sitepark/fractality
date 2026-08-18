@@ -7,6 +7,8 @@ import type { EntityPayload, TreePayload } from '@fractality/web/contract';
 import { resolveRouteUrl } from './frctl.js';
 import { Browser } from './Browser.js';
 import { StatusTag } from './Status.js';
+import { OpenInBrowserIcon } from './Icons.js';
+import { frctl } from './frctl.js';
 
 interface PenProps {
     entity: EntityPayload;
@@ -60,12 +62,26 @@ export function Pen({ entity, statuses, selected }: PenProps) {
 
     const previewUrl = variant ? resolveRouteUrl(variant.previewUrl) : undefined;
 
+    const previewLabel =
+        (frctl.labels?.components as Record<string, Record<string, string>> | undefined)?.preview?.label ?? 'Preview';
+
     return (
         <div className={`Pen${preview.dragging ? ' is-resizing' : ''}`}>
             <div className="Pen-panel Pen-header">
                 <h1 className="Pen-title">
-                    <a className="Pen-previewLink" href={previewUrl} title="Preview">
+                    <a
+                        className="Pen-previewLink"
+                        href={previewUrl}
+                        // Opened as a window of its own, which is why the dev
+                        // server injects a live-reload subscription into Preview
+                        // documents: nothing else would tell a detached window
+                        // that the library rebuilt.
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title={previewLabel}
+                    >
                         {entity.title}
+                        <OpenInBrowserIcon />
                     </a>
                 </h1>
                 <span className="Pen-preview-size">{size}</span>

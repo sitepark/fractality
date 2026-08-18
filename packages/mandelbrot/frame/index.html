@@ -1,12 +1,17 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr" class="has-js">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Fractality</title>
     </head>
     <body>
-        <div id="frame"></div>
+        <!--
+            The mount point *is* the Frame element rather than a wrapper around
+            it: the stylesheet sizes .Frame at 100% of its parent, so an extra
+            div between body and .Frame would collapse the layout.
+        -->
+        <div id="frame" class="Frame"></div>
         <noscript>The Fractality Frame requires JavaScript.</noscript>
         <script type="module" src="/src/main.tsx"></script>
     </body>

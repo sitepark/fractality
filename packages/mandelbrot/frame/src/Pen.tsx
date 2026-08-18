@@ -1,27 +1,44 @@
 import { useState } from 'react';
-import type { EntityPayload } from '@fractality/web/contract';
+import type { EntityPayload, TreePayload } from '@fractality/web/contract';
 import { resolveRouteUrl } from './frctl.js';
 import { Browser } from './Browser.js';
+import { StatusTag } from './Status.js';
+
+interface PenProps {
+    entity: EntityPayload;
+    statuses: TreePayload['status'];
+}
 
 /**
- * The component workbench: the Preview iframe plus the Browser beneath it.
+ * The component workbench. Mirrors `views/layouts/pen.nunj` and its partials.
  *
- * Switching variants is local state, not navigation — which is why variants ride
- * along inside their component's payload instead of being fetched separately.
+ * Switching variants is local state rather than navigation, which is why
+ * variants ride along inside their component's payload instead of each being
+ * fetched separately.
  */
-export function Pen({ entity }: { entity: EntityPayload }) {
+export function Pen({ entity, statuses }: PenProps) {
     const [variant, setVariant] = useState(() => entity.variants.find((v) => v.isDefault) ?? entity.variants[0]);
 
+    const previewUrl = variant ? resolveRouteUrl(variant.previewUrl) : undefined;
+
     return (
-        <main className="Pen">
-            <h1 className="Pen-title">{entity.title}</h1>
+        <div className="Pen">
+            <div className="Pen-panel Pen-header">
+                <h1 className="Pen-title">
+                    <a className="Pen-previewLink" href={previewUrl} title="Preview">
+                        {entity.title}
+                    </a>
+                </h1>
+                <StatusTag status={entity.status ? statuses[entity.status] : undefined} />
+            </div>
 
             {entity.variants.length > 1 ? (
-                <div className="Pen-variants">
+                <div className="Pen-panel Pen-variants">
                     {entity.variants.map((v) => (
                         <button
-                            key={v.handle}
                             type="button"
+                            key={v.handle}
+                            className={`Pen-variant${v.handle === variant?.handle ? ' is-active' : ''}`}
                             aria-pressed={v.handle === variant?.handle}
                             onClick={() => setVariant(v)}
                         >
@@ -31,15 +48,24 @@ export function Pen({ entity }: { entity: EntityPayload }) {
                 </div>
             ) : null}
 
-            {variant ? (
-                <iframe
-                    className="Preview"
-                    title={`Preview of ${variant.label}`}
-                    src={resolveRouteUrl(variant.previewUrl)}
-                />
-            ) : null}
+            <div className="Pen-panel Pen-preview Preview">
+                <div className="Preview-wrapper">
+                    <div className="Preview-resizer">
+                        {previewUrl ? (
+                            <iframe
+                                className="Preview-iframe"
+                                title={`Preview of ${variant?.label ?? entity.label}`}
+                                src={previewUrl}
+                                frameBorder="0"
+                            />
+                        ) : null}
+                    </div>
+                </div>
+            </div>
 
-            <Browser entity={entity} />
-        </main>
+            <div className="Pen-panel Pen-info">
+                <Browser entity={entity} />
+            </div>
+        </div>
     );
 }

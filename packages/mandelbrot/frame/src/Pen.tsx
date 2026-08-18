@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useResizable } from './useResizable.js';
 import { read, write } from './storage.js';
 import type { EntityPayload, TreePayload } from '@fractality/web/contract';
@@ -9,6 +9,15 @@ import { StatusTag } from './Status.js';
 interface PenProps {
     entity: EntityPayload;
     statuses: TreePayload['status'];
+    /**
+     * The handle the current route names, which may be a variant.
+     *
+     * A variant route resolves to its component's payload — that is what makes
+     * one payload serve every variant — so the URL is the only thing that says
+     * *which* variant is being looked at. Without it every variant of a
+     * component renders the default one.
+     */
+    selected: string;
 }
 
 /**
@@ -18,8 +27,20 @@ interface PenProps {
  * variants ride along inside their component's payload instead of each being
  * fetched separately.
  */
-export function Pen({ entity, statuses }: PenProps) {
-    const [variant, setVariant] = useState(() => entity.variants.find((v) => v.isDefault) ?? entity.variants[0]);
+export function Pen({ entity, statuses, selected }: PenProps) {
+    // Derived rather than initialised-at-mount. The payload arrives after the
+    // route changes, so a `useState` initialiser reads whichever entity was
+    // still on screen — the previous component. The switcher's own choice is a
+    // separate override, cleared whenever the route names a different entity.
+    const [override, setOverride] = useState<string | null>(null);
+
+    useEffect(() => setOverride(null), [entity.handle, selected]);
+
+    const variant =
+        entity.variants.find((v) => v.handle === override) ??
+        entity.variants.find((v) => v.handle === selected) ??
+        entity.variants.find((v) => v.isDefault) ??
+        entity.variants[0];
 
     // Keys match the legacy theme's, so an upgrading user keeps their layout.
     const preview = useResizable({ key: 'pen.previewHeight', fallback: 400, min: 80 });
@@ -52,7 +73,7 @@ export function Pen({ entity, statuses }: PenProps) {
                             key={v.handle}
                             className={`Pen-variant${v.handle === variant?.handle ? ' is-active' : ''}`}
                             aria-pressed={v.handle === variant?.handle}
-                            onClick={() => setVariant(v)}
+                            onClick={() => setOverride(v.handle)}
                         >
                             {v.label}
                         </button>

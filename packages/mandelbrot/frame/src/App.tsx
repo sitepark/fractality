@@ -124,9 +124,15 @@ export function App() {
                                 // in the same position — so without this the
                                 // iframe kept showing the previous component
                                 // while the URL and payload had already moved on.
+                                // Keyed by the entity, not by the route: the
+                                // payload arrives after the route changes, so
+                                // keying on the route remounts against the
+                                // previous component's data. Variant selection
+                                // follows `selected` instead of a remount.
                                 key={`${entity.handle}:${generation}`}
                                 entity={entity}
                                 statuses={tree.status}
+                                selected={handleFromPath(route)}
                             />
                         ) : doc && tree ? (
                             <Doc doc={doc} statuses={tree.status} />

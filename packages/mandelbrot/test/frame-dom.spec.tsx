@@ -17,6 +17,16 @@ const tree: TreePayload = {
             children: [
                 { handle: 'button', label: 'Button', status: 'components:ready' },
                 { handle: 'field', label: 'Field', tags: ['form-control'] },
+                {
+                    // Multi-variant components render as collections in the real
+                    // tree, with one child per variant.
+                    handle: 'tabs',
+                    label: 'Tabs',
+                    children: [
+                        { handle: 'tabs--default', label: 'Default' },
+                        { handle: 'tabs--pill', label: 'Pill' },
+                    ],
+                },
             ],
         },
     ],
@@ -52,9 +62,49 @@ const entity: EntityPayload = {
     ],
 };
 
+const tabsEntity: EntityPayload = {
+    contractVersion: 1,
+    handle: 'tabs',
+    label: 'Tabs',
+    title: 'Tabs',
+    viewPath: 'nav/tabs/tabs.hbs',
+    references: [],
+    referencedBy: [],
+    resources: [],
+    variants: [
+        {
+            handle: 'tabs--default',
+            label: 'Default',
+            name: 'default',
+            isDefault: true,
+            previewUrl: '/components/preview/tabs--default',
+        },
+        {
+            handle: 'tabs--pill',
+            label: 'Pill',
+            name: 'pill',
+            isDefault: false,
+            previewUrl: '/components/preview/tabs--pill',
+        },
+    ],
+};
+
 const payloads: Record<string, unknown> = {
     '/tree.json': tree,
     '/components/detail/button.json': entity,
+    // A variant route resolves to its component's payload: that is the design,
+    // and the reason the URL is the only thing that identifies the variant.
+    '/components/detail/tabs.json': tabsEntity,
+    // Both variant routes resolve to the component's payload: that is the
+    // design, and why the URL is the only thing identifying the variant.
+    '/components/detail/tabs--default.json': tabsEntity,
+    '/components/detail/tabs--pill.json': tabsEntity,
+    '/components/detail/tabs.notes.json': {
+        contractVersion: 1,
+        handle: 'tabs',
+        notes: null,
+        variants: [],
+    },
     '/docs/index.json': {
         contractVersion: 1,
         handle: 'index',
@@ -221,9 +271,12 @@ describe('the Frame renders the markup the stylesheet expects', () => {
     });
 
     it('offers a variant switcher when there is more than one variant', async () => {
-        await mount();
-        await waitFor(() => expect(screen.getByText('Primary')).toBeTruthy());
-        expect(screen.getByText('Default')).toBeTruthy();
+        // Scoped to the Pen: variant labels also appear in the tree, where a
+        // multi-variant component lists its variants as children.
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Pen-variants')).not.toBeNull());
+        const labels = [...container.querySelectorAll('.Pen-variant')].map((b) => b.textContent);
+        expect(labels).toEqual(['Default', 'Primary']);
     });
 
     it('labels browser tabs from theme config', async () => {
@@ -606,5 +659,42 @@ describe('icon buttons', () => {
                 throw new Error(`${selector} renders no svg — it would be invisible`);
             }
         }
+    });
+});
+
+describe('opening a variant directly', () => {
+    it('previews the variant the url names, not the default', async () => {
+        // Both routes resolve to the same payload, so a Pen that picks the
+        // default variant renders the same thing for every variant of a
+        // component — which looks like the preview failing to update at all.
+        window.history.pushState(null, '', '/components/detail/tabs--pill');
+        const { container } = await mount();
+
+        await waitFor(() =>
+            expect(container.querySelector('.Preview-iframe')?.getAttribute('src')).toBe(
+                '/components/preview/tabs--pill',
+            ),
+        );
+    });
+
+    it('updates when moving between two variants of the same component', async () => {
+        window.history.pushState(null, '', '/components/detail/tabs--pill');
+        const { container } = await mount();
+        await waitFor(() =>
+            expect(container.querySelector('.Preview-iframe')?.getAttribute('src')).toBe(
+                '/components/preview/tabs--pill',
+            ),
+        );
+
+        const link = [...container.querySelectorAll('.Tree-entityLink')].find(
+            (a) => a.getAttribute('href') === '/components/detail/tabs--default',
+        ) as HTMLElement;
+        link.click();
+
+        await waitFor(() =>
+            expect(container.querySelector('.Preview-iframe')?.getAttribute('src')).toBe(
+                '/components/preview/tabs--default',
+            ),
+        );
     });
 });

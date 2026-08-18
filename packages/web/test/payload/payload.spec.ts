@@ -12,6 +12,7 @@ import {
     type SourceComponent,
 } from '../../src/payload/index.js';
 import { CONTRACT_VERSION } from '../../src/contract/index.js';
+import { entityHandles } from '../../src/build/routes.js';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const example = path.join(__dirname, '..', '..', '..', '..', 'examples', 'handlebars');
@@ -138,6 +139,26 @@ describe('buildEntityPayload', () => {
         const payload = buildEntityPayload(find('render'), buildStatusTable(app));
         for (const ref of [...payload.references, ...payload.referencedBy]) {
             expect(typeof ref).toBe('string');
+        }
+    });
+
+    it('only ever points a preview at a handle that is routed', () => {
+        // The invariant this file was missing. previewUrl used to name the
+        // variant handle unconditionally, but a variant is only routed when its
+        // component has more than one — so for every single-variant component the
+        // iframe requested a URL nothing served and got the Frame catch-all,
+        // rendering the Frame inside itself. Asserted across the whole library,
+        // because the broken case was the common one and the working case was
+        // the exception.
+        const routed = new Set(entityHandles(app));
+        const statuses = buildStatusTable(app);
+
+        for (const component of components) {
+            if (component.isHidden) continue;
+            for (const variant of buildEntityPayload(component, statuses).variants) {
+                const handle = variant.previewUrl.replace('/components/preview/', '');
+                expect(routed.has(handle)).toBe(true);
+            }
         }
     });
 

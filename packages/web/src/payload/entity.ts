@@ -37,13 +37,22 @@ function resourcesOf(component: SourceComponent): ResourceSummary[] {
  * payload below.
  */
 export function buildEntityPayload(component: SourceComponent, statuses: StatusTable): EntityPayload {
-    const variants: VariantSummary[] = visibleVariants(component).map((variant) => {
+    const visible = visibleVariants(component);
+
+    // A variant handle is only routable when the component has more than one
+    // visible variant — the rule `entityHandles` applies when building the route
+    // table. Pointing a preview at `<component>--default` for a single-variant
+    // component addresses a route that was never created, and the request falls
+    // through to the Frame catch-all: the iframe renders the Frame inside itself.
+    const addressable = visible.length > 1;
+
+    const variants: VariantSummary[] = visible.map((variant) => {
         const summary: VariantSummary = {
             handle: variant.handle,
             label: variant.label,
             name: variant.name,
             isDefault: variant.isDefault,
-            previewUrl: `/components/preview/${variant.handle}`,
+            previewUrl: `/components/preview/${addressable ? variant.handle : component.handle}`,
         };
         const status = statuses.keyOf('components', variant.status);
         if (status) summary.status = status;

@@ -16,6 +16,15 @@ export interface DevHostOptions {
     config: FrctlConfig;
     /** Vite's root. A theme author's source tree; irrelevant for a prebuilt theme. */
     root?: string;
+    /**
+     * The theme's static assets.
+     *
+     * Passed in rather than mounted by the caller afterwards: the Frame
+     * catch-all is registered here, and Express matches middleware in
+     * registration order, so anything added after this function returns is
+     * unreachable.
+     */
+    staticMounts?: Array<{ path: string; mount: string }>;
 }
 
 export interface DevHost {
@@ -45,8 +54,9 @@ export const PREVIEW_RELOAD_EVENT = 'fractality:preview-reload';
  *
  * 1. Preview and render routes — the user's templates, never transformed.
  * 2. Payload routes — the data contract.
- * 3. `vite.middlewares`.
- * 4. The Frame catch-all, **last**. It matches everything, `/@vite/client`
+ * 3. The theme's static assets.
+ * 4. `vite.middlewares`.
+ * 5. The Frame catch-all, **last**. It matches everything, `/@vite/client`
  *    included, so anything after it is unreachable and HMR silently dies.
  *
  * `appType: 'custom'` drops Vite's own HTML-fallback and 404 middlewares so it
@@ -55,7 +65,7 @@ export const PREVIEW_RELOAD_EVENT = 'fractality:preview-reload';
  * Specified in docs/specs/client-rendered-frame.md §8.
  */
 export async function createDevHost(options: DevHostOptions): Promise<DevHost> {
-    const { app, shell, config, root } = options;
+    const { app, shell, config, root, staticMounts = [] } = options;
 
     const host = express();
     const server = createHttpServer(host);
@@ -73,6 +83,11 @@ export async function createDevHost(options: DevHostOptions): Promise<DevHost> {
 
     host.use(previewRoutes({ app }));
     host.use(payloadRoutes({ app, treeFile: config.treeFile }));
+
+    for (const entry of staticMounts) {
+        host.use(entry.mount, express.static(entry.path));
+    }
+
     host.use(vite.middlewares);
 
     // Last. Every route the Frame owns resolves to the same Shell — that is what

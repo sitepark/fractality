@@ -1,5 +1,4 @@
 import { readFile } from 'node:fs/promises';
-import express from 'express';
 import getPort, { portNumbers } from 'get-port';
 import { mixins } from '@fractality/core';
 
@@ -81,13 +80,8 @@ export default class Server extends mix(Emitter) {
             app: this._app,
             shell,
             config: this._frctlConfig(shellPath),
+            staticMounts: this._theme.static(),
         });
-
-        // Theme assets are served as ordinary static files, ahead of the Frame
-        // catch-all but after the routes that answer with data.
-        for (const mount of this._theme.static()) {
-            host.express.use(mount.mount, express.static(mount.path));
-        }
 
         const port = this._config.port ?? (await getPort({ port: portNumbers(3000, 3100) }));
         this._port = await host.listen(port);

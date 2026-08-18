@@ -36,7 +36,13 @@ beforeAll(async () => {
     instance.docs.set('path', path.join(example, 'docs'));
     await instance.load();
 
-    host = await createDevHost({ app: instance, shell: SHELL, config, root: example });
+    host = await createDevHost({
+        app: instance,
+        shell: SHELL,
+        config,
+        root: example,
+        staticMounts: [{ path: path.join(example, 'components'), mount: '/themes/example' }],
+    });
     const port = await host.listen();
     origin = `http://127.0.0.1:${port}`;
 }, 60000);
@@ -116,6 +122,16 @@ describe('createDevHost', () => {
             () => false,
         );
         expect(stray).toBe(false);
+    });
+
+    it('serves the theme static assets instead of swallowing them in the catch-all', async () => {
+        // Found by running the real dev server: mounting these after
+        // createDevHost returns puts them behind the Frame catch-all, so every
+        // stylesheet came back as HTML with a 200 and the Frame looked unstyled
+        // for no visible reason.
+        const res = await fetch(`${origin}/themes/example/render/render.hbs`);
+        expect(res.status).toBe(200);
+        expect(await res.text()).not.toContain('id="frame"');
     });
 
     it('can broadcast a preview reload over that websocket', () => {

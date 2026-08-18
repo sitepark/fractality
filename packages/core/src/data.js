@@ -44,13 +44,12 @@ export default {
         const format = utils.lang(filePath, true).mode;
         if (format === 'js' || format === 'javascript') {
             try {
-                filePath = Path.relative(__dirname, filePath);
-
                 // always delete from require cache, to prevent stale content when loading cjs files
                 delete require.cache[require.resolve(filePath)];
-
                 const { mtimeMs } = await stat(filePath);
-                let data = (await import(`${filePath}?t=${mtimeMs}`)).default;
+
+                const relativePath = Path.relative(__dirname, filePath);
+                let data = (await import(`${relativePath}?t=${mtimeMs}`)).default;
                 if (typeof data === 'function') {
                     data = data();
                 }

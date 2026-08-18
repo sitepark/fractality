@@ -104,7 +104,17 @@ export function App() {
                                 <p className="Error-message">{error}</p>
                             </div>
                         ) : entity && tree ? (
-                            <Pen entity={entity} statuses={tree.status} />
+                            <Pen
+                                // Keyed by handle so navigating remounts the Pen.
+                                // Its selected variant is useState-initialised
+                                // from the entity, and React reuses an instance
+                                // in the same position — so without this the
+                                // iframe kept showing the previous component
+                                // while the URL and payload had already moved on.
+                                key={entity.handle}
+                                entity={entity}
+                                statuses={tree.status}
+                            />
                         ) : doc && tree ? (
                             <Doc doc={doc} statuses={tree.status} />
                         ) : asset ? (

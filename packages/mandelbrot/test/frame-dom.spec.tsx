@@ -63,6 +63,31 @@ const payloads: Record<string, unknown> = {
         path: '',
         content: '# Hello\n\nSome **documentation**.',
     },
+    '/components/detail/field.json': {
+        contractVersion: 1,
+        handle: 'field',
+        label: 'Field',
+        title: 'Field',
+        viewPath: 'forms/field/field.hbs',
+        references: [],
+        referencedBy: [],
+        resources: [],
+        variants: [
+            {
+                handle: 'field--default',
+                label: 'Default',
+                name: 'default',
+                isDefault: true,
+                previewUrl: '/components/preview/field',
+            },
+        ],
+    },
+    '/components/detail/field.notes.json': {
+        contractVersion: 1,
+        handle: 'field',
+        notes: null,
+        variants: [],
+    },
     '/components/detail/button.view.json': {
         contractVersion: 1,
         handle: 'button',
@@ -89,6 +114,11 @@ const payloads: Record<string, unknown> = {
 };
 
 beforeEach(() => {
+    // The Frame persists panel layout and the open Browser tab, so state leaks
+    // between tests otherwise — one test clicking "view" would open the next
+    // one on it.
+    localStorage.clear();
+
     window.frctl = {
         env: 'server',
         themeMount: '/themes/mandelbrot/frame',
@@ -331,5 +361,42 @@ describe('search', () => {
         const clear = container.querySelector('.Search-clearButton') as HTMLElement;
         clear.click();
         await waitFor(() => expect(container.querySelectorAll('.Tree-entityLink').length).toBeGreaterThan(1));
+    });
+});
+
+describe('navigating between components', () => {
+    it('updates the preview iframe, not just the url', async () => {
+        // The Pen initialises its selected variant with useState, and React
+        // reuses a component instance in the same position — so the iframe kept
+        // pointing at the previous component while the URL and the payload had
+        // already moved on.
+        const { container } = await mount();
+        await waitFor(() =>
+            expect(container.querySelector('.Preview-iframe')?.getAttribute('src')).toBe(
+                '/components/preview/button--default',
+            ),
+        );
+
+        const link = [...container.querySelectorAll('.Tree-entityLink')].find(
+            (a) => a.getAttribute('href') === '/components/detail/field',
+        ) as HTMLElement;
+        link.click();
+
+        await waitFor(() =>
+            expect(container.querySelector('.Preview-iframe')?.getAttribute('src')).toBe('/components/preview/field'),
+        );
+        expect(window.location.pathname).toBe('/components/detail/field');
+    });
+
+    it('shows the newly selected component in the Pen title', async () => {
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Pen-title')).not.toBeNull());
+
+        const link = [...container.querySelectorAll('.Tree-entityLink')].find(
+            (a) => a.getAttribute('href') === '/components/detail/field',
+        ) as HTMLElement;
+        link.click();
+
+        await waitFor(() => expect(container.querySelector('.Pen-title')?.textContent).toContain('Field'));
     });
 });

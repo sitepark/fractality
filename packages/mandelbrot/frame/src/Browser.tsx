@@ -3,6 +3,7 @@ import type { EntityPayload } from '@fractality/web/contract';
 import { fetchContext, fetchNotes, fetchView } from './api.js';
 import { frctl } from './frctl.js';
 import { highlight } from './highlight.js';
+import { read, write } from './storage.js';
 import { renderMarkdown } from './markdown.js';
 
 const PANELS = ['notes', 'context', 'view', 'resources', 'info'] as const;
@@ -21,7 +22,9 @@ const label = (panel: Panel): string => {
  * hundred bytes rather than the component's whole notes, context and source.
  */
 export function Browser({ entity }: { entity: EntityPayload }) {
-    const [open, setOpen] = useState<Panel>('notes');
+    // Persisted because the Pen remounts on navigation: without this, every
+    // component you opened would reset you to the first tab.
+    const [open, setOpen] = useState<Panel>(() => read<Panel>('browser.panel', 'notes'));
     /** Rendered HTML for the open panel, or null while it is still loading. */
     const [body, setBody] = useState<string | null>(null);
 
@@ -72,6 +75,7 @@ export function Browser({ entity }: { entity: EntityPayload }) {
                                 onClick={(event) => {
                                     event.preventDefault();
                                     setOpen(panel);
+                                    write('browser.panel', panel);
                                 }}
                             >
                                 {label(panel)}

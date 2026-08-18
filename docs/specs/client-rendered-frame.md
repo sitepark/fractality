@@ -344,11 +344,23 @@ server on port 24678.
 Two watchers, permanently: `Source#watch()` rebuilds the tree and has no Vite equivalent, and Vite
 ignores `**/node_modules/**` unconditionally.
 
-When a pattern changes, fire a **namespaced custom HMR event** off core's post-rebuild
-`source:updated`; the Frame handles it with `iframe.contentWindow.location.reload()`. `full-reload`
-is wrong — it broadcasts, and only the Frame would hear it and reload itself. Frame state survives
-by construction because the parent never navigates. This is strictly better than today, where
-browser-sync reloads both.
+When a pattern changes, the Frame is told over a **server-sent events stream** off core's
+post-rebuild `source:updated`; it drops its payload cache, refetches what it is showing, and remounts
+the Preview iframe. The Frame itself is never reloaded, so open panels, scroll position and tree
+expansion survive an edit.
+
+> **Amended during implementation (2026-08-18).** This section specified a namespaced custom **HMR**
+> event. That cannot work under the packaging decision: `import.meta.hot` exists only inside modules
+> Vite has transformed, and §7.1 makes the Frame a prebuilt static asset that never enters the
+> consumer's Vite graph. Server-sent events need nothing from the bundler, behave identically in a
+> consumer's project and in this repo, and reconnect on their own.
+>
+> Two things also had to change for any of it to fire: the dev server now calls `app.watch()`, which
+> the rewrite had dropped, and `web.server.watch` now **defaults to true**. It defaulted to false
+> because reloading was browser-sync's job and watching without it achieved nothing — but with the
+> Frame subscribing to rebuilds, a dev server that does not watch cannot tell it anything. Frame state survives
+> by construction because the parent never navigates. This is strictly better than today, where
+> browser-sync reloads both.
 
 ### 8.3 Request gating
 

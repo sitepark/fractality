@@ -9,4 +9,4 @@ export { buildStatic, entityHandles, staticRoutes, writePreviews } from './build
 export { payloadPathFor, writePayloads } from './payload/index.js';
 export { prepareShell, writeShells } from './shell/index.js';
 export type { FrctlConfig } from './shell/index.js';
-export { createDevHost, payloadRoutes, previewRoutes, PREVIEW_RELOAD_EVENT } from './dev/index.js';
+export { createDevHost, liveReloadRoutes, payloadRoutes, previewRoutes, LIVE_RELOAD_ROUTE } from './dev/index.js';

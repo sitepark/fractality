@@ -4,13 +4,14 @@ import { createServer as createViteServer, type ViteDevServer } from 'vite';
 
 import { prepareShell } from '../shell/writer.js';
 import type { FrctlConfig } from '../shell/config.js';
-import type { SourceApp } from '../payload/source-types.js';
+import type { SourceApp, Watchable } from '../payload/source-types.js';
 import type { IdleGateable } from './gate.js';
+import { liveReloadRoutes, LIVE_RELOAD_ROUTE } from './live-reload.js';
 import { payloadRoutes } from './payload-routes.js';
 import { previewRoutes } from './preview-routes.js';
 
 export interface DevHostOptions {
-    app: SourceApp & IdleGateable;
+    app: SourceApp & IdleGateable & Watchable;
     /** The Shell HTML as the theme built it. */
     shell: string;
     config: FrctlConfig;
@@ -33,18 +34,9 @@ export interface DevHost {
     vite: ViteDevServer;
     listen(port?: number): Promise<number>;
     close(): Promise<void>;
-    /**
-     * Tells every Preview iframe to reload, without touching the Frame.
-     *
-     * Fired off core's post-rebuild `source:updated`. A `full-reload` would be
-     * wrong: it broadcasts, and only the Frame would hear it and reload *itself*,
-     * losing exactly the state — open panels, scroll, tree expansion — that
-     * client-side rendering exists to keep.
-     */
-    reloadPreviews(): void;
+    /** Where the Frame subscribes for rebuild notifications. */
+    liveReloadRoute: string;
 }
-
-export const PREVIEW_RELOAD_EVENT = 'fractality:preview-reload';
 
 /**
  * The dev server: a thin Express host with Vite in middleware mode.
@@ -52,11 +44,12 @@ export const PREVIEW_RELOAD_EVENT = 'fractality:preview-reload';
  * **Registration order is load-bearing**, and getting it wrong fails in ways
  * that look like something else:
  *
- * 1. Preview and render routes — the user's templates, never transformed.
- * 2. Payload routes — the data contract.
- * 3. The theme's static assets.
- * 4. `vite.middlewares`.
- * 5. The Frame catch-all, **last**. It matches everything, `/@vite/client`
+ * 1. The live-reload stream.
+ * 2. Preview and render routes — the user's templates, never transformed.
+ * 3. Payload routes — the data contract.
+ * 4. The theme's static assets.
+ * 5. `vite.middlewares`.
+ * 6. The Frame catch-all, **last**. It matches everything, `/@vite/client`
  *    included, so anything after it is unreachable and HMR silently dies.
  *
  * `appType: 'custom'` drops Vite's own HTML-fallback and 404 middlewares so it
@@ -80,6 +73,10 @@ export async function createDevHost(options: DevHostOptions): Promise<DevHost> {
             ws: { server },
         },
     });
+
+    // Before everything: it is a long-lived stream, and must not be gated on a
+    // rebuild it exists to announce.
+    host.use(liveReloadRoutes({ app }));
 
     host.use(previewRoutes({ app }));
     host.use(payloadRoutes({ app, treeFile: config.treeFile }));
@@ -119,8 +116,6 @@ export async function createDevHost(options: DevHostOptions): Promise<DevHost> {
             await vite.close();
             await new Promise<void>((resolve) => server.close(() => resolve()));
         },
-        reloadPreviews() {
-            vite.ws.send({ type: 'custom', event: PREVIEW_RELOAD_EVENT });
-        },
+        liveReloadRoute: LIVE_RELOAD_ROUTE,
     };
 }

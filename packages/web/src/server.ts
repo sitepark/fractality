@@ -3,7 +3,7 @@ import getPort, { portNumbers } from 'get-port';
 import { mixins } from '@fractality/core';
 
 import { createDevHost, type DevHost } from './dev/host.js';
-import type { Loadable, SourceApp } from './payload/source-types.js';
+import type { Loadable, SourceApp, Watchable } from './payload/source-types.js';
 import type { IdleGateable } from './dev/gate.js';
 import type { FrctlConfig } from './shell/config.js';
 import { resolveShellMount } from './shell/mount.js';
@@ -29,11 +29,11 @@ export interface ServerConfig {
 export default class Server extends mix(Emitter) {
     private readonly _theme: Theme;
     private readonly _config: ServerConfig;
-    private readonly _app: SourceApp & IdleGateable & Loadable;
+    private readonly _app: SourceApp & IdleGateable & Loadable & Watchable;
     private _host: DevHost | null = null;
     private _port: number | null = null;
 
-    constructor(theme: Theme, config: ServerConfig, app: SourceApp & IdleGateable & Loadable) {
+    constructor(theme: Theme, config: ServerConfig, app: SourceApp & IdleGateable & Loadable & Watchable) {
         super();
         this._theme = theme;
         this._config = config;
@@ -67,6 +67,16 @@ export default class Server extends mix(Emitter) {
 
         await this._app.load();
 
+        // Watch by default. The old server did this only under --watch, because
+        // reloading was browser-sync's job and watching without it just burned
+        // file handles. Now the Frame subscribes to rebuilds over the live-reload
+        // stream, so a dev server that does not watch cannot tell it anything —
+        // an edit to a template or to context data would never reach the browser.
+        // `watch: false` still opts out.
+        if (this._config.watch !== false) {
+            this._app.watch();
+        }
+
         const shell = await readFile(shellPath, 'utf8').catch(() => {
             // A theme ships its Shell as build output, so this is what a user
             // sees when the theme has not been built — a far more common
@@ -92,6 +102,7 @@ export default class Server extends mix(Emitter) {
     }
 
     async stop(): Promise<void> {
+        this._app.unwatch?.();
         await this._host?.close();
         this._host = null;
         this._port = null;

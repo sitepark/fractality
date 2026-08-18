@@ -6,12 +6,13 @@ import { createDevHost, type DevHost } from '../../src/dev/index.js';
 import { payloadPathFor } from '../../src/payload/paths.js';
 import type { SourceApp } from '../../src/payload/source-types.js';
 import type { IdleGateable } from '../../src/dev/gate.js';
+import type { Watchable } from '../../src/payload/source-types.js';
 import type { FrctlConfig } from '../../src/shell/index.js';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const example = path.join(__dirname, '..', '..', '..', '..', 'examples', 'handlebars');
 
-interface TestApp extends SourceApp, IdleGateable {
+interface TestApp extends SourceApp, IdleGateable, Watchable {
     components: SourceApp['components'] & { set(key: string, value: unknown): void };
     docs: SourceApp['docs'] & { set(key: string, value: unknown): void };
     load(): Promise<unknown>;
@@ -29,9 +30,10 @@ const SHELL = `<!DOCTYPE html><html><head><script type="module" src="./assets/fr
 
 let host: DevHost;
 let origin: string;
+let instance: TestApp & { emit(event: string, ...args: unknown[]): unknown };
 
 beforeAll(async () => {
-    const instance = create() as unknown as TestApp;
+    instance = create() as unknown as TestApp & { emit(event: string, ...args: unknown[]): unknown };
     instance.components.set('path', path.join(example, 'components'));
     instance.docs.set('path', path.join(example, 'docs'));
     await instance.load();
@@ -134,10 +136,29 @@ describe('createDevHost', () => {
         expect(await res.text()).not.toContain('id="frame"');
     });
 
-    it('can broadcast a preview reload over that websocket', () => {
-        // The Preview-reload mechanism: a namespaced custom event rather than
-        // full-reload, which would broadcast and make the Frame reload itself,
-        // discarding the state client-side rendering exists to preserve.
-        expect(() => host.reloadPreviews()).not.toThrow();
+    it('opens a live-reload stream the Frame can subscribe to', async () => {
+        const res = await fetch(`${origin}${host.liveReloadRoute}`);
+        expect(res.status).toBe(200);
+        expect(res.headers.get('content-type')).toContain('text/event-stream');
+
+        const reader = res.body!.getReader();
+        const first = new TextDecoder().decode((await reader.read()).value);
+        expect(first).toContain('event: connected');
+        await reader.cancel();
+    });
+
+    it('tells subscribers when the library is rebuilt', async () => {
+        // The wiring that was missing: the host had a broadcast method and
+        // nothing ever called it, so an edit to a template or to context data
+        // never reached the Frame.
+        const res = await fetch(`${origin}${host.liveReloadRoute}`);
+        const reader = res.body!.getReader();
+        await reader.read(); // the connected frame
+
+        instance.emit('source:updated');
+
+        const next = new TextDecoder().decode((await reader.read()).value);
+        expect(next).toContain('event: rebuild');
+        await reader.cancel();
     });
 });

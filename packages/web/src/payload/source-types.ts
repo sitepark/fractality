@@ -131,6 +131,14 @@ export const isCollection = (item: SourceTreeItem): item is SourceCollection =>
 export const isComponent = (item: SourceTreeItem): item is SourceComponent =>
     (item as SourceComponent).isComponent === true;
 
+/** Core emits `source:updated` once a rebuild has finished. */
+export interface Watchable {
+    on(event: string, listener: (...args: unknown[]) => void): unknown;
+    /** Starts the per-source chokidar watchers. Nothing is emitted without it. */
+    watch(): unknown;
+    unwatch?(): unknown;
+}
+
 /** Loading is what turns a configured app into a populated tree. */
 export interface Loadable {
     load(): Promise<unknown>;

@@ -4,7 +4,7 @@ import Server, { type ServerConfig } from './server.js';
 import Builder, { type BuilderConfig } from './builder.js';
 import Theme from './theme.js';
 import { CONTRACT_VERSION } from './contract/version.js';
-import type { Loadable, SourceApp } from './payload/source-types.js';
+import type { Loadable, SourceApp, Watchable } from './payload/source-types.js';
 import type { IdleGateable } from './dev/gate.js';
 
 const mix = mixins.mix;
@@ -18,10 +18,10 @@ const Emitter = mixins.emitter;
  * theme view is loaded. A theme contributes routes, static assets and a Shell.
  */
 export default class Web extends mix(Configurable, Emitter) {
-    private readonly _app: SourceApp & IdleGateable & Loadable;
+    private readonly _app: SourceApp & IdleGateable & Loadable & Watchable;
     private readonly _themes = new Map<string, Theme>();
 
-    constructor(app: SourceApp & IdleGateable & Loadable & { get(path: string): unknown }) {
+    constructor(app: SourceApp & IdleGateable & Loadable & Watchable & { get(path: string): unknown }) {
         super(app);
         this.config(app.get('web'));
         this._app = app;

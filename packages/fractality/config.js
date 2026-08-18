@@ -112,10 +112,12 @@ export default {
     web: {
         theme: mandelbrot(),
         server: {
-            sync: false,
-            watch: false,
+            // The dev server watches by default. It did not before, because
+            // reloading was browser-sync's job and watching without it achieved
+            // nothing. The Frame now subscribes to rebuilds over the live-reload
+            // stream, so watching is what makes the dev server a dev server.
+            watch: true,
             port: null,
-            syncOptions: {},
         },
         builder: {
             dest: null,

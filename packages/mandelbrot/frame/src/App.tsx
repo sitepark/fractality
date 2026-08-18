@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import type { AssetPayload, DocPayload, EntityPayload, TreePayload } from '@fractality/web/contract';
 import { fetchAsset, fetchDoc, fetchEntity, fetchTree } from './api.js';
+import { useLiveReload } from './useLiveReload.js';
 import { Asset } from './Asset.js';
 import { Doc } from './Doc.js';
 import { Header } from './Header.js';
@@ -29,10 +30,11 @@ export function App() {
     const [asset, setAsset] = useState<AssetPayload | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [sidebarOpen, setSidebarOpen] = useState(true);
+    const generation = useLiveReload();
 
     useEffect(() => {
         fetchTree().then(setTree, (e: unknown) => setError(String(e)));
-    }, []);
+    }, [generation]);
 
     // The Frame is never torn down by navigation — only the panel changes. That
     // is the behaviour static builds did not have at all before.
@@ -113,13 +115,15 @@ export function App() {
                             </div>
                         ) : entity && tree ? (
                             <Pen
-                                // Keyed by handle so navigating remounts the Pen.
+                                // Keyed by handle so navigating remounts the Pen,
+                                // and by generation so a rebuild reloads the
+                                // Preview iframe with it.
                                 // Its selected variant is useState-initialised
                                 // from the entity, and React reuses an instance
                                 // in the same position — so without this the
                                 // iframe kept showing the previous component
                                 // while the URL and payload had already moved on.
-                                key={entity.handle}
+                                key={`${entity.handle}:${generation}`}
                                 entity={entity}
                                 statuses={tree.status}
                             />

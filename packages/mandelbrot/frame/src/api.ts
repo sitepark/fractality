@@ -12,6 +12,15 @@ import { frctl } from './frctl.js';
 
 const cache = new Map<string, Promise<unknown>>();
 
+/**
+ * Drops every cached payload.
+ *
+ * Called when the dev server reports a rebuild. Without this the Frame would
+ * keep serving the tree and payloads it fetched at boot, and an edit to a
+ * template or to context data would never appear.
+ */
+export const invalidate = (): void => cache.clear();
+
 async function getJson<T>(url: string): Promise<T> {
     let pending = cache.get(url) as Promise<T> | undefined;
     if (!pending) {

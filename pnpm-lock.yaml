@@ -345,6 +345,9 @@ importers:
       mark.js:
         specifier: ^8.11.1
         version: 8.11.1
+      marked:
+        specifier: ^18.0.9
+        version: 18.0.9
       normalize.css:
         specifier: ^8.0.1
         version: 8.0.1

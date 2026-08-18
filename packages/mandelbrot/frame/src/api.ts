@@ -1,5 +1,12 @@
 import { payloadPathFor, type PanelSegment } from '@fractality/web/addressing';
-import type { ContextPayload, EntityPayload, NotesPayload, TreePayload, ViewPayload } from '@fractality/web/contract';
+import type {
+    ContextPayload,
+    DocPayload,
+    EntityPayload,
+    NotesPayload,
+    TreePayload,
+    ViewPayload,
+} from '@fractality/web/contract';
 import { frctl } from './frctl.js';
 
 const cache = new Map<string, Promise<unknown>>();
@@ -37,6 +44,21 @@ export const fetchEntity = (pathname: string): Promise<EntityPayload> =>
  */
 const panelUrl = (handle: string, panel: PanelSegment): string =>
     payloadPathFor(`${frctl.siteRoot.replace(/\/$/, '')}/components/detail/${handle}`, panel);
+
+/**
+ * A documentation page.
+ *
+ * Same derivation rule as everything else: the payload is a sibling of the route
+ * the Shell was served at, so the Frame never needs its own route table.
+ */
+export const fetchDoc = (pathname: string): Promise<DocPayload> => {
+    // A static host serves /docs/ from /docs/index.html, so the Frame can find
+    // itself at the bare docs root even though every doc is routed as
+    // /docs/<name>. Normalise before deriving, so both spellings hit one file.
+    const normalised = pathname.replace(/\.html$/, '').replace(/\/+$/, '');
+    const route = /^\/docs$/.test(normalised) ? '/docs/index' : normalised;
+    return getJson<DocPayload>(payloadPathFor(route));
+};
 
 export const fetchNotes = (handle: string): Promise<NotesPayload> => getJson<NotesPayload>(panelUrl(handle, 'notes'));
 

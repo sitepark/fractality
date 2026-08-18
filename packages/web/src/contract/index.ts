@@ -15,6 +15,7 @@ export type { Handle, StatusDefinition, StatusKey, TreeNode, TreePayload } from 
 
 export type {
     ContextPayload,
+    DocPayload,
     EntityPayload,
     NotesPayload,
     ResourceSummary,

@@ -49,7 +49,11 @@ export async function buildStatic(options: BuildStaticOptions): Promise<BuildSta
         .flatten()
         .toArray()
         .filter((component) => !component.isHidden).length;
-    const total = routes.length + 1 + entities.length + components * 3 + entities.length * 2;
+    const docs = app.docs
+        .flatten()
+        .toArray()
+        .filter((doc) => !doc.isHidden).length;
+    const total = routes.length + 1 + entities.length + components * 3 + docs + entities.length * 2;
     let completed = 0;
     const advance = (by: number) => {
         completed += by;
@@ -60,7 +64,7 @@ export async function buildStatic(options: BuildStaticOptions): Promise<BuildSta
     advance(shells.files.length);
 
     const payloads = await writePayloads(app, { dest, detailRoute, treeFile: config.treeFile });
-    advance(1 + payloads.entities.length + payloads.panels.length);
+    advance(1 + payloads.entities.length + payloads.panels.length + payloads.docs.length);
 
     const before = completed;
     const previews = await writePreviews(app, {
@@ -73,7 +77,7 @@ export async function buildStatic(options: BuildStaticOptions): Promise<BuildSta
         routes: routes.length,
         shellBytes: shells.bytes,
         shellTotalBytes: shells.bytes * routes.length,
-        payloadFiles: 1 + payloads.entities.length + payloads.panels.length,
+        payloadFiles: 1 + payloads.entities.length + payloads.panels.length + payloads.docs.length,
         previewFiles: previews.files.length,
         previewErrors: previews.errors,
     };

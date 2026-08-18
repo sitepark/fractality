@@ -1,3 +1,4 @@
+import { routedDocs } from '../payload/doc.js';
 import type { SourceApp, SourceComponent } from '../payload/source-types.js';
 
 /**
@@ -48,6 +49,7 @@ export function componentsByHandle(app: SourceApp): Map<string, SourceComponent>
 
 export interface StaticRoutesOptions {
     detailRoute?: string;
+    docsRoute?: string;
 }
 
 /**
@@ -57,7 +59,13 @@ export interface StaticRoutesOptions {
  * deep links keep working and existing bookmarks survive.
  */
 export function staticRoutes(app: SourceApp, options: StaticRoutesOptions = {}): string[] {
-    const { detailRoute = '/components/detail' } = options;
+    const { detailRoute = '/components/detail', docsRoute = '/docs' } = options;
 
-    return ['/index.html', ...entityHandles(app).map((handle) => `${detailRoute}/${handle}.html`)];
+    return [
+        '/index.html',
+        ...entityHandles(app).map((handle) => `${detailRoute}/${handle}.html`),
+        // Documentation pages get a Shell too: they are Frame routes like any
+        // other, and a deep link to one has to resolve on a dumb static host.
+        ...routedDocs(app.docs.flatten().toArray(), docsRoute).map(({ route }) => `${route}.html`),
+    ];
 }

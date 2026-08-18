@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
-import type { EntityPayload, TreePayload } from '@fractality/web/contract';
-import { fetchEntity, fetchTree } from './api.js';
+import type { DocPayload, EntityPayload, TreePayload } from '@fractality/web/contract';
+import { fetchDoc, fetchEntity, fetchTree } from './api.js';
+import { Doc } from './Doc.js';
 import { Header } from './Header.js';
 import { Nav } from './Nav.js';
 import { Pen } from './Pen.js';
@@ -12,6 +13,7 @@ const handleFromPath = (pathname: string): string =>
         .pop() ?? '';
 
 const isDetailRoute = (pathname: string): boolean => /\/components\/detail\//.test(pathname);
+const isDocRoute = (pathname: string): boolean => /^\/docs(\/|$)/.test(pathname.replace(/\.html$/, ''));
 
 /**
  * Renders the Frame's own chrome. Mirrors `views/layouts/frame.nunj`, minus its
@@ -21,6 +23,7 @@ export function App() {
     const [tree, setTree] = useState<TreePayload | null>(null);
     const [route, setRoute] = useState(() => window.location.pathname);
     const [entity, setEntity] = useState<EntityPayload | null>(null);
+    const [doc, setDoc] = useState<DocPayload | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [sidebarOpen, setSidebarOpen] = useState(true);
 
@@ -37,24 +40,35 @@ export function App() {
     }, []);
 
     useEffect(() => {
-        if (!isDetailRoute(route)) {
-            setEntity(null);
-            return;
-        }
         let cancelled = false;
         setError(null);
-        fetchEntity(route).then(
-            (payload) => !cancelled && setEntity(payload),
-            (e: unknown) => !cancelled && setError(String(e)),
-        );
+
+        if (isDetailRoute(route)) {
+            setDoc(null);
+            fetchEntity(route).then(
+                (payload) => !cancelled && setEntity(payload),
+                (e: unknown) => !cancelled && setError(String(e)),
+            );
+        } else if (isDocRoute(route)) {
+            setEntity(null);
+            fetchDoc(route).then(
+                (payload) => !cancelled && setDoc(payload),
+                (e: unknown) => !cancelled && setError(String(e)),
+            );
+        } else {
+            setEntity(null);
+            setDoc(null);
+        }
+
         return () => {
             cancelled = true;
         };
     }, [route]);
 
     useEffect(() => {
-        document.title = entity ? `${entity.title} | Fractality` : 'Fractality';
-    }, [entity]);
+        const title = entity?.title ?? doc?.title;
+        document.title = title ? `${title} | Fractality` : 'Fractality';
+    }, [entity, doc]);
 
     const navigate = useCallback((href: string) => {
         // pushState keeps the real URL, so a deep link, a refresh and a bookmark
@@ -78,6 +92,8 @@ export function App() {
                             </div>
                         ) : entity && tree ? (
                             <Pen entity={entity} statuses={tree.status} />
+                        ) : doc && tree ? (
+                            <Doc doc={doc} statuses={tree.status} />
                         ) : (
                             <div className="Document">
                                 <div className="Document-header">

@@ -14,6 +14,12 @@ interface BranchProps {
     current: string;
     depth: number;
     onNavigate: (href: string) => void;
+    /**
+     * Where this tree's entities live. Docs are not components: routing them to
+     * /components/detail produces a URL with no payload behind it, which fails
+     * only when someone clicks it.
+     */
+    hrefFor: (handle: string) => string;
 }
 
 /**
@@ -23,7 +29,7 @@ interface BranchProps {
  * toggling a class. Same markup and the same `aria-expanded`, so the stylesheet
  * and assistive technology both see what they did before.
  */
-function Collection({ node, statuses, current, depth, onNavigate }: BranchProps & { node: TreeNode }) {
+function Collection({ node, statuses, current, depth, onNavigate, hrefFor }: BranchProps & { node: TreeNode }) {
     const [open, setOpen] = useState(true);
     const id = `tree-collection-${node.handle}`;
 
@@ -46,6 +52,7 @@ function Collection({ node, statuses, current, depth, onNavigate }: BranchProps 
                         current={current}
                         depth={depth + 1}
                         onNavigate={onNavigate}
+                        hrefFor={hrefFor}
                     />
                 </ul>
             ) : null}
@@ -53,7 +60,7 @@ function Collection({ node, statuses, current, depth, onNavigate }: BranchProps 
     );
 }
 
-function Branch({ nodes, statuses, current, depth, onNavigate }: BranchProps) {
+function Branch({ nodes, statuses, current, depth, onNavigate, hrefFor }: BranchProps) {
     return (
         <>
             {nodes.map((node) => {
@@ -67,11 +74,12 @@ function Branch({ nodes, statuses, current, depth, onNavigate }: BranchProps) {
                             current={current}
                             depth={depth}
                             onNavigate={onNavigate}
+                            hrefFor={hrefFor}
                         />
                     );
                 }
 
-                const href = `/components/detail/${node.handle}`;
+                const href = hrefFor(node.handle);
                 const isCurrent = current === node.handle;
 
                 return (
@@ -104,7 +112,14 @@ function Branch({ nodes, statuses, current, depth, onNavigate }: BranchProps) {
     );
 }
 
-function Tree({ label, nodes, statuses, current, onNavigate }: Omit<BranchProps, 'depth'> & { label: string }) {
+function Tree({
+    label,
+    nodes,
+    statuses,
+    current,
+    onNavigate,
+    hrefFor,
+}: Omit<BranchProps, 'depth'> & { label: string }) {
     if (!nodes.length) return null;
     return (
         <div className="Navigation-group">
@@ -113,7 +128,14 @@ function Tree({ label, nodes, statuses, current, onNavigate }: Omit<BranchProps,
                     <h3 className="Tree-title">{label}</h3>
                 </div>
                 <ul className="Tree-items Tree-depth-1">
-                    <Branch nodes={nodes} statuses={statuses} current={current} depth={2} onNavigate={onNavigate} />
+                    <Branch
+                        nodes={nodes}
+                        statuses={statuses}
+                        current={current}
+                        depth={2}
+                        onNavigate={onNavigate}
+                        hrefFor={hrefFor}
+                    />
                 </ul>
             </div>
         </div>
@@ -131,6 +153,7 @@ export function Nav({ tree, current, onNavigate }: NavProps) {
                     statuses={tree.status}
                     current={current}
                     onNavigate={onNavigate}
+                    hrefFor={(handle) => `/components/detail/${handle}`}
                 />
                 <Tree
                     label="Documentation"
@@ -138,6 +161,7 @@ export function Nav({ tree, current, onNavigate }: NavProps) {
                     statuses={tree.status}
                     current={current}
                     onNavigate={onNavigate}
+                    hrefFor={(handle) => `/docs/${handle}`}
                 />
             </div>
         </nav>

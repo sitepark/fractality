@@ -59,9 +59,16 @@ const exists = async (file: string): Promise<boolean> => {
 };
 
 describe('buildStatic', () => {
-    it('writes a shell for every route the detail page resolves', () => {
+    it('writes a shell for every Frame route', () => {
+        // The index, one per component/variant handle, and one per doc page.
+        // Docs are Frame routes like any other — a deep link to one has to
+        // resolve on a dumb static host too.
+        const docs = app.docs
+            .flatten()
+            .toArray()
+            .filter((doc) => !doc.isHidden).length;
         expect(result.routes).toBe(staticRoutes(app).length);
-        expect(result.routes).toBe(entityHandles(app).length + 1); // + index
+        expect(result.routes).toBe(1 + entityHandles(app).length + docs);
     });
 
     it('resolves a payload for every route a shell was written to', async () => {

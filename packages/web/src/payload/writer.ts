@@ -5,6 +5,7 @@ import { buildContextPayload, buildEntityPayload, buildNotesPayload, buildViewPa
 import { payloadPathFor } from './paths.js';
 import { buildStatusTable } from './status.js';
 import { buildTreePayload } from './tree.js';
+import { buildDocPayload, routedDocs } from './doc.js';
 import { componentsByHandle } from '../build/routes.js';
 import type { SourceApp, SourceComponent } from './source-types.js';
 
@@ -23,12 +24,14 @@ export interface WritePayloadsOptions {
      * through `window.frctl`.
      */
     treeFile?: string;
+    docsRoute?: string;
 }
 
 export interface WritePayloadsResult {
     tree: string;
     entities: string[];
     panels: string[];
+    docs: string[];
 }
 
 const toDiskPath = (dest: string, urlPath: string): string => path.join(dest, urlPath.replace(/^\/+/, ''));
@@ -45,7 +48,7 @@ async function writeJson(file: string, value: unknown): Promise<void> {
  * Specified in docs/specs/client-rendered-frame.md §4 and §5.
  */
 export async function writePayloads(app: SourceApp, options: WritePayloadsOptions): Promise<WritePayloadsResult> {
-    const { dest, detailRoute = '/components/detail', treeFile = '/tree.json' } = options;
+    const { dest, detailRoute = '/components/detail', treeFile = '/tree.json', docsRoute = '/docs' } = options;
 
     const statuses = buildStatusTable(app);
     const byHandle = componentsByHandle(app);
@@ -89,5 +92,12 @@ export async function writePayloads(app: SourceApp, options: WritePayloadsOption
         }
     }
 
-    return { tree: treePath, entities, panels };
+    const docs: string[] = [];
+    for (const { route, doc } of routedDocs(app.docs.flatten().toArray(), docsRoute)) {
+        const file = toDiskPath(dest, payloadPathFor(route));
+        await writeJson(file, buildDocPayload(doc, statuses));
+        docs.push(file);
+    }
+
+    return { tree: treePath, entities, panels, docs };
 }

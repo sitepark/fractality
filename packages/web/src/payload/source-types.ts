@@ -82,9 +82,15 @@ export interface SourceComponent extends Renderable {
 export interface SourceDoc {
     handle: string;
     label: string;
+    title: string;
+    /** URL path below the docs root. Empty string for the index page. */
+    path: string;
     isHidden: boolean;
+    isIndex?: boolean;
     status?: SourceStatus | null;
     tags?: string[];
+    /** Raw Markdown. */
+    content?: string;
 }
 
 export interface SourceAsset {
@@ -119,7 +125,7 @@ export interface Loadable {
 export interface SourceApp {
     get(path: string): unknown;
     components: { items(): SourceTreeItem[]; flatten(): { toArray(): SourceComponent[] } };
-    docs: { items(): SourceTreeItem[] };
+    docs: { items(): SourceTreeItem[]; flatten(): { toArray(): SourceDoc[] } };
     /** Returns a plain array, not a collection — verified against a loaded app. */
     assets?: { visible?(): SourceAsset[] };
 }

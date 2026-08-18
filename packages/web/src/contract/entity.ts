@@ -83,3 +83,21 @@ export interface ViewPayload extends Versioned {
     handle: Handle;
     variants: Array<{ handle: Handle; content: string | null; lang: string }>;
 }
+
+/**
+ * `docs/<path>.json` — a documentation page.
+ *
+ * Carries **raw Markdown**, not rendered HTML, for the same reason notes do: the
+ * payload holds source of truth and the Frame decides how to present it. It also
+ * keeps `markdown()`'s built-in code highlighting from creating a second
+ * highlighting path alongside the View panel's.
+ */
+export interface DocPayload extends Versioned {
+    handle: Handle;
+    label: string;
+    title: string;
+    /** URL path below the docs root. Empty for the index page. */
+    path: string;
+    status?: StatusKey;
+    content: string;
+}

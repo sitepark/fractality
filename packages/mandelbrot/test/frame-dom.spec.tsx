@@ -17,7 +17,7 @@ const tree: TreePayload = {
             children: [{ handle: 'button', label: 'Button', status: 'components:ready' }],
         },
     ],
-    docs: [],
+    docs: [{ handle: 'index', label: 'Overview' }],
     assets: [],
 };
 
@@ -52,6 +52,14 @@ const entity: EntityPayload = {
 const payloads: Record<string, unknown> = {
     '/tree.json': tree,
     '/components/detail/button.json': entity,
+    '/docs/index.json': {
+        contractVersion: 1,
+        handle: 'index',
+        label: 'Overview',
+        title: 'Project Overview',
+        path: '',
+        content: '# Hello\n\nSome **documentation**.',
+    },
     '/components/detail/button.notes.json': {
         contractVersion: 1,
         handle: 'button',
@@ -165,5 +173,30 @@ describe('the Frame renders the markup the stylesheet expects', () => {
         await waitFor(() => expect(container.querySelector('.Browser-tabs')).not.toBeNull());
         expect(container.querySelector('.Browser-tab--notes.is-active')).not.toBeNull();
         expect(screen.getByText('Notes')).toBeTruthy();
+    });
+});
+
+describe('documentation pages', () => {
+    it('links docs to /docs, not to the components route', async () => {
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Navigation')).not.toBeNull());
+
+        const links = [...container.querySelectorAll('.Tree-entityLink')].map((a) => a.getAttribute('href'));
+        // Routing a doc to /components/detail yields a URL with no payload
+        // behind it — a link that only fails when someone clicks it.
+        expect(links).toContain('/docs/index');
+        expect(links).not.toContain('/components/detail/index');
+    });
+
+    it('renders a doc page as prose, from Markdown', async () => {
+        window.history.pushState(null, '', '/docs/index');
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Document')).not.toBeNull());
+
+        expect(container.querySelector('.Document-title')?.textContent).toBe('Project Overview');
+        const prose = container.querySelector('.Prose');
+        // Rendered client-side: the payload carries Markdown, not HTML.
+        expect(prose?.querySelector('h1')?.textContent).toBe('Hello');
+        expect(prose?.querySelector('strong')?.textContent).toBe('documentation');
     });
 });

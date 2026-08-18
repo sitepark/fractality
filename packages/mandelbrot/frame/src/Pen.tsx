@@ -92,8 +92,8 @@ export function Pen({ entity, statuses, selected }: PenProps) {
                 className={`Pen-panel Pen-preview Preview${previewWidth.dragging ? ' is-resizing is-disabled' : ''}`}
                 style={{ height: collapsed ? '100%' : preview.size }}
             >
-                <div className="Preview-wrapper">
-                    <div className="Preview-resizer" ref={previewWidth.ref} style={previewWidth.style}>
+                <div className="Preview-wrapper" ref={previewWidth.ref} style={previewWidth.style}>
+                    <div className="Preview-resizer">
                         {previewUrl ? (
                             <iframe
                                 className="Preview-iframe"

@@ -722,14 +722,20 @@ describe('resizing the preview', () => {
         expect(container.querySelector('.Preview-overlay')).not.toBeNull();
     });
 
-    it('narrows the preview when the handle is dragged inward', async () => {
+    it('narrows the surface the handle is positioned against', async () => {
+        // The wrapper, not the inner resizer. The handle sits at the wrapper's
+        // inline end and the resizer is a percentage of it, so a width on the
+        // inner element moves neither the handle nor the visible surface.
         const { container } = await mount();
         await waitFor(() => expect(container.querySelector('.Preview-handle')).not.toBeNull());
 
-        const resizer = container.querySelector('.Preview-resizer') as HTMLElement;
+        const wrapper = container.querySelector('.Preview-wrapper') as HTMLElement;
+        expect(wrapper.style.width).toBe('');
+
         await drag(container.querySelector('.Preview-handle')!, 800, 500);
 
-        await waitFor(() => expect(resizer.style.width).toMatch(/^\d+px$/));
+        await waitFor(() => expect(wrapper.style.width).toMatch(/^\d+px$/));
+        expect(container.querySelector('.Preview-resizer')?.getAttribute('style')).toBeNull();
     });
 
     it('masks the iframe while dragging, which otherwise swallows the pointer', async () => {
@@ -753,12 +759,13 @@ describe('resizing the preview', () => {
         const { container } = await mount();
         await waitFor(() => expect(container.querySelector('.Preview-handle')).not.toBeNull());
 
-        const resizer = container.querySelector('.Preview-resizer') as HTMLElement;
+        const wrapper = container.querySelector('.Preview-wrapper') as HTMLElement;
         await drag(container.querySelector('.Preview-handle')!, 800, 400);
-        await waitFor(() => expect(resizer.style.width).toMatch(/^\d+px$/));
+        await waitFor(() => expect(wrapper.style.width).toMatch(/^\d+px$/));
 
         fireEvent.doubleClick(container.querySelector('.Preview-handle')!);
-        await waitFor(() => expect(resizer.style.width).toContain('calc('));
+        // No inline width at all, so the stylesheet's own sizing applies again.
+        await waitFor(() => expect(wrapper.style.width).toBe(''));
     });
 
     it('reports the preview viewport size', async () => {

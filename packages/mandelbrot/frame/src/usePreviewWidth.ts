@@ -1,11 +1,15 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { read, write } from './storage.js';
 
-/** Matches `$handle-size` in the theme's SCSS. */
-const HANDLE = 12;
-
 export interface PreviewWidth {
-    /** Style for `.Preview-resizer`. */
+    /**
+     * Style for `.Preview-wrapper`.
+     *
+     * The wrapper, not the inner `.Preview-resizer`: the wrapper is what the
+     * handle is positioned against (`offset-inline(end, 0)`), and the resizer is
+     * sized as a percentage of it. Setting the width on the inner element moves
+     * neither the handle nor the visible surface — the wrapper caps it.
+     */
     style: React.CSSProperties;
     dragging: boolean;
     onPointerDown: (event: React.PointerEvent<HTMLElement>) => void;
@@ -72,10 +76,10 @@ export function usePreviewWidth(): PreviewWidth {
     }, [dragging, width]);
 
     return {
-        // Null means "as wide as the panel allows", which is the default and what
-        // a double-click restores. The extra handle width matches the wrapper,
-        // which is sized `calc(100% + $handle-size)` so the handle sits outside.
-        style: width === null ? { width: `calc(100% - ${HANDLE}px + 1px)` } : { width },
+        // Null means "as wide as the panel allows": no inline width at all, so
+        // the stylesheet's `calc(100% + $handle-size)` applies. That is the
+        // default and what a double-click restores.
+        style: width === null ? {} : { width, maxWidth: width },
         dragging,
         onPointerDown,
         onDoubleClick,

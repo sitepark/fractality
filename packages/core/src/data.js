@@ -7,6 +7,7 @@ import fs from 'fs-extra';
 import * as utils from './utils.js';
 import Log from './log.js';
 import { URL, fileURLToPath } from 'url';
+import { stat } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
@@ -44,9 +45,12 @@ export default {
         if (format === 'js' || format === 'javascript') {
             try {
                 filePath = Path.relative(__dirname, filePath);
+
+                // always delete from require cache, to prevent stale content when loading cjs files
                 delete require.cache[require.resolve(filePath)];
 
-                let data = (await import(`${filePath}?t=${Date.now()}`)).default;
+                const { mtimeMs } = await stat(filePath);
+                let data = (await import(`${filePath}?t=${mtimeMs}`)).default;
                 if (typeof data === 'function') {
                     data = data();
                 }

@@ -121,6 +121,18 @@ describe('buildStatic', () => {
         expect(nested).toBe(root);
     });
 
+    it('reports a breakdown that adds up, in units a reader can compare', async () => {
+        // The progress counter measures files, and a client-rendered build writes
+        // the data contract alongside the documents — so the number is legitimately
+        // larger than the page count the engine-backed builder reported. The
+        // breakdown is what makes that difference legible instead of looking like
+        // the library grew.
+        expect(result.totalFiles).toBe(result.routes + result.previewFiles + result.payloadFiles);
+        expect(result.routes).toBe(staticRoutes(app).length);
+        expect(result.previewFiles).toBeGreaterThan(0);
+        expect(result.payloadFiles).toBeGreaterThan(0);
+    });
+
     it('produces a build dominated by data rather than by repeated markup', async () => {
         // The point of the whole exercise: today every detail page carries the
         // entire navigation tree. Here the markup is one small file repeated,

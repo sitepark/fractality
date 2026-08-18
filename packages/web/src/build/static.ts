@@ -19,12 +19,18 @@ export interface BuildStaticOptions {
 }
 
 export interface BuildStaticResult {
+    /** Shell copies written — one per Frame route. Comparable to the page count
+     *  the engine-backed builder reported. */
     routes: number;
     shellBytes: number;
     /** Total bytes of Shell copies — route count times one copy. */
     shellTotalBytes: number;
+    /** Contract files: the tree, plus per entity a core payload and its panels. */
     payloadFiles: number;
+    /** Preview and render documents, two per routable handle. */
     previewFiles: number;
+    /** Everything written, which is what the progress counter measures. */
+    totalFiles: number;
     /** Patterns that failed to render. Collected, not thrown. */
     previewErrors: PreviewError[];
 }
@@ -64,7 +70,9 @@ export async function buildStatic(options: BuildStaticOptions): Promise<BuildSta
     advance(shells.files.length);
 
     const payloads = await writePayloads(app, { dest, detailRoute, treeFile: config.treeFile });
-    advance(1 + payloads.entities.length + payloads.panels.length + payloads.docs.length + payloads.assets.length);
+    const payloadCount =
+        1 + payloads.entities.length + payloads.panels.length + payloads.docs.length + payloads.assets.length;
+    advance(payloadCount);
 
     const before = completed;
     const previews = await writePreviews(app, {
@@ -79,6 +87,7 @@ export async function buildStatic(options: BuildStaticOptions): Promise<BuildSta
         shellTotalBytes: shells.bytes * routes.length,
         payloadFiles: 1 + payloads.entities.length + payloads.panels.length + payloads.docs.length,
         previewFiles: previews.files.length,
+        totalFiles: routes.length + payloadCount + previews.files.length,
         previewErrors: previews.errors,
     };
 }

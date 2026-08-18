@@ -459,6 +459,41 @@ describe('the sidebar toggle', () => {
         await waitFor(() => expect(frame.classList.contains('is-closed')).toBe(false));
     });
 
+    it('actually moves the sidebar, not just the icon', async () => {
+        // The stylesheet has no rule that hides the sidebar. The previous theme
+        // moved it with inline styles on .Frame-body and used .Frame.is-closed
+        // only to swap the toggle icon — so setting the class alone changes the
+        // icon and leaves the sidebar exactly where it was.
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Header-navToggle')).not.toBeNull());
+
+        const body = container.querySelector('.Frame-body') as HTMLElement;
+        expect(body.style.transform).toBe('translate3d(0, 0, 0)');
+
+        (container.querySelector('.Header-navToggle') as HTMLElement).click();
+        await waitFor(() => {
+            expect(body.style.transform).toMatch(/translate3d\(-\d+px/);
+            expect(body.style.marginRight).toMatch(/^-\d+px$/);
+        });
+
+        (container.querySelector('.Header-navToggle') as HTMLElement).click();
+        await waitFor(() => expect(body.style.transform).toBe('translate3d(0, 0, 0)'));
+    });
+
+    it('remembers the sidebar state across a reload', async () => {
+        const first = await mount();
+        await waitFor(() => expect(first.container.querySelector('.Header-navToggle')).not.toBeNull());
+        (first.container.querySelector('.Header-navToggle') as HTMLElement).click();
+        await waitFor(() => expect(document.getElementById('frame')?.classList.contains('is-closed')).toBe(true));
+        cleanup();
+
+        const second = await mount();
+        await waitFor(() => {
+            const body = second.container.querySelector('.Frame-body') as HTMLElement;
+            expect(body.style.transform).toMatch(/translate3d\(-\d+px/);
+        });
+    });
+
     it('renders both toggle icons, since the stylesheet swaps between them', async () => {
         const { container } = await mount();
         await waitFor(() => expect(container.querySelector('.Header-navToggle')).not.toBeNull());

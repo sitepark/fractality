@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import type { AssetPayload, DocPayload, EntityPayload, TreePayload } from '@fractality/web/contract';
 import { fetchAsset, fetchDoc, fetchEntity, fetchTree } from './api.js';
 import { useLiveReload } from './useLiveReload.js';
+import { useSidebar } from './useSidebar.js';
 import { Asset } from './Asset.js';
 import { Doc } from './Doc.js';
 import { Header } from './Header.js';
@@ -29,7 +30,7 @@ export function App() {
     const [doc, setDoc] = useState<DocPayload | null>(null);
     const [asset, setAsset] = useState<AssetPayload | null>(null);
     const [error, setError] = useState<string | null>(null);
-    const [sidebarOpen, setSidebarOpen] = useState(true);
+    const sidebar = useSidebar();
     const generation = useLiveReload();
 
     useEffect(() => {
@@ -90,8 +91,8 @@ export function App() {
     // (the header icon swap, the file browser and the meta layout). Setting it on
     // anything else, or under any other name, silently does nothing.
     useEffect(() => {
-        document.getElementById('frame')?.classList.toggle('is-closed', !sidebarOpen);
-    }, [sidebarOpen]);
+        document.getElementById('frame')?.classList.toggle('is-closed', !sidebar.open);
+    }, [sidebar.open]);
 
     const navigate = useCallback((href: string) => {
         // pushState keeps the real URL, so a deep link, a refresh and a bookmark
@@ -103,10 +104,10 @@ export function App() {
     return (
         <>
             <div className="Frame-header">
-                <Header onToggleSidebar={() => setSidebarOpen((was) => !was)} />
+                <Header onToggleSidebar={sidebar.toggle} />
             </div>
 
-            <div className="Frame-body">
+            <div className="Frame-body" style={sidebar.bodyStyle}>
                 <div className="Frame-panel Frame-panel--main">
                     <div className="Frame-inner">
                         {error ? (
@@ -141,7 +142,7 @@ export function App() {
                     </div>
                 </div>
 
-                <div className="Frame-panel Frame-panel--sidebar">
+                <div className="Frame-panel Frame-panel--sidebar" ref={sidebar.ref}>
                     {tree ? <Nav tree={tree} current={handleFromPath(route)} onNavigate={navigate} /> : null}
                 </div>
             </div>

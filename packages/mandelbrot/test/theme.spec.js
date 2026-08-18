@@ -24,15 +24,19 @@ describe('mandelbrot theme factory', () => {
             expect(theme.get('favicon')).toEqual('/themes/mandelbrot/favicon.ico');
         });
 
-        it('normalizes a string skin option into a skin object', () => {
+        it('ignores a leftover named skin rather than linking a stylesheet that is gone', () => {
+            // Named skins were removed. Honouring `skin: 'blue'` would resolve to
+            // /css/blue.css, which is no longer built — a 404 for a stylesheet
+            // instead of an unstyled-but-working Frame.
             const theme = mandelbrot({ skin: 'blue' });
-            expect(theme.get('skin')).toEqual({ name: 'blue' });
-            expect(theme.get('styles')).toContain('/themes/mandelbrot/css/blue.css');
+            expect(theme.get('skin')).toEqual({});
+            expect(theme.get('styles')).toContain('/themes/mandelbrot/css/default.css');
+            expect(theme.get('styles')).not.toContain('blue.css');
         });
 
-        it('merges a skin object option with the default name', () => {
+        it('keeps a skin object as custom-property overrides', () => {
             const theme = mandelbrot({ skin: { accent: '#FFB300' } });
-            expect(theme.get('skin')).toEqual({ name: 'default', accent: '#FFB300' });
+            expect(theme.get('skin')).toEqual({ accent: '#FFB300' });
         });
 
         it('passes through a non-"default" style URL unchanged', () => {

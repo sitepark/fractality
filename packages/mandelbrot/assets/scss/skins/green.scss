@@ -1,7 +1,0 @@
-@use "../theme" with (
-    $color-link: #172,
-    $color-header-background: #3c4,
-    $color-header-content: #fff
-);
-@use "../core/all" as core;
-@use "../components/all" as components;

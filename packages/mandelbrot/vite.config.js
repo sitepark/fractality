@@ -1,18 +1,8 @@
 import path from 'path';
-import { globbySync } from 'globby';
 import autoprefixer from 'autoprefixer';
 import { defineConfig } from 'vite';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import { visualizer } from 'rollup-plugin-visualizer';
-
-const skins = globbySync('./assets/scss/skins/*.scss').reduce((acc, file) => {
-    const fileName = path.basename(file, '.scss');
-
-    return {
-        ...acc,
-        [fileName]: path.resolve(file),
-    };
-}, {});
 
 export default defineConfig(({ mode }) => ({
     resolve: {
@@ -32,22 +22,6 @@ export default defineConfig(({ mode }) => ({
         dedupe: ['jquery'],
     },
     css: {
-        preprocessorOptions: {
-            scss: {
-                // Several skins share identical color variables and therefore compile to
-                // byte-identical CSS (e.g. default.scss === blue.scss). Rollup dedupes
-                // assets with identical content onto one physical file regardless of the
-                // requested name, which would silently drop one skin's output entirely.
-                // This makes every skin's compiled CSS genuinely unique so that can't happen.
-                additionalData: (source, filename) => {
-                    if (path.basename(path.dirname(filename)) !== 'skins') {
-                        return source;
-                    }
-                    const name = path.basename(filename, '.scss');
-                    return `${source}\n:root { --sp-mandelbrot-skin: "${name}"; }\n`;
-                },
-            },
-        },
         postcss: {
             plugins: [autoprefixer()],
         },
@@ -63,7 +37,10 @@ export default defineConfig(({ mode }) => ({
             input: {
                 mandelbrot: path.resolve('./assets/js/mandelbrot.js'),
                 highlight: path.resolve('./assets/scss/highlight.scss'),
-                ...skins,
+                // One stylesheet, not seventeen. Named skins are gone; the
+                // Frame's colours are set through CSS custom properties written
+                // into the Shell, so nothing here varies per project.
+                default: path.resolve('./assets/scss/skins/default.scss'),
             },
             output: {
                 entryFileNames: 'js/[name].js',

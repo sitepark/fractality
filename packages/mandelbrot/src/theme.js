@@ -12,7 +12,7 @@ const packageJSON = readJsonSync(__dirname + '../package.json');
 
 export default function (options) {
     const config = _.defaultsDeep(_.clone(options || {}), {
-        skin: 'default',
+        skin: {},
         navigation: 'default',
         rtl: false,
         lang: 'en',
@@ -75,20 +75,16 @@ export default function (options) {
             },
         },
     });
-    config.skin =
-        typeof config.skin === 'string'
-            ? {
-                  name: config.skin,
-              }
-            : {
-                  name: 'default',
-                  ...config.skin,
-              };
+    // Named skins are gone. `skin` is now purely a set of custom-property
+    // overrides ({ accent, complement, links }) written into the Shell — the
+    // form this config has always also accepted. A leftover string is ignored
+    // rather than silently resolving to a stylesheet that no longer exists.
+    config.skin = typeof config.skin === 'object' && config.skin !== null ? config.skin : {};
     const uiStyles = []
         .concat(config.styles)
         .concat(config.stylesheet)
         .filter((url) => url)
-        .map((url) => (url === 'default' ? `/${config.static.mount}/css/${config.skin.name}.css` : url));
+        .map((url) => (url === 'default' ? `/${config.static.mount}/css/default.css` : url));
     const highlightStyles = []
         .concat(config.highlightStyles)
         .filter((url) => url)

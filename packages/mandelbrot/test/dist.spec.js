@@ -1,25 +1,26 @@
 import { execSync } from 'node:child_process';
+import { globbySync } from 'globby';
 import { readFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import Path from 'node:path';
-import { globbySync } from 'globby';
-
 const packageRoot = Path.dirname(Path.dirname(fileURLToPath(import.meta.url)));
 const distDir = Path.join(packageRoot, 'dist');
-
-const skinNames = globbySync('./assets/scss/skins/*.scss', { cwd: packageRoot }).map((file) =>
-    Path.basename(file, '.scss'),
-);
 
 describe('mandelbrot dist build', () => {
     beforeAll(() => {
         execSync('pnpm exec vite build', { cwd: packageRoot, stdio: 'pipe' });
     }, 60000);
 
-    it('builds a skin stylesheet for every skin under assets/scss/skins', () => {
-        expect(skinNames.length).toBeGreaterThan(0);
-        for (const skin of skinNames) {
-            expect(existsSync(Path.join(distDir, 'css', `${skin}.css`))).toBe(true);
+    it('builds the one theme stylesheet, referenced by the theme as styles default', () => {
+        expect(existsSync(Path.join(distDir, 'css', 'default.css'))).toBe(true);
+    });
+
+    it('builds no named skin stylesheets', () => {
+        // Named skins were removed: the Frame's colours come from CSS custom
+        // properties written into the Shell. Asserted rather than assumed,
+        // because a stale one lying around in dist would still be served.
+        for (const gone of ['blue', 'aqua', 'black', 'red', 'white']) {
+            expect(existsSync(Path.join(distDir, 'css', `${gone}.css`))).toBe(false);
         }
     });
 

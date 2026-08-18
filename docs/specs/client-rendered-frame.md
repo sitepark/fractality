@@ -471,6 +471,11 @@ None of these block implementation starting.
 - **Search architecture.** `mark.js` marks the DOM today; with the tree as data, search becomes
   data-driven. The tree carries `handle`, `label`, `status` and `tags` only — anything search needs
   beyond those is a **contract change**, not a theme-side decision.
+- **Nothing consumes `theme.get('styles')` yet.** The Shell links no stylesheet, so the theme's
+  `default.css` is built and copied into every site but never referenced, and the Frame is unstyled.
+  The mechanism gap is small — the style URLs need carrying into `window.frctl` and injecting — but
+  the styling itself belongs to the mandelbrot rewrite, since the existing CSS targets the old
+  markup.
 - **The plugin API** (§7.2), deferred to the mandelbrot rewrite.
 - **The `skin` config key name** (§7.3).
 - **Whether `packages/web/views/` still ships.** It holds four `__system` files for the nunjucks

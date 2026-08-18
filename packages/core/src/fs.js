@@ -20,23 +20,25 @@ export default {
     },
 
     globDescribe(dir, relDir, match) {
-        return globbySync(match, {
-            cwd: dir,
-        }).then((matches) => {
-            const directories = [];
-            matches.forEach((path) => {
-                const parts = Path.parse(path).dir.split('/');
-                const buildPath = [];
-                parts.forEach((part) => {
-                    buildPath.push(part);
-                    directories.push(buildPath.join('/'));
-                });
-            });
-            const included = _.uniq(directories.concat(matches)).map((p) => Path.join(dir, p));
-            return this.describe(dir, relDir, (filePath) => {
-                return _.includes(included, filePath);
+        // globbySync is synchronous. This called .then() on its result, so every
+        // asset source threw "globbySync(...).then is not a function" on load —
+        // introduced when the async `globby` was swapped for the sync variant and
+        // the promise chain around it was left in place. No example registers an
+        // asset source, which is why it went unnoticed.
+        const matches = globbySync(match, { cwd: dir });
+
+        const directories = [];
+        matches.forEach((path) => {
+            const parts = Path.parse(path).dir.split('/');
+            const buildPath = [];
+            parts.forEach((part) => {
+                buildPath.push(part);
+                directories.push(buildPath.join('/'));
             });
         });
+
+        const included = _.uniq(directories.concat(matches)).map((p) => Path.join(dir, p));
+        return this.describe(dir, relDir, (filePath) => _.includes(included, filePath));
     },
 
     find(filePath) {

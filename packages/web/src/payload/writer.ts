@@ -6,6 +6,7 @@ import { payloadPathFor } from './paths.js';
 import { buildStatusTable } from './status.js';
 import { buildTreePayload } from './tree.js';
 import { buildDocPayload, routedDocs } from './doc.js';
+import { assetsMount, buildAssetPayload, routedAssets } from './asset.js';
 import { componentsByHandle } from '../build/routes.js';
 import type { SourceApp, SourceComponent } from './source-types.js';
 
@@ -25,6 +26,7 @@ export interface WritePayloadsOptions {
      */
     treeFile?: string;
     docsRoute?: string;
+    assetsRoute?: string;
 }
 
 export interface WritePayloadsResult {
@@ -32,6 +34,7 @@ export interface WritePayloadsResult {
     entities: string[];
     panels: string[];
     docs: string[];
+    assets: string[];
 }
 
 const toDiskPath = (dest: string, urlPath: string): string => path.join(dest, urlPath.replace(/^\/+/, ''));
@@ -48,7 +51,13 @@ async function writeJson(file: string, value: unknown): Promise<void> {
  * Specified in docs/specs/client-rendered-frame.md §4 and §5.
  */
 export async function writePayloads(app: SourceApp, options: WritePayloadsOptions): Promise<WritePayloadsResult> {
-    const { dest, detailRoute = '/components/detail', treeFile = '/tree.json', docsRoute = '/docs' } = options;
+    const {
+        dest,
+        detailRoute = '/components/detail',
+        treeFile = '/tree.json',
+        docsRoute = '/docs',
+        assetsRoute = '/assets',
+    } = options;
 
     const statuses = buildStatusTable(app);
     const byHandle = componentsByHandle(app);
@@ -99,5 +108,13 @@ export async function writePayloads(app: SourceApp, options: WritePayloadsOption
         docs.push(file);
     }
 
-    return { tree: treePath, entities, panels, docs };
+    const assets: string[] = [];
+    const mount = assetsMount(app);
+    for (const { route, asset } of routedAssets(app, assetsRoute)) {
+        const file = toDiskPath(dest, payloadPathFor(route));
+        await writeJson(file, buildAssetPayload(asset, mount));
+        assets.push(file);
+    }
+
+    return { tree: treePath, entities, panels, docs, assets };
 }

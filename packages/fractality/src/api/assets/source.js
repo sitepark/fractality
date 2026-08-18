@@ -62,7 +62,18 @@ export default class AssetSource extends mix(Source) {
         return eventData;
     }
 
-    _parse(fileTree) {
+    /**
+     * Assets are static files: they carry no context data to resolve, and the
+     * Asset entity has no setContext for the base implementation to call.
+     */
+    async _resolveTreeContext(tree) {
+        return tree;
+    }
+
+    // async because the base Source chains `.then()` on the result — the
+    // component and doc sources are async too. Returning undefined here threw
+    // "Cannot read properties of undefined (reading 'then')" on every load.
+    async _parse(fileTree) {
         const source = this;
         function convert(items) {
             const converted = [];
@@ -75,6 +86,6 @@ export default class AssetSource extends mix(Source) {
             }
             return converted;
         }
-        this.setItems(convert(fileTree.children));
+        return this.setItems(convert(fileTree.children));
     }
 }

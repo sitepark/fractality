@@ -14,6 +14,8 @@ export type { JsonObject, JsonPrimitive, JsonValue } from './json.js';
 export type { Handle, StatusDefinition, StatusKey, TreeNode, TreePayload } from './tree.js';
 
 export type {
+    AssetFile,
+    AssetPayload,
     ContextPayload,
     DocPayload,
     EntityPayload,

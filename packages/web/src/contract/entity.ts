@@ -101,3 +101,29 @@ export interface DocPayload extends Versioned {
     status?: StatusKey;
     content: string;
 }
+
+/** One file inside an asset source. */
+export interface AssetFile {
+    name: string;
+    /** Path relative to the asset source root. */
+    path: string;
+    /** Where the file is actually served, from `web.assets.mount`. */
+    url: string;
+    ext: string;
+    size: number;
+}
+
+/**
+ * `assets/<name>.json` — an asset source and the files in it.
+ *
+ * An asset source is a directory a project registers with
+ * `fractality.assets.add()`; it is opt-in, so most libraries have none.
+ */
+export interface AssetPayload extends Versioned {
+    name: string;
+    label: string;
+    title: string;
+    /** Raw Markdown, rendered client-side like every other note. */
+    notes: string | null;
+    files: AssetFile[];
+}

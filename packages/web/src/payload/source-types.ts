@@ -93,10 +93,25 @@ export interface SourceDoc {
     content?: string;
 }
 
+/** A single file inside an asset source. */
+export interface SourceAssetFile {
+    name: string;
+    base: string;
+    relPath: string;
+    srcPath: string;
+    ext: string;
+    stat?: { size: number } | null;
+}
+
+/** An asset source: a registered directory, not a single file. */
 export interface SourceAsset {
     name: string;
     label?: string;
+    title?: string;
     handle?: string;
+    notes?: string | null;
+    isHidden?: boolean;
+    flatten(): { items(): SourceAssetFile[] };
 }
 
 export interface SourceCollection {

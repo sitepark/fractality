@@ -192,6 +192,15 @@ export function Nav({ tree, current, onNavigate }: NavProps) {
                     hrefFor={(handle) => `/docs/${handle}`}
                     forceOpen={searching}
                 />
+                <Tree
+                    label="Assets"
+                    nodes={filtered.assets}
+                    statuses={filtered.status}
+                    current={current}
+                    onNavigate={onNavigate}
+                    hrefFor={(handle) => `/assets/${handle}`}
+                    forceOpen={searching}
+                />
             </div>
         </nav>
     );

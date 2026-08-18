@@ -64,7 +64,7 @@ export async function buildStatic(options: BuildStaticOptions): Promise<BuildSta
     advance(shells.files.length);
 
     const payloads = await writePayloads(app, { dest, detailRoute, treeFile: config.treeFile });
-    advance(1 + payloads.entities.length + payloads.panels.length + payloads.docs.length);
+    advance(1 + payloads.entities.length + payloads.panels.length + payloads.docs.length + payloads.assets.length);
 
     const before = completed;
     const previews = await writePreviews(app, {

@@ -1,5 +1,6 @@
 import { payloadPathFor, type PanelSegment } from '@fractality/web/addressing';
 import type {
+    AssetPayload,
     ContextPayload,
     DocPayload,
     EntityPayload,
@@ -59,6 +60,9 @@ export const fetchDoc = (pathname: string): Promise<DocPayload> => {
     const route = /^\/docs$/.test(normalised) ? '/docs/index' : normalised;
     return getJson<DocPayload>(payloadPathFor(route));
 };
+
+export const fetchAsset = (pathname: string): Promise<AssetPayload> =>
+    getJson<AssetPayload>(payloadPathFor(pathname.replace(/\/+$/, '')));
 
 export const fetchNotes = (handle: string): Promise<NotesPayload> => getJson<NotesPayload>(panelUrl(handle, 'notes'));
 

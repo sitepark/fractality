@@ -5,6 +5,7 @@ import { buildContextPayload, buildEntityPayload, buildNotesPayload, buildViewPa
 import { buildStatusTable } from '../payload/status.js';
 import { buildTreePayload } from '../payload/tree.js';
 import { buildDocPayload, routedDocs } from '../payload/doc.js';
+import { assetsMount, buildAssetPayload, routedAssets } from '../payload/asset.js';
 import type { SourceApp, SourceComponent } from '../payload/source-types.js';
 import { gateOnIdle, type IdleGateable } from './gate.js';
 
@@ -13,6 +14,7 @@ export interface PayloadRoutesOptions {
     detailRoute?: string;
     treeFile?: string;
     docsRoute?: string;
+    assetsRoute?: string;
 }
 
 type PanelName = 'notes' | 'context' | 'view';
@@ -41,7 +43,13 @@ const isPanel = (value: string): value is PanelName => value in PANEL_BUILDERS;
  * Specified in docs/specs/client-rendered-frame.md §8.
  */
 export function payloadRoutes(options: PayloadRoutesOptions): Router {
-    const { app, detailRoute = '/components/detail', treeFile = '/tree.json', docsRoute = '/docs' } = options;
+    const {
+        app,
+        detailRoute = '/components/detail',
+        treeFile = '/tree.json',
+        docsRoute = '/docs',
+        assetsRoute = '/assets',
+    } = options;
 
     const router = Router();
 
@@ -93,7 +101,19 @@ export function payloadRoutes(options: PayloadRoutesOptions): Router {
 
     router.get(treeFile, sendTree);
     router.get(`${detailRoute}/:file`, sendEntity);
+    const sendAsset: RequestHandler = (req, res, next) => {
+        const file = String(req.params.file ?? '');
+        if (!file.endsWith('.json')) return next();
+        const wanted = file.slice(0, -'.json'.length);
+
+        const match = routedAssets(app, assetsRoute).find(({ route }) => route === `${assetsRoute}/${wanted}`);
+        if (!match) return next();
+
+        res.json(buildAssetPayload(match.asset, assetsMount(app)));
+    };
+
     router.get(`${docsRoute}/:file`, sendDoc);
+    router.get(`${assetsRoute}/:file`, sendAsset);
 
     return router;
 }

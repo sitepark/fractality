@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
-import type { DocPayload, EntityPayload, TreePayload } from '@fractality/web/contract';
-import { fetchDoc, fetchEntity, fetchTree } from './api.js';
+import type { AssetPayload, DocPayload, EntityPayload, TreePayload } from '@fractality/web/contract';
+import { fetchAsset, fetchDoc, fetchEntity, fetchTree } from './api.js';
+import { Asset } from './Asset.js';
 import { Doc } from './Doc.js';
 import { Header } from './Header.js';
 import { Nav } from './Nav.js';
@@ -14,6 +15,7 @@ const handleFromPath = (pathname: string): string =>
 
 const isDetailRoute = (pathname: string): boolean => /\/components\/detail\//.test(pathname);
 const isDocRoute = (pathname: string): boolean => /^\/docs(\/|$)/.test(pathname.replace(/\.html$/, ''));
+const isAssetRoute = (pathname: string): boolean => /^\/assets\/.+/.test(pathname.replace(/\.html$/, ''));
 
 /**
  * Renders the Frame's own chrome. Mirrors `views/layouts/frame.nunj`, minus its
@@ -24,6 +26,7 @@ export function App() {
     const [route, setRoute] = useState(() => window.location.pathname);
     const [entity, setEntity] = useState<EntityPayload | null>(null);
     const [doc, setDoc] = useState<DocPayload | null>(null);
+    const [asset, setAsset] = useState<AssetPayload | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [sidebarOpen, setSidebarOpen] = useState(true);
 
@@ -45,19 +48,29 @@ export function App() {
 
         if (isDetailRoute(route)) {
             setDoc(null);
+            setAsset(null);
             fetchEntity(route).then(
                 (payload) => !cancelled && setEntity(payload),
                 (e: unknown) => !cancelled && setError(String(e)),
             );
         } else if (isDocRoute(route)) {
             setEntity(null);
+            setAsset(null);
             fetchDoc(route).then(
                 (payload) => !cancelled && setDoc(payload),
+                (e: unknown) => !cancelled && setError(String(e)),
+            );
+        } else if (isAssetRoute(route)) {
+            setEntity(null);
+            setDoc(null);
+            fetchAsset(route).then(
+                (payload) => !cancelled && setAsset(payload),
                 (e: unknown) => !cancelled && setError(String(e)),
             );
         } else {
             setEntity(null);
             setDoc(null);
+            setAsset(null);
         }
 
         return () => {
@@ -66,9 +79,9 @@ export function App() {
     }, [route]);
 
     useEffect(() => {
-        const title = entity?.title ?? doc?.title;
+        const title = entity?.title ?? doc?.title ?? asset?.title;
         document.title = title ? `${title} | Fractality` : 'Fractality';
-    }, [entity, doc]);
+    }, [entity, doc, asset]);
 
     const navigate = useCallback((href: string) => {
         // pushState keeps the real URL, so a deep link, a refresh and a bookmark
@@ -94,6 +107,8 @@ export function App() {
                             <Pen entity={entity} statuses={tree.status} />
                         ) : doc && tree ? (
                             <Doc doc={doc} statuses={tree.status} />
+                        ) : asset ? (
+                            <Asset asset={asset} />
                         ) : (
                             <div className="Document">
                                 <div className="Document-header">

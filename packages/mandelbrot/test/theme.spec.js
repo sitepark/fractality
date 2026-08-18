@@ -14,9 +14,16 @@ describe('mandelbrot theme factory', () => {
             expect(theme.get('styles')).toContain('/themes/mandelbrot/css/highlight.css');
         });
 
-        it('resolves the default script bundle', () => {
+        it('links no theme script by default', () => {
+            // The Frame is loaded by the Shell as a module. 'default' no longer
+            // resolves to anything, and must not resolve to a URL that 404s.
             const theme = mandelbrot();
-            expect(theme.get('scripts')).toEqual(['/themes/mandelbrot/js/mandelbrot.js']);
+            expect(theme.get('scripts')).toEqual([]);
+        });
+
+        it("still passes a consumer's own script urls through", () => {
+            const theme = mandelbrot({ scripts: ['/custom/analytics.js'] });
+            expect(theme.get('scripts')).toEqual(['/custom/analytics.js']);
         });
 
         it('defaults the favicon to the theme mount path', () => {

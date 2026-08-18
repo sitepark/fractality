@@ -333,18 +333,6 @@ importers:
       highlight.js:
         specifier: ^11.12.0
         version: 11.12.0
-      jquery:
-        specifier: ^4.0.0
-        version: 4.0.0
-      jquery-pjax:
-        specifier: ^2.0.1
-        version: 2.0.1
-      jquery-resizable-dom:
-        specifier: ^0.35.0
-        version: 0.35.0
-      mark.js:
-        specifier: ^8.11.1
-        version: 8.11.1
       marked:
         specifier: ^18.0.9
         version: 18.0.9
@@ -3888,18 +3876,6 @@ packages:
     resolution: {integrity: sha512-AC/7JofJvZGrrneWNaEnJeOLUx+JlGt7tNa0wZiRPT4MY1wmfKjt2+6O2p2uz2+skll8OZZmJMNqeke7kKbNgQ==}
     hasBin: true
 
-  jquery-pjax@2.0.1:
-    resolution: {integrity: sha512-xMSUMh5p0f0O2XMh13YbkS94NWuWkV9k+3ouECvVWb9Li6OCF7BVinotGwbUYDKYWA0PCoTq64dTYiJwmN6H6Q==}
-
-  jquery-resizable-dom@0.35.0:
-    resolution: {integrity: sha512-AbZsJ+aKJnoIYNT4dPy9om72L/j/z3hBCAHz9yO2Ifn60tAkEti3KJ4Exb98OV3P9R4Mst4E1YEFKzHrDPy/Nw==}
-
-  jquery@3.7.1:
-    resolution: {integrity: sha512-m4avr8yL8kmFN8psrbFFFmB/If14iN5o9nw/NgnnM+kybDJpRsAynV2BsfpTYrTRysYUdADVD7CkUUizgkpLfg==}
-
-  jquery@4.0.0:
-    resolution: {integrity: sha512-TXCHVR3Lb6TZdtw1l3RTLf8RBWVGexdxL6AC8/e0xZKEpBflBsjh9/8LXw+dkNFuOyW9B7iB3O1sP7hS0Kiacg==}
-
   js-tokens@10.0.0:
     resolution: {integrity: sha512-lM/UBzQmfJRo9ABXbPWemivdCW8V2G8FHaHdypQaIy523snUjog0W71ayWXTjiR+ixeMyVHN2XcpnTd/liPg/Q==}
 
@@ -4183,9 +4159,6 @@ packages:
   map-cache@0.2.2:
     resolution: {integrity: sha512-8y/eV9QQZCiyn1SprXSrCmqJN0yNRATe+PO8ztwqrvrbdRLA3eYJF0yaR0YayLWkMbsQSKWS9N2gPcGEc4UsZg==}
     engines: {node: '>=0.10.0'}
-
-  mark.js@8.11.1:
-    resolution: {integrity: sha512-1I+1qpDt4idfgLQG+BNWmrqku+7/2bi5nLf4YwF8y8zXvmfiTBY3PV3ZibfrjBueCByROpuBjLLFCajqkgYoLQ==}
 
   marked-smartypants@1.1.12:
     resolution: {integrity: sha512-Z0QL2GpihbSeG5aaCrQxMEoqvngMftF/gq1SrdlCnbecUSrX3HYgPtCZzCW+OyNe2ideQqaFdxfGryqQX1MBDA==}
@@ -9549,16 +9522,6 @@ snapshots:
   jiti@2.7.0:
     optional: true
 
-  jquery-pjax@2.0.1: {}
-
-  jquery-resizable-dom@0.35.0:
-    dependencies:
-      jquery: 3.7.1
-
-  jquery@3.7.1: {}
-
-  jquery@4.0.0: {}
-
   js-tokens@10.0.0: {}
 
   js-tokens@4.0.0: {}
@@ -9909,8 +9872,6 @@ snapshots:
       - supports-color
 
   map-cache@0.2.2: {}
-
-  mark.js@8.11.1: {}
 
   marked-smartypants@1.1.12(marked@18.0.9):
     dependencies:

@@ -28,8 +28,11 @@ describe('mandelbrot dist build', () => {
         expect(existsSync(Path.join(distDir, 'css', 'highlight.css'))).toBe(true);
     });
 
-    it('builds the main mandelbrot script bundle, referenced by the theme as scripts default', () => {
-        expect(existsSync(Path.join(distDir, 'js', 'mandelbrot.js'))).toBe(true);
+    it('builds no legacy script bundle', () => {
+        // The jQuery theme script is gone: the Frame is a module the Shell loads,
+        // not a script the theme links. A stale bundle left in dist would still
+        // be copied into every site.
+        expect(existsSync(Path.join(distDir, 'js', 'mandelbrot.js'))).toBe(false);
     });
 
     it('copies the favicon to the dist root, referenced by the theme as favicon default', () => {
@@ -41,19 +44,15 @@ describe('mandelbrot dist build', () => {
         expect(images.length).toBeGreaterThan(0);
     });
 
-    it('bundles jquery-pjax and jquery-resizable-dom, which the theme scripts rely on', () => {
-        const bundle = readFileSync(Path.join(distDir, 'js', 'mandelbrot.js'), 'utf8');
-        expect(bundle).toContain('pjax:click');
-        expect(bundle).toMatch(/resizable/i);
-    });
-
-    it('bundles exactly one copy of jquery, so plugins register on the instance that becomes window.$', () => {
-        const bundle = readFileSync(Path.join(distDir, 'js', 'mandelbrot.js'), 'utf8');
-
-        // jQuery 4's `exports` map resolves an ESM `import` and a bundler `require` to two
-        // different builds. When both were bundled, jquery-resizable-dom registered
-        // $.fn.resizable on the copy that never became window.$ and every call threw.
-        // noConflict is defined exactly once per jQuery copy.
-        expect(bundle.match(/noConflict/g)).toHaveLength(1);
+    it('ships no jquery anywhere in the theme output', () => {
+        // Replaces the guard for ADR 0002's dual-package hazard. That hazard
+        // needed two copies of jQuery to exist; there are now none, so the
+        // meaningful assertion is absence rather than a count of one.
+        const bundles = globbySync('./**/*.js', { cwd: distDir });
+        for (const file of bundles) {
+            const contents = readFileSync(Path.join(distDir, file), 'utf8');
+            expect(contents).not.toContain('jQuery.fn.jquery');
+            expect(contents).not.toMatch(/pjax:click/);
+        }
     });
 });

@@ -111,10 +111,10 @@ export default function (options) {
     config.panels = config.panels || ['html', 'view', 'context', 'resources', 'info', 'notes'];
     config.nav = config.nav || ['search', 'components', 'docs', 'assets', 'information'];
     config.styles = [].concat(uiStyles).concat(highlightStyles);
-    config.scripts = []
-        .concat(config.scripts)
-        .filter((url) => url)
-        .map((url) => (url === 'default' ? `/${config.static.mount}/js/mandelbrot.js` : url));
+    // 'default' no longer resolves to anything: the Frame is loaded by the Shell
+    // as a module, not linked as a theme script. A consumer's own script URLs
+    // still pass through.
+    config.scripts = [].concat(config.scripts).filter((url) => url && url !== 'default');
     config.favicon = config.favicon || `/${config.static.mount}/favicon.ico`;
 
     const theme = new Theme(config);

@@ -3,6 +3,7 @@ import type { TreePayload } from '@fractality/web/contract';
 import { Search } from './Search.js';
 import { Tree } from './Tree.js';
 import { filterTree } from './search.js';
+import { resolveRouteUrl } from './frctl.js';
 
 interface NavProps {
     tree: TreePayload;
@@ -50,11 +51,25 @@ export function Nav({ tree, current, onNavigate }: NavProps) {
                 <Tree
                     label="Components"
                     nodes={filtered.components}
-                    hrefFor={(handle) => `/components/detail/${handle}`}
+                    hrefFor={(node) => resolveRouteUrl(`/components/detail/${node.handle}`)}
                     {...shared}
                 />
-                <Tree label="Documentation" nodes={filtered.docs} hrefFor={(handle) => `/docs/${handle}`} {...shared} />
-                <Tree label="Assets" nodes={filtered.assets} hrefFor={(handle) => `/assets/${handle}`} {...shared} />
+                <Tree
+                    label="Documentation"
+                    nodes={filtered.docs}
+                    // By `path`, not by handle. A doc's handle is its file's own
+                    // name, so a page in a subdirectory is not addressable by it:
+                    // `/docs/setup` is a page that does not exist where
+                    // `/docs/guide/setup` is the one in the nav.
+                    hrefFor={(node) => resolveRouteUrl(`/docs/${node.path ?? node.handle}`)}
+                    {...shared}
+                />
+                <Tree
+                    label="Assets"
+                    nodes={filtered.assets}
+                    hrefFor={(node) => resolveRouteUrl(`/assets/${node.handle}`)}
+                    {...shared}
+                />
             </div>
         </nav>
     );

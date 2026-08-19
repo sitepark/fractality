@@ -33,6 +33,16 @@ export interface TreeNode {
     status?: StatusKey;
     /** Omitted when empty. */
     tags?: string[];
+    /**
+     * Where a documentation page is served, below the docs root — `guide/setup`,
+     * or `index` for the index page. **Documentation nodes only.**
+     *
+     * The one thing `handle` does not determine: a doc's handle is its file's
+     * name, so two pages in different directories can share one, and neither is
+     * addressable by it. Components and assets have no such problem and carry
+     * nothing here.
+     */
+    path?: string;
     /** Omitted for leaves. */
     children?: TreeNode[];
     /** Present only on collections. */

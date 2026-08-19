@@ -1,5 +1,5 @@
 import { createServer, type Server } from 'node:http';
-import { mkdtemp, readFile, rm } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -141,5 +141,74 @@ describe('payloadRoutes', () => {
         expect(released).toBe(true);
 
         await new Promise<void>((resolve) => local.close(() => resolve()));
+    });
+});
+
+describe('documentation pages below the docs root', () => {
+    // Its own library and host: the example has one index page, and a single
+    // path segment is exactly what used to work.
+    let root: string;
+    let nested: Server;
+    let nestedOrigin: string;
+    let dist: string;
+
+    beforeAll(async () => {
+        root = await mkdtemp(path.join(tmpdir(), 'fractality-nested-docs-'));
+        await mkdir(path.join(root, 'guide'), { recursive: true });
+        await writeFile(path.join(root, '01-index.md'), '# Overview\n');
+        await writeFile(path.join(root, 'guide', 'getting-started.md'), '# Getting started\n');
+
+        const instance = create() as unknown as TestApp;
+        instance.docs.set('path', root);
+        await instance.load();
+
+        const host = express();
+        host.use(payloadRoutes({ app: instance }));
+        host.use((_req, res) => res.status(404).type('text/html').send('<!-- shell -->'));
+
+        nested = createServer(host);
+        await new Promise<void>((resolve) => nested.listen(0, resolve));
+        const address = nested.address();
+        if (typeof address === 'string' || address === null) throw new Error('no port');
+        nestedOrigin = `http://127.0.0.1:${address.port}`;
+
+        dist = await mkdtemp(path.join(tmpdir(), 'fractality-nested-dist-'));
+        await writePayloads(instance, { dest: dist });
+    }, 30000);
+
+    afterAll(async () => {
+        await new Promise<void>((resolve) => nested.close(() => resolve()));
+        if (root) await rm(root, { recursive: true, force: true });
+        if (dist) await rm(dist, { recursive: true, force: true });
+    });
+
+    it('serves a nested page, which a single-segment route could not match', async () => {
+        // It fell through to the Frame catch-all instead, so the Frame parsed a
+        // Shell as JSON and reported a syntax error where a page should be.
+        const res = await fetch(`${nestedOrigin}${payloadPathFor('/docs/guide/getting-started')}`);
+        expect(res.status).toBe(200);
+        expect(res.headers.get('content-type')).toContain('application/json');
+        const payload = (await res.json()) as { handle: string; path: string };
+        expect(payload.path).toBe('guide/getting-started');
+    });
+
+    it('serves it at the url the static build writes it to', async () => {
+        const urlPath = payloadPathFor('/docs/guide/getting-started');
+        const served = await (await fetch(`${nestedOrigin}${urlPath}`)).json();
+        const written = JSON.parse(await readFile(path.join(dist, urlPath.replace(/^\//, '')), 'utf8'));
+        expect(served).toEqual(written);
+    });
+
+    it('still serves the index page', async () => {
+        const res = await fetch(`${nestedOrigin}${payloadPathFor('/docs/index')}`);
+        expect(res.status).toBe(200);
+    });
+
+    it('falls through for a path no page is served at', async () => {
+        // `/docs/getting-started` is the handle-shaped url the navigation used to
+        // build. Nothing is there, and the Frame is what says so.
+        const res = await fetch(`${nestedOrigin}${payloadPathFor('/docs/getting-started')}`);
+        expect(res.status).toBe(404);
+        expect(res.headers.get('content-type')).toContain('text/html');
     });
 });

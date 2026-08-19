@@ -36,7 +36,17 @@ const tree: TreePayload = {
             children: [{ handle: 'image', label: 'Image' }],
         },
     ],
-    docs: [{ handle: 'index', label: 'Overview' }],
+    docs: [
+        { handle: 'index', label: 'Overview', path: 'index' },
+        {
+            handle: 'guide',
+            label: 'Guide',
+            isCollection: true,
+            // A page one directory down. Its handle is the file's own name, so
+            // the path is the only thing that addresses it.
+            children: [{ handle: 'getting-started', label: 'Getting Started', path: 'guide/getting-started' }],
+        },
+    ],
     assets: [],
 };
 
@@ -148,6 +158,14 @@ const payloads: Record<string, unknown> = {
         handle: 'field',
         notes: null,
         variants: [],
+    },
+    '/docs/guide/getting-started.json': {
+        contractVersion: 1,
+        handle: 'getting-started',
+        label: 'Getting Started',
+        title: 'Getting Started',
+        path: 'guide/getting-started',
+        content: '# Start here',
     },
     '/components/detail/button.view.json': {
         contractVersion: 1,
@@ -325,6 +343,33 @@ describe('documentation pages', () => {
         // behind it — a link that only fails when someone clicks it.
         expect(links).toContain('/docs/index');
         expect(links).not.toContain('/components/detail/index');
+    });
+
+    it('links a page below the docs root by its path, not by its handle', async () => {
+        const { container } = await mount();
+        await waitFor(() => expect(screen.getByText('Guide')).not.toBeNull());
+        // Collections start closed unless they are on the way to the current
+        // page, so the nested link has to be revealed before it can be read.
+        fireEvent.click(screen.getByText('Guide'));
+
+        const links = await waitFor(() => {
+            const found = [...container.querySelectorAll('.Tree-entityLink')].map((a) => a.getAttribute('href'));
+            expect(found.length).toBeGreaterThan(3);
+            return found;
+        });
+        expect(links).toContain('/docs/guide/getting-started');
+        // The handle-shaped url has no page and no payload behind it: nothing is
+        // served there in either mode.
+        expect(links).not.toContain('/docs/getting-started');
+    });
+
+    it('opens a page below the docs root from a deep link', async () => {
+        window.history.pushState(null, '', '/docs/guide/getting-started');
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Document-title')).not.toBeNull());
+
+        expect(container.querySelector('.Document-title')?.textContent).toBe('Getting Started');
+        expect(container.querySelector('.Prose')?.querySelector('h1')?.textContent).toBe('Start here');
     });
 
     it('renders a doc page as prose, from Markdown', async () => {
@@ -1101,5 +1146,56 @@ describe('the panels config', () => {
         await waitFor(() => expect(container.querySelector('.Browser-tabs')).not.toBeNull());
 
         expect(container.querySelector('.Browser-tab--notes.is-active')).not.toBeNull();
+    });
+});
+
+describe('the urls a static build is browsed by', () => {
+    // A static build writes `<route>.html` and nothing at the extensionless
+    // path. The Frame resolves either spelling, so navigation looked fine and
+    // then 404'd on the first reload or shared link.
+    const staticMode = () => {
+        window.frctl = { ...window.frctl!, env: 'static' };
+    };
+
+    it('links to the documents the build actually wrote', async () => {
+        staticMode();
+        // Opened at the nested page, which expands the collection holding it.
+        window.history.pushState(null, '', '/docs/guide/getting-started.html');
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Navigation')).not.toBeNull());
+
+        const links = await waitFor(() => {
+            const found = [...container.querySelectorAll('.Tree-entityLink')].map((a) => a.getAttribute('href'));
+            expect(found).toContain('/docs/guide/getting-started.html');
+            return found;
+        });
+        expect(links).toContain('/docs/index.html');
+        expect(links).not.toContain('/docs/guide/getting-started');
+    });
+
+    it('puts a reloadable url in the address bar when one is clicked', async () => {
+        staticMode();
+        const { container } = await mount();
+        await waitFor(() => expect(screen.getByText('Field')).not.toBeNull());
+
+        expect([...container.querySelectorAll('.Tree-entityLink')].map((a) => a.getAttribute('href'))).toContain(
+            '/components/detail/button.html',
+        );
+
+        fireEvent.click(screen.getByText('Field'));
+
+        await waitFor(() => expect(window.location.pathname).toBe('/components/detail/field.html'));
+        // And the Frame still resolves it: the payload url is derived by
+        // stripping the extension, not by knowing which mode this is.
+        expect(container.querySelector('.Preview-iframe')?.getAttribute('src')).toBe('/components/preview/field.html');
+    });
+
+    it('leaves the urls extensionless for the dev server', async () => {
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Navigation')).not.toBeNull());
+
+        const links = [...container.querySelectorAll('.Tree-entityLink')].map((a) => a.getAttribute('href'));
+        expect(links).toContain('/components/detail/button');
+        expect(links.some((href) => href?.endsWith('.html'))).toBe(false);
     });
 });

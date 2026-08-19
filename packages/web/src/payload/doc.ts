@@ -26,16 +26,21 @@ export function buildDocPayload(doc: SourceDoc, statuses: StatusTable): DocPaylo
     return payload;
 }
 
+/**
+ * Where a doc is served, below the docs root.
+ *
+ * The index page has an empty path and is routed as `index` rather than as the
+ * bare docs root, so that one rule covers every doc: the Shell, the payload and
+ * the nav link all derive from this, and none of them special-cases the root.
+ *
+ * Exported because the tree payload carries it too. A doc's URL is the one thing
+ * `handle` does not determine — a handle is the file's own name, so two pages in
+ * different directories can share one — so a navigation that derived a doc URL
+ * from its handle would link to a page that does not exist.
+ */
+export const docRoutePath = (doc: Pick<SourceDoc, 'path'>): string => doc.path || 'index';
+
 /** Every visible doc page, paired with the URL path it is served at. */
 export function routedDocs(docs: SourceDoc[], docsRoute = '/docs'): Array<{ route: string; doc: SourceDoc }> {
-    return docs
-        .filter((doc) => !doc.isHidden)
-        .map((doc) => ({
-            // The index page has an empty path. It is routed as `/docs/index`
-            // rather than bare `/docs` so that one rule covers every doc: the
-            // Shell, the payload and the nav link are all derived from the same
-            // route, and none of them has to special-case the root.
-            route: `${docsRoute}/${doc.path || 'index'}`,
-            doc,
-        }));
+    return docs.filter((doc) => !doc.isHidden).map((doc) => ({ route: `${docsRoute}/${docRoutePath(doc)}`, doc }));
 }

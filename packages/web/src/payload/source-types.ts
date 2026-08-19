@@ -87,6 +87,7 @@ export interface SourceComponent extends Renderable {
 
 export interface SourceDoc {
     handle: string;
+    isDoc: true;
     label: string;
     title: string;
     /** URL path below the docs root. Empty string for the index page. */
@@ -136,6 +137,9 @@ export const isCollection = (item: SourceTreeItem): item is SourceCollection =>
 
 export const isComponent = (item: SourceTreeItem): item is SourceComponent =>
     (item as SourceComponent).isComponent === true;
+
+/** A documentation page. Core sets `isDoc` on the entity itself. */
+export const isDoc = (item: SourceTreeItem): item is SourceDoc => (item as SourceDoc).isDoc === true;
 
 /** Core emits `source:updated` once a rebuild has finished. */
 export interface Watchable {

@@ -28,6 +28,15 @@ const PANEL_BUILDERS: Record<PanelName, (component: SourceComponent) => unknown>
 const isPanel = (value: string): value is PanelName => value in PANEL_BUILDERS;
 
 /**
+ * A route parameter as a path.
+ *
+ * Express hands a wildcard's value over as an array of segments and a named
+ * parameter's as a string, so both shapes arrive here depending on the route.
+ */
+const segments = (value: unknown): string =>
+    (Array.isArray(value) ? value : [value]).filter((part) => part != null && part !== '').join('/');
+
+/**
  * Serves the data contract in dev, at exactly the URLs the static build writes
  * to disk.
  *
@@ -87,7 +96,11 @@ export function payloadRoutes(options: PayloadRoutesOptions): Router {
     };
 
     const sendDoc: RequestHandler = (req, res, next) => {
-        const file = String(req.params.file ?? '');
+        // A wildcard, not `:file`: docs nest, so `/docs/guide/setup.json` is two
+        // segments and a single-segment param does not match it at all — the
+        // request fell through to the Frame catch-all and the Frame parsed a
+        // Shell as JSON.
+        const file = segments(req.params.file);
         if (!file.endsWith('.json')) return next();
         const wanted = file.slice(0, -'.json'.length);
 
@@ -112,7 +125,7 @@ export function payloadRoutes(options: PayloadRoutesOptions): Router {
         res.json(buildAssetPayload(match.asset, assetsMount(app)));
     };
 
-    router.get(`${docsRoute}/:file`, sendDoc);
+    router.get(`${docsRoute}/*file`, sendDoc);
     router.get(`${assetsRoute}/:file`, sendAsset);
 
     return router;

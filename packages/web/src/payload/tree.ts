@@ -1,10 +1,12 @@
 import { CONTRACT_VERSION } from '../contract/version.js';
 import type { TreeNode, TreePayload } from '../contract/tree.js';
 import { buildStatusTable, type StatusRoot, type StatusTable } from './status.js';
+import { docRoutePath } from './doc.js';
 import { sanitiseTags } from './tags.js';
 import {
     isCollection,
     isComponent,
+    isDoc,
     type SourceApp,
     type SourceComponent,
     type SourceTreeItem,
@@ -43,6 +45,10 @@ function walk(items: SourceTreeItem[], root: StatusRoot, statuses: StatusTable):
         if (status) node.status = status;
         const tags = sanitiseTags(item.tags);
         if (tags) node.tags = tags;
+
+        // Docs are addressed by path, not by handle, and the same rule the routes
+        // and payloads use decides it — see `docRoutePath`.
+        if (root === 'docs' && isDoc(item)) node.path = docRoutePath(item);
 
         if (isComponent(item) && expandsToVariants(item)) {
             node.children = item

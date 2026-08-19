@@ -1,3 +1,5 @@
+import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { create } from '../../../fractality/src/fractal.js';
@@ -8,6 +10,7 @@ import {
     buildStatusTable,
     buildTreePayload,
     buildViewPayload,
+    routedDocs,
     type SourceApp,
     type SourceComponent,
 } from '../../src/payload/index.js';
@@ -203,5 +206,67 @@ describe('panel payloads', () => {
             expect(payload.contractVersion).toBe(CONTRACT_VERSION);
             expect(payload.handle).toBe('render');
         }
+    });
+});
+
+describe('documentation nodes in the tree', () => {
+    // Its own library, because the example has a single index page and the bug
+    // this covers only exists one directory down.
+    let root: string;
+    let docsApp: TestApp;
+
+    beforeAll(async () => {
+        root = await mkdtemp(path.join(tmpdir(), 'fractality-docs-'));
+        await mkdir(path.join(root, 'guide'), { recursive: true });
+        await writeFile(path.join(root, '01-index.md'), '# Overview\n');
+        await writeFile(path.join(root, 'guide', 'getting-started.md'), '# Getting started\n');
+        // Same basename in a different directory: two pages, one handle between
+        // them, and nothing to tell them apart but their path.
+        await mkdir(path.join(root, 'reference'), { recursive: true });
+        await writeFile(path.join(root, 'reference', 'getting-started.md'), '# Reference\n');
+
+        const instance = create() as unknown as TestApp;
+        instance.docs.set('path', root);
+        await instance.load();
+        docsApp = instance;
+    }, 30000);
+
+    afterAll(async () => {
+        if (root) await rm(root, { recursive: true, force: true });
+    });
+
+    const leaves = (nodes: ReturnType<typeof buildTreePayload>['docs']): Array<{ handle: string; path?: string }> =>
+        nodes.flatMap((node) => (node.children?.length ? leaves(node.children) : [node]));
+
+    it('says where each page is served, which its handle does not', () => {
+        const found = leaves(buildTreePayload(docsApp).docs);
+        expect(found.map((node) => node.path).sort()).toEqual([
+            'guide/getting-started',
+            'index',
+            'reference/getting-started',
+        ]);
+    });
+
+    it('routes the index page as index rather than as the bare docs root', () => {
+        const index = leaves(buildTreePayload(docsApp).docs).find((node) => node.handle === 'index');
+        expect(index?.path).toBe('index');
+    });
+
+    it('agrees exactly with the urls the build writes', () => {
+        // The property that was broken: the navigation linked `/docs/<handle>`
+        // while the Shell and the payload were written at `/docs/<path>`, so
+        // every page below the docs root was a dead link.
+        const linked = leaves(buildTreePayload(docsApp).docs).map((node) => `/docs/${node.path}`);
+        const written = routedDocs(docsApp.docs.flatten().toArray()).map(({ route }) => route);
+        expect(linked.sort()).toEqual(written.sort());
+    });
+
+    it('leaves components without one, since their handle is their address', () => {
+        // Checked structurally, not on the serialised payload: one of the example
+        // components is itself called `path`.
+        const anyPath = (nodes: ReturnType<typeof buildTreePayload>['components']): boolean =>
+            nodes.some((node) => 'path' in node || (node.children ? anyPath(node.children) : false));
+
+        expect(anyPath(buildTreePayload(app).components)).toBe(false);
     });
 });

@@ -5,6 +5,7 @@
  * functions is an untyped JavaScript boundary — see `source-types.ts`.
  */
 export { buildTreePayload } from './tree.js';
+export { buildDocPayload, docRoutePath, routedDocs } from './doc.js';
 export { buildContextPayload, buildEntityPayload, buildNotesPayload, buildViewPayload } from './entity.js';
 export { buildStatusTable } from './status.js';
 export { BUILTIN_PANELS, extPanel, payloadPathFor } from './paths.js';

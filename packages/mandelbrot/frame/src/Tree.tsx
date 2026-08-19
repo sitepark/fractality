@@ -10,7 +10,8 @@ export interface TreeProps {
     statuses: TreePayload['status'];
     current: string;
     onNavigate: (href: string) => void;
-    hrefFor: (handle: string) => string;
+    /** The whole node, not its handle: a doc's URL is its path. */
+    hrefFor: (node: TreeNode) => string;
     /** Set while filtering, so matches inside collapsed collections stay visible. */
     forceOpen: boolean;
 }
@@ -90,7 +91,7 @@ function Branch({ nodes, depth, isExpanded, onToggle, ...rest }: BranchProps) {
                     );
                 }
 
-                const href = hrefFor(node.handle);
+                const href = hrefFor(node);
                 const isCurrent = current === node.handle;
 
                 return (

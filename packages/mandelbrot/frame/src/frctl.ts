@@ -21,6 +21,15 @@ export const frctl: FrctlConfig = window.frctl ?? {
 };
 
 /**
+ * The project's name, as the header and the document title show it.
+ *
+ * `@fractality/web` reads it off the library's own `project.title`, whose default
+ * is already "Component Library"; the fallback here covers a theme running
+ * against something that supplies no configuration at all.
+ */
+export const projectTitle: string = frctl.projectTitle ?? 'Component Library';
+
+/**
  * Resolves a route path to a URL that exists in this mode.
  *
  * Routes are mode-independent by design — the dev server and the static build

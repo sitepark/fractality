@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import type { AssetPayload, DocPayload, EntityPayload, TreePayload } from '@fractality/web/contract';
 import { fetchAsset, fetchDoc, fetchEntity, fetchTree, PayloadError } from './api.js';
+import { projectTitle } from './frctl.js';
 import { useLiveReload } from './useLiveReload.js';
 import { useSidebar } from './useSidebar.js';
 import { Asset } from './Asset.js';
@@ -110,9 +111,12 @@ export function App() {
         };
     }, [route]);
 
+    // `<page> | <project>`, and the project's name alone when no page is open —
+    // the shape 0.x's <title> had. It said "Fractality" here, which named the
+    // tool rather than the library being browsed.
     useEffect(() => {
         const title = entity?.title ?? doc?.title ?? asset?.title;
-        document.title = title ? `${title} | Fractality` : 'Fractality';
+        document.title = title ? `${title} | ${projectTitle}` : projectTitle;
     }, [entity, doc, asset]);
 
     // `is-closed` belongs on the .Frame root, which is the mount point rather

@@ -1,4 +1,4 @@
-import { frctl } from './frctl.js';
+import { projectTitle } from './frctl.js';
 import { BurgerIcon, CloseIcon } from './Icons.js';
 
 interface HeaderProps {
@@ -7,8 +7,6 @@ interface HeaderProps {
 
 /** Mirrors `views/partials/header.nunj`. */
 export function Header({ onToggleSidebar }: HeaderProps) {
-    const title = (frctl.labels?.projectTitle as string) ?? 'Component Library';
-
     return (
         <div className="Header">
             <button
@@ -29,7 +27,7 @@ export function Header({ onToggleSidebar }: HeaderProps) {
                 </div>
             </button>
             <a href="/" className="Header-title">
-                {title}
+                {projectTitle}
             </a>
         </div>
     );

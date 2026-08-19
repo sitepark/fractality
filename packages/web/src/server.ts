@@ -94,7 +94,7 @@ export default class Server extends mix(Emitter) {
         const host = await createDevHost({
             app: this._app,
             shell: readShell,
-            config: frctlConfigFor(this._theme, 'server', shellPath),
+            config: frctlConfigFor({ theme: this._theme, app: this._app, env: 'server', shellPath }),
             staticMounts: this._theme.static(),
         });
 

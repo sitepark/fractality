@@ -6,6 +6,7 @@ import {
     frctlConfigFor,
     prepareShell,
     writeShells,
+    type AppConfigSource,
     type FrctlConfig,
     type ThemeConfigSource,
 } from '../../src/shell/index.js';
@@ -225,27 +226,32 @@ describe('frctlConfigFor', () => {
         static: () => [{ path: path.join('/srv', 'theme', 'dist'), mount: '/themes/mandelbrot' }],
     });
 
+    /** The library's own configuration, which is where the project's name lives. */
+    const app = (options: Record<string, unknown> = {}): AppConfigSource => ({ get: (key) => options[key] });
+
     it("carries the theme's whole configuration through to the Shell", () => {
         // Every field, in one assertion, deliberately: this used to be written
         // out separately for the server and the builder, and `theming` was
         // missing from both. Adding a field the Shell needs should fail here.
-        const built = frctlConfigFor(
-            theme({
+        const built = frctlConfigFor({
+            theme: theme({
                 styles: ['/themes/mandelbrot/css/default.css'],
                 favicon: '/themes/mandelbrot/favicon.ico',
                 labels: { search: { label: 'Suchen' } },
                 panels: ['html', 'info'],
                 theming: { '--skin-accent': '0, 137, 255' },
             }),
-            'static',
-            SHELL_PATH,
-        );
+            app: app({ 'project.title': 'Acme Patterns' }),
+            env: 'static',
+            shellPath: SHELL_PATH,
+        });
 
         expect(built).toEqual({
             env: 'static',
             themeMount: '/themes/mandelbrot/frame',
             siteRoot: '',
             treeFile: '/tree.json',
+            projectTitle: 'Acme Patterns',
             styles: ['/themes/mandelbrot/css/default.css'],
             favicon: '/themes/mandelbrot/favicon.ico',
             labels: { search: { label: 'Suchen' } },
@@ -255,13 +261,31 @@ describe('frctlConfigFor', () => {
     });
 
     it('reaches the rendered Shell, not just the serialised config', () => {
-        const built = frctlConfigFor(theme({ theming: { '--skin-accent': '0, 137, 255' } }), 'server', SHELL_PATH);
+        const built = frctlConfigFor({
+            theme: theme({ theming: { '--skin-accent': '0, 137, 255' } }),
+            app: app(),
+            env: 'server',
+            shellPath: SHELL_PATH,
+        });
         expect(prepareShell({ shell: SHELL, config: built })).toContain('--skin-accent:0, 137, 255');
     });
 
+    it("takes the project's name from the library, not from the theme", () => {
+        // A theme has no business naming the project, and the header and document
+        // title of every theme need it — so it rides in the global config rather
+        // than in the theme's labels, where it was read from and never written.
+        const built = frctlConfigFor({
+            theme: theme({ labels: { projectTitle: 'ignored' } }),
+            app: app({ 'project.title': 'Acme Patterns' }),
+            env: 'server',
+            shellPath: SHELL_PATH,
+        });
+        expect(built.projectTitle).toBe('Acme Patterns');
+    });
+
     it('refuses a Shell that sits outside every static mount', () => {
-        expect(() => frctlConfigFor(theme({}), 'static', '/elsewhere/index.html')).toThrow(
-            /not inside any of its static mounts/,
-        );
+        expect(() =>
+            frctlConfigFor({ theme: theme({}), app: app(), env: 'static', shellPath: '/elsewhere/index.html' }),
+        ).toThrow(/not inside any of its static mounts/);
     });
 });

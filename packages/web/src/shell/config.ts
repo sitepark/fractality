@@ -34,6 +34,14 @@ export interface FrctlConfig {
     styles?: string[];
     /** Favicon URL, root-absolute. */
     favicon?: string;
+    /**
+     * The project's own name, from `project.title`.
+     *
+     * The library's, not the theme's — which is why it is here rather than in
+     * `labels`: a theme has no business defaulting it, and every theme needs it
+     * for its header and the document title.
+     */
+    projectTitle?: string;
     /** Consumer overrides only — a theme's own label defaults live in its bundle. */
     labels?: Record<string, unknown>;
     /**
@@ -76,15 +84,28 @@ export interface ThemeConfigSource {
     static(): StaticMount[];
 }
 
+/** The part of a loaded library this reads: its configuration, and nothing else. */
+export interface AppConfigSource {
+    get(key: string): unknown;
+}
+
+export interface FrctlConfigOptions {
+    theme: ThemeConfigSource;
+    app: AppConfigSource;
+    env: FrctlConfig['env'];
+    /** Where the theme's Shell sits on disk, which fixes the asset mount. */
+    shellPath: string;
+}
+
 /**
- * Reads the global config off a theme.
+ * Assembles the global config from the theme's configuration and the library's.
  *
  * Shared by the dev server and the static builder rather than written out in
  * both: they must agree on every field, and `env` is the only thing that differs
  * between them. Two copies made a missing field invisible — `theming` was
  * declared above and populated by neither, so `skin` silently did nothing.
  */
-export function frctlConfigFor(theme: ThemeConfigSource, env: FrctlConfig['env'], shellPath: string): FrctlConfig {
+export function frctlConfigFor({ theme, app, env, shellPath }: FrctlConfigOptions): FrctlConfig {
     const mount = resolveShellMount(shellPath, theme.static());
     if (!mount) {
         throw new WebError(
@@ -99,6 +120,8 @@ export function frctlConfigFor(theme: ThemeConfigSource, env: FrctlConfig['env']
         themeMount: mount,
         siteRoot: '',
         treeFile: '/tree.json',
+        // Read off the library, not the theme: this is the project's name.
+        projectTitle: (app.get('project.title') as string) ?? undefined,
         styles: ([] as string[]).concat((theme.get('styles') as string[]) ?? []),
         favicon: (theme.get('favicon') as string) ?? undefined,
         labels: (theme.get('labels') as Record<string, unknown>) ?? undefined,

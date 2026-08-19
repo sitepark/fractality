@@ -11,4 +11,4 @@
 export { prepareShell, writeShells } from './writer.js';
 export type { PrepareShellOptions, WriteShellsOptions, WriteShellsResult } from './writer.js';
 export { frctlConfigFor, serialiseFrctlConfig } from './config.js';
-export type { FrctlConfig, ThemeConfigSource } from './config.js';
+export type { AppConfigSource, FrctlConfig, FrctlConfigOptions, ThemeConfigSource } from './config.js';

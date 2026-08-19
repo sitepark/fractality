@@ -82,7 +82,7 @@ export default class Builder extends mix(Emitter) {
             app: this._app,
             dest,
             shell,
-            config: frctlConfigFor(this._theme, 'static', shellPath),
+            config: frctlConfigFor({ theme: this._theme, app: this._app, env: 'static', shellPath }),
             onProgress: (completed, total) => this.emit('progress', completed, total),
         });
 

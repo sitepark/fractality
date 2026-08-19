@@ -1,3 +1,5 @@
+import { frctl } from './frctl.js';
+
 /**
  * What the site root shows when a project has no index page.
  *
@@ -12,10 +14,16 @@
  * would be a legend of colours with nothing to explain them.
  */
 export function Welcome() {
+    // The project's name when it has one, and the welcome otherwise — 0.x's own
+    // fallback chain for a page with no document behind it. Read raw rather than
+    // through `projectTitle`, whose "Component Library" default would stand in
+    // for the greeting a project that has configured nothing should get.
+    const heading = frctl.projectTitle ?? 'Welcome to your component library';
+
     return (
         <div className="Document">
             <div className="Document-header">
-                <h1 className="Document-title">Welcome to your component library</h1>
+                <h1 className="Document-title">{heading}</h1>
             </div>
             <div className="Prose">
                 <p>You can browse the component library using the navigation.</p>

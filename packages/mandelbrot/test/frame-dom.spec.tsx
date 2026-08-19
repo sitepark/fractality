@@ -204,6 +204,7 @@ beforeEach(() => {
         themeMount: '/themes/mandelbrot/frame',
         siteRoot: '',
         treeFile: '/tree.json',
+        projectTitle: 'Acme Patterns',
         labels: { panels: { notes: 'Notes', context: 'Context' } },
     };
     window.history.pushState(null, '', '/components/detail/button');
@@ -385,6 +386,70 @@ describe('documentation pages', () => {
     });
 });
 
+describe("the project's own name", () => {
+    // It comes from the library's `project.title`. The Frame used to read it from
+    // `labels.projectTitle`, which nothing sets, so every site called itself
+    // "Component Library" and every tab said "Fractality".
+    it('names the library in the header', async () => {
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Header-title')).not.toBeNull());
+        expect(container.querySelector('.Header-title')?.textContent).toBe('Acme Patterns');
+    });
+
+    it('ends the document title, after the page', async () => {
+        await mount();
+        await waitFor(() => expect(document.title).toBe('Button | Acme Patterns'));
+    });
+
+    it('is the whole document title when no page is open', async () => {
+        window.history.pushState(null, '', '/nowhere');
+        await mount();
+        await waitFor(() => expect(document.title).toBe('Acme Patterns'));
+    });
+
+    it('falls back to a generic name when the library supplies none', async () => {
+        window.frctl = { ...window.frctl!, projectTitle: undefined };
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Header-title')).not.toBeNull());
+        expect(container.querySelector('.Header-title')?.textContent).toBe('Component Library');
+    });
+
+    it('greets a project that has named nothing, rather than heading its page "Component Library"', async () => {
+        window.frctl = { ...window.frctl!, projectTitle: undefined };
+        vi.stubGlobal(
+            'fetch',
+            vi.fn((url: string) =>
+                url === '/tree.json'
+                    ? Promise.resolve({ ok: true, status: 200, json: () => Promise.resolve(tree) })
+                    : Promise.resolve({ ok: false, status: 404, json: () => Promise.resolve({}) }),
+            ),
+        );
+        window.history.pushState(null, '', '/');
+
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Document-title')).not.toBeNull());
+        expect(container.querySelector('.Document-title')?.textContent).toBe('Welcome to your component library');
+    });
+
+    it('heads the welcome page, since that page has no document of its own', async () => {
+        // 0.x's title chain for a page with nothing behind it: the project's name,
+        // then the greeting.
+        vi.stubGlobal(
+            'fetch',
+            vi.fn((url: string) =>
+                url === '/tree.json'
+                    ? Promise.resolve({ ok: true, status: 200, json: () => Promise.resolve(tree) })
+                    : Promise.resolve({ ok: false, status: 404, json: () => Promise.resolve({}) }),
+            ),
+        );
+        window.history.pushState(null, '', '/');
+
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Document-title')).not.toBeNull());
+        expect(container.querySelector('.Document-title')?.textContent).toBe('Acme Patterns');
+    });
+});
+
 describe('the home page', () => {
     // `/` is the project's index page, as it was in 0.x. It is the url
     // `fractality start` prints and the one a bare domain resolves to, and it
@@ -436,8 +501,10 @@ describe('the home page', () => {
         const { container } = await mount();
         await waitFor(() => expect(container.querySelector('.Document-title')).not.toBeNull());
 
-        expect(container.querySelector('.Document-title')?.textContent).toBe('Welcome to your component library');
+        // Identified by what it tells the reader to do, not by its heading: the
+        // heading is the project's own name when it has one.
         expect(container.querySelector('.Prose')?.textContent).toContain('index.md');
+        expect(container.querySelector('.Prose')?.textContent).toContain('using the navigation');
         expect(container.querySelector('.Error')).toBeNull();
         // The navigation is still there: the library is browsable with no
         // documentation at all.

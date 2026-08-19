@@ -1,8 +1,8 @@
-import { cp, mkdir, readFile, rm } from 'node:fs/promises';
-import path from 'node:path';
+import { mkdir, readFile, rm } from 'node:fs/promises';
 import { mixins } from '@fractality/core';
+import type { Matcher } from 'anymatch';
 
-import { buildStatic, type BuildStaticResult } from './build/index.js';
+import { buildStatic, copyStaticAssets, type BuildStaticResult, type StaticAssetError } from './build/index.js';
 import type { Loadable, SourceApp } from './payload/source-types.js';
 import { frctlConfigFor } from './shell/config.js';
 import Theme from './theme.js';
@@ -17,7 +17,9 @@ export interface BuilderConfig {
 }
 
 export interface BuildReport extends BuildStaticResult {
-    /** What the CLI reports at the end of a build. */
+    /** Static directories that could not be copied. */
+    staticErrors: StaticAssetError[];
+    /** What the CLI reports at the end of a build: render plus copy failures. */
     errorCount: number;
 }
 
@@ -86,11 +88,10 @@ export default class Builder extends mix(Emitter) {
 
         // Static assets last: they must not be clobbered by the route walk, and
         // copying them first would mean deleting them on a failed build.
-        for (const mount of this._theme.static()) {
-            await cp(mount.path, path.join(dest, mount.mount.replace(/^\/+/, '')), {
-                recursive: true,
-            });
-        }
+        const staticAssets = await copyStaticAssets(this._theme.static(), {
+            dest,
+            ignored: (this._config.static as { ignored?: Matcher } | undefined)?.ignored,
+        });
 
         for (const error of result.previewErrors) {
             // Emitted, not logged. The CLI subscribes to 'error' and prints it;
@@ -99,6 +100,14 @@ export default class Builder extends mix(Emitter) {
             this.emit('error', new WebError(`${error.handle}: ${error.message}`));
         }
 
-        return { ...result, errorCount: result.previewErrors.length };
+        for (const error of staticAssets.errors) {
+            this.emit('error', new WebError(error.message));
+        }
+
+        return {
+            ...result,
+            staticErrors: staticAssets.errors,
+            errorCount: result.previewErrors.length + staticAssets.errors.length,
+        };
     }
 }

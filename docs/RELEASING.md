@@ -18,7 +18,7 @@ Packages are versioned independently, and a bumped package also bumps its depend
 ## Cutting a release
 
 1. Make sure `main` is green and holds everything you want to ship.
-2. Check that the `NPM_TOKEN` secret is still valid — npm granular tokens expire after 90 days at most, and an expired one is the single most likely reason for a failed release. The workflow verifies this before it changes anything, so a dead token costs you a few seconds rather than a broken release.
+2. Check that the `NPM_TOKEN` secret is still valid — npm granular tokens expire after 90 days at most, and an expired one is the single most likely reason for a failed release. The workflow verifies this before it changes anything, so a dead token costs you a few seconds rather than a broken release. Packages covered by trusted publishing (below) do not need it.
 3. Run the **Release** workflow from the Actions tab. Tick **dry-run** first if you want to see which packages and versions it would ship without publishing or pushing anything.
 4. The workflow validates, tests, bumps versions, writes changelogs, publishes to npm, and only then pushes the version commit, the tags and the GitHub releases.
 
@@ -29,6 +29,23 @@ The **bump** input defaults to `conventional`, which is the normal case: every p
 Reach for it when a `feat!` sitting in the backlog would force a major you are not ready to cut. Setting `minor` ships that work as a minor instead. The changelog still records the breaking change under **BREAKING CHANGES**, so nothing is hidden from the people upgrading.
 
 The override applies to every package in the release, so a package whose commits were all fixes moves by the chosen bump too. Check the dry run before using it.
+
+## Trusted publishing
+
+Publishing authenticates through npm's trusted publishing rather than a stored token. Lerna asks GitHub for an OIDC token, trades it at the registry for a short-lived credential scoped to the one package it is about to publish, and throws it away afterwards. Nothing long-lived sits in the repository secrets, npm never asks for a one-time password, and each published version carries a provenance attestation linking it to the commit and workflow run that built it.
+
+This is configured per package, at **npmjs.com → the package → Settings → Trusted Publisher**:
+
+| Field       | Value                 |
+| ----------- | --------------------- |
+| Publisher   | GitHub Actions        |
+| Repository  | `sitepark/fractality` |
+| Workflow    | `release.yml`         |
+| Environment | leave empty           |
+
+Every package in `packages/` needs its own entry. The workflow grants `id-token: write`, without which GitHub does not hand out an OIDC token at all and lerna quietly falls back to `NPM_TOKEN`.
+
+That fallback is why a missing entry is not dangerous: the package publishes the old way, or fails the old way, and the rest of the release is unaffected. Once every package is covered, `NPM_TOKEN` and the step that verifies it can go.
 
 ## When a release fails
 

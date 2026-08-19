@@ -23,6 +23,9 @@ concurrency:
 
 permissions:
   contents: write
+  # Lets lerna mint a short-lived, per-package npm token from GitHub's OIDC
+  # provider instead of presenting NPM_TOKEN. See docs/RELEASING.md.
+  id-token: write
 
 jobs:
   release:
@@ -41,6 +44,10 @@ jobs:
           cache: true
           runtime: node@24
 
+      # Fallback credential only. When trusted publishing is configured for a
+      # package, lerna exchanges GitHub's OIDC token for a short-lived npm one
+      # and this is never used; where it is not, publishing falls back to here.
+      #
       # pnpm/setup has no registry-url input, so nothing writes an .npmrc the
       # way actions/setup-node used to. Write the token into the user config
       # instead, where npm and lerna's own config reader both pick it up for

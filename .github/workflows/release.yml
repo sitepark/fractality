@@ -23,8 +23,9 @@ concurrency:
 
 permissions:
   contents: write
-  # Lets lerna mint a short-lived, per-package npm token from GitHub's OIDC
-  # provider instead of presenting NPM_TOKEN. See docs/RELEASING.md.
+  # Lets lerna mint a short-lived, per-package npm credential from GitHub's
+  # OIDC provider. This is the only way the release authenticates to the
+  # registry; there is no stored token. See docs/RELEASING.md.
   id-token: write
 
 jobs:
@@ -44,29 +45,19 @@ jobs:
           cache: true
           runtime: node@24
 
-      # Fallback credential only. When trusted publishing is configured for a
-      # package, lerna exchanges GitHub's OIDC token for a short-lived npm one
-      # and this is never used; where it is not, publishing falls back to here.
-      #
-      # pnpm/setup has no registry-url input, so nothing writes an .npmrc the
-      # way actions/setup-node used to. Write the token into the user config
-      # instead, where npm and lerna's own config reader both pick it up for
-      # the rest of the job.
-      #
-      # Fail here, before anything is bumped, tagged or written. An expired or
-      # under-scoped token otherwise surfaces as an opaque "E404 Not found" from
-      # the publish step, long after the version commit and tags already exist.
-      - name: Authenticate to npm
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      # Publishing authenticates through trusted publishing, so there is no
+      # stored credential to check. What can go missing is the OIDC token
+      # itself, if the id-token permission above is ever dropped: lerna treats
+      # a failed exchange as optional and carries on unauthenticated, so the
+      # release would only die at publish time, once versions and tags exist.
+      # Fail here instead, before anything is written.
+      - name: Verify OIDC availability
         run: |
-          npm config set //registry.npmjs.org/:_authToken "${NODE_AUTH_TOKEN}"
-          if ! whoami=$(npm whoami 2>&1); then
-            echo "::error::npm authentication failed: ${whoami}"
-            echo "::error::Rotate the NPM_TOKEN secret (npm granular tokens expire; 90 days max)."
+          if [ -z "${ACTIONS_ID_TOKEN_REQUEST_URL}" ]; then
+            echo "::error::GitHub issued no OIDC token; check that this workflow still grants id-token: write."
             exit 1
           fi
-          echo "Authenticated to npm as ${whoami}"
+          echo "OIDC token endpoint available"
 
       - name: Validate
         run: pnpm run validate

@@ -18,7 +18,7 @@ Packages are versioned independently, and a bumped package also bumps its depend
 ## Cutting a release
 
 1. Make sure `main` is green and holds everything you want to ship.
-2. Check that the `NPM_TOKEN` secret is still valid — npm granular tokens expire after 90 days at most, and an expired one is the single most likely reason for a failed release. The workflow verifies this before it changes anything, so a dead token costs you a few seconds rather than a broken release. Packages covered by trusted publishing (below) do not need it.
+2. Nothing to prepare for npm. Publishing authenticates through trusted publishing (below), so there is no token to keep alive.
 3. Run the **Release** workflow from the Actions tab. Tick **dry-run** first if you want to see which packages and versions it would ship without publishing or pushing anything.
 4. The workflow validates, tests, bumps versions, writes changelogs, publishes to npm, and only then pushes the version commit, the tags and the GitHub releases.
 
@@ -43,9 +43,9 @@ This is configured per package, at **npmjs.com → the package → Settings → 
 | Workflow    | `release.yml`         |
 | Environment | leave empty           |
 
-Every package in `packages/` needs its own entry. The workflow grants `id-token: write`, without which GitHub does not hand out an OIDC token at all and lerna quietly falls back to `NPM_TOKEN`.
+Every package in `packages/` needs its own entry. The workflow grants `id-token: write`, without which GitHub hands out no OIDC token at all; the **Verify OIDC availability** step fails the run early if that permission ever goes missing, since lerna itself treats a failed exchange as optional and would carry on to fail at publish time instead.
 
-That fallback is why a missing entry is not dangerous: the package publishes the old way, or fails the old way, and the rest of the release is unaffected. Once every package is covered, `NPM_TOKEN` and the step that verifies it can go.
+There is no stored token behind this any more. If you add a package to `packages/`, note that its first publish has nothing to attach a trusted publisher to, because npm configures this on packages that already exist. Publish that one version by hand, then add its entry like the rest.
 
 ## When a release fails
 

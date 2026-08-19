@@ -1,6 +1,7 @@
 import { Router, type RequestHandler } from 'express';
 
 import { routedEntities } from '../build/entities.js';
+import { serverRenderEnv } from '../render-env.js';
 import type { SourceApp } from '../payload/source-types.js';
 import { gateOnIdle, type IdleGateable } from './gate.js';
 import { LIVE_RELOAD_ROUTE } from './live-reload.js';
@@ -68,7 +69,13 @@ export function previewRoutes(options: PreviewRoutesOptions): Router {
             const match = routedEntities(app).find((entity) => entity.handle === handle);
             if (!match) return next();
 
-            match.entity.render(null, {}, { preview, collate: true }).then(
+            // The env the adapters expose as `_env`. `server: true` is what
+            // keeps a pattern's `path` helper emitting absolute URLs here;
+            // without it the same markup is served with build-relative links,
+            // which resolve against the Preview's own directory and 404.
+            const env = serverRenderEnv({ path: req.path, url: req.originalUrl, params: { handle } });
+
+            match.entity.render(null, env, { preview, collate: true }).then(
                 (markup: string) => {
                     // Only the Preview. The render route is the component's bare
                     // markup, which the Browser's HTML panel reads as data — a

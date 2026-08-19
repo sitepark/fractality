@@ -12,6 +12,8 @@
  * layer stays out of scope. The payload tests are what stand in for a compiler
  * here, so keep them exercising real entities rather than hand-built objects.
  */
+
+import type { RenderEnv } from '../render-env.js';
 import type { JsonObject } from '../contract/json.js';
 
 /** A resolved status. Note it carries no key — see `status.ts`. */
@@ -39,7 +41,11 @@ export interface RenderOptions {
 }
 
 export interface Renderable {
-    render(context: unknown, env: unknown, opts: RenderOptions): Promise<string>;
+    /**
+     * `env` is what the adapters expose to a pattern as `_env`, so it is not
+     * optional and not `{}`: see src/render-env.ts.
+     */
+    render(context: unknown, env: RenderEnv, opts: RenderOptions): Promise<string>;
 }
 
 export interface SourceVariant extends Renderable {

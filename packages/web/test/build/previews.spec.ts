@@ -108,6 +108,19 @@ describe('writePreviews', () => {
         expect(html).not.toContain('EventSource');
     });
 
+    it('renders each document for its own url, so a pattern links relative to where it sits', async () => {
+        // The `path` fixture is `{{path '/some-path' }}`. In a build the helper
+        // rewrites that relative to the document it appears in, and the document
+        // is two directories deep — so `./some-path.html`, which resolves inside
+        // components/preview/, is the wrong answer even though it looks fine.
+        const [preview, render] = await Promise.all([
+            readFile(path.join(dest, 'components', 'preview', 'path.html'), 'utf8'),
+            readFile(path.join(dest, 'components', 'render', 'path.html'), 'utf8'),
+        ]);
+        expect(preview.trim()).toBe('../../some-path.html');
+        expect(render.trim()).toBe('../../some-path.html');
+    });
+
     it('renders patterns without involving any theme view', async () => {
         // The engine and its views are gone; what lands here is the adapter's
         // output for the user's own template.

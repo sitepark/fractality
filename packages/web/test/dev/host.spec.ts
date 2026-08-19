@@ -103,6 +103,19 @@ describe('createDevHost', () => {
         expect(html).not.toContain('id="frame"');
     });
 
+    it('renders a Preview for the dev server, not for a build', async () => {
+        // The `path` fixture is `{{path '/some-path' }}`. Absolute here and
+        // rewritten relative only in a build — a Preview served with
+        // build-relative links resolves them against its own directory and 404s.
+        const [preview, render] = await Promise.all([
+            fetch(`${origin}/components/preview/path`).then((r) => r.text()),
+            fetch(`${origin}/components/render/path`).then((r) => r.text()),
+        ]);
+        expect(render.trim()).toBe('/some-path');
+        expect(preview).toContain('/some-path');
+        expect(preview).not.toContain('some-path.html');
+    });
+
     it('injects the Vite client into the Shell', async () => {
         const html = await fetch(`${origin}/components/detail/render`).then((r) => r.text());
         expect(html).toContain('/@vite/client');

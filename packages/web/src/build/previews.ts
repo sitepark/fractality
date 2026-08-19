@@ -2,6 +2,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
 import { routedEntities } from './entities.js';
+import { builderRenderEnv } from '../render-env.js';
 import type { SourceApp } from '../payload/source-types.js';
 
 export interface WritePreviewsOptions {
@@ -87,10 +88,18 @@ export async function writePreviews(app: SourceApp, options: WritePreviewsOption
         ] as const) {
             const file = path.join(dest, route.replace(/^\/+/, ''), `${handle}.html`);
             try {
+                // Rendered for *this* document's URL, which is what a pattern's
+                // `path` helper rewrites its links relative to. With no env — or
+                // one carrying no path — every pattern links as though it sat at
+                // the site root, and the build succeeds with links that 404.
+                //
                 // `collate: true` unconditionally, matching both of today's templates,
                 // which set withCollation = true and leave render() to decide whether
                 // the entity is actually collated.
-                const markup = await entity.render(null, {}, { preview, collate: true });
+                const markup = await entity.render(null, builderRenderEnv(`${route}/${handle}`, { handle }), {
+                    preview,
+                    collate: true,
+                });
                 await write(file, markup);
             } catch (error: unknown) {
                 const message = error instanceof Error ? error.message : String(error);

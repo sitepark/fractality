@@ -49,6 +49,16 @@ Serve the directory over HTTP instead; any static server will do.
 This is a real regression against 0.x, and there is no workaround that keeps the
 rest of the model intact.
 
+### `_env` in your own patterns is smaller, but still there
+
+`{{#if _env.server}}`, `_env.builder` and the `path` helper all keep working:
+`@fractality/web` still tells your patterns which of the two modes rendered them.
+
+`_env.request` is trimmed to what a static build can honestly answer — `path`,
+`url`, `segments`, `params`, `query` and `headers`. There is no request behind it
+in a build, so `route`, `error`, `errorStatus` and `isPjax` are gone. `path` is
+the URL of the Preview document itself, as before.
+
 ---
 
 ## If you wrote a theme

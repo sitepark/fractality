@@ -38,9 +38,6 @@
   "peerDependencies": {
     "@fractality/fractality": ">= 1.5 < 2"
   },
-  "devDependencies": {
-    "@fractality/fractality": "workspace:*"
-  },
   "publishConfig": {
     "access": "public"
   }

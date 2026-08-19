@@ -5,6 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
+  '@fractality/fractality': workspace:*
   brace-expansion@>=4.0.0 <5.0.9: ^5.0.9
   js-yaml@>=4.0.0 <4.3.1: ^4.3.1
   tar@>=7.0.0 <7.5.21: ^7.5.22
@@ -279,6 +280,9 @@ importers:
       '@fractality/core':
         specifier: workspace:*
         version: link:../core
+      '@fractality/fractality':
+        specifier: workspace:*
+        version: link:../fractality
       handlebars:
         specifier: ^4.7.9
         version: 4.7.9
@@ -288,13 +292,12 @@ importers:
       promised-handlebars:
         specifier: ^2.0.1
         version: 2.0.1(handlebars@4.7.9)
-    devDependencies:
-      '@fractality/fractality':
-        specifier: workspace:*
-        version: link:../fractality
 
   packages/mandelbrot:
     dependencies:
+      '@fractality/fractality':
+        specifier: workspace:*
+        version: link:../fractality
       fs-extra:
         specifier: ^11.4.0
         version: 11.4.0
@@ -302,9 +305,6 @@ importers:
         specifier: ^4.18.1
         version: 4.18.1
     devDependencies:
-      '@fractality/fractality':
-        specifier: workspace:*
-        version: link:../fractality
       '@fractality/web':
         specifier: workspace:*
         version: link:../web

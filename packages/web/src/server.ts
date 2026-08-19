@@ -5,8 +5,7 @@ import { mixins } from '@fractality/core';
 import { createDevHost, type DevHost } from './dev/host.js';
 import type { Loadable, SourceApp, Watchable } from './payload/source-types.js';
 import type { IdleGateable } from './dev/gate.js';
-import type { FrctlConfig } from './shell/config.js';
-import { resolveShellMount } from './shell/mount.js';
+import { frctlConfigFor } from './shell/config.js';
 import Theme from './theme.js';
 import WebError from './error.js';
 
@@ -95,7 +94,7 @@ export default class Server extends mix(Emitter) {
         const host = await createDevHost({
             app: this._app,
             shell: readShell,
-            config: this._frctlConfig(shellPath),
+            config: frctlConfigFor(this._theme, 'server', shellPath),
             staticMounts: this._theme.static(),
         });
 
@@ -112,27 +111,5 @@ export default class Server extends mix(Emitter) {
         await this._host?.close();
         this._host = null;
         this._port = null;
-    }
-
-    private _frctlConfig(shellPath: string): FrctlConfig {
-        const mount = resolveShellMount(shellPath, this._theme.static());
-        if (!mount) {
-            throw new WebError(
-                `The theme's Shell (${shellPath}) is not inside any of its static mounts, ` +
-                    'so its assets cannot be addressed. Call addStatic() for the directory ' +
-                    'the Shell is built into.',
-            );
-        }
-
-        return {
-            env: 'server',
-            themeMount: mount,
-            siteRoot: '',
-            treeFile: '/tree.json',
-            styles: ([] as string[]).concat((this._theme.get('styles') as string[]) ?? []),
-            favicon: (this._theme.get('favicon') as string) ?? undefined,
-            labels: (this._theme.get('labels') as Record<string, unknown>) ?? undefined,
-            panels: (this._theme.get('panels') as string[]) ?? undefined,
-        };
     }
 }

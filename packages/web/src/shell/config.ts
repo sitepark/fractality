@@ -1,3 +1,7 @@
+import WebError from '../error.js';
+import type { StaticMount } from '../theme.js';
+import { resolveShellMount } from './mount.js';
+
 /**
  * The global configuration the Shell needs *before* any JavaScript runs,
  * serialised into the `window.frctl` block at site build time.
@@ -64,4 +68,41 @@ export function serialiseFrctlConfig(config: FrctlConfig): string {
         .replace(/</g, '\\u003c')
         .replace(/\u2028/g, '\\u2028')
         .replace(/\u2029/g, '\\u2029');
+}
+
+/** The part of a Theme this reads: its configuration and its static mounts. */
+export interface ThemeConfigSource {
+    get(key: string): unknown;
+    static(): StaticMount[];
+}
+
+/**
+ * Reads the global config off a theme.
+ *
+ * Shared by the dev server and the static builder rather than written out in
+ * both: they must agree on every field, and `env` is the only thing that differs
+ * between them. Two copies made a missing field invisible — `theming` was
+ * declared above and populated by neither, so `skin` silently did nothing.
+ */
+export function frctlConfigFor(theme: ThemeConfigSource, env: FrctlConfig['env'], shellPath: string): FrctlConfig {
+    const mount = resolveShellMount(shellPath, theme.static());
+    if (!mount) {
+        throw new WebError(
+            `The theme's Shell (${shellPath}) is not inside any of its static mounts, ` +
+                'so its assets cannot be addressed. Call addStatic() for the directory ' +
+                'the Shell is built into.',
+        );
+    }
+
+    return {
+        env,
+        themeMount: mount,
+        siteRoot: '',
+        treeFile: '/tree.json',
+        styles: ([] as string[]).concat((theme.get('styles') as string[]) ?? []),
+        favicon: (theme.get('favicon') as string) ?? undefined,
+        labels: (theme.get('labels') as Record<string, unknown>) ?? undefined,
+        panels: (theme.get('panels') as string[]) ?? undefined,
+        theming: (theme.get('theming') as Record<string, string>) ?? undefined,
+    };
 }

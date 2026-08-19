@@ -2,7 +2,13 @@ import { mkdtemp, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 
-import { prepareShell, writeShells, type FrctlConfig } from '../../src/shell/index.js';
+import {
+    frctlConfigFor,
+    prepareShell,
+    writeShells,
+    type FrctlConfig,
+    type ThemeConfigSource,
+} from '../../src/shell/index.js';
 
 const config: FrctlConfig = {
     env: 'static',
@@ -116,6 +122,54 @@ describe('prepareShell', () => {
     it('keeps the noscript notice, since no-JS is unsupported', () => {
         expect(prepareShell({ shell: SHELL, config })).toContain('<noscript>');
     });
+
+    describe('theming', () => {
+        const theming = { '--skin-accent': '0, 137, 255', '--skin-links': '34, 136, 255' };
+
+        it('writes the custom properties into a :root rule', () => {
+            const html = prepareShell({ shell: SHELL, config: { ...config, theming } });
+            expect(html).toContain('<style>:root{--skin-accent:0, 137, 255;--skin-links:34, 136, 255}</style>');
+        });
+
+        it('puts them after the theme stylesheets, so an override wins', () => {
+            // Same specificity as anything the theme's own CSS declares on :root,
+            // so the later of the two is the one that applies.
+            const html = prepareShell({
+                shell: SHELL,
+                config: { ...config, styles: ['/themes/mandelbrot/css/default.css'], theming },
+            });
+            expect(html.indexOf('<style>:root{')).toBeGreaterThan(html.indexOf('css/default.css">'));
+        });
+
+        it('injects no style block when a theme declares no theming', () => {
+            expect(prepareShell({ shell: SHELL, config })).not.toContain('<style>');
+            expect(prepareShell({ shell: SHELL, config: { ...config, theming: {} } })).not.toContain('<style>');
+        });
+
+        it('refuses a value that would end the declaration and inject rules of its own', () => {
+            expect(() =>
+                prepareShell({
+                    shell: SHELL,
+                    config: { ...config, theming: { '--skin-accent': 'red;} body{display:none' } },
+                }),
+            ).toThrow(/not a plain CSS value/);
+        });
+
+        it('refuses a value that would close the style element', () => {
+            expect(() =>
+                prepareShell({
+                    shell: SHELL,
+                    config: { ...config, theming: { '--skin-accent': '</style><script>alert(1)</script>' } },
+                }),
+            ).toThrow(/not a plain CSS value/);
+        });
+
+        it('refuses a property name that is not a custom property', () => {
+            expect(() =>
+                prepareShell({ shell: SHELL, config: { ...config, theming: { 'body{color': 'red' } } }),
+            ).toThrow(/not a CSS custom property/);
+        });
+    });
 });
 
 describe('writeShells', () => {
@@ -160,5 +214,54 @@ describe('writeShells', () => {
         const result = await writeShells({ dest, routes, shell: SHELL, config });
         expect(result.files).toContain(path.join(dest, 'components', 'detail', 'button.html'));
         expect(result.files).toContain(path.join(dest, 'index.html'));
+    });
+});
+
+describe('frctlConfigFor', () => {
+    const SHELL_PATH = path.join('/srv', 'theme', 'dist', 'frame', 'index.html');
+
+    const theme = (options: Record<string, unknown>): ThemeConfigSource => ({
+        get: (key) => options[key],
+        static: () => [{ path: path.join('/srv', 'theme', 'dist'), mount: '/themes/mandelbrot' }],
+    });
+
+    it("carries the theme's whole configuration through to the Shell", () => {
+        // Every field, in one assertion, deliberately: this used to be written
+        // out separately for the server and the builder, and `theming` was
+        // missing from both. Adding a field the Shell needs should fail here.
+        const built = frctlConfigFor(
+            theme({
+                styles: ['/themes/mandelbrot/css/default.css'],
+                favicon: '/themes/mandelbrot/favicon.ico',
+                labels: { search: { label: 'Suchen' } },
+                panels: ['html', 'info'],
+                theming: { '--skin-accent': '0, 137, 255' },
+            }),
+            'static',
+            SHELL_PATH,
+        );
+
+        expect(built).toEqual({
+            env: 'static',
+            themeMount: '/themes/mandelbrot/frame',
+            siteRoot: '',
+            treeFile: '/tree.json',
+            styles: ['/themes/mandelbrot/css/default.css'],
+            favicon: '/themes/mandelbrot/favicon.ico',
+            labels: { search: { label: 'Suchen' } },
+            panels: ['html', 'info'],
+            theming: { '--skin-accent': '0, 137, 255' },
+        });
+    });
+
+    it('reaches the rendered Shell, not just the serialised config', () => {
+        const built = frctlConfigFor(theme({ theming: { '--skin-accent': '0, 137, 255' } }), 'server', SHELL_PATH);
+        expect(prepareShell({ shell: SHELL, config: built })).toContain('--skin-accent:0, 137, 255');
+    });
+
+    it('refuses a Shell that sits outside every static mount', () => {
+        expect(() => frctlConfigFor(theme({}), 'static', '/elsewhere/index.html')).toThrow(
+            /not inside any of its static mounts/,
+        );
     });
 });

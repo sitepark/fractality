@@ -55,6 +55,15 @@ export default class Theme extends mix(Configurable, Emitter) {
     getOption!: (key: string) => unknown;
 
     /**
+     * Reads a config value. Comes from the Configurable mixin, which is
+     * JavaScript and therefore untyped — declared here so a Theme can satisfy an
+     * interface that asks for it. `declare` rather than a field, because a real
+     * field would be defined as `undefined` at construction and shadow the
+     * prototype method it is describing.
+     */
+    declare get: (key: string) => unknown;
+
+    /**
      * The version of the data contract this theme was written against.
      *
      * Declared explicitly rather than defaulted, and that is the point: a theme

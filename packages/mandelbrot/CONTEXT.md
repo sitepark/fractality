@@ -38,5 +38,7 @@ _Avoid_: nav, menu, sidebar, explorer
 **Skin**:
 ~~A named colour scheme for the Frame.~~ **Retired** — named skins are being removed. The Frame's
 appearance is adjusted through CSS custom properties instead, and there is no successor noun: say
-"theming" for the activity and name the properties directly.
+"theming" for the activity and name the properties directly. The **config key** is still `skin`
+(`{ accent, complement, links }`) — it is the input `theme.js` resolves into `--skin-*` values for
+`@fractality/web` to write into the Shell, not a thing the Frame has.
 _Avoid_: skin, palette, colour scheme

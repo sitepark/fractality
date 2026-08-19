@@ -1,6 +1,7 @@
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
+import WebError from '../error.js';
 import { serialiseFrctlConfig, type FrctlConfig } from './config.js';
 
 export interface PrepareShellOptions {
@@ -29,6 +30,47 @@ const escapeAttribute = (value: string): string =>
     value.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 
 const ABSOLUTE = /^(?:[a-z][a-z0-9+.-]*:|\/\/|\/|#|data:)/i;
+
+/** A CSS custom-property name: two dashes, then identifier characters. */
+const CUSTOM_PROPERTY = /^--[A-Za-z0-9_-]+$/;
+
+/**
+ * Anything that could end the declaration, the rule or the element it sits in.
+ *
+ * A theming value is consumer configuration reaching a `<style>` block, so a `;`
+ * or `}` in it would append rules of the author's choosing to the page, and
+ * `</style` would end the element. Escaping is not available inside a style
+ * element the way it is inside an attribute — the only safe answer is to refuse.
+ */
+const UNSAFE_DECLARATION = /[;{}<>\\]|\/\*/;
+
+/**
+ * The theming custom properties, as a `:root` rule.
+ *
+ * These are the consumer's overrides, so the block is injected *after* the
+ * theme's stylesheets: same specificity, so the later declaration is the one
+ * that wins. Emitted as CSS rather than applied by the Frame at mount, because
+ * anything JavaScript does happens after first paint — the user would watch the
+ * default colours repaint into theirs.
+ */
+function themingBlock(theming: FrctlConfig['theming']): string {
+    const declarations = Object.entries(theming ?? {}).map(([property, value]) => {
+        if (!CUSTOM_PROPERTY.test(property)) {
+            throw new WebError(
+                `Theming property "${property}" is not a CSS custom property. ` + 'Names must look like "--accent".',
+            );
+        }
+        if (typeof value !== 'string' || UNSAFE_DECLARATION.test(value)) {
+            throw new WebError(
+                `Theming value for "${property}" is not a plain CSS value: ${JSON.stringify(value)}. ` +
+                    'It is written into a <style> block, so ; { } < > \\ and comments are refused.',
+            );
+        }
+        return `${property}:${value.trim()}`;
+    });
+
+    return declarations.length ? `<style>:root{${declarations.join(';')}}</style>` : '';
+}
 
 /**
  * Rewrites a theme-relative asset URL to be root-absolute from the theme mount.
@@ -76,7 +118,9 @@ export function prepareShell({ shell, config }: PrepareShellOptions): string {
 
     const favicon = config.favicon ? `<link rel="shortcut icon" href="${escapeAttribute(config.favicon)}">` : '';
 
-    const block = `${links}${favicon}<script>window.frctl=${serialiseFrctlConfig(config)};</script>`;
+    const block =
+        `${links}${favicon}${themingBlock(config.theming)}` +
+        `<script>window.frctl=${serialiseFrctlConfig(config)};</script>`;
 
     if (/<\/head>/i.test(rewritten)) {
         return rewritten.replace(/<\/head>/i, `${block}</head>`);

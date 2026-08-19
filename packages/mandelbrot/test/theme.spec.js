@@ -60,6 +60,52 @@ describe('mandelbrot theme factory', () => {
         });
     });
 
+    describe('theming', () => {
+        // `skin` is the whole of mandelbrot's colour configuration now that named
+        // skins are gone, and it reaches the page as custom properties written
+        // into the Shell. `theme.get('skin')` holding the values is not evidence
+        // that anything applies them — that is precisely how this silently
+        // stopped working.
+        it('resolves skin colours to the custom properties the stylesheet reads', () => {
+            const theme = mandelbrot({ skin: { accent: '#0089ff', complement: '#666', links: '#0089ff' } });
+            expect(theme.get('theming')).toEqual({
+                '--skin-accent': '0, 137, 255',
+                '--skin-complement': '102, 102, 102',
+                '--skin-links': '0, 137, 255',
+            });
+        });
+
+        it('expands the three-digit hex form', () => {
+            const theme = mandelbrot({ skin: { links: '#08f' } });
+            expect(theme.get('theming')).toEqual({ '--skin-links': '0, 136, 255' });
+        });
+
+        it('accepts uppercase hex', () => {
+            const theme = mandelbrot({ skin: { accent: '#FFB300' } });
+            expect(theme.get('theming')).toEqual({ '--skin-accent': '255, 179, 0' });
+        });
+
+        it('declares no theming when no skin is configured', () => {
+            expect(mandelbrot().get('theming')).toEqual({});
+        });
+
+        it('ignores a leftover named skin in either form', () => {
+            expect(mandelbrot({ skin: 'blue' }).get('theming')).toEqual({});
+            expect(mandelbrot({ skin: { name: 'blue' } }).get('theming')).toEqual({});
+        });
+
+        it('refuses a colour it cannot split into channels', () => {
+            // The stylesheet interpolates these into rgba(), so a keyword would
+            // produce an invalid value — and CSS drops those silently.
+            expect(() => mandelbrot({ skin: { accent: 'rebeccapurple' } })).toThrow(/must be a hex colour/);
+            expect(() => mandelbrot({ skin: { accent: 'rgb(0 137 255)' } })).toThrow(/must be a hex colour/);
+        });
+
+        it('refuses an unknown skin option instead of ignoring it', () => {
+            expect(() => mandelbrot({ skin: { link: '#0089ff' } })).toThrow(/unknown skin option "link"/);
+        });
+    });
+
     describe('static assets', () => {
         it('mounts its own dist directory under the configured mount path', () => {
             const theme = mandelbrot();

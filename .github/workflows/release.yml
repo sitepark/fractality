@@ -26,7 +26,7 @@ jobs:
         uses: pnpm/setup@v2
         with:
           cache: true
-          runtime: node 24
+          runtime: node@24
 
       # Fail here, before anything is bumped, tagged or written. An expired or
       # under-scoped token otherwise surfaces as an opaque "E404 Not found" from

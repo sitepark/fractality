@@ -91,17 +91,20 @@ describe('payloadRoutes', () => {
         expect(served).toEqual(await onDisk(urlPath));
     });
 
-    it('falls through to the Frame for an unknown handle rather than erroring', async () => {
-        // A deep link to something that no longer exists is the Frame's problem
-        // to report, not a 500 from the data layer.
+    it('answers 404 for an unknown handle rather than erroring', async () => {
+        // A payload that does not exist is a status, not a document. Falling
+        // through to the Shell catch-all answered 200 with HTML, so a client got
+        // a JSON parse error and could not tell a missing page from a broken
+        // server.
         const res = await fetch(`${origin}/components/detail/does-not-exist.json`);
         expect(res.status).toBe(404);
-        expect(res.headers.get('content-type')).toContain('text/html');
+        expect(res.headers.get('content-type')).toContain('application/json');
     });
 
-    it('falls through for an unknown panel', async () => {
+    it('answers 404 for an unknown panel', async () => {
         const res = await fetch(`${origin}/components/detail/render.bogus.json`);
         expect(res.status).toBe(404);
+        expect(res.headers.get('content-type')).toContain('application/json');
     });
 
     it('does not intercept the html route it shares a prefix with', async () => {
@@ -204,11 +207,11 @@ describe('documentation pages below the docs root', () => {
         expect(res.status).toBe(200);
     });
 
-    it('falls through for a path no page is served at', async () => {
+    it('answers 404 for a path no page is served at', async () => {
         // `/docs/getting-started` is the handle-shaped url the navigation used to
-        // build. Nothing is there, and the Frame is what says so.
+        // build. Nothing is there, and the status says so.
         const res = await fetch(`${nestedOrigin}${payloadPathFor('/docs/getting-started')}`);
         expect(res.status).toBe(404);
-        expect(res.headers.get('content-type')).toContain('text/html');
+        expect(res.headers.get('content-type')).toContain('application/json');
     });
 });

@@ -385,6 +385,86 @@ describe('documentation pages', () => {
     });
 });
 
+describe('the home page', () => {
+    // `/` is the project's index page, as it was in 0.x. It is the url
+    // `fractality start` prints and the one a bare domain resolves to, and it
+    // rendered an empty panel saying "Select a component".
+    it('renders the index page at the site root', async () => {
+        window.history.pushState(null, '', '/');
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Document-title')).not.toBeNull());
+
+        expect(container.querySelector('.Document-title')?.textContent).toBe('Project Overview');
+        expect(container.querySelector('.Prose')?.querySelector('h1')?.textContent).toBe('Hello');
+    });
+
+    it('renders it at /index.html too, which is the file a static host serves', async () => {
+        window.history.pushState(null, '', '/index.html');
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Document-title')).not.toBeNull());
+        expect(container.querySelector('.Document-title')?.textContent).toBe('Project Overview');
+    });
+
+    it('marks the index page as current in the navigation', async () => {
+        window.history.pushState(null, '', '/');
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Navigation')).not.toBeNull());
+
+        const current = container.querySelector('.Tree-item.is-current .Tree-entityLink');
+        expect(current?.getAttribute('href')).toBe('/docs/index');
+    });
+
+    it('welcomes a project that has no index page, rather than reporting an error', async () => {
+        // Every new library starts here: an empty documentation directory. A 404
+        // on the payload is an ordinary state, and the home page has to say
+        // something — an error panel reads as a broken install.
+        vi.stubGlobal(
+            'fetch',
+            vi.fn((url: string) => {
+                if (url === '/tree.json') {
+                    return Promise.resolve({ ok: true, status: 200, json: () => Promise.resolve(tree) });
+                }
+                return Promise.resolve({
+                    ok: false,
+                    status: 404,
+                    json: () => Promise.resolve({ error: 'No payload is served at ' + url }),
+                });
+            }),
+        );
+
+        window.history.pushState(null, '', '/');
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Document-title')).not.toBeNull());
+
+        expect(container.querySelector('.Document-title')?.textContent).toBe('Welcome to your component library');
+        expect(container.querySelector('.Prose')?.textContent).toContain('index.md');
+        expect(container.querySelector('.Error')).toBeNull();
+        // The navigation is still there: the library is browsable with no
+        // documentation at all.
+        expect(container.querySelector('.Navigation')).not.toBeNull();
+    });
+
+    it('still reports a real failure on the home page', async () => {
+        // Only a 404 means "no index page". Anything else is a fault, and
+        // swallowing it would leave the welcome text standing in for a broken
+        // server.
+        vi.stubGlobal(
+            'fetch',
+            vi.fn((url: string) => {
+                if (url === '/tree.json') {
+                    return Promise.resolve({ ok: true, status: 200, json: () => Promise.resolve(tree) });
+                }
+                return Promise.resolve({ ok: false, status: 500, json: () => Promise.resolve({}) });
+            }),
+        );
+
+        window.history.pushState(null, '', '/');
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Error')).not.toBeNull());
+        expect(container.querySelector('.Error-message')?.textContent).toContain('500');
+    });
+});
+
 describe('panel visibility', () => {
     const PANELS = ['notes', 'context', 'view', 'resources', 'info'];
 

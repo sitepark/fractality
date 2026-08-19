@@ -128,5 +128,22 @@ export function payloadRoutes(options: PayloadRoutesOptions): Router {
     router.get(`${docsRoute}/*file`, sendDoc);
     router.get(`${assetsRoute}/:file`, sendAsset);
 
+    // A payload path nothing answered is a 404, not the Frame's problem.
+    //
+    // Falling through to the Shell catch-all meant every missing payload arrived
+    // as an HTML document with a 200, so a client asking for one got a JSON
+    // parse error where it should have got a status — and could not tell a page
+    // that does not exist from a server that is broken. Scoped to these three
+    // prefixes and to `.json`, so a theme's or a project's own static files are
+    // still served by the mounts registered after this router.
+    const noPayload: RequestHandler = (req, res, next) => {
+        if (!req.path.endsWith('.json')) return next();
+        res.status(404).json({ error: `No payload is served at ${req.path}` });
+    };
+
+    for (const prefix of [detailRoute, docsRoute, assetsRoute]) {
+        router.get(`${prefix}/*file`, noPayload);
+    }
+
     return router;
 }

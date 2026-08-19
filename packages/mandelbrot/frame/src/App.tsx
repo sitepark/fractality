@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import type { AssetPayload, DocPayload, EntityPayload, TreePayload } from '@fractality/web/contract';
-import { fetchAsset, fetchDoc, fetchEntity, fetchTree } from './api.js';
+import { fetchAsset, fetchDoc, fetchEntity, fetchTree, PayloadError } from './api.js';
 import { useLiveReload } from './useLiveReload.js';
 import { useSidebar } from './useSidebar.js';
 import { Asset } from './Asset.js';
@@ -8,6 +8,7 @@ import { Doc } from './Doc.js';
 import { Header } from './Header.js';
 import { Nav } from './Nav.js';
 import { Pen } from './Pen.js';
+import { Welcome } from './Welcome.js';
 
 const handleFromPath = (pathname: string): string =>
     pathname
@@ -16,8 +17,25 @@ const handleFromPath = (pathname: string): string =>
         .pop() ?? '';
 
 const isDetailRoute = (pathname: string): boolean => /\/components\/detail\//.test(pathname);
-const isDocRoute = (pathname: string): boolean => /^\/docs(\/|$)/.test(pathname.replace(/\.html$/, ''));
 const isAssetRoute = (pathname: string): boolean => /^\/assets\/.+/.test(pathname.replace(/\.html$/, ''));
+
+/** The site root, in either of the two forms a static host serves it under. */
+const isHomeRoute = (pathname: string): boolean => {
+    const path = pathname.replace(/\.html$/, '');
+    return path === '/' || path === '/index';
+};
+
+/**
+ * Documentation, including the site root.
+ *
+ * `/` is a documentation route — the project's index page is what 0.x rendered
+ * there, and it is the url `fractality start` prints and a bare domain resolves
+ * to. Leaving it out is what made the home page of every site an empty panel
+ * saying "Select a component". `fetchDoc` maps the three spellings of the index
+ * page onto the one payload that backs it.
+ */
+const isDocRoute = (pathname: string): boolean =>
+    isHomeRoute(pathname) || /^\/docs(\/|$)/.test(pathname.replace(/\.html$/, ''));
 
 /**
  * Renders the Frame's own chrome. Mirrors `views/layouts/frame.nunj`, minus its
@@ -61,7 +79,18 @@ export function App() {
             setAsset(null);
             fetchDoc(route).then(
                 (payload) => !cancelled && setDoc(payload),
-                (e: unknown) => !cancelled && setError(String(e)),
+                (e: unknown) => {
+                    if (cancelled) return;
+                    // A project with no `docs/index.md` has no payload behind its
+                    // home page, which is an ordinary state and not a failure —
+                    // it is the state every new project starts in.
+                    if (e instanceof PayloadError && e.status === 404 && isHomeRoute(route)) {
+                        setDoc(null);
+                        setError(null);
+                        return;
+                    }
+                    setError(String(e));
+                },
             );
         } else if (isAssetRoute(route)) {
             setEntity(null);
@@ -93,6 +122,10 @@ export function App() {
     useEffect(() => {
         document.getElementById('frame')?.classList.toggle('is-closed', !sidebar.open);
     }, [sidebar.open]);
+
+    // What the navigation highlights. At the site root that is the index page,
+    // whose own tree item links to /docs/index — the two urls are the same page.
+    const currentHandle = isHomeRoute(route) ? 'index' : handleFromPath(route);
 
     const navigate = useCallback((href: string) => {
         // pushState keeps the real URL, so a deep link, a refresh and a bookmark
@@ -138,6 +171,8 @@ export function App() {
                             <Doc doc={doc} statuses={tree.status} />
                         ) : asset ? (
                             <Asset asset={asset} />
+                        ) : tree && isHomeRoute(route) ? (
+                            <Welcome />
                         ) : (
                             <div className="Document">
                                 <div className="Document-header">
@@ -149,7 +184,7 @@ export function App() {
                 </div>
 
                 <div className="Frame-panel Frame-panel--sidebar" ref={sidebar.ref}>
-                    {tree ? <Nav tree={tree} current={handleFromPath(route)} onNavigate={navigate} /> : null}
+                    {tree ? <Nav tree={tree} current={currentHandle} onNavigate={navigate} /> : null}
                 </div>
             </div>
         </>

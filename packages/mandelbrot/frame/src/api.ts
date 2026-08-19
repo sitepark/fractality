@@ -13,6 +13,23 @@ import { frctl } from './frctl.js';
 const cache = new Map<string, Promise<unknown>>();
 
 /**
+ * A payload the server would not give us, carrying the status it answered with.
+ *
+ * The status is the difference between "this project has no index page" and
+ * "something is wrong", and the Frame renders those differently. A message
+ * string cannot be asked that question without parsing it.
+ */
+export class PayloadError extends Error {
+    constructor(
+        readonly status: number,
+        readonly url: string,
+    ) {
+        super(`${status} fetching ${url}`);
+        this.name = 'PayloadError';
+    }
+}
+
+/**
  * Drops every cached payload.
  *
  * Called when the dev server reports a rebuild. Without this the Frame would
@@ -25,7 +42,7 @@ async function getJson<T>(url: string): Promise<T> {
     let pending = cache.get(url) as Promise<T> | undefined;
     if (!pending) {
         pending = fetch(url).then((res) => {
-            if (!res.ok) throw new Error(`${res.status} fetching ${url}`);
+            if (!res.ok) throw new PayloadError(res.status, url);
             return res.json() as Promise<T>;
         });
         cache.set(url, pending);
@@ -62,12 +79,14 @@ const panelUrl = (handle: string, panel: PanelSegment): string =>
  * the Shell was served at, so the Frame never needs its own route table.
  */
 export const fetchDoc = (pathname: string): Promise<DocPayload> => {
-    // A static host serves /docs/ from /docs/index.html, so the Frame can find
-    // itself at the bare docs root even though every doc is routed as
-    // /docs/<name>. Normalise before deriving, so both spellings hit one file.
+    // Three urls address the index page and one file backs it. The site root is
+    // the one people actually visit — it is what `fractality start` prints and
+    // what a bare domain resolves to — and 0.x rendered the index page there;
+    // `/docs` is the bare docs root a static host serves from `/docs/index.html`.
+    // Normalising here is what keeps that from being three code paths.
     const normalised = pathname.replace(/\.html$/, '').replace(/\/+$/, '');
-    const route = /^\/docs$/.test(normalised) ? '/docs/index' : normalised;
-    return getJson<DocPayload>(payloadPathFor(route));
+    const isIndex = normalised === '' || normalised === '/index' || normalised === '/docs';
+    return getJson<DocPayload>(payloadPathFor(isIndex ? '/docs/index' : normalised));
 };
 
 export const fetchAsset = (pathname: string): Promise<AssetPayload> =>

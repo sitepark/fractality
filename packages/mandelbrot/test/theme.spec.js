@@ -134,15 +134,7 @@ describe('mandelbrot theme factory', () => {
             const theme = mandelbrot();
             const handles = theme.routes().map((r) => r.handle);
             expect(handles).toEqual(
-                expect.arrayContaining([
-                    'overview',
-                    'asset-source',
-                    'preview',
-                    'render',
-                    'component',
-                    'component-resource',
-                    'page',
-                ]),
+                expect.arrayContaining(['overview', 'asset-source', 'preview', 'render', 'component', 'page']),
             );
         });
 
@@ -153,12 +145,13 @@ describe('mandelbrot theme factory', () => {
             expect(match.params.handle).toEqual('my-component--variant');
         });
 
-        it('matches a component resource URL and extracts handle and asset params', () => {
+        it("declares no route for a component's own files", () => {
+            // @fractality/web serves those itself, at the same
+            // /components/raw/<handle>/<file> urls. The mechanism this route used
+            // — handing a filesystem path back for the renderer to send — went
+            // with the server-rendered Frame, so the route resolved to nothing.
             const theme = mandelbrot();
-            const match = theme.matchRoute('/components/raw/my-component/image.png');
-            expect(match.route.handle).toEqual('component-resource');
-            expect(match.params.handle).toEqual('my-component');
-            expect(match.params.asset).toEqual('image.png');
+            expect(theme.matchRoute('/components/raw/my-component/image.png')).toBe(false);
         });
 
         it('matches a nested docs page URL, including the wildcard path segments', () => {
@@ -264,33 +257,6 @@ describe('mandelbrot theme factory', () => {
             resolver(app);
 
             expect(flattenSpy).toHaveBeenCalledTimes(1);
-        });
-    });
-
-    describe('component resource resolver', () => {
-        it('lists every resource file across every component', () => {
-            const theme = mandelbrot();
-            const resolver = theme.resolvers()['component-resource'][0];
-            const app = {
-                components: {
-                    flatten() {
-                        return {
-                            each(cb) {
-                                cb({
-                                    handle: '@button',
-                                    resources: () => ({
-                                        flatten: () => ({
-                                            toArray: () => [{ base: 'icon.svg' }],
-                                        }),
-                                    }),
-                                });
-                            },
-                        };
-                    },
-                },
-            };
-
-            expect(resolver(app)).toEqual([{ handle: '@button', asset: 'icon.svg' }]);
         });
     });
 });

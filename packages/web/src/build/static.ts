@@ -3,6 +3,8 @@ import { writeShells } from '../shell/writer.js';
 import type { FrctlConfig } from '../shell/config.js';
 import type { SourceApp } from '../payload/source-types.js';
 import { writePreviews, type PreviewError } from './previews.js';
+import { writeResources } from './resources.js';
+import { routedResources } from '../payload/resources.js';
 import { routedEntities } from './entities.js';
 import { staticRoutes } from './routes.js';
 
@@ -29,6 +31,8 @@ export interface BuildStaticResult {
     payloadFiles: number;
     /** Preview and render documents, two per routable handle. */
     previewFiles: number;
+    /** A component's own files, copied to the urls the Resources panel links. */
+    resourceFiles: number;
     /** Everything written, which is what the progress counter measures. */
     totalFiles: number;
     /** Patterns that failed to render. Collected, not thrown. */
@@ -59,7 +63,11 @@ export async function buildStatic(options: BuildStaticOptions): Promise<BuildSta
         .flatten()
         .toArray()
         .filter((doc) => !doc.isHidden).length;
-    const total = routes.length + 1 + entities.length + components * 3 + docs + entities.length * 2;
+    // Panels are four per component, and a component's own files are copied too:
+    // a total that leaves either out reports a build as finished while it is
+    // still writing.
+    const resourceCount = routedResources(app).length;
+    const total = routes.length + 1 + entities.length + components * 4 + docs + entities.length * 2 + resourceCount;
     let completed = 0;
     const advance = (by: number) => {
         completed += by;
@@ -81,13 +89,17 @@ export async function buildStatic(options: BuildStaticOptions): Promise<BuildSta
     });
     completed = before + previews.files.length;
 
+    const resources = await writeResources(app, { dest });
+    advance(resources.length);
+
     return {
         routes: routes.length,
         shellBytes: shells.bytes,
         shellTotalBytes: shells.bytes * routes.length,
         payloadFiles: 1 + payloads.entities.length + payloads.panels.length + payloads.docs.length,
         previewFiles: previews.files.length,
-        totalFiles: routes.length + payloadCount + previews.files.length,
+        resourceFiles: resources.length,
+        totalFiles: routes.length + payloadCount + previews.files.length + resources.length,
         previewErrors: previews.errors,
     };
 }

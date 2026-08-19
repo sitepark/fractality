@@ -127,10 +127,22 @@ describe('buildStatic', () => {
         // larger than the page count the engine-backed builder reported. The
         // breakdown is what makes that difference legible instead of looking like
         // the library grew.
-        expect(result.totalFiles).toBe(result.routes + result.previewFiles + result.payloadFiles);
+        expect(result.totalFiles).toBe(
+            result.routes + result.previewFiles + result.payloadFiles + result.resourceFiles,
+        );
         expect(result.routes).toBe(staticRoutes(app).length);
         expect(result.previewFiles).toBeGreaterThan(0);
         expect(result.payloadFiles).toBeGreaterThan(0);
+    });
+
+    it("copies a component's own files to the urls its Resources panel links", async () => {
+        // The panel shows a file's url as something a reader can open, and a
+        // built site has to stand on its own — so the files are copied, not
+        // referenced. Nothing served them at all before.
+        expect(result.resourceFiles).toBeGreaterThan(0);
+        expect(await readFile(path.join(dest, 'components', 'raw', 'path', 'path.spec.js'), 'utf8')).toContain(
+            'describe',
+        );
     });
 
     it('produces a build dominated by data rather than by repeated markup', async () => {

@@ -9,6 +9,7 @@ import type { IdleGateable } from './gate.js';
 import { liveReloadRoutes, LIVE_RELOAD_ROUTE } from './live-reload.js';
 import { payloadRoutes } from './payload-routes.js';
 import { previewRoutes } from './preview-routes.js';
+import { resourceRoutes } from './resource-routes.js';
 
 export interface DevHostOptions {
     app: SourceApp & IdleGateable & Watchable;
@@ -87,6 +88,8 @@ export async function createDevHost(options: DevHostOptions): Promise<DevHost> {
 
     host.use(previewRoutes({ app }));
     host.use(payloadRoutes({ app, treeFile: config.treeFile }));
+    // A component's own files, at the urls its Resources panel links to.
+    host.use(resourceRoutes({ app }));
 
     for (const entry of staticMounts) {
         host.use(entry.mount, express.static(entry.path));

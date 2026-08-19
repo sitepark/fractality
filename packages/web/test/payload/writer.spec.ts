@@ -56,7 +56,8 @@ describe('writePayloads', () => {
             .toArray()
             .filter((c) => !c.isHidden);
         expect(result.entities.length).toBe(entityHandles(app).length);
-        expect(result.panels.length).toBe(components.length * 3);
+        // notes, context, view, resources.
+        expect(result.panels.length).toBe(components.length * 4);
         expect(result.entities.length).toBeGreaterThan(components.length);
     });
 

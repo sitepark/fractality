@@ -116,6 +116,30 @@ describe('createDevHost', () => {
         expect(preview).not.toContain('some-path.html');
     });
 
+    it("serves a component's own files, which nothing served at all before", async () => {
+        // The Resources panel links these. 0.x served them from a theme route
+        // that handed back a filesystem path; that mechanism went with the render
+        // pipeline, and the urls have 404'd since.
+        const res = await fetch(`${origin}/components/raw/path/path.spec.js`);
+        expect(res.status).toBe(200);
+        expect(await res.text()).toContain('describe');
+    });
+
+    it('will not serve a path the library does not list', async () => {
+        // Looked up in the library rather than joined onto a directory, so a
+        // traversal is just a name that is not in the list — and the theme route
+        // this replaces did join, so it was traversable.
+        const escape = await fetch(`${origin}/components/raw/path/..%2F..%2F..%2Fpackage.json`);
+        const body = await escape.text();
+        expect(body).not.toContain('"@fractality');
+        // What is left is the Frame, which answers for anything that is neither a
+        // payload nor a file.
+        expect(body).toContain('id="frame"');
+
+        const missing = await fetch(`${origin}/components/raw/path/nope.css`);
+        expect(missing.headers.get('content-type')).toContain('text/html');
+    });
+
     it('injects the Vite client into the Shell', async () => {
         const html = await fetch(`${origin}/components/detail/render`).then((r) => r.text());
         expect(html).toContain('/@vite/client');

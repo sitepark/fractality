@@ -5,6 +5,8 @@ export { gateOnIdle } from './gate.js';
 export type { IdleGateable } from './gate.js';
 export { payloadRoutes } from './payload-routes.js';
 export { previewRoutes } from './preview-routes.js';
+export { resourceRoutes } from './resource-routes.js';
+export type { ResourceRoutesOptions } from './resource-routes.js';
 export type { PreviewRoutesOptions } from './preview-routes.js';
 export { createDevHost } from './host.js';
 export { liveReloadRoutes, LIVE_RELOAD_ROUTE } from './live-reload.js';

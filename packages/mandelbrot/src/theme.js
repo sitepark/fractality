@@ -261,20 +261,10 @@ export default function (options) {
         getHandles,
     );
 
-    theme.addRoute(
-        '/components/raw/:handle/:asset',
-        {
-            handle: 'component-resource',
-            static: function (params, app) {
-                const component = app.components.find(`@${params.handle}`);
-                if (component) {
-                    return Path.join(component.viewDir, params.asset);
-                }
-                throw new Error('Component not found');
-            },
-        },
-        getResources,
-    );
+    // No route for a component's own files. @fractality/web serves them itself,
+    // at the same /components/raw/<handle>/<file> urls, because the mechanism
+    // this route used — a route handing back a filesystem path for the renderer
+    // to send — went with the server-rendered Frame.
 
     theme.addRoute(
         '/docs{/*path}',
@@ -305,25 +295,6 @@ export default function (options) {
         });
         handles = handles.map((h) => ({ handle: h }));
         return handles;
-    }
-
-    function getResources(app) {
-        let params = [];
-        app.components.flatten().each((comp) => {
-            params = params.concat(
-                comp
-                    .resources()
-                    .flatten()
-                    .toArray()
-                    .map((res) => {
-                        return {
-                            handle: comp.handle,
-                            asset: res.base,
-                        };
-                    }),
-            );
-        });
-        return params;
     }
 
     return theme;

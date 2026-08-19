@@ -2,6 +2,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
 import { buildContextPayload, buildEntityPayload, buildNotesPayload, buildViewPayload } from './entity.js';
+import { buildResourcesPayload } from './resources.js';
 import { payloadPathFor } from './paths.js';
 import { buildStatusTable } from './status.js';
 import { buildTreePayload } from './tree.js';
@@ -94,6 +95,7 @@ export async function writePayloads(app: SourceApp, options: WritePayloadsOption
             ['notes', buildNotesPayload],
             ['context', buildContextPayload],
             ['view', buildViewPayload],
+            ['resources', buildResourcesPayload],
         ] as const) {
             const file = toDiskPath(dest, payloadPathFor(route, panel));
             await writeJson(file, build(component));

@@ -24,13 +24,28 @@ export interface SourceStatus {
 }
 
 export interface SourceResource {
+    /** Filename with a leading order prefix stripped — `button.css`. */
     name: string;
+    /** Filename as it is on disk, which is what the served url is keyed by. */
+    base: string;
+    /** Relative to the components root. */
     relPath: string;
+    /** Absolute path on disk. */
+    path: string;
     ext: string;
+    /** Highlighting language, from `utils.lang()`. */
+    lang?: string;
+    isBinary?: boolean;
+    isImage?: boolean;
     stat?: { size: number } | null;
+    /** Reads a text file. Absent on anything that is not a file entity. */
+    getContentSync?(): string;
 }
 
 export interface SourceResourceCollection {
+    /** Group name, from the `components.resources` key it was configured under. */
+    name?: string;
+    label?: string;
     toArray(): SourceResource[];
 }
 

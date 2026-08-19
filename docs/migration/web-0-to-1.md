@@ -77,6 +77,7 @@ renders everything from the data contract. There is no template engine left in
 | `Theme#addLoadPath()` / `#loadPaths()`             | none today — see _Custom panels_ below                                    |
 | `Theme#setErrorView()` / `#errorView()`            | none; `@fractality/web` renders render-failures itself                    |
 | `Theme#setRedirectView()` / `#redirectView()`      | none                                                                      |
+| `addRoute(url, { static })`                        | none — `@fractality/web` serves component files itself, see below         |
 | `render` filter (template syntax inside doc pages) | none — documentation is plain Markdown                                    |
 | `information[].format` (a function)                | a declarative descriptor; functions cannot cross a JSON wire              |
 | `request.isPjax`                                   | none                                                                      |
@@ -105,6 +106,21 @@ theme.setShell(path.join(__dirname, '..', 'dist', 'frame', 'index.html'));
 
 Your Shell must live **inside one of your static mounts** — its asset URLs are
 resolved relative to where it sits within that mount.
+
+### A component's own files are served for you
+
+A theme used to declare a route for them and hand back a filesystem path.
+`@fractality/web` serves them itself now, at the same URLs —
+`/components/raw/<handle>/<file>` — and the resources payload carries the URL of
+every file, so a Frame links what it is given rather than constructing paths:
+
+```js
+import type { ResourcesPayload } from '@fractality/web/contract';
+```
+
+Remove any route you declared for this. `{ static }` is no longer honoured, and
+the file is looked up in the library rather than resolved from the request path,
+which also closes the traversal the old resolver allowed.
 
 ### Reading the data
 

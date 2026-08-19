@@ -16,8 +16,6 @@ export interface RouteDefinition {
     path: string;
     /** Where this route redirects to, if it is a redirect. */
     redirect?: string;
-    /** Resolves a static file for this route instead of a page. */
-    static?: (params: Record<string, string>, app: unknown) => string;
     matcher: MatchFunction<Record<string, string>>;
     [key: string]: unknown;
 }
@@ -32,6 +30,11 @@ export type RouteResolver = unknown;
  * contract. The removed API — `addLoadPath`, `setErrorView`, `setRedirectView`
  * and `addRoute({ view })` — has no replacement, by design; see
  * docs/specs/client-rendered-frame.md §9.1.
+ *
+ * `addRoute({ static })` is gone with them: it handed a filesystem path back for
+ * the renderer to send, and nothing renders. The one thing it was used for —
+ * serving a component's own files — `@fractality/web` does itself, at the urls it
+ * publishes in the resources payload.
  */
 export default class Theme extends mix(Configurable, Emitter) {
     private _staticPaths = new Set<StaticMount>();

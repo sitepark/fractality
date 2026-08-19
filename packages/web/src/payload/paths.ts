@@ -15,14 +15,14 @@
  */
 
 /** Panel payloads that ship with `@fractality/web` itself. */
-export type BuiltinPanel = 'notes' | 'context' | 'view';
+export type BuiltinPanel = 'notes' | 'context' | 'view' | 'resources';
 
 /** A theme-contributed panel, namespaced by theme — see the `ext` slot. */
 export type ExtPanel = `ext.${string}.${string}`;
 
 export type PanelSegment = BuiltinPanel | ExtPanel;
 
-export const BUILTIN_PANELS: readonly BuiltinPanel[] = ['notes', 'context', 'view'];
+export const BUILTIN_PANELS: readonly BuiltinPanel[] = ['notes', 'context', 'view', 'resources'];
 
 /** Builds the `ext` segment for a theme-contributed panel. */
 export const extPanel = (theme: string, panel: string): ExtPanel => `ext.${theme}.${panel}`;

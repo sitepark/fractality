@@ -9,8 +9,10 @@ import {
     buildNotesPayload,
     buildStatusTable,
     buildTreePayload,
+    buildResourcesPayload,
     buildViewPayload,
     routedDocs,
+    routedResources,
     type SourceApp,
     type SourceComponent,
 } from '../../src/payload/index.js';
@@ -205,6 +207,48 @@ describe('panel payloads', () => {
         ]) {
             expect(payload.contractVersion).toBe(CONTRACT_VERSION);
             expect(payload.handle).toBe('render');
+        }
+    });
+});
+
+describe("buildResourcesPayload — a component's own files", () => {
+    // The `path` fixture has a spec file beside its template, which is what the
+    // default `assets` resource group matches.
+    const payloadFor = (handle: string) => buildResourcesPayload(find(handle));
+
+    it('groups files as the project configured them, dropping empty groups', () => {
+        const payload = payloadFor('path');
+        expect(payload.collections).toHaveLength(1);
+        expect(payload.collections[0]!.name).toBe('assets');
+        expect(payload.collections[0]!.label).toBe('Assets');
+    });
+
+    it('carries what the panel shows about a file', () => {
+        const file = payloadFor('path').collections[0]!.files.find((f) => f.name === 'path.spec.js');
+
+        expect(file).toBeDefined();
+        expect(file!.url).toBe('/components/raw/path/path.spec.js');
+        expect(file!.path).toBe('path/path.spec.js');
+        expect(file!.ext).toBe('.js');
+        expect(file!.size).toBeGreaterThan(0);
+        // Read here because only this side has the file — the panel shows a
+        // component's script the way the View panel shows its template.
+        expect(file!.content).toContain('describe');
+        expect(file!.lang).toBeTruthy();
+    });
+
+    it('routes every file it lists, so nothing in the panel is a dead link', () => {
+        const routed = new Set(routedResources(app).map((r) => r.route));
+        for (const collection of payloadFor('path').collections) {
+            for (const file of collection.files) {
+                expect(routed.has(file.url)).toBe(true);
+            }
+        }
+    });
+
+    it('resolves each routed file to a path on disk', () => {
+        for (const resource of routedResources(app).slice(0, 5)) {
+            expect(path.isAbsolute(resource.path)).toBe(true);
         }
     });
 });

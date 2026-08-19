@@ -36,7 +36,8 @@ export default function (fractality) {
                 console.persist();
 
                 console.success(
-                    `${data.routes} pages, ${data.previewFiles} previews, ` + `${data.payloadFiles} data files.`,
+                    `${data.routes} pages, ${data.previewFiles} previews, ` +
+                        `${data.payloadFiles} data files, ${data.resourceFiles} component files.`,
                 );
 
                 const e = data.errorCount;

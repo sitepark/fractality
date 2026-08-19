@@ -2,6 +2,7 @@ import { Router, type RequestHandler } from 'express';
 
 import { componentsByHandle } from '../build/routes.js';
 import { buildContextPayload, buildEntityPayload, buildNotesPayload, buildViewPayload } from '../payload/entity.js';
+import { buildResourcesPayload } from '../payload/resources.js';
 import { buildStatusTable } from '../payload/status.js';
 import { buildTreePayload } from '../payload/tree.js';
 import { buildDocPayload, routedDocs } from '../payload/doc.js';
@@ -17,12 +18,13 @@ export interface PayloadRoutesOptions {
     assetsRoute?: string;
 }
 
-type PanelName = 'notes' | 'context' | 'view';
+type PanelName = 'notes' | 'context' | 'view' | 'resources';
 
 const PANEL_BUILDERS: Record<PanelName, (component: SourceComponent) => unknown> = {
     notes: buildNotesPayload,
     context: buildContextPayload,
     view: buildViewPayload,
+    resources: buildResourcesPayload,
 };
 
 const isPanel = (value: string): value is PanelName => value in PANEL_BUILDERS;

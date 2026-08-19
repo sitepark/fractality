@@ -6,6 +6,14 @@
  */
 export { buildTreePayload } from './tree.js';
 export { buildDocPayload, docRoutePath, routedDocs } from './doc.js';
+export {
+    buildResourcesPayload,
+    resourceCollections,
+    resourceUrl,
+    routedResources,
+    RESOURCE_ROUTE,
+} from './resources.js';
+export type { RoutedResource } from './resources.js';
 export { buildContextPayload, buildEntityPayload, buildNotesPayload, buildViewPayload } from './entity.js';
 export { buildStatusTable } from './status.js';
 export { BUILTIN_PANELS, extPanel, payloadPathFor } from './paths.js';

@@ -110,6 +110,53 @@ export interface ViewPayload extends Versioned {
 }
 
 /**
+ * One of a component's own files, as the Resources panel shows it.
+ *
+ * Contents ride along because the panel displays them: a component's stylesheet
+ * or script is source to read, like its template. Binary files carry `null` and
+ * are linked instead.
+ */
+export interface ResourceFile {
+    /** Filename, extension included. */
+    name: string;
+    /** Relative to the components root — what the panel shows as its path. */
+    path: string;
+    ext: string;
+    size: number;
+    /** Where the file itself is served, root-absolute. */
+    url: string;
+    /** Highlighting language, from the file's extension. Empty when unknown. */
+    lang: string;
+    /** Text contents, or `null` for a binary file. */
+    content: string | null;
+    /** Present when the file is an image, which the panel shows inline. */
+    isImage?: true;
+}
+
+/**
+ * A group of resource files, as configured under `components.resources`.
+ *
+ * One group matching everything by default, so most libraries have exactly one.
+ */
+export interface ResourceCollection {
+    name: string;
+    label: string;
+    files: ResourceFile[];
+}
+
+/**
+ * `<handle>.resources.json` — a component's own files.
+ *
+ * Its own payload rather than part of the entity: contents make this the largest
+ * panel of the four, and it is the one least often opened. Groups with no files
+ * are omitted.
+ */
+export interface ResourcesPayload extends Versioned {
+    handle: Handle;
+    collections: ResourceCollection[];
+}
+
+/**
  * `docs/<path>.json` — a documentation page.
  *
  * Carries **raw Markdown**, not rendered HTML, for the same reason notes do: the

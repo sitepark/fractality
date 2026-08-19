@@ -6,6 +6,15 @@ on:
         description: 'Bump versions and build, but publish nothing and push nothing'
         type: boolean
         default: false
+      bump:
+        description: 'Version bump. "conventional" reads it from the commit messages; anything else overrides it for every package at once.'
+        type: choice
+        default: conventional
+        options:
+          - conventional
+          - patch
+          - minor
+          - major
 
 # Never let two releases interleave: they would race on tags and versions.
 concurrency:
@@ -71,8 +80,17 @@ jobs:
       # --no-push is the crux: version, changelog and tags stay local until the
       # packages are actually on npm. A failed publish leaves the remote
       # untouched, so re-running the workflow is a clean retry.
+      #
+      # An explicit bump overrides what the commit messages imply, for every
+      # package in the release. Use it to hold back a major that a `feat!` in
+      # the backlog would otherwise force; the changelog still records the
+      # breaking change either way.
       - name: Bump versions and write changelogs
-        run: pnpm lerna version --conventional-commits --no-private --no-push --yes
+        env:
+          BUMP: ${{ inputs.bump }}
+        run: |
+          if [ "${BUMP}" = conventional ]; then BUMP=''; fi
+          pnpm lerna version ${BUMP} --conventional-commits --no-private --no-push --yes
 
       - name: Show pending release
         run: |

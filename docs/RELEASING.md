@@ -22,6 +22,14 @@ Packages are versioned independently, and a bumped package also bumps its depend
 3. Run the **Release** workflow from the Actions tab. Tick **dry-run** first if you want to see which packages and versions it would ship without publishing or pushing anything.
 4. The workflow validates, tests, bumps versions, writes changelogs, publishes to npm, and only then pushes the version commit, the tags and the GitHub releases.
 
+## Holding back a bump
+
+The **bump** input defaults to `conventional`, which is the normal case: every package moves by whatever its own commits imply. Setting it to `patch`, `minor` or `major` overrides that for the whole release at once.
+
+Reach for it when a `feat!` sitting in the backlog would force a major you are not ready to cut. Setting `minor` ships that work as a minor instead. The changelog still records the breaking change under **BREAKING CHANGES**, so nothing is hidden from the people upgrading.
+
+The override applies to every package in the release, so a package whose commits were all fixes moves by the chosen bump too. Check the dry run before using it.
+
 ## When a release fails
 
 Nothing is pushed until npm has accepted every package, so a failed run leaves `main` and the tags exactly as they were. Fix the cause and run the workflow again — publishing is idempotent, so a run that died partway through is completed rather than duplicated. See [ADR 0005](adr/0005-publish-to-npm-before-pushing-release-tags.md) for why the pipeline is ordered this way.

@@ -5,6 +5,7 @@ import type {
     DocPayload,
     EntityPayload,
     NotesPayload,
+    ResourcesPayload,
     TreePayload,
     ViewPayload,
 } from '@fractality/web/contract';
@@ -111,3 +112,6 @@ export const fetchContext = (handle: string): Promise<ContextPayload> =>
     getJson<ContextPayload>(panelUrl(handle, 'context'));
 
 export const fetchView = (handle: string): Promise<ViewPayload> => getJson<ViewPayload>(panelUrl(handle, 'view'));
+
+export const fetchResources = (handle: string): Promise<ResourcesPayload> =>
+    getJson<ResourcesPayload>(panelUrl(handle, 'resources'));

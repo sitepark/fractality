@@ -61,7 +61,7 @@ const entity: EntityPayload = {
     renderUrl: '/components/render/button',
     references: ['icon'],
     referencedBy: [],
-    resources: [],
+    resources: [{ name: 'button.css', path: 'forms/button/button.css', ext: '.css', size: 812 }],
     variants: [
         {
             handle: 'button--default',
@@ -225,6 +225,37 @@ const payloads: Record<string, unknown> = {
         variants: [
             { handle: 'grid--default', content: '<div class="Grid">{{ columns }}</div>', lang: 'html' },
             { handle: 'grid--wide', content: '<div class="Grid Grid--wide">{{ columns }}</div>', lang: 'html' },
+        ],
+    },
+    '/components/detail/button.resources.json': {
+        contractVersion: 1,
+        handle: 'button',
+        collections: [
+            {
+                name: 'assets',
+                label: 'Assets',
+                files: [
+                    {
+                        name: 'button.css',
+                        path: 'forms/button/button.css',
+                        ext: '.css',
+                        size: 812,
+                        url: '/components/raw/button/button.css',
+                        lang: 'css',
+                        content: '.Button { color: red }',
+                    },
+                    {
+                        name: 'icon.svg',
+                        path: 'forms/button/icon.svg',
+                        ext: '.svg',
+                        size: 240,
+                        url: '/components/raw/button/icon.svg',
+                        lang: 'xml',
+                        content: null,
+                        isImage: true,
+                    },
+                ],
+            },
         ],
     },
     '/components/detail/button.view.json': {
@@ -1128,6 +1159,166 @@ describe('the panels follow the variant on screen', () => {
         ).click();
 
         await waitFor(() => expect(container.querySelector('.Browser-code pre')?.textContent).toContain('Buy now'));
+    });
+});
+
+describe('the resources panel', () => {
+    const openResources = async (container: HTMLElement) => {
+        await waitFor(() => expect(container.querySelector('.Browser-tabs')).not.toBeNull());
+        (
+            [...container.querySelectorAll('.Browser-tab a')].find(
+                (a) => a.textContent?.toLowerCase() === 'resources',
+            ) as HTMLElement
+        ).click();
+    };
+
+    it("lists a component's files in a chooser, one file at a time", async () => {
+        // The markup the inherited stylesheet expects: .FileBrowser with a select
+        // and a single .FileBrowser-item.is-active.
+        const { container } = await mount();
+        await openResources(container);
+
+        await waitFor(() => expect(container.querySelector('.FileBrowser-select')).not.toBeNull());
+        const options = [...container.querySelectorAll('.FileBrowser-select option')].map((o) => o.textContent);
+        expect(options).toEqual(['button.css', 'icon.svg']);
+        expect(container.querySelectorAll('.FileBrowser-item.is-active')).toHaveLength(1);
+    });
+
+    it('shows a text file as highlighted source', async () => {
+        const { container } = await mount();
+        await openResources(container);
+
+        await waitFor(() => {
+            const code = container.querySelector('.FileBrowser-code pre');
+            expect(code?.textContent).toContain('.Button');
+            expect(code?.innerHTML).toContain('hljs-');
+        });
+    });
+
+    it('reports the url, path and a readable size', async () => {
+        const { container } = await mount();
+        await openResources(container);
+
+        await waitFor(() => expect(container.querySelector('.Meta-value')).not.toBeNull());
+        const text = container.querySelector('.Browser-resources')?.textContent ?? '';
+        expect(text).toContain('/components/raw/button/button.css');
+        expect(text).toContain('forms/button/button.css');
+        // Formatted, not a raw byte count — this was "812 bytes".
+        expect(text).toContain('812 Bytes');
+
+        const link = container.querySelector('.Browser-resources a');
+        expect(link?.getAttribute('href')).toBe('/components/raw/button/button.css');
+    });
+
+    it('shows an image inline rather than as source', async () => {
+        const { container } = await mount();
+        await openResources(container);
+        await waitFor(() => expect(container.querySelector('.FileBrowser-select')).not.toBeNull());
+
+        fireEvent.change(container.querySelector('.FileBrowser-select') as HTMLSelectElement, {
+            target: { value: '/components/raw/button/icon.svg' },
+        });
+
+        await waitFor(() => {
+            const image = container.querySelector('.FileBrowser-itemPreview img');
+            expect(image?.getAttribute('src')).toBe('/components/raw/button/icon.svg');
+        });
+    });
+
+    it('says so when a file cannot be previewed', async () => {
+        payloads['/components/detail/button.resources.json'] = {
+            contractVersion: 1,
+            handle: 'button',
+            collections: [
+                {
+                    name: 'assets',
+                    label: 'Assets',
+                    files: [
+                        {
+                            name: 'button.woff2',
+                            path: 'forms/button/button.woff2',
+                            ext: '.woff2',
+                            size: 12000,
+                            url: '/components/raw/button/button.woff2',
+                            lang: '',
+                            content: null,
+                        },
+                    ],
+                },
+            ],
+        };
+
+        const { container } = await mount();
+        await openResources(container);
+
+        await waitFor(() =>
+            expect(container.querySelector('.Browser-resources')?.textContent).toContain(
+                'Previews are currently not available',
+            ),
+        );
+        // Still linked and described, since the file is there to download.
+        expect(container.querySelector('.Browser-resources')?.textContent).toContain('12 KB');
+    });
+
+    it('groups the chooser when a project configures more than one group', async () => {
+        payloads['/components/detail/button.resources.json'] = {
+            contractVersion: 1,
+            handle: 'button',
+            collections: [
+                {
+                    name: 'styles',
+                    label: 'Styles',
+                    files: [
+                        {
+                            name: 'button.css',
+                            path: 'forms/button/button.css',
+                            ext: '.css',
+                            size: 10,
+                            url: '/components/raw/button/button.css',
+                            lang: 'css',
+                            content: '.Button {}',
+                        },
+                    ],
+                },
+                {
+                    name: 'scripts',
+                    label: 'Scripts',
+                    files: [
+                        {
+                            name: 'button.js',
+                            path: 'forms/button/button.js',
+                            ext: '.js',
+                            size: 20,
+                            url: '/components/raw/button/button.js',
+                            lang: 'javascript',
+                            content: 'export {}',
+                        },
+                    ],
+                },
+            ],
+        };
+
+        const { container } = await mount();
+        await openResources(container);
+
+        await waitFor(() =>
+            expect(
+                [...container.querySelectorAll('.FileBrowser-select optgroup')].map((g) => g.getAttribute('label')),
+            ).toEqual(['Styles', 'Scripts']),
+        );
+    });
+
+    it('offers no tab at all for a component with no files of its own', async () => {
+        // As the template layer did: it emitted a tab per non-empty group, so a
+        // component with none got none. An empty panel is worse than an absent one.
+        window.history.pushState(null, '', '/components/detail/tabs');
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Browser-tabs')).not.toBeNull());
+
+        const names = [...container.querySelectorAll('.Browser-tab a')].map((a) => a.textContent?.toLowerCase());
+        expect(names).not.toContain('resources');
+        // And the panel that opens is a real one, not a body with no tab.
+        expect(container.querySelector('.Browser-panel.is-active')).not.toBeNull();
     });
 });
 

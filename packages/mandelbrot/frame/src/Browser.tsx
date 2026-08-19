@@ -5,6 +5,7 @@ import { frctl, resolveRouteUrl } from './frctl.js';
 import { highlight } from './highlight.js';
 import { read, write } from './storage.js';
 import { renderMarkdown } from './markdown.js';
+import { Resources } from './Resources.js';
 
 // Every panel this theme implements. Order matches the historic default; which
 // of them are actually shown is the consumer's `panels` config.
@@ -129,10 +130,21 @@ export function Browser({ entity, variant, renderUrl }: BrowserProps) {
         const remembered = read<Panel>('browser.panel', PANELS[0]);
         return PANELS.includes(remembered) ? remembered : PANELS[0];
     });
+
+    // A component with no files of its own gets no Resources tab, as it got none
+    // from the template layer — an empty panel is worse than an absent one. Known
+    // from the entity payload, so nothing has to be fetched to draw the strip.
+    const panels: readonly [Panel, ...Panel[]] = (() => {
+        const shown = PANELS.filter((panel) => panel !== 'resources' || entity.resources.length > 0);
+        return shown.length ? (shown as [Panel, ...Panel[]]) : PANELS;
+    })();
+
+    // The remembered panel may be one this component does not show.
+    const active = panels.includes(open) ? open : panels[0];
     /** Rendered HTML for the open panel, or null while it is still loading. */
     const [body, setBody] = useState<string | null>(null);
 
-    const needsFetch = open === 'notes' || open === 'context' || open === 'view' || open === 'html';
+    const needsFetch = active === 'notes' || active === 'context' || active === 'view' || active === 'html';
 
     useEffect(() => {
         if (!needsFetch) return;
@@ -140,16 +152,16 @@ export function Browser({ entity, variant, renderUrl }: BrowserProps) {
         setBody(null);
 
         const load = async (): Promise<string> => {
-            if (open === 'html') {
+            if (active === 'html') {
                 // Whatever the Preview is showing, so the two agree — including
                 // when that is a collation rather than a single variant.
                 return highlight(await fetchRendered(resolveRouteUrl(renderUrl)), 'html');
             }
-            if (open === 'notes') {
+            if (active === 'notes') {
                 const payload = await fetchNotes(entity.handle);
                 return payload.notes ? renderMarkdown(payload.notes) : '';
             }
-            if (open === 'context') {
+            if (active === 'context') {
                 // Formatted here rather than at build time: the payload carries
                 // the real objects, so the panel chooses how to present them.
                 return highlight(contextSource(await fetchContext(entity.handle), entity, variant), 'json');
@@ -166,15 +178,15 @@ export function Browser({ entity, variant, renderUrl }: BrowserProps) {
         return () => {
             cancelled = true;
         };
-    }, [entity.handle, open, needsFetch, renderUrl, variant?.handle]);
+    }, [entity.handle, active, needsFetch, renderUrl, variant?.handle]);
 
     return (
         <div className="Browser">
             <div className="Browser-controls">
                 <ul className="Browser-tabs">
-                    {PANELS.map((panel) => (
+                    {panels.map((panel) => (
                         <li
-                            className={`Browser-tab Browser-tab--${panel}${open === panel ? ' is-active' : ''}`}
+                            className={`Browser-tab Browser-tab--${panel}${active === panel ? ' is-active' : ''}`}
                             key={panel}
                         >
                             <a
@@ -192,7 +204,7 @@ export function Browser({ entity, variant, renderUrl }: BrowserProps) {
                 </ul>
             </div>
 
-            <Panel panel={open} entity={entity} body={body} />
+            <Panel panel={active} entity={entity} body={body} />
         </div>
     );
 }
@@ -224,21 +236,9 @@ function Panel({ panel, entity, body }: { panel: Panel; entity: EntityPayload; b
     }
 
     if (panel === 'resources') {
-        return (
-            <div className="Browser-panel Browser-resources is-active" id="browser-panel-resources">
-                {entity.resources.length ? (
-                    <ul className="FileBrowser-items">
-                        {entity.resources.map((resource) => (
-                            <li className="FileBrowser-item" key={resource.path}>
-                                {resource.name} <span>{resource.size} bytes</span>
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p className="Browser-isEmptyNote">No resources.</p>
-                )}
-            </div>
-        );
+        // Its own component: it fetches a payload of its own and renders
+        // structure rather than a block of highlighted text.
+        return <Resources entity={entity} />;
     }
 
     if (body === null) {

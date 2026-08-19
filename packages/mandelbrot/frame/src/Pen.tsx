@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useResizable } from './useResizable.js';
 import { usePreviewWidth } from './usePreviewWidth.js';
 import { usePreviewSize } from './usePreviewSize.js';
+import { usePreviewLoading } from './usePreviewLoading.js';
 import { read, write } from './storage.js';
 import type { EntityPayload, TreePayload } from '@fractality/web/contract';
 import { resolveRouteUrl } from './frctl.js';
@@ -61,6 +62,7 @@ export function Pen({ entity, statuses, selected }: PenProps) {
     const size = usePreviewSize(iframe, previewWidth.dragging);
 
     const previewUrl = variant ? resolveRouteUrl(variant.previewUrl) : undefined;
+    const loading = usePreviewLoading(previewUrl);
 
     const previewLabel =
         (frctl.labels?.components as Record<string, Record<string, string>> | undefined)?.preview?.label ?? 'Preview';
@@ -109,7 +111,7 @@ export function Pen({ entity, statuses, selected }: PenProps) {
                 style={{ height: collapsed ? '100%' : preview.size }}
             >
                 <div className="Preview-wrapper" ref={previewWidth.ref} style={previewWidth.style}>
-                    <div className="Preview-resizer">
+                    <div className="Preview-resizer" aria-busy={loading.visible || undefined}>
                         {previewUrl ? (
                             <iframe
                                 className="Preview-iframe"
@@ -117,12 +119,26 @@ export function Pen({ entity, statuses, selected }: PenProps) {
                                 src={previewUrl}
                                 frameBorder="0"
                                 ref={iframe}
+                                onLoad={loading.onLoad}
                                 // An iframe swallows pointer events, which would
                                 // end a drag the moment the pointer crossed it.
                                 style={{
                                     pointerEvents: preview.dragging || previewWidth.dragging ? 'none' : undefined,
                                 }}
                             />
+                        ) : null}
+
+                        {/*
+                            Rendered only while it is wanted, rather than hidden
+                            with a class: the bar animates, and an animation left
+                            running behind `display: none` is work the browser
+                            still does on every frame.
+
+                            Indeterminate, because a cross-document load reports
+                            no progress — hence a `progressbar` with no value.
+                        */}
+                        {loading.visible ? (
+                            <div className="Preview-progress" role="progressbar" aria-label="Loading preview" />
                         ) : null}
                     </div>
 

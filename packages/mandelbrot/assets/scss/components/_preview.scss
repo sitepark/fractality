@@ -81,6 +81,70 @@
     opacity: 0;
 }
 
+// Sits on the iframe's own top edge rather than the wrapper's: the wrapper is
+// wider by the drag handle, so a bar spanning it would overhang the document it
+// reports on.
+.Preview-progress {
+    --color: rgb(var(--skin-links));
+
+    position: absolute;
+    top: 0;
+    z-index: 1; // above .Preview-iframe, which sits at 0
+    width: 100%;
+    height: 2px;
+    // Clips the travelling segment at both ends. No track behind it: at any
+    // opacity subtle enough not to read as a border it is invisible anyway.
+    overflow: hidden;
+
+    @include mixins.offset-inline(start, 0);
+
+    &::after {
+        content: "";
+        display: block;
+        height: 100%;
+        width: 33%;
+        background-color: theme.$color-link;
+        background-color: var(--color, theme.$color-link);
+        animation: Preview-progress-slide 1.2s ease-in-out infinite;
+    }
+
+    [dir="rtl"] & {
+        &::after {
+            animation-name: Preview-progress-slide--rtl;
+        }
+    }
+}
+
+@keyframes Preview-progress-slide {
+    from {
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateX(300%);
+    }
+}
+
+@keyframes Preview-progress-slide--rtl {
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(-300%);
+    }
+}
+
+// Movement is the only thing this element communicates, so it cannot simply be
+// stilled: without the animation it would read as a load stuck at one third.
+// A full-width bar says "working" without moving.
+@media (prefers-reduced-motion: reduce) {
+    .Preview-progress::after {
+        width: 100%;
+        animation: none;
+    }
+}
+
 .Preview-handle {
     position: absolute;
     top: -1px;

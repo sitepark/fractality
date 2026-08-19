@@ -731,6 +731,72 @@ describe('opening a variant directly', () => {
     });
 });
 
+describe('the preview loading bar', () => {
+    // jsdom never loads an iframe's src, so a Preview here stays pending until a
+    // load event is fired at it by hand — which is exactly the state the bar
+    // exists for.
+    const iframeOf = (container: HTMLElement) => container.querySelector('.Preview-iframe') as HTMLIFrameElement;
+
+    it('appears on the iframe while it is still loading', async () => {
+        const { container } = await mount();
+        await waitFor(() => expect(iframeOf(container)).not.toBeNull());
+
+        const bar = await waitFor(() => {
+            const found = container.querySelector('.Preview-progress');
+            expect(found).not.toBeNull();
+            return found!;
+        });
+
+        // Inside the element the iframe is in, so it lands on the document's own
+        // top edge rather than spanning the drag handle too.
+        expect(bar.closest('.Preview-resizer')).not.toBeNull();
+        expect(bar.getAttribute('role')).toBe('progressbar');
+        // Indeterminate: a cross-document load reports no progress, and a
+        // progressbar carrying a value would be claiming otherwise.
+        expect(bar.getAttribute('aria-valuenow')).toBeNull();
+        expect(container.querySelector('.Preview-resizer')?.getAttribute('aria-busy')).toBe('true');
+    });
+
+    it('goes away when the preview has loaded', async () => {
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Preview-progress')).not.toBeNull());
+
+        fireEvent.load(iframeOf(container));
+
+        await waitFor(() => expect(container.querySelector('.Preview-progress')).toBeNull());
+        expect(container.querySelector('.Preview-resizer')?.getAttribute('aria-busy')).toBeNull();
+    });
+
+    it('stays away for a load fast enough not to need it', async () => {
+        // Anything a local server answers in a few tens of milliseconds shows
+        // nothing at all: a bar that appears and vanishes within one frame reads
+        // as a glitch, not as progress.
+        const { container } = await mount();
+        await waitFor(() => expect(iframeOf(container)).not.toBeNull());
+
+        fireEvent.load(iframeOf(container));
+
+        await new Promise((resolve) => setTimeout(resolve, 300));
+        expect(container.querySelector('.Preview-progress')).toBeNull();
+    });
+
+    it('comes back when a variant switch loads a different document', async () => {
+        // The iframe's src changes without anything remounting, so a loading flag
+        // that only reset on mount would report the first document forever.
+        const { container } = await mount();
+        await waitFor(() => expect(iframeOf(container)).not.toBeNull());
+        fireEvent.load(iframeOf(container));
+        await waitFor(() => expect(container.querySelector('.Preview-progress')).toBeNull());
+
+        fireEvent.click(screen.getByRole('button', { name: 'Primary' }));
+
+        await waitFor(() =>
+            expect(iframeOf(container).getAttribute('src')).toBe('/components/preview/button--primary'),
+        );
+        await waitFor(() => expect(container.querySelector('.Preview-progress')).not.toBeNull());
+    });
+});
+
 describe('resizing the preview', () => {
     // Awaited between steps: the window move/up listeners are attached by an
     // effect that runs after the pointerdown commits, so firing all three

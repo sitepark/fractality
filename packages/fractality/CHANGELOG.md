@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.7.0](https://github.com/sitepark/fractality/compare/%40fractality%2Ffractality%401.6.3...%40fractality%2Ffractality%401.7.0) (2026-08-19)
+
+- feat!: Remove Support for Node 20 ([f6e2ed7](https://github.com/sitepark/fractality/commit/f6e2ed77035d32f1d3c6e616dc0303024f8cee3d))
+
+### Bug Fixes
+
+- **core,fractality,web:** gate requests on in-progress source rebuilds ([f17a02c](https://github.com/sitepark/fractality/commit/f17a02c77403d3c14c01d52af6ad0a847321ae46))
+- **deps:** update all dependencies to latest, except sass ([88d3e5c](https://github.com/sitepark/fractality/commit/88d3e5c67c3976fc6dd815875a39685e6033dbe1))
+- **deps:** update dependencies ([3c598f9](https://github.com/sitepark/fractality/commit/3c598f95a148a151c97f0d3c3293ba924862155c))
+- **deps:** update execa from 9.6.1 to 10.0.1 ([a9f0e22](https://github.com/sitepark/fractality/commit/a9f0e221b5e74843a2acd4fc5e09d6512b9a9ce7))
+- fix circular dependencies ([d57d337](https://github.com/sitepark/fractality/commit/d57d337ca03c7420101cab0192452888040a9079))
+- **fractality:** fix extend() referencing undefined module.exports ([c81fd43](https://github.com/sitepark/fractality/commit/c81fd438e1618cac16334d2d57efd88897866466))
+- **fractality:** remove reference to undefined variable in error handler ([4e331c1](https://github.com/sitepark/fractality/commit/4e331c1b020f871ed40f1d1b54fe3130547fc3db))
+- **fractality:** resolve the CLI's own package.json against __dirname ([e7a815a](https://github.com/sitepark/fractality/commit/e7a815ac62a0556ddc186735502fcfd8c5a4d302))
+- **test:** exclude dist from vitest, and declare accurate engines ranges ([e0adc25](https://github.com/sitepark/fractality/commit/e0adc25dd8000003a67268b6cc5758ee2596b08d))
+- use workspace protocol for inter-package dependencies ([79b0fd6](https://github.com/sitepark/fractality/commit/79b0fd6634ec319c7f6e8dcaebd385ee2a8181a3))
+
+### Features
+
+- add files allowlists and exports maps to all packages ([298d693](https://github.com/sitepark/fractality/commit/298d69391c96b5a2c6751eb87653b17796d36ab9))
+- **deps:** migrate to express 5 & path-to-regexp 8 ([9d8acf9](https://github.com/sitepark/fractality/commit/9d8acf9742dbab983afc5554bda9913bff69d2c3))
+
+### BREAKING CHANGES
+
+- Node 20 is no longer supported
+
 ## 1.6.3 (2024-09-24)
 
 **Note:** Version bump only for package @fractality/fractality

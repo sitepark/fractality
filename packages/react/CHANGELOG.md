@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/sitepark/fractality/compare/%40fractality%2Freact%400.5.3...%40fractality%2Freact%400.6.0) (2026-08-19)
+
+### Bug Fixes
+
+- **deps:** update all dependencies to latest, except sass ([88d3e5c](https://github.com/sitepark/fractality/commit/88d3e5c67c3976fc6dd815875a39685e6033dbe1))
+- **deps:** update dependencies ([3c598f9](https://github.com/sitepark/fractality/commit/3c598f95a148a151c97f0d3c3293ba924862155c))
+- **deps:** update dependencies ([80e4e56](https://github.com/sitepark/fractality/commit/80e4e56d9764a5a297cfe4d7d0af4dacf5dc88fe))
+- **deps:** update dependencies ([28fecb9](https://github.com/sitepark/fractality/commit/28fecb9b861642b69d24418c6d929f715193e00b))
+- **react:** return a rejected promise instead of throwing synchronously ([ec18929](https://github.com/sitepark/fractality/commit/ec189296aa41464e90deca1fbf004138f1d68da6))
+- replace import-sync with createRequire ([65ef165](https://github.com/sitepark/fractality/commit/65ef1656d6f20d83c4b85b2b2e684d857b8ad89f))
+- **test:** exclude dist from vitest, and declare accurate engines ranges ([e0adc25](https://github.com/sitepark/fractality/commit/e0adc25dd8000003a67268b6cc5758ee2596b08d))
+- use workspace protocol for inter-package dependencies ([79b0fd6](https://github.com/sitepark/fractality/commit/79b0fd6634ec319c7f6e8dcaebd385ee2a8181a3))
+
+### Features
+
+- add files allowlists and exports maps to all packages ([298d693](https://github.com/sitepark/fractality/commit/298d69391c96b5a2c6751eb87653b17796d36ab9))
+
 ## 0.5.3 (2024-09-24)
 
 **Note:** Version bump only for package @fractality/react

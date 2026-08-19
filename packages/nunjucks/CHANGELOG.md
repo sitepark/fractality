@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.3.0](https://github.com/sitepark/fractality/compare/%40fractality%2Fnunjucks%402.2.3...%40fractality%2Fnunjucks%402.3.0) (2026-08-19)
+
+### Bug Fixes
+
+- **deps:** update dependencies ([3c598f9](https://github.com/sitepark/fractality/commit/3c598f95a148a151c97f0d3c3293ba924862155c))
+- **nunjucks:** don't hang forever when context resolution fails ([e317763](https://github.com/sitepark/fractality/commit/e3177638f3f34c4f8ab9d97663f0d091c369f95e))
+- use workspace protocol for inter-package dependencies ([79b0fd6](https://github.com/sitepark/fractality/commit/79b0fd6634ec319c7f6e8dcaebd385ee2a8181a3))
+
+### Features
+
+- add files allowlists and exports maps to all packages ([298d693](https://github.com/sitepark/fractality/commit/298d69391c96b5a2c6751eb87653b17796d36ab9))
+
 ## 2.2.3 (2024-09-24)
 
 **Note:** Version bump only for package @fractality/nunjucks

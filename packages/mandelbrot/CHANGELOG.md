@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.13.0](https://github.com/sitepark/fractality/compare/%40fractality%2Fmandelbrot%401.12.3...%40fractality%2Fmandelbrot%401.13.0) (2026-08-19)
+
+### Bug Fixes
+
+- **deps:** downgrade to jquery 3.7.1 ([9d02ada](https://github.com/sitepark/fractality/commit/9d02ada41fb7ce969d99debbb879fa622a5ba43a))
+- **deps:** update all dependencies to latest, except sass ([88d3e5c](https://github.com/sitepark/fractality/commit/88d3e5c67c3976fc6dd815875a39685e6033dbe1))
+- **deps:** update dependencies ([3c598f9](https://github.com/sitepark/fractality/commit/3c598f95a148a151c97f0d3c3293ba924862155c))
+- **deps:** update dependencies ([28fecb9](https://github.com/sitepark/fractality/commit/28fecb9b861642b69d24418c6d929f715193e00b))
+- fix circular dependencies ([d57d337](https://github.com/sitepark/fractality/commit/d57d337ca03c7420101cab0192452888040a9079))
+- **mandelbrot:** declare fs-extra and @fractality/web as dependencies ([f64f693](https://github.com/sitepark/fractality/commit/f64f6937ff3fe58da81f537ca8899d8bf329dd42))
+- **mandelbrot:** make skin-detection path check OS-agnostic ([edf3890](https://github.com/sitepark/fractality/commit/edf3890364f9b6bb418cf1de5852535be7780dd4))
+- **mandelbrot:** migrate SCSS to the sass module system, sass 1.79 -> 1.102 ([ad7065d](https://github.com/sitepark/fractality/commit/ad7065ddfbe801c43d182a75dc67bd335939c2f8))
+- **mandelbrot:** restore theme JS under jQuery 4 ([f3248a9](https://github.com/sitepark/fractality/commit/f3248a9055679c6fc2f4c649ac4b64ba62b69ec8))
+- resolve the fractality peer through an override, not a devDependency ([753e820](https://github.com/sitepark/fractality/commit/753e82048d6cd2e9fcf6e6178f66db98e407a5b0))
+- use workspace protocol for inter-package dependencies ([79b0fd6](https://github.com/sitepark/fractality/commit/79b0fd6634ec319c7f6e8dcaebd385ee2a8181a3))
+
+### Features
+
+- add files allowlists and exports maps to all packages ([298d693](https://github.com/sitepark/fractality/commit/298d69391c96b5a2c6751eb87653b17796d36ab9))
+- **deps:** migrate to express 5 & path-to-regexp 8 ([9d8acf9](https://github.com/sitepark/fractality/commit/9d8acf9742dbab983afc5554bda9913bff69d2c3))
+- **mandelbrot:** add explicit jQuery global shim ([3c0ee2c](https://github.com/sitepark/fractality/commit/3c0ee2c17fa137d8cbbf7b0a7e9d64eb578bf3c1))
+- **mandelbrot:** migrate asset build from webpack to vite ([13bc2bc](https://github.com/sitepark/fractality/commit/13bc2bc1d7e3247579bfd2423d098f2946a40d2f))
+
 ## 1.12.3 (2024-09-24)
 
 **Note:** Version bump only for package @fractality/mandelbrot

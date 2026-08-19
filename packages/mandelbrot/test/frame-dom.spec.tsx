@@ -56,11 +56,12 @@ const entity: EntityPayload = {
     label: 'Button',
     title: 'Button',
     status: 'components:ready',
+    tags: ['form-control'],
     viewPath: 'forms/button/button.hbs',
     previewUrl: '/components/preview/button',
     renderUrl: '/components/render/button',
     references: ['icon'],
-    referencedBy: [],
+    referencedBy: ['card'],
     resources: [{ name: 'button.css', path: 'forms/button/button.css', ext: '.css', size: 812 }],
     variants: [
         {
@@ -1159,6 +1160,196 @@ describe('the panels follow the variant on screen', () => {
         ).click();
 
         await waitFor(() => expect(container.querySelector('.Browser-code pre')?.textContent).toContain('Buy now'));
+    });
+});
+
+describe('the info panel', () => {
+    const openInfo = async (container: HTMLElement) => {
+        await waitFor(() => expect(container.querySelector('.Browser-tabs')).not.toBeNull());
+        (
+            [...container.querySelectorAll('.Browser-tab a')].find(
+                (a) => a.textContent?.toLowerCase() === 'info',
+            ) as HTMLElement
+        ).click();
+        await waitFor(() => expect(container.querySelector('.Browser-info')).not.toBeNull());
+    };
+
+    it('uses the markup the stylesheet styles', async () => {
+        // It was a `dl` of `.Meta-term`/`.Meta-description`, class names the
+        // stylesheet has never had — so every row ran together with no label
+        // column and no rule between them.
+        const { container } = await mount();
+        await openInfo(container);
+
+        expect(container.querySelector('.Browser-info ul.Meta')).not.toBeNull();
+        expect(container.querySelectorAll('.Browser-info .Meta-item').length).toBeGreaterThan(3);
+        expect(container.querySelector('.Browser-info .Meta-key')).not.toBeNull();
+        expect(container.querySelector('.Browser-info .Meta-value')).not.toBeNull();
+        expect(container.querySelector('.Browser-info dl')).toBeNull();
+    });
+
+    it('lists every row the template layer listed', async () => {
+        const { container } = await mount();
+        await openInfo(container);
+
+        const keys = [...container.querySelectorAll('.Browser-info .Meta-key')].map((k) =>
+            k.textContent?.replace(/\s+/g, ' ').trim(),
+        );
+        expect(keys).toEqual([
+            'Handle:',
+            'Tags:',
+            'Variants (2):',
+            'Preview:',
+            'Filesystem Path:',
+            'References (1):',
+            'Referenced by (1):',
+        ]);
+    });
+
+    it('links the variants, which were plain text before', async () => {
+        const { container } = await mount();
+        await openInfo(container);
+
+        const links = [...container.querySelectorAll('.Browser-info .Meta-value--linkList a')].map((a) => ({
+            href: a.getAttribute('href'),
+            text: a.textContent,
+        }));
+        expect(links).toEqual(
+            expect.arrayContaining([
+                { href: '/components/detail/button--default', text: 'Default' },
+                { href: '/components/detail/button--primary', text: 'Primary' },
+                { href: '/components/detail/icon', text: '@icon' },
+                { href: '/components/detail/card', text: '@card' },
+            ]),
+        );
+    });
+
+    it('navigates in the Frame when one is clicked, rather than reloading', async () => {
+        // The template layer marked these `data-pjax`; a full reload would throw
+        // away the panel, the scroll position and the Preview.
+        const { container } = await mount();
+        await openInfo(container);
+
+        const link = [...container.querySelectorAll('.Browser-info a')].find(
+            (a) => a.getAttribute('href') === '/components/detail/button--primary',
+        ) as HTMLElement;
+        fireEvent.click(link);
+
+        await waitFor(() => expect(window.location.pathname).toBe('/components/detail/button--primary'));
+    });
+
+    it('offers both ways to open the preview on its own', async () => {
+        // The render route is built either way; nothing linked to it before.
+        const { container } = await mount();
+        await openInfo(container);
+
+        const links = [...container.querySelectorAll('.Browser-info .Meta-value > ul a')].map((a) => ({
+            href: a.getAttribute('href'),
+            text: a.textContent?.trim(),
+            target: a.getAttribute('target'),
+        }));
+        expect(links).toEqual([
+            { href: '/components/preview/button--default', text: 'With layout', target: '_blank' },
+            { href: '/components/render/button--default', text: 'Component only', target: '_blank' },
+        ]);
+        // The icon the stylesheet sizes inside a Meta-value link.
+        expect(container.querySelector('.Browser-info .Meta-value a svg')).not.toBeNull();
+    });
+
+    it('takes its labels from the config, which it used to ignore', async () => {
+        window.frctl = {
+            ...window.frctl!,
+            labels: {
+                ...(window.frctl!.labels as Record<string, unknown>),
+                components: {
+                    handle: 'Kennung',
+                    path: 'Dateipfad',
+                    references: 'Verweise',
+                    preview: { label: 'Vorschau', withLayout: 'Mit Layout', componentOnly: 'Nur Komponente' },
+                },
+            },
+        };
+
+        const { container } = await mount();
+        await openInfo(container);
+
+        const text = container.querySelector('.Browser-info')?.textContent ?? '';
+        expect(text).toContain('Kennung');
+        expect(text).toContain('Dateipfad');
+        expect(text).toContain('Mit Layout');
+        expect(text).not.toContain('Filesystem Path');
+    });
+
+    it('names the variant on screen as the handle', async () => {
+        const { container } = await mount();
+        await waitFor(() => expect(screen.getByRole('button', { name: 'Primary' })).not.toBeNull());
+        fireEvent.click(screen.getByRole('button', { name: 'Primary' }));
+        await openInfo(container);
+
+        expect(container.querySelector('.Browser-info .Meta-value')?.textContent).toBe('@button--primary');
+        // And the preview links follow it.
+        expect(container.querySelector('.Browser-info .Meta-value > ul a')?.getAttribute('href')).toBe(
+            '/components/preview/button--primary',
+        );
+    });
+});
+
+describe('the labels a consumer configures', () => {
+    // Most of `labels` was read by nothing: a localised config reverted to
+    // English wherever the Frame had hardcoded a string.
+    it('names an empty context, rather than showing an empty object', async () => {
+        payloads['/components/detail/button.context.json'] = {
+            contractVersion: 1,
+            handle: 'button',
+            context: {},
+            variants: [],
+        };
+        window.frctl = {
+            ...window.frctl!,
+            labels: { components: { context: { empty: 'Kein Kontext.' } } },
+        };
+
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Browser-tabs')).not.toBeNull());
+        (
+            [...container.querySelectorAll('.Browser-tab a')].find(
+                (a) => a.textContent?.toLowerCase() === 'context',
+            ) as HTMLElement
+        ).click();
+
+        await waitFor(() =>
+            expect(container.querySelector('.Browser-code pre')?.textContent).toBe('/* Kein Kontext. */'),
+        );
+    });
+
+    it('names an empty notes panel', async () => {
+        payloads['/components/detail/button.notes.json'] = {
+            contractVersion: 1,
+            handle: 'button',
+            notes: null,
+            variants: [],
+        };
+        window.frctl = { ...window.frctl!, labels: { components: { notes: { empty: 'Keine Notizen.' } } } };
+
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Browser-tabs')).not.toBeNull());
+        (
+            [...container.querySelectorAll('.Browser-tab a')].find(
+                (a) => a.textContent?.toLowerCase() === 'notes',
+            ) as HTMLElement
+        ).click();
+
+        await waitFor(() =>
+            expect(container.querySelector('.Browser-isEmptyNote')?.textContent).toBe('Keine Notizen.'),
+        );
+    });
+
+    it("labels the tree's collapse control", async () => {
+        window.frctl = { ...window.frctl!, labels: { tree: { collapse: 'Baum einklappen' } } };
+
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Tree-collapse')).not.toBeNull());
+        expect(container.querySelector('.Tree-collapse')?.getAttribute('title')).toBe('Baum einklappen');
     });
 });
 

@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState, type ReactNode } from 'react';
 import type { ContextPayload, EntityPayload, VariantSummary, ViewPayload } from '@fractality/web/contract';
 import { fetchContext, fetchNotes, fetchRendered, fetchView } from './api.js';
 import { frctl, resolveRouteUrl } from './frctl.js';
+import { OpenInBrowserIcon } from './Icons.js';
 import { highlight } from './highlight.js';
 import { read, write } from './storage.js';
 import { renderMarkdown } from './markdown.js';
@@ -35,6 +36,15 @@ const label = (panel: Panel): string => {
     return labels[panel] ?? panel.charAt(0).toUpperCase() + panel.slice(1);
 };
 
+/** A `labels.components.*` string, by dotted path. */
+const componentLabel = (path: string, fallback: string): string => {
+    let value: unknown = frctl.labels?.components;
+    for (const key of path.split('.')) {
+        value = typeof value === 'object' && value !== null ? (value as Record<string, unknown>)[key] : undefined;
+    }
+    return typeof value === 'string' ? value : fallback;
+};
+
 /**
  * A variant's label, for the headers a collated panel puts between variants.
  *
@@ -53,7 +63,12 @@ const labelFor = (entity: EntityPayload, handle: string): string =>
  * would describe a third of what is rendered — and otherwise the component's own.
  */
 function contextSource(payload: ContextPayload, entity: EntityPayload, variant?: VariantSummary): string {
-    const format = (context: unknown) => JSON.stringify(context, null, 2);
+    const format = (context: unknown) =>
+        context && Object.keys(context).length
+            ? JSON.stringify(context, null, 2)
+            : // What the template layer showed for a component with no context. `{}`
+              // is technically the answer and tells a reader nothing.
+              `/* ${componentLabel('context.empty', 'No context defined.')} */`;
 
     if (variant) {
         const own = payload.variants.find((v) => v.handle === variant.handle);
@@ -112,15 +127,22 @@ function viewSource(
  * reason the entity payload is split by panel at all — a navigation costs a few
  * hundred bytes rather than the component's whole notes, context and source.
  */
+/** The documents on screen, as the Pen resolved them. */
+export interface ShownDocuments {
+    previewUrl: string;
+    renderUrl: string;
+}
+
 interface BrowserProps {
     entity: EntityPayload;
     /** The variant on screen, if a single one is. Absent for a collation. */
     variant?: VariantSummary;
-    /** The document the HTML panel reads — decided by the Pen, which owns what is on screen. */
-    renderUrl: string;
+    /** What the Preview is showing — decided by the Pen, which owns that choice. */
+    showing: ShownDocuments;
+    onNavigate: (href: string) => void;
 }
 
-export function Browser({ entity, variant, renderUrl }: BrowserProps) {
+export function Browser({ entity, variant, showing, onNavigate }: BrowserProps) {
     // Persisted because the Pen remounts on navigation: without this, every
     // component you opened would reset you to the first tab. The fallback is
     // the first panel, as it was when the template layer rendered the tabs.
@@ -155,7 +177,7 @@ export function Browser({ entity, variant, renderUrl }: BrowserProps) {
             if (active === 'html') {
                 // Whatever the Preview is showing, so the two agree — including
                 // when that is a collation rather than a single variant.
-                return highlight(await fetchRendered(resolveRouteUrl(renderUrl)), 'html');
+                return highlight(await fetchRendered(resolveRouteUrl(showing.renderUrl)), 'html');
             }
             if (active === 'notes') {
                 const payload = await fetchNotes(entity.handle);
@@ -178,7 +200,7 @@ export function Browser({ entity, variant, renderUrl }: BrowserProps) {
         return () => {
             cancelled = true;
         };
-    }, [entity.handle, active, needsFetch, renderUrl, variant?.handle]);
+    }, [entity.handle, active, needsFetch, showing.renderUrl, variant?.handle]);
 
     return (
         <div className="Browser">
@@ -204,35 +226,186 @@ export function Browser({ entity, variant, renderUrl }: BrowserProps) {
                 </ul>
             </div>
 
-            <Panel panel={active} entity={entity} body={body} />
+            <Panel
+                panel={active}
+                entity={entity}
+                variant={variant}
+                showing={showing}
+                onNavigate={onNavigate}
+                body={body}
+            />
         </div>
     );
 }
 
-function Panel({ panel, entity, body }: { panel: Panel; entity: EntityPayload; body: string | null }) {
+/**
+ * A row of the Info panel.
+ *
+ * `ul`/`li`/`strong`/`span` with these class names because that is what the
+ * stylesheet styles: `.Meta-item` draws the rule between rows and `.Meta-key`
+ * floats into a label column on a wide viewport. The `dl` this replaces used
+ * class names the stylesheet has never had, so every row ran together
+ * unstyled — structure the CSS does not know about is invisible work.
+ */
+function MetaItem({ label, count, children }: { label: string; count?: number; children: ReactNode }) {
+    return (
+        <li className="Meta-item">
+            <strong className="Meta-key">
+                {/* No space before the colon, and one before a count, as the
+                    template layer wrote it: `Variants <em>(3)</em>:`. */}
+                {count === undefined ? (
+                    `${label}:`
+                ) : (
+                    <>
+                        {label} <em className="Meta-count">({count})</em>:
+                    </>
+                )}
+            </strong>
+            <span className="Meta-value">{children}</span>
+        </li>
+    );
+}
+
+/**
+ * A comma-separated list of links, as the template layer's `Meta-value--linkList`
+ * rows were.
+ *
+ * These navigate in the Frame rather than reloading it — the equivalent of the
+ * `data-pjax` the template layer put on them, and the reason the Browser is
+ * handed a navigate callback at all.
+ */
+function LinkList({
+    items,
+    onNavigate,
+}: {
+    items: Array<{ href: string; label: string }>;
+    onNavigate: (href: string) => void;
+}) {
+    return (
+        <span className="Meta-value--linkList">
+            {items.map((item, index) => (
+                <Fragment key={item.href}>
+                    <a
+                        href={item.href}
+                        onClick={(event) => {
+                            if (event.metaKey || event.ctrlKey || event.shiftKey) return;
+                            event.preventDefault();
+                            onNavigate(item.href);
+                        }}
+                    >
+                        <span>{item.label}</span>
+                    </a>
+                    {index < items.length - 1 ? ', ' : null}
+                </Fragment>
+            ))}
+        </span>
+    );
+}
+
+/**
+ * What the component is, and where to find it. Mirrors
+ * `views/partials/browser/panel-info.nunj`.
+ *
+ * Every row it lists was in that template and had gone missing here: the
+ * variants, the two ways to open the Preview on its own, and what references this
+ * component — which the payload has carried all along.
+ */
+function Info({
+    entity,
+    variant,
+    showing,
+    onNavigate,
+}: {
+    entity: EntityPayload;
+    variant?: VariantSummary;
+    showing: ShownDocuments;
+    onNavigate: (href: string) => void;
+}) {
+    const detailUrl = (handle: string) => resolveRouteUrl(`/components/detail/${handle}`);
+    const variants = entity.variants;
+
+    return (
+        <div className="Browser-panel Browser-info is-active" id="browser-panel-info">
+            <ul className="Meta">
+                <MetaItem label={componentLabel('handle', 'Handle')}>@{variant?.handle ?? entity.handle}</MetaItem>
+
+                {entity.tags?.length ? (
+                    <MetaItem label={componentLabel('tags', 'Tags')}>{entity.tags.join(', ')}</MetaItem>
+                ) : null}
+
+                {variants.length > 1 ? (
+                    <MetaItem label={componentLabel('variants', 'Variants')} count={variants.length}>
+                        <LinkList
+                            items={variants.map((v) => ({ href: detailUrl(v.handle), label: v.label }))}
+                            onNavigate={onNavigate}
+                        />
+                    </MetaItem>
+                ) : null}
+
+                <MetaItem label={componentLabel('preview.label', 'Preview')}>
+                    {/*
+                        Both documents the Preview iframe can hold, opened on their
+                        own. Real links out of the Frame — the template layer marked
+                        these `data-no-pjax` for the same reason.
+                    */}
+                    <ul>
+                        <li>
+                            <a href={resolveRouteUrl(showing.previewUrl)} target="_blank" rel="noopener noreferrer">
+                                <span>{componentLabel('preview.withLayout', 'With layout')}</span>
+                                <OpenInBrowserIcon />
+                            </a>
+                        </li>
+                        <li>
+                            <a href={resolveRouteUrl(showing.renderUrl)} target="_blank" rel="noopener noreferrer">
+                                <span>{componentLabel('preview.componentOnly', 'Component only')}</span>
+                                <OpenInBrowserIcon />
+                            </a>
+                        </li>
+                    </ul>
+                </MetaItem>
+
+                <MetaItem label={componentLabel('path', 'Filesystem Path')}>{entity.viewPath}</MetaItem>
+
+                {entity.references.length ? (
+                    <MetaItem label={componentLabel('references', 'References')} count={entity.references.length}>
+                        <LinkList
+                            items={entity.references.map((handle) => ({
+                                href: detailUrl(handle),
+                                label: `@${handle}`,
+                            }))}
+                            onNavigate={onNavigate}
+                        />
+                    </MetaItem>
+                ) : null}
+
+                {entity.referencedBy.length ? (
+                    <MetaItem label={componentLabel('referenced', 'Referenced by')} count={entity.referencedBy.length}>
+                        <LinkList
+                            items={entity.referencedBy.map((handle) => ({
+                                href: detailUrl(handle),
+                                label: `@${handle}`,
+                            }))}
+                            onNavigate={onNavigate}
+                        />
+                    </MetaItem>
+                ) : null}
+            </ul>
+        </div>
+    );
+}
+
+interface PanelProps {
+    panel: Panel;
+    entity: EntityPayload;
+    variant?: VariantSummary;
+    showing: ShownDocuments;
+    onNavigate: (href: string) => void;
+    body: string | null;
+}
+
+function Panel({ panel, entity, variant, showing, onNavigate, body }: PanelProps) {
     if (panel === 'info') {
-        return (
-            <div className="Browser-panel Browser-info is-active" id="browser-panel-info">
-                <dl className="Meta">
-                    <dt className="Meta-term">Handle</dt>
-                    <dd className="Meta-description">@{entity.handle}</dd>
-                    <dt className="Meta-term">Filesystem Path</dt>
-                    <dd className="Meta-description">{entity.viewPath}</dd>
-                    {entity.tags?.length ? (
-                        <>
-                            <dt className="Meta-term">Tags</dt>
-                            <dd className="Meta-description">{entity.tags.join(', ')}</dd>
-                        </>
-                    ) : null}
-                    {entity.references.length ? (
-                        <>
-                            <dt className="Meta-term">References</dt>
-                            <dd className="Meta-description">{entity.references.join(', ')}</dd>
-                        </>
-                    ) : null}
-                </dl>
-            </div>
-        );
+        return <Info entity={entity} variant={variant} showing={showing} onNavigate={onNavigate} />;
     }
 
     if (panel === 'resources') {
@@ -252,7 +425,7 @@ function Panel({ panel, entity, body }: { panel: Panel; entity: EntityPayload; b
                     {body ? (
                         <div dangerouslySetInnerHTML={{ __html: body }} />
                     ) : (
-                        <p className="Browser-isEmptyNote">No notes defined.</p>
+                        <p className="Browser-isEmptyNote">{componentLabel('notes.empty', 'No notes defined.')}</p>
                     )}
                 </div>
             </div>

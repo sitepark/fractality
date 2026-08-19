@@ -23,6 +23,8 @@ interface PenProps {
      * component renders the default one.
      */
     selected: string;
+    /** In-Frame navigation, for the links the Info panel lists. */
+    onNavigate: (href: string) => void;
 }
 
 /**
@@ -32,7 +34,7 @@ interface PenProps {
  * variants ride along inside their component's payload instead of each being
  * fetched separately.
  */
-export function Pen({ entity, statuses, selected }: PenProps) {
+export function Pen({ entity, statuses, selected, onNavigate }: PenProps) {
     // Derived rather than initialised-at-mount. The payload arrives after the
     // route changes, so a `useState` initialiser reads whichever entity was
     // still on screen — the previous component. The switcher's own choice is a
@@ -176,7 +178,7 @@ export function Pen({ entity, statuses, selected }: PenProps) {
             />
 
             <div className="Pen-panel Pen-info">
-                <Browser entity={entity} variant={variant} renderUrl={showing.renderUrl} />
+                <Browser entity={entity} variant={variant} showing={showing} onNavigate={onNavigate} />
             </div>
         </div>
     );

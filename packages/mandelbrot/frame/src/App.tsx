@@ -170,6 +170,7 @@ export function App() {
                                 entity={entity}
                                 statuses={tree.status}
                                 selected={handleFromPath(route)}
+                                onNavigate={navigate}
                             />
                         ) : doc && tree ? (
                             <Doc doc={doc} statuses={tree.status} />

@@ -3,6 +3,7 @@ import type { TreeNode, TreePayload } from '@fractality/web/contract';
 import { StatusDot } from './Status.js';
 import { read, write } from './storage.js';
 import { CollapseIcon } from './Icons.js';
+import { frctl } from './frctl.js';
 
 export interface TreeProps {
     label: string;
@@ -132,6 +133,15 @@ function Branch({ nodes, depth, isExpanded, onToggle, ...rest }: BranchProps) {
  * outside it. Persisted to sessionStorage under the key the previous theme used,
  * so expansion survives a reload exactly as it did before.
  */
+/**
+ * The collapse control's label. Configurable as `labels.tree.collapse`; the
+ * expand wording has no label of its own, as it had none in the template layer.
+ */
+const collapseLabel = (anyOpen: boolean): string => {
+    const tree = (frctl.labels?.tree ?? {}) as Record<string, string>;
+    return anyOpen ? (tree.collapse ?? 'Collapse tree') : 'Expand tree';
+};
+
 export function Tree({ label, nodes, ...rest }: TreeProps) {
     const key = `tree.${label}.state`;
 
@@ -178,8 +188,8 @@ export function Tree({ label, nodes, ...rest }: TreeProps) {
                         <button
                             type="button"
                             className="Tree-collapse"
-                            title={anyOpen ? 'Collapse tree' : 'Expand tree'}
-                            aria-label={anyOpen ? 'Collapse tree' : 'Expand tree'}
+                            title={collapseLabel(anyOpen)}
+                            aria-label={collapseLabel(anyOpen)}
                             onClick={() => persist(Object.fromEntries(handles.map((handle) => [handle, !anyOpen])))}
                         >
                             <CollapseIcon />

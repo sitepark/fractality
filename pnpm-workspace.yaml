@@ -6,3 +6,11 @@ allowBuilds:
   nx: true
 minimumReleaseAgeExclude:
   - rollup-plugin-visualizer@7.1.1
+
+# Advisories in transitive dependencies of the lerna/nx toolchain, which pins
+# them too tightly to pick up the fixes on its own. All dev-only: none of these
+# reach a published package. Drop an entry once the upstream range widens.
+overrides:
+  'brace-expansion@>=4.0.0 <5.0.9': '^5.0.9' # GHSA-rgw5-rvv9-x895
+  'js-yaml@>=4.0.0 <4.3.1': '^4.3.1' # GHSA-5p4m-2wfm-xmqj
+  'tar@>=7.0.0 <7.5.21': '^7.5.22' # GHSA-r292-9mhp-454m

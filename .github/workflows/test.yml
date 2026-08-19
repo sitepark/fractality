@@ -16,18 +16,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
-      - name: Install pnpm
-        uses: pnpm/action-setup@v6.0.10
+      - name: PNPM
+        uses: pnpm/setup@v2
         with:
-          run_install: false
-      - name: Install Node.js ${{ matrix.node }}
-        uses: actions/setup-node@v7
-        with:
-          node-version: ${{ matrix.node }}
-          registry-url: 'https://registry.npmjs.org'
-          cache: 'pnpm'
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+          cache: true
+          runtime: node@${{ matrix.node }}
       - name: Execute tests
         run: pnpm test
         env:

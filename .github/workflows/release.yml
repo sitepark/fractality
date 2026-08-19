@@ -6,6 +6,15 @@ on:
         description: 'Bump versions and build, but publish nothing and push nothing'
         type: boolean
         default: false
+      bump:
+        description: 'Version bump. "conventional" reads it from the commit messages; anything else overrides it for every package at once.'
+        type: choice
+        default: conventional
+        options:
+          - conventional
+          - patch
+          - minor
+          - major
 
 # Never let two releases interleave: they would race on tags and versions.
 concurrency:
@@ -14,6 +23,10 @@ concurrency:
 
 permissions:
   contents: write
+  # Lets lerna mint a short-lived, per-package npm credential from GitHub's
+  # OIDC provider. This is the only way the release authenticates to the
+  # registry; there is no stored token. See docs/RELEASING.md.
+  id-token: write
 
 jobs:
   release:
@@ -26,34 +39,25 @@ jobs:
           # to work out what changed since each package's last release.
           fetch-depth: 0
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v6.0.10
+      - name: PNPM
+        uses: pnpm/setup@v2
         with:
-          run_install: false
+          cache: true
+          runtime: node@24
 
-      - name: Install Node.js
-        uses: actions/setup-node@v7
-        with:
-          node-version: 24
-          registry-url: 'https://registry.npmjs.org'
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      # Fail here, before anything is bumped, tagged or written. An expired or
-      # under-scoped token otherwise surfaces as an opaque "E404 Not found" from
-      # the publish step, long after the version commit and tags already exist.
-      - name: Verify npm authentication
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      # Publishing authenticates through trusted publishing, so there is no
+      # stored credential to check. What can go missing is the OIDC token
+      # itself, if the id-token permission above is ever dropped: lerna treats
+      # a failed exchange as optional and carries on unauthenticated, so the
+      # release would only die at publish time, once versions and tags exist.
+      # Fail here instead, before anything is written.
+      - name: Verify OIDC availability
         run: |
-          if ! whoami=$(npm whoami 2>&1); then
-            echo "::error::npm authentication failed: ${whoami}"
-            echo "::error::Rotate the NPM_TOKEN secret (npm granular tokens expire; 90 days max)."
+          if [ -z "${ACTIONS_ID_TOKEN_REQUEST_URL}" ]; then
+            echo "::error::GitHub issued no OIDC token; check that this workflow still grants id-token: write."
             exit 1
           fi
-          echo "Authenticated to npm as ${whoami}"
+          echo "OIDC token endpoint available"
 
       - name: Validate
         run: pnpm run validate
@@ -74,8 +78,17 @@ jobs:
       # --no-push is the crux: version, changelog and tags stay local until the
       # packages are actually on npm. A failed publish leaves the remote
       # untouched, so re-running the workflow is a clean retry.
+      #
+      # An explicit bump overrides what the commit messages imply, for every
+      # package in the release. Use it to hold back a major that a `feat!` in
+      # the backlog would otherwise force; the changelog still records the
+      # breaking change either way.
       - name: Bump versions and write changelogs
-        run: pnpm lerna version --conventional-commits --no-private --no-push --yes
+        env:
+          BUMP: ${{ inputs.bump }}
+        run: |
+          if [ "${BUMP}" = conventional ]; then BUMP=''; fi
+          pnpm lerna version ${BUMP} --conventional-commits --no-private --no-push --yes
 
       - name: Show pending release
         run: |
@@ -90,8 +103,6 @@ jobs:
       # self-healing: a partially published release is completed by re-running.
       - name: Publish to npm
         if: ${{ !inputs.dry-run }}
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: pnpm lerna publish from-package --yes
 
       # Only now is it safe to move the remote: npm and git cannot diverge.

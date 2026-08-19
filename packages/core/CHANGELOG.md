@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/sitepark/fractality/compare/%40fractality%2Fcore%400.5.3...%40fractality%2Fcore%400.6.0) (2026-08-19)
+
+### Bug Fixes
+
+- clear cjs cache before loading cjs modules ([c0af387](https://github.com/sitepark/fractality/commit/c0af387b55026e5b95f179d6a495f77905375234))
+- **core,fractality,web:** gate requests on in-progress source rebuilds ([f17a02c](https://github.com/sitepark/fractality/commit/f17a02c77403d3c14c01d52af6ad0a847321ae46))
+- **core:** guard the @@ context reference against a missing entity ([80f9327](https://github.com/sitepark/fractality/commit/80f9327d2820a9c83800c51dea922ba5e8cfccb4))
+- **core:** make PromiseStream work with native promises ([1aa2fc5](https://github.com/sitepark/fractality/commit/1aa2fc533dcb884bf0ef0c6914a74b553981b167))
+- **core:** stop merging arrays by reference in defaultsDeep ([b7f30ae](https://github.com/sitepark/fractality/commit/b7f30aeb0b013d8f303f7bec9d456697233cf015))
+- **deps:** update all dependencies to latest, except sass ([88d3e5c](https://github.com/sitepark/fractality/commit/88d3e5c67c3976fc6dd815875a39685e6033dbe1))
+- **deps:** update dependencies ([ff33e1a](https://github.com/sitepark/fractality/commit/ff33e1ad489715a86a4de5fd9fb49b32bfc418f5))
+- **deps:** update dependencies ([3c598f9](https://github.com/sitepark/fractality/commit/3c598f95a148a151c97f0d3c3293ba924862155c))
+- **deps:** update dependencies ([80e4e56](https://github.com/sitepark/fractality/commit/80e4e56d9764a5a297cfe4d7d0af4dacf5dc88fe))
+- **deps:** update linguist-languages from 7.27.0 to 9.0.0 ([e66232c](https://github.com/sitepark/fractality/commit/e66232c607cc7fa276c7c21efbd3f38cf75b4979))
+- **deps:** update marked from 14.1.4 to 16.3.0 ([6733972](https://github.com/sitepark/fractality/commit/67339725c58800e059652f67c556fe5d4491a060))
+- stat the original absolute path, not the import()-relativized one ([f0047d3](https://github.com/sitepark/fractality/commit/f0047d363d583701142895e1426e590cf5ab3d9c))
+
+### Features
+
+- add files allowlists and exports maps to all packages ([298d693](https://github.com/sitepark/fractality/commit/298d69391c96b5a2c6751eb87653b17796d36ab9))
+
+### Performance Improvements
+
+- use mtime for cache invalidation to reduce number of cache misses ([1d29452](https://github.com/sitepark/fractality/commit/1d2945232d5342b098527921a4355cb1dadc1d59))
+
 ## 0.5.3 (2024-09-24)
 
 **Note:** Version bump only for package @fractality/core

@@ -1,6 +1,6 @@
 {
   "name": "@fractality/mandelbrot",
-  "version": "1.12.3",
+  "version": "1.13.0",
   "type": "module",
   "description": "The default theme for Fractality.",
   "main": "index.js",

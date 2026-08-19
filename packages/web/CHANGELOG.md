@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/sitepark/fractality/compare/%40fractality%2Fweb%400.3.3...%40fractality%2Fweb%400.4.0) (2026-08-19)
+
+### Bug Fixes
+
+- **core,fractality,web:** gate requests on in-progress source rebuilds ([f17a02c](https://github.com/sitepark/fractality/commit/f17a02c77403d3c14c01d52af6ad0a847321ae46))
+- **deps:** update all dependencies to latest, except sass ([88d3e5c](https://github.com/sitepark/fractality/commit/88d3e5c67c3976fc6dd815875a39685e6033dbe1))
+- **deps:** update dependencies ([ff33e1a](https://github.com/sitepark/fractality/commit/ff33e1ad489715a86a4de5fd9fb49b32bfc418f5))
+- **deps:** update dependencies ([3c598f9](https://github.com/sitepark/fractality/commit/3c598f95a148a151c97f0d3c3293ba924862155c))
+
+### Features
+
+- add files allowlists and exports maps to all packages ([298d693](https://github.com/sitepark/fractality/commit/298d69391c96b5a2c6751eb87653b17796d36ab9))
+- **deps:** migrate to express 5 & path-to-regexp 8 ([9d8acf9](https://github.com/sitepark/fractality/commit/9d8acf9742dbab983afc5554bda9913bff69d2c3))
+
 ## 0.3.3 (2024-09-24)
 
 **Note:** Version bump only for package @fractality/web

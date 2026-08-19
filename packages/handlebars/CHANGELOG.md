@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](https://github.com/sitepark/fractality/compare/%40fractality%2Fhandlebars%401.4.3...%40fractality%2Fhandlebars%401.5.0) (2026-08-19)
+
+### Bug Fixes
+
+- **deps:** update dependencies ([3c598f9](https://github.com/sitepark/fractality/commit/3c598f95a148a151c97f0d3c3293ba924862155c))
+- fix circular dependencies ([d57d337](https://github.com/sitepark/fractality/commit/d57d337ca03c7420101cab0192452888040a9079))
+- **handlebars:** stop swallowing errors in the render helper ([2b5c182](https://github.com/sitepark/fractality/commit/2b5c1824201ff34867e390ddd6eb8c43fb9828e9))
+- resolve the fractality peer through an override, not a devDependency ([753e820](https://github.com/sitepark/fractality/commit/753e82048d6cd2e9fcf6e6178f66db98e407a5b0))
+- use workspace protocol for inter-package dependencies ([79b0fd6](https://github.com/sitepark/fractality/commit/79b0fd6634ec319c7f6e8dcaebd385ee2a8181a3))
+
+### Features
+
+- add files allowlists and exports maps to all packages ([298d693](https://github.com/sitepark/fractality/commit/298d69391c96b5a2c6751eb87653b17796d36ab9))
+
 ## 1.4.3 (2024-09-24)
 
 **Note:** Version bump only for package @fractality/handlebars

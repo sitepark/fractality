@@ -21,6 +21,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          # Conventional-commit changelogs need the full history and all tags
+          # to work out what changed since each package's last release.
+          fetch-depth: 0
 
       - name: PNPM
         uses: pnpm/setup@v2
@@ -28,13 +32,19 @@ jobs:
           cache: true
           runtime: node@24
 
+      # pnpm/setup has no registry-url input, so nothing writes an .npmrc the
+      # way actions/setup-node used to. Write the token into the user config
+      # instead, where npm and lerna's own config reader both pick it up for
+      # the rest of the job.
+      #
       # Fail here, before anything is bumped, tagged or written. An expired or
       # under-scoped token otherwise surfaces as an opaque "E404 Not found" from
       # the publish step, long after the version commit and tags already exist.
-      - name: Verify npm authentication
+      - name: Authenticate to npm
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
+          npm config set //registry.npmjs.org/:_authToken "${NODE_AUTH_TOKEN}"
           if ! whoami=$(npm whoami 2>&1); then
             echo "::error::npm authentication failed: ${whoami}"
             echo "::error::Rotate the NPM_TOKEN secret (npm granular tokens expire; 90 days max)."
@@ -77,8 +87,6 @@ jobs:
       # self-healing: a partially published release is completed by re-running.
       - name: Publish to npm
         if: ${{ !inputs.dry-run }}
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: pnpm lerna publish from-package --yes
 
       # Only now is it safe to move the remote: npm and git cannot diverge.

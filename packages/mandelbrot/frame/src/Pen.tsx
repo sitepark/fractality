@@ -41,11 +41,21 @@ export function Pen({ entity, statuses, selected }: PenProps) {
 
     useEffect(() => setOverride(null), [entity.handle, selected]);
 
-    const variant =
-        entity.variants.find((v) => v.handle === override) ??
-        entity.variants.find((v) => v.handle === selected) ??
-        entity.variants.find((v) => v.isDefault) ??
-        entity.variants[0];
+    // A collated component is one document containing all of its variants, so
+    // there is nothing to switch between and no default to fall back to — unless
+    // the url names a variant, which is how a variant of a collated component is
+    // still reachable by a deep link. That is the rule 0.x applied: the component
+    // route rendered the collation, a variant route rendered that variant.
+    const named =
+        entity.variants.find((v) => v.handle === override) ?? entity.variants.find((v) => v.handle === selected);
+
+    const variant = entity.isCollated
+        ? named
+        : (named ?? entity.variants.find((v) => v.isDefault) ?? entity.variants[0]);
+
+    // What the Preview and the HTML panel are showing: the variant if one is
+    // being shown, the component's own document otherwise.
+    const showing = variant ?? { previewUrl: entity.previewUrl, renderUrl: entity.renderUrl };
 
     // Keys match the legacy theme's, so an upgrading user keeps their layout.
     const preview = useResizable({ key: 'pen.previewHeight', fallback: 400, min: 80 });
@@ -61,7 +71,7 @@ export function Pen({ entity, statuses, selected }: PenProps) {
     const iframe = useRef<HTMLIFrameElement | null>(null);
     const size = usePreviewSize(iframe, previewWidth.dragging);
 
-    const previewUrl = variant ? resolveRouteUrl(variant.previewUrl) : undefined;
+    const previewUrl = resolveRouteUrl(showing.previewUrl);
     const loading = usePreviewLoading(previewUrl);
 
     const previewLabel =
@@ -90,7 +100,7 @@ export function Pen({ entity, statuses, selected }: PenProps) {
                 <StatusTag status={entity.status ? statuses[entity.status] : undefined} />
             </div>
 
-            {entity.variants.length > 1 ? (
+            {entity.variants.length > 1 && !entity.isCollated ? (
                 <div className="Pen-panel Pen-variants">
                     {entity.variants.map((v) => (
                         <button
@@ -166,7 +176,7 @@ export function Pen({ entity, statuses, selected }: PenProps) {
             />
 
             <div className="Pen-panel Pen-info">
-                <Browser entity={entity} variant={variant} />
+                <Browser entity={entity} variant={variant} renderUrl={showing.renderUrl} />
             </div>
         </div>
     );

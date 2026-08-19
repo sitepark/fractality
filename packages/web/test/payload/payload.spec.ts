@@ -209,6 +209,31 @@ describe('panel payloads', () => {
     });
 });
 
+describe('a collated component', () => {
+    // The example's `collated` fixture sets `collated: true`, which makes the
+    // component's own Preview a single document containing every variant. A theme
+    // cannot tell that from a list of variants, and rendering it as one of them is
+    // what the flag exists to prevent.
+    it('says so, and carries its own document urls', () => {
+        const payload = buildEntityPayload(find('collated'), buildStatusTable(app));
+
+        expect(payload.isCollated).toBe(true);
+        expect(payload.previewUrl).toBe('/components/preview/collated');
+        expect(payload.renderUrl).toBe('/components/render/collated');
+    });
+
+    it('still addresses each variant, so a deep link to one resolves', () => {
+        const payload = buildEntityPayload(find('collated'), buildStatusTable(app));
+        expect(payload.variants.map((v) => v.previewUrl)).toContain('/components/preview/collated--one');
+    });
+
+    it('leaves the flag off a component that is not collated', () => {
+        const payload = buildEntityPayload(find('render'), buildStatusTable(app));
+        expect(payload.isCollated).toBeUndefined();
+        expect(payload.previewUrl).toBe('/components/preview/render');
+    });
+});
+
 describe('documentation nodes in the tree', () => {
     // Its own library, because the example has a single index page and the bug
     // this covers only exists one directory down.

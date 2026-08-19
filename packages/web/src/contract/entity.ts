@@ -44,6 +44,26 @@ export interface EntityPayload extends Versioned {
     tags?: string[];
     /** Relative to the components root. */
     viewPath: string;
+    /**
+     * True when the component renders as **one document containing all of its
+     * variants**, which is what `collated: true` in a component's own config
+     * asks for.
+     *
+     * The distinction is not cosmetic: a collated component's `previewUrl` is a
+     * document its variants appear inside, so presenting it as a set of variants
+     * to choose between contradicts what the project asked for. Omitted when
+     * false, like every other flag here.
+     */
+    isCollated?: true;
+    /**
+     * The component's own Preview, wrapped in the user's `@preview` layout.
+     *
+     * The component's, not a variant's — collated when the component is. A
+     * variant's own document is on its {@link VariantSummary}.
+     */
+    previewUrl: string;
+    /** The component's own bare markup, without the preview layout. */
+    renderUrl: string;
     /** Handles this component references. Drives client-side link rewriting. */
     references: Handle[];
     /** Handles referencing this component. */

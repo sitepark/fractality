@@ -66,11 +66,18 @@ export function buildEntityPayload(component: SourceComponent, statuses: StatusT
         label: component.label,
         title: component.title,
         viewPath: component.relViewPath,
+        // The component's own documents. For a collated component these are the
+        // collated ones — every variant in a single render — which is what the
+        // build already writes at the component's handle.
+        previewUrl: `/components/preview/${component.handle}`,
+        renderUrl: `/components/render/${component.handle}`,
         references: component.references.map((r) => r.handle),
         referencedBy: component.referencedBy.map((r) => r.handle),
         variants,
         resources: resourcesOf(component),
     };
+
+    if (component.isCollated) payload.isCollated = true;
 
     const status = statuses.keyOf('components', component.status);
     if (status) payload.status = status;

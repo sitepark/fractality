@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import type { EntityPayload, VariantSummary } from '@fractality/web/contract';
+import type { ContextPayload, EntityPayload, VariantSummary, ViewPayload } from '@fractality/web/contract';
 import { fetchContext, fetchNotes, fetchRendered, fetchView } from './api.js';
 import { frctl, resolveRouteUrl } from './frctl.js';
 import { highlight } from './highlight.js';
@@ -35,6 +35,71 @@ const label = (panel: Panel): string => {
 };
 
 /**
+ * A variant's label, for the headers a collated panel puts between variants.
+ *
+ * The panel payloads key their variants by handle; the labels live on the entity
+ * payload the Pen already has.
+ */
+const labelFor = (entity: EntityPayload, handle: string): string =>
+    entity.variants.find((v) => v.handle === handle)?.label ?? handle;
+
+/**
+ * What the Context panel shows.
+ *
+ * Three cases, which are the template layer's: the variant on screen if there is
+ * one, every variant when the component is a collation of them — the panel is
+ * describing one document containing all of them, so showing one variant's data
+ * would describe a third of what is rendered — and otherwise the component's own.
+ */
+function contextSource(payload: ContextPayload, entity: EntityPayload, variant?: VariantSummary): string {
+    const format = (context: unknown) => JSON.stringify(context, null, 2);
+
+    if (variant) {
+        const own = payload.variants.find((v) => v.handle === variant.handle);
+        return format(own ? own.context : payload.context);
+    }
+
+    if (entity.isCollated && payload.variants.length > 1) {
+        return payload.variants.map((v) => `/* ${labelFor(entity, v.handle)} */\n${format(v.context)}`).join('\n\n');
+    }
+
+    return format(payload.context);
+}
+
+/**
+ * What the View panel shows, and which language to highlight it as.
+ *
+ * A collation whose variants share one view file shows it once rather than four
+ * identical copies — the rule `getCollatedContent()` applied, and the common case,
+ * since variants usually differ by context alone.
+ */
+function viewSource(
+    payload: ViewPayload,
+    entity: EntityPayload,
+    variant?: VariantSummary,
+): { content: string; lang: string } {
+    const first = payload.variants[0];
+
+    if (variant) {
+        const own = payload.variants.find((v) => v.handle === variant.handle) ?? first;
+        return { content: own?.content ?? '', lang: own?.lang ?? '' };
+    }
+
+    const shared = payload.variants.every((v) => v.content === first?.content);
+
+    if (entity.isCollated && payload.variants.length > 1 && !shared) {
+        return {
+            content: payload.variants
+                .map((v) => `<!-- ${labelFor(entity, v.handle)} -->\n${(v.content ?? '').trim()}`)
+                .join('\n\n'),
+            lang: first?.lang ?? '',
+        };
+    }
+
+    return { content: first?.content ?? '', lang: first?.lang ?? '' };
+}
+
+/**
  * The tabbed panel beneath the Preview. Mirrors `views/partials/browser/`.
  *
  * Only the open panel is rendered, where the template layer rendered all of them
@@ -46,7 +111,15 @@ const label = (panel: Panel): string => {
  * reason the entity payload is split by panel at all — a navigation costs a few
  * hundred bytes rather than the component's whole notes, context and source.
  */
-export function Browser({ entity, variant }: { entity: EntityPayload; variant?: VariantSummary }) {
+interface BrowserProps {
+    entity: EntityPayload;
+    /** The variant on screen, if a single one is. Absent for a collation. */
+    variant?: VariantSummary;
+    /** The document the HTML panel reads — decided by the Pen, which owns what is on screen. */
+    renderUrl: string;
+}
+
+export function Browser({ entity, variant, renderUrl }: BrowserProps) {
     // Persisted because the Pen remounts on navigation: without this, every
     // component you opened would reset you to the first tab. The fallback is
     // the first panel, as it was when the template layer rendered the tabs.
@@ -68,25 +141,21 @@ export function Browser({ entity, variant }: { entity: EntityPayload; variant?: 
 
         const load = async (): Promise<string> => {
             if (open === 'html') {
-                // The variant currently shown, so the panel and the Preview
-                // agree about what is being looked at.
-                const url = variant?.renderUrl ?? entity.variants[0]?.renderUrl;
-                if (!url) return '';
-                return highlight(await fetchRendered(resolveRouteUrl(url)), 'html');
+                // Whatever the Preview is showing, so the two agree — including
+                // when that is a collation rather than a single variant.
+                return highlight(await fetchRendered(resolveRouteUrl(renderUrl)), 'html');
             }
             if (open === 'notes') {
                 const payload = await fetchNotes(entity.handle);
                 return payload.notes ? renderMarkdown(payload.notes) : '';
             }
             if (open === 'context') {
-                const payload = await fetchContext(entity.handle);
                 // Formatted here rather than at build time: the payload carries
-                // the real object, so the panel chooses how to present it.
-                return highlight(JSON.stringify(payload.context, null, 2), 'json');
+                // the real objects, so the panel chooses how to present them.
+                return highlight(contextSource(await fetchContext(entity.handle), entity, variant), 'json');
             }
-            const payload = await fetchView(entity.handle);
-            const source = payload.variants[0];
-            return highlight(source?.content ?? '', source?.lang ?? '', entity.references);
+            const source = viewSource(await fetchView(entity.handle), entity, variant);
+            return highlight(source.content, source.lang, entity.references);
         };
 
         load().then(
@@ -97,7 +166,7 @@ export function Browser({ entity, variant }: { entity: EntityPayload; variant?: 
         return () => {
             cancelled = true;
         };
-    }, [entity.handle, open, needsFetch, variant?.renderUrl]);
+    }, [entity.handle, open, needsFetch, renderUrl, variant?.handle]);
 
     return (
         <div className="Browser">

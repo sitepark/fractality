@@ -57,6 +57,8 @@ const entity: EntityPayload = {
     title: 'Button',
     status: 'components:ready',
     viewPath: 'forms/button/button.hbs',
+    previewUrl: '/components/preview/button',
+    renderUrl: '/components/render/button',
     references: ['icon'],
     referencedBy: [],
     resources: [],
@@ -86,6 +88,8 @@ const tabsEntity: EntityPayload = {
     label: 'Tabs',
     title: 'Tabs',
     viewPath: 'nav/tabs/tabs.hbs',
+    previewUrl: '/components/preview/tabs',
+    renderUrl: '/components/render/tabs',
     references: [],
     referencedBy: [],
     resources: [],
@@ -105,6 +109,43 @@ const tabsEntity: EntityPayload = {
             isDefault: false,
             previewUrl: '/components/preview/tabs--pill',
             renderUrl: '/components/render/tabs--pill',
+        },
+    ],
+};
+
+/**
+ * A component whose variants render into one document — `collated: true` in its
+ * own config. It is presented as that document, not as variants to choose
+ * between.
+ */
+const collatedEntity: EntityPayload = {
+    contractVersion: 1,
+    handle: 'grid',
+    label: 'Grid',
+    title: 'Grid',
+    viewPath: 'layout/grid/grid.hbs',
+    isCollated: true,
+    previewUrl: '/components/preview/grid',
+    renderUrl: '/components/render/grid',
+    references: [],
+    referencedBy: [],
+    resources: [],
+    variants: [
+        {
+            handle: 'grid--default',
+            label: 'Default',
+            name: 'default',
+            isDefault: true,
+            previewUrl: '/components/preview/grid--default',
+            renderUrl: '/components/render/grid--default',
+        },
+        {
+            handle: 'grid--wide',
+            label: 'Wide',
+            name: 'wide',
+            isDefault: false,
+            previewUrl: '/components/preview/grid--wide',
+            renderUrl: '/components/render/grid--wide',
         },
     ],
 };
@@ -167,6 +208,25 @@ const payloads: Record<string, unknown> = {
         path: 'guide/getting-started',
         content: '# Start here',
     },
+    '/components/detail/grid.json': collatedEntity,
+    '/components/detail/grid--wide.json': collatedEntity,
+    '/components/detail/grid.context.json': {
+        contractVersion: 1,
+        handle: 'grid',
+        context: { columns: 12 },
+        variants: [
+            { handle: 'grid--default', context: { columns: 12 } },
+            { handle: 'grid--wide', context: { columns: 16 } },
+        ],
+    },
+    '/components/detail/grid.view.json': {
+        contractVersion: 1,
+        handle: 'grid',
+        variants: [
+            { handle: 'grid--default', content: '<div class="Grid">{{ columns }}</div>', lang: 'html' },
+            { handle: 'grid--wide', content: '<div class="Grid Grid--wide">{{ columns }}</div>', lang: 'html' },
+        ],
+    },
     '/components/detail/button.view.json': {
         contractVersion: 1,
         handle: 'button',
@@ -192,7 +252,16 @@ const payloads: Record<string, unknown> = {
     },
 };
 
+/**
+ * The payload map as declared, so a test can replace an entry to describe a
+ * different library and the next test still gets the fixture it expects.
+ */
+const declaredPayloads = { ...payloads };
+
 beforeEach(() => {
+    for (const key of Object.keys(payloads)) delete payloads[key];
+    Object.assign(payloads, declaredPayloads);
+
     // The Frame persists panel layout and the open Browser tab, so state leaks
     // between tests otherwise — one test clicking "view" would open the next
     // one on it.
@@ -215,10 +284,12 @@ beforeEach(() => {
             // Render documents are served as text, not JSON — the HTML panel
             // reads the same artefact the build writes for each component.
             if (url.startsWith('/components/render/')) {
+                // Named after the url, so a panel assertion can tell which
+                // document it is looking at.
                 return Promise.resolve({
                     ok: true,
                     status: 200,
-                    text: () => Promise.resolve('<button class="Button">Click me</button>'),
+                    text: () => Promise.resolve(`<button class="Button">Click me</button><!-- ${url} -->`),
                 });
             }
 
@@ -920,6 +991,143 @@ describe('opening a variant directly', () => {
                 '/components/preview/tabs--default',
             ),
         );
+    });
+});
+
+describe('a collated component', () => {
+    // `collated: true` means the component renders as one document with every
+    // variant inside it. The build writes exactly that at the component's own
+    // url — the Frame was previewing `<handle>--default` instead, so a collated
+    // component showed one variant and offered a switcher for the rest.
+    const openPanel = async (container: HTMLElement, name: string) => {
+        await waitFor(() => expect(container.querySelector('.Browser-tabs')).not.toBeNull());
+        (
+            [...container.querySelectorAll('.Browser-tab a')].find(
+                (a) => a.textContent?.toLowerCase() === name,
+            ) as HTMLElement
+        ).click();
+    };
+
+    beforeEach(() => {
+        window.history.pushState(null, '', '/components/detail/grid');
+    });
+
+    it('previews the collated document, not one of its variants', async () => {
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Preview-iframe')).not.toBeNull());
+        expect(container.querySelector('.Preview-iframe')?.getAttribute('src')).toBe('/components/preview/grid');
+    });
+
+    it('offers no variant switcher, since there is nothing to switch between', async () => {
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Pen-preview')).not.toBeNull());
+        expect(container.querySelector('.Pen-variants')).toBeNull();
+    });
+
+    it('shows the collated markup in the HTML panel', async () => {
+        const { container } = await mount();
+        await openPanel(container, 'html');
+        await waitFor(() =>
+            expect(container.querySelector('.Browser-code pre')?.textContent).toContain('/components/render/grid'),
+        );
+        expect(container.querySelector('.Browser-code pre')?.textContent).not.toContain('grid--default');
+    });
+
+    it('shows every variant in the context panel, labelled', async () => {
+        // One document containing all of them, so one variant's data would
+        // describe half of what is rendered.
+        const { container } = await mount();
+        await openPanel(container, 'context');
+
+        await waitFor(() => {
+            const text = container.querySelector('.Browser-code pre')?.textContent ?? '';
+            expect(text).toContain('/* Default */');
+            expect(text).toContain('/* Wide */');
+            expect(text).toContain('12');
+            expect(text).toContain('16');
+        });
+    });
+
+    it('concatenates the view panel when the variants do not share a view', async () => {
+        const { container } = await mount();
+        await openPanel(container, 'view');
+
+        await waitFor(() => {
+            const text = container.querySelector('.Browser-code pre')?.textContent ?? '';
+            expect(text).toContain('<!-- Default -->');
+            expect(text).toContain('<!-- Wide -->');
+            expect(text).toContain('Grid--wide');
+        });
+    });
+
+    it('shows a shared view once rather than repeating it per variant', async () => {
+        // Variants usually differ by context alone, and four identical copies of
+        // one template is not a listing of anything.
+        const shared = '<div class="Grid">{{ columns }}</div>';
+        payloads['/components/detail/grid.view.json'] = {
+            contractVersion: 1,
+            handle: 'grid',
+            variants: [
+                { handle: 'grid--default', content: shared, lang: 'html' },
+                { handle: 'grid--wide', content: shared, lang: 'html' },
+            ],
+        };
+
+        const { container } = await mount();
+        await openPanel(container, 'view');
+
+        await waitFor(() => {
+            const text = container.querySelector('.Browser-code pre')?.textContent ?? '';
+            expect(text).toContain('class="Grid"');
+            expect(text).not.toContain('<!-- Default -->');
+        });
+    });
+
+    it('still shows a single variant when the url names one', async () => {
+        // How a variant of a collated component stays reachable: the component
+        // route renders the collation, a variant route renders that variant —
+        // the rule the template layer applied.
+        window.history.pushState(null, '', '/components/detail/grid--wide');
+        const { container } = await mount();
+        await waitFor(() => expect(container.querySelector('.Preview-iframe')).not.toBeNull());
+        expect(container.querySelector('.Preview-iframe')?.getAttribute('src')).toBe('/components/preview/grid--wide');
+
+        await openPanel(container, 'context');
+        await waitFor(() => {
+            const text = container.querySelector('.Browser-code pre')?.textContent ?? '';
+            expect(text).toContain('16');
+            expect(text).not.toContain('/* Wide */');
+        });
+    });
+});
+
+describe('the panels follow the variant on screen', () => {
+    // Not collation: an ordinary multi-variant component, where the switcher
+    // changes what the Preview shows. The panels used to describe the first
+    // variant whatever the switcher said.
+    it('shows the selected variant in the context panel', async () => {
+        payloads['/components/detail/button.context.json'] = {
+            contractVersion: 1,
+            handle: 'button',
+            context: { text: 'Click me' },
+            variants: [
+                { handle: 'button--default', context: { text: 'Click me' } },
+                { handle: 'button--primary', context: { text: 'Buy now' } },
+            ],
+        };
+
+        const { container } = await mount();
+        await waitFor(() => expect(screen.getByRole('button', { name: 'Primary' })).not.toBeNull());
+        fireEvent.click(screen.getByRole('button', { name: 'Primary' }));
+
+        await waitFor(() => expect(container.querySelector('.Browser-tabs')).not.toBeNull());
+        (
+            [...container.querySelectorAll('.Browser-tab a')].find(
+                (a) => a.textContent?.toLowerCase() === 'context',
+            ) as HTMLElement
+        ).click();
+
+        await waitFor(() => expect(container.querySelector('.Browser-code pre')?.textContent).toContain('Buy now'));
     });
 });
 

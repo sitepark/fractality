@@ -32,8 +32,26 @@ export interface FrctlConfig {
      * through rather than interpreted.
      */
     styles?: string[];
+    /**
+     * Script URLs the theme wants in the Shell, already root-absolute.
+     *
+     * A consumer's own scripts, passed through like `styles`. Not the theme's own
+     * bundle: the Shell loads that itself.
+     */
+    scripts?: string[];
     /** Favicon URL, root-absolute. */
     favicon?: string;
+    /**
+     * Document language, for the `<html lang>` attribute.
+     *
+     * Here rather than left to the Shell because a theme builds its Shell once,
+     * before it knows whose library it will render — and rather than applied by
+     * the Frame at runtime, because both this and `dir` have to be right at first
+     * paint.
+     */
+    lang?: string;
+    /** Writing direction, for the `<html dir>` attribute. */
+    dir?: 'ltr' | 'rtl';
     /**
      * The project's own name, from `project.title`.
      *
@@ -123,7 +141,10 @@ export function frctlConfigFor({ theme, app, env, shellPath }: FrctlConfigOption
         // Read off the library, not the theme: this is the project's name.
         projectTitle: (app.get('project.title') as string) ?? undefined,
         styles: ([] as string[]).concat((theme.get('styles') as string[]) ?? []),
+        scripts: ([] as string[]).concat((theme.get('scripts') as string[]) ?? []),
         favicon: (theme.get('favicon') as string) ?? undefined,
+        lang: (theme.get('lang') as string) ?? undefined,
+        dir: (theme.get('dir') as 'ltr' | 'rtl') ?? undefined,
         labels: (theme.get('labels') as Record<string, unknown>) ?? undefined,
         panels: (theme.get('panels') as string[]) ?? undefined,
         theming: (theme.get('theming') as Record<string, string>) ?? undefined,

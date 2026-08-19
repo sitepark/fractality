@@ -157,6 +157,11 @@ export default function (options) {
     // rather than silently resolving to a stylesheet that no longer exists.
     config.skin = typeof config.skin === 'object' && config.skin !== null ? config.skin : {};
     config.theming = themingFromSkin(config.skin);
+    // `rtl` is a flag; `dir` is the attribute value @fractality/web writes onto the
+    // Shell's root element. Resolved here so the Shell carries the right writing
+    // direction on the first paint — the stylesheet's `[dir="rtl"]` rules and the
+    // Frame's own drag arithmetic both read it from the document.
+    config.dir = config.rtl ? 'rtl' : 'ltr';
     const uiStyles = []
         .concat(config.styles)
         .concat(config.stylesheet)

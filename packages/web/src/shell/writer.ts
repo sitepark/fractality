@@ -44,6 +44,54 @@ const CUSTOM_PROPERTY = /^--[A-Za-z0-9_-]+$/;
  */
 const UNSAFE_DECLARATION = /[;{}<>\\]|\/\*/;
 
+/** A BCP-47 language tag, as far as an attribute needs to care. */
+const LANGUAGE_TAG = /^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$/;
+
+/**
+ * Sets `lang` and `dir` on the Shell's root element.
+ *
+ * A theme builds its Shell once, before it knows whose library it will render, so
+ * it cannot bake these in — mandelbrot's says `lang="en" dir="ltr"` and its
+ * consumers' `lang` and `rtl` configuration reached the page nowhere. Applied
+ * here rather than by the Frame at runtime because `dir` decides the layout: a
+ * right-to-left site would otherwise paint left-to-right first and flip.
+ *
+ * Values are validated rather than escaped. Both are short, closed vocabularies,
+ * and refusing what does not fit is more useful than encoding it into an
+ * attribute the browser will then ignore.
+ */
+function withRootAttributes(html: string, config: FrctlConfig): string {
+    const attributes: Array<[string, string]> = [];
+
+    if (config.lang !== undefined) {
+        if (!LANGUAGE_TAG.test(config.lang)) {
+            throw new WebError(`"${config.lang}" is not a language tag. Expected something like "en" or "pt-BR".`);
+        }
+        attributes.push(['lang', config.lang]);
+    }
+
+    if (config.dir !== undefined) {
+        if (config.dir !== 'ltr' && config.dir !== 'rtl') {
+            throw new WebError(`Writing direction must be "ltr" or "rtl", not "${String(config.dir)}".`);
+        }
+        attributes.push(['dir', config.dir]);
+    }
+
+    if (!attributes.length) return html;
+
+    return html.replace(/<html\b([^>]*)>/i, (match, existing: string) => {
+        let rewritten = existing;
+        for (const [name, value] of attributes) {
+            const declaration = `${name}="${value}"`;
+            const present = new RegExp(`\\s${name}\\s*=\\s*("[^"]*"|'[^']*'|[^\\s>]+)`, 'i');
+            rewritten = present.test(rewritten)
+                ? rewritten.replace(present, ` ${declaration}`)
+                : `${rewritten} ${declaration}`;
+        }
+        return rewritten === existing ? match : `<html${rewritten}>`;
+    });
+}
+
 /**
  * The theming custom properties, as a `:root` rule.
  *
@@ -122,12 +170,23 @@ export function prepareShell({ shell, config }: PrepareShellOptions): string {
         `${links}${favicon}${themingBlock(config.theming)}` +
         `<script>window.frctl=${serialiseFrctlConfig(config)};</script>`;
 
-    if (/<\/head>/i.test(rewritten)) {
-        return rewritten.replace(/<\/head>/i, `${block}</head>`);
-    }
-    // A Shell without a head is malformed, but silently dropping the config
-    // would fail far away from the cause.
-    return `${block}${rewritten}`;
+    const withHead = /<\/head>/i.test(rewritten)
+        ? rewritten.replace(/<\/head>/i, `${block}</head>`)
+        : // A Shell without a head is malformed, but silently dropping the config
+          // would fail far away from the cause.
+          `${block}${rewritten}`;
+
+    // A consumer's own scripts, at the end of the body as the templates put them.
+    // Classic scripts, so they run *before* the Frame's module — which is the
+    // order the theme's own foot partial produced, and the only one in which a
+    // script can set something up for the Frame to find.
+    const scripts = (config.scripts ?? []).map((src) => `<script src="${escapeAttribute(src)}"></script>`).join('');
+
+    const withScripts = /<\/body>/i.test(withHead)
+        ? withHead.replace(/<\/body>/i, `${scripts}</body>`)
+        : `${withHead}${scripts}`;
+
+    return withRootAttributes(withScripts, config);
 }
 
 /**

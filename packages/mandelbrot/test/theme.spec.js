@@ -60,6 +60,21 @@ describe('mandelbrot theme factory', () => {
         });
     });
 
+    describe('language and writing direction', () => {
+        it('resolves rtl into the attribute value the Shell is written with', () => {
+            // `rtl` is a flag in this config and an attribute value on the page.
+            // Nothing was translating between the two, so an rtl project rendered
+            // left to right.
+            expect(mandelbrot({ rtl: true }).get('dir')).toBe('rtl');
+            expect(mandelbrot().get('dir')).toBe('ltr');
+        });
+
+        it('defaults the language to en and passes another through', () => {
+            expect(mandelbrot().get('lang')).toBe('en');
+            expect(mandelbrot({ lang: 'pt-BR' }).get('lang')).toBe('pt-BR');
+        });
+    });
+
     describe('theming', () => {
         // `skin` is the whole of mandelbrot's colour configuration now that named
         // skins are gone, and it reaches the page as custom properties written

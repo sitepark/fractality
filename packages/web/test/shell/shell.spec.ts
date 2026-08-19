@@ -124,6 +124,86 @@ describe('prepareShell', () => {
         expect(prepareShell({ shell: SHELL, config })).toContain('<noscript>');
     });
 
+    describe("a consumer's own scripts", () => {
+        it('links them at the end of the body, where the templates put them', () => {
+            const html = prepareShell({
+                shell: SHELL,
+                config: { ...config, scripts: ['/custom/analytics.js', '/custom/extra.js'] },
+            });
+            expect(html).toContain('<script src="/custom/analytics.js"></script>');
+            expect(html).toContain('<script src="/custom/extra.js"></script>');
+            // Classic scripts at the end of the body run before the Frame's
+            // module, which is the order the theme's foot partial produced and the
+            // only one in which a script can set something up for the Frame.
+            expect(html.indexOf('/custom/analytics.js')).toBeLessThan(html.indexOf('</body>'));
+        });
+
+        it('passes their urls through unrewritten, as it does stylesheets', () => {
+            const html = prepareShell({ shell: SHELL, config: { ...config, scripts: ['/custom/analytics.js'] } });
+            expect(html).not.toContain('/themes/mandelbrot/custom/analytics.js');
+        });
+
+        it('escapes a url rather than letting it break out of the attribute', () => {
+            const html = prepareShell({
+                shell: SHELL,
+                config: { ...config, scripts: ['/x.js" onload="alert(1)'] },
+            });
+            expect(html).not.toContain('onload="alert(1)"');
+            expect(html).toContain('&quot;');
+        });
+
+        it('adds no script tag when a theme declares none', () => {
+            const before = (SHELL.match(/<script/g) ?? []).length;
+            const html = prepareShell({ shell: SHELL, config: { ...config, scripts: [] } });
+            // One is the injected window.frctl block.
+            expect((html.match(/<script/g) ?? []).length).toBe(before + 1);
+        });
+    });
+
+    describe('language and writing direction', () => {
+        // A theme builds its Shell before it knows whose library it will render,
+        // so it cannot bake these in — mandelbrot's says `lang="en" dir="ltr"`.
+        it('rewrites the attributes the Shell was built with', () => {
+            const html = prepareShell({ shell: SHELL, config: { ...config, lang: 'ar', dir: 'rtl' } });
+            expect(html).toContain('<html lang="ar" dir="rtl">');
+        });
+
+        it('adds them to a root element that carries neither', () => {
+            const html = prepareShell({
+                shell: '<!DOCTYPE html><html><head></head><body></body></html>',
+                config: { ...config, lang: 'pt-BR', dir: 'ltr' },
+            });
+            expect(html).toContain('lang="pt-BR"');
+            expect(html).toContain('dir="ltr"');
+        });
+
+        it('leaves the Shell as it was built when neither is configured', () => {
+            expect(prepareShell({ shell: SHELL, config })).toContain('<html lang="en">');
+        });
+
+        it('keeps the other attributes on the root element', () => {
+            const html = prepareShell({
+                shell: '<!DOCTYPE html><html lang="en" class="no-js" data-x="1"><head></head><body></body></html>',
+                config: { ...config, dir: 'rtl' },
+            });
+            expect(html).toContain('class="no-js"');
+            expect(html).toContain('data-x="1"');
+            expect(html).toContain('dir="rtl"');
+        });
+
+        it('refuses a direction that is neither ltr nor rtl', () => {
+            expect(() => prepareShell({ shell: SHELL, config: { ...config, dir: 'sideways' as 'ltr' } })).toThrow(
+                /must be "ltr" or "rtl"/,
+            );
+        });
+
+        it('refuses something that is not a language tag', () => {
+            expect(() => prepareShell({ shell: SHELL, config: { ...config, lang: 'en" onload="alert(1)' } })).toThrow(
+                /is not a language tag/,
+            );
+        });
+    });
+
     describe('theming', () => {
         const theming = { '--skin-accent': '0, 137, 255', '--skin-links': '34, 136, 255' };
 
@@ -236,7 +316,10 @@ describe('frctlConfigFor', () => {
         const built = frctlConfigFor({
             theme: theme({
                 styles: ['/themes/mandelbrot/css/default.css'],
+                scripts: ['/custom/analytics.js'],
                 favicon: '/themes/mandelbrot/favicon.ico',
+                lang: 'de',
+                dir: 'ltr',
                 labels: { search: { label: 'Suchen' } },
                 panels: ['html', 'info'],
                 theming: { '--skin-accent': '0, 137, 255' },
@@ -253,7 +336,10 @@ describe('frctlConfigFor', () => {
             treeFile: '/tree.json',
             projectTitle: 'Acme Patterns',
             styles: ['/themes/mandelbrot/css/default.css'],
+            scripts: ['/custom/analytics.js'],
             favicon: '/themes/mandelbrot/favicon.ico',
+            lang: 'de',
+            dir: 'ltr',
             labels: { search: { label: 'Suchen' } },
             panels: ['html', 'info'],
             theming: { '--skin-accent': '0, 137, 255' },

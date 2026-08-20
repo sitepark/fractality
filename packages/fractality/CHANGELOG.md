@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.1](https://github.com/sitepark/fractality/compare/%40fractality%2Ffractality%401.7.0...%40fractality%2Ffractality%401.7.1) (2026-08-20)
+
+**Note:** Version bump only for package @fractality/fractality
+
 # [1.7.0](https://github.com/sitepark/fractality/compare/%40fractality%2Ffractality%401.6.3...%40fractality%2Ffractality%401.7.0) (2026-08-19)
 
 - feat!: Remove Support for Node 20 ([f6e2ed7](https://github.com/sitepark/fractality/commit/f6e2ed77035d32f1d3c6e616dc0303024f8cee3d))

@@ -1,4 +1,4 @@
-import { compile, match, type MatchFunction } from 'path-to-regexp';
+import { compile, match, parse, type MatchFunction, type ParamData, type Token } from 'path-to-regexp';
 import { mixins } from '@fractality/core';
 
 const mix = mixins.mix;
@@ -16,7 +16,9 @@ export interface RouteDefinition {
     path: string;
     /** Where this route redirects to, if it is a redirect. */
     redirect?: string;
-    matcher: MatchFunction<Record<string, string>>;
+    matcher: MatchFunction<ParamData>;
+    /** Names of the route's wildcard parameters, e.g. `path` for `/docs{/*path}`. */
+    wildcards: string[];
     [key: string]: unknown;
 }
 
@@ -117,7 +119,8 @@ export default class Theme extends mix(Configurable, Emitter) {
             ...opts,
             path,
             handle,
-            matcher: match(path) as MatchFunction<Record<string, string>>,
+            matcher: match(path),
+            wildcards: wildcardNames(path),
         };
         this.addResolver(handle, resolvers ?? null);
         this._routes.set(handle, route);
@@ -140,15 +143,61 @@ export default class Theme extends mix(Configurable, Emitter) {
     matchRoute(urlPath: string): { route: RouteDefinition; params: Record<string, string> } | false {
         for (const route of this._routes.values()) {
             const matched = route.matcher(urlPath);
-            if (matched) return { route, params: matched.params };
+            if (matched) return { route, params: wildcardsToPaths(matched.params) };
         }
         return false;
     }
 
-    urlFromRoute(handle: string, params: Record<string, string>, noRedirect?: boolean): string | null {
+    urlFromRoute(handle: string, params: Record<string, string | string[]>, noRedirect?: boolean): string | null {
         const route = this._routes.get(handle);
         if (!route) return null;
         if (!noRedirect && route.redirect) return route.redirect;
-        return compile(route.path)(params).replace(/%2F/g, '/');
+        return compile(route.path)(pathsToWildcards(params, route.wildcards)).replace(/%2F/g, '/');
     }
+}
+
+/*
+ * path-to-regexp represents a wildcard parameter as an array of path segments,
+ * while routes, resolvers and the Frame all deal in slash-separated strings.
+ * These two helpers translate between the representations.
+ */
+
+/** Names of every wildcard in a route path, including those nested in optional groups. */
+function wildcardNames(path: string): string[] {
+    const names: string[] = [];
+    const collect = (tokens: Token[]) => {
+        for (const token of tokens) {
+            if (token.type === 'wildcard') {
+                names.push(token.name);
+            } else if (token.type === 'group') {
+                collect(token.tokens);
+            }
+        }
+    };
+    collect(parse(path).tokens);
+    return names;
+}
+
+/** Only a wildcard ever matches as an array, so any array is a path to join. */
+function wildcardsToPaths(params: ParamData): Record<string, string> {
+    const mapped: Record<string, string> = {};
+    for (const [name, value] of Object.entries(params)) {
+        if (value === undefined) continue;
+        mapped[name] = Array.isArray(value) ? value.join('/') : value;
+    }
+    return mapped;
+}
+
+function pathsToWildcards(params: Record<string, string | string[]>, wildcards: string[]): ParamData {
+    if (!wildcards.length) return params;
+    const mapped: ParamData = { ...params };
+    for (const name of wildcards) {
+        const value = mapped[name];
+        if (typeof value !== 'string') continue;
+        const segments = value.split('/').filter((segment) => segment !== '');
+        // An empty wildcard has no segments to compile; leaving it undefined
+        // lets an optional group be omitted instead of throwing.
+        mapped[name] = segments.length ? segments : undefined;
+    }
+    return mapped;
 }

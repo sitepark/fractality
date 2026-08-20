@@ -1,7 +1,7 @@
 'use strict';
 
 import _ from 'lodash';
-import { compile, match } from 'path-to-regexp';
+import { compile, match, parse } from 'path-to-regexp';
 import { mixins } from '@fractality/core';
 const mix = mixins.mix;
 const Configurable = mixins.configurable;
@@ -84,6 +84,7 @@ export default class Theme extends mix(Configurable, Emitter) {
         opts.path = path;
         opts.handle = opts.handle || path;
         opts.matcher = match(path);
+        opts.wildcards = wildcardNames(path);
         this.addResolver(opts.handle, resolvers || null);
         this._routes.set(opts.handle, _.clone(opts));
         return this;
@@ -108,7 +109,7 @@ export default class Theme extends mix(Configurable, Emitter) {
             if (match) {
                 return {
                     route: route,
-                    params: match.params,
+                    params: wildcardsToPaths(match.params, route.wildcards),
                 };
             }
         }
@@ -131,7 +132,7 @@ export default class Theme extends mix(Configurable, Emitter) {
                 return route.redirect;
             }
             const compiler = compile(route.path);
-            return cleanUrlPath(compiler(params));
+            return cleanUrlPath(compiler(pathsToWildcards(params, route.wildcards)));
         }
         return null;
     }
@@ -139,4 +140,57 @@ export default class Theme extends mix(Configurable, Emitter) {
 
 function cleanUrlPath(urlPath) {
     return urlPath.replace(/%2F/g, '/');
+}
+
+/*
+ * Names of every wildcard parameter in a route path, including those nested in
+ * optional groups, e.g. 'path' for '/docs{/*path}'.
+ */
+function wildcardNames(path) {
+    const names = [];
+    const collect = (tokens) => {
+        for (const token of tokens) {
+            if (token.type === 'wildcard') {
+                names.push(token.name);
+            } else if (token.type === 'group') {
+                collect(token.tokens);
+            }
+        }
+    };
+    collect(parse(path).tokens);
+    return names;
+}
+
+/*
+ * path-to-regexp represents a wildcard parameter as an array of path segments,
+ * while routes, resolvers and views all deal in slash-separated strings. These
+ * two helpers translate between the representations.
+ */
+function wildcardsToPaths(params, wildcards) {
+    return mapWildcards(params, wildcards, (value) => (Array.isArray(value) ? value.join('/') : value));
+}
+
+function pathsToWildcards(params, wildcards) {
+    return mapWildcards(params, wildcards, (value) => {
+        if (!_.isString(value)) {
+            return value;
+        }
+        const segments = value.split('/').filter((segment) => segment !== '');
+        // An empty wildcard has no segments to compile; leaving it undefined
+        // lets an optional group be omitted instead of throwing.
+        return segments.length ? segments : undefined;
+    });
+}
+
+function mapWildcards(params, wildcards, mapper) {
+    if (!_.isObject(params) || _.isEmpty(wildcards)) {
+        return params;
+    }
+    const mapped = _.clone(params);
+    for (const name of wildcards) {
+        if (name in mapped) {
+            mapped[name] = mapper(mapped[name]);
+        }
+    }
+    return mapped;
 }

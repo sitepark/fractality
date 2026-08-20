@@ -154,10 +154,44 @@ describe('Theme', () => {
         });
     });
 
+    it('returns wildcard params as a slash separated path', () => {
+        const theme = new Theme();
+        theme.addRoute('/docs{/*path}', {});
+        expect(theme.matchRoute('/docs/nested/page')).toMatchObject({
+            params: {
+                path: 'nested/page',
+            },
+        });
+    });
+
+    it('omits an unmatched optional wildcard param', () => {
+        const theme = new Theme();
+        theme.addRoute('/docs{/*path}', {});
+        expect(theme.matchRoute('/docs')).toMatchObject({ params: {} });
+    });
+
     it('returns url from route handle if matching route exists', () => {
         const theme = new Theme();
         theme.addRoute('/:name', {});
         expect(theme.urlFromRoute('/:name', { name: 'test' })).toEqual('/test');
+    });
+
+    it('returns url from route handle for a wildcard param given as a path', () => {
+        const theme = new Theme();
+        theme.addRoute('/docs{/*path}', {});
+        expect(theme.urlFromRoute('/docs{/*path}', { path: 'nested/page' })).toEqual('/docs/nested/page');
+    });
+
+    it('returns url from route handle for a wildcard param given as segments', () => {
+        const theme = new Theme();
+        theme.addRoute('/docs{/*path}', {});
+        expect(theme.urlFromRoute('/docs{/*path}', { path: ['nested', 'page'] })).toEqual('/docs/nested/page');
+    });
+
+    it('returns url from route handle for an empty optional wildcard param', () => {
+        const theme = new Theme();
+        theme.addRoute('/docs{/*path}', {});
+        expect(theme.urlFromRoute('/docs{/*path}', { path: '' })).toEqual('/docs');
     });
 
     it('returns redirect url if route has redirect', () => {

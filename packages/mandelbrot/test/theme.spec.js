@@ -89,11 +89,18 @@ describe('mandelbrot theme factory', () => {
             expect(match.params.asset).toEqual('image.png');
         });
 
-        it('matches a nested docs page URL, including the wildcard path segments', () => {
+        it('matches a nested docs page URL and extracts the doc path', () => {
             const theme = mandelbrot();
             const match = theme.matchRoute('/docs/getting-started/installation');
             expect(match.route.handle).toEqual('page');
-            expect(match.params.path).toEqual(['getting-started', 'installation']);
+            expect(match.params.path).toEqual('getting-started/installation');
+        });
+
+        it('builds a docs page URL from a doc path', () => {
+            const theme = mandelbrot();
+            expect(theme.urlFromRoute('page', { path: 'getting-started/installation' })).toEqual(
+                '/docs/getting-started/installation',
+            );
         });
 
         it('matches the bare /docs URL as a redirect to /', () => {

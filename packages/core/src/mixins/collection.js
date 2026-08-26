@@ -302,8 +302,15 @@ export default mixin(
                 return squashed;
             }
 
+            /*
+             * Derived collections differ from their source only in their items.
+             * Delegating to the original through the prototype chain keeps
+             * config, parent and the heritable accessors reachable without
+             * copying them - _.clone() had to invoke every heritable getter,
+             * because setHeritable defines them as enumerable own accessors.
+             */
             newSelf(items) {
-                const self = _.clone(this);
+                const self = Object.create(this);
                 self.setItems(items);
                 return self;
             }

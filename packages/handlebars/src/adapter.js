@@ -54,26 +54,54 @@ export default function (config) {
                 Promise: Promise,
             });
 
+            /*
+             * invokePartial runs once per partial call. Resolving the entity means
+             * walking the whole component tree (Collection#find), so on a large
+             * library that walk is quadratic overall - it dominated build time.
+             * Cache the lookup, keyed on the partial name.
+             *
+             * Cache the entity, not its toJSON(): the JSON is handed to templates
+             * as `_self`, and a shared copy would let one template's write outlive
+             * the render that made it. The clear is bound to app.components because
+             * that is the source resolveSelf reads - `source` is a different source
+             * when this adapter is registered as the docs engine.
+             */
+            const entityCache = new Map();
+            for (const event of ['loaded', 'changed', 'updated']) {
+                app.components.on(event, () => entityCache.clear());
+            }
+
+            const resolveSelf = (identifier) => {
+                let entity;
+                if (entityCache.has(identifier)) {
+                    entity = entityCache.get(identifier);
+                } else {
+                    entity =
+                        identifier.indexOf('@') === 0
+                            ? app.components.find(identifier)
+                            : app.components.find('viewPath', identifier);
+                    entityCache.set(identifier, entity);
+                }
+                if (!entity) {
+                    return null;
+                }
+                return entity.isComponent ? entity.variants().default().toJSON() : entity.toJSON();
+            };
+
             const invokePartial = hbs.VM.invokePartial;
             hbs.VM.invokePartial = function () {
                 const args = Array.from(arguments);
-                const identifier = args[2].name;
-                let entity;
-                if (identifier.indexOf('@') === 0) {
-                    entity = app.components.find(identifier);
-                } else {
-                    entity = app.components.find('viewPath', identifier);
-                }
+                const data = args[2].data;
 
-                args[2].data = _.cloneDeep(args[2].data);
+                /*
+                 * Previously: _.cloneDeep(data). The deep clone only existed so that
+                 * setting data.root._self would not leak back into the caller — but it
+                 * copied the entire context tree to do so. A shallow clone of the frame
+                 * and of root isolates exactly that one assignment and matches what
+                 * Handlebars itself does with createFrame.
+                 */
+                args[2].data = { ...data, root: { ...data.root, _self: resolveSelf(args[2].name) } };
 
-                if (entity) {
-                    args[2].data.root._self = entity.isComponent
-                        ? entity.variants().default().toJSON()
-                        : entity.toJSON();
-                } else {
-                    args[2].data.root._self = null;
-                }
                 return invokePartial.apply(hbs.VM, args);
             };
 

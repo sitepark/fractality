@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.1](https://github.com/sitepark/fractality/compare/%40fractality%2Fcore%400.6.0...%40fractality%2Fcore%400.6.1) (2026-08-26)
+
+### Performance Improvements
+
+- **core:** stop materialising heritable props when deriving collections ([a68479f](https://github.com/sitepark/fractality/commit/a68479f4feb247d828c55ff42aa28237b4e86b97)), closes [Collection#newSelf](https://github.com/Collection/issues/newSelf)
+
 # [0.6.0](https://github.com/sitepark/fractality/compare/%40fractality%2Fcore%400.5.3...%40fractality%2Fcore%400.6.0) (2026-08-19)
 
 ### Bug Fixes

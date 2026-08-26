@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.3](https://github.com/sitepark/fractality/compare/%40fractality%2Ffractality%401.7.2...%40fractality%2Ffractality%401.7.3) (2026-08-26)
+
+**Note:** Version bump only for package @fractality/fractality
+
 ## [1.7.2](https://github.com/sitepark/fractality/compare/%40fractality%2Ffractality%401.7.1...%40fractality%2Ffractality%401.7.2) (2026-08-20)
 
 **Note:** Version bump only for package @fractality/fractality

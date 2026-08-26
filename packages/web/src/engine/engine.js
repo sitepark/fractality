@@ -51,9 +51,14 @@ export default class Engine {
 
         const views = viewsPath.concat([Path.join(__dirname, '../../views')]);
 
+        /*
+         * A build renders every page against a fixed set of theme views, so
+         * recompiling them per render is pure overhead. The server keeps
+         * caching off so theme authors see view edits without a restart.
+         */
         const loader = new nunjucks.FileSystemLoader(views, {
             watch: false,
-            noCache: true,
+            noCache: env !== 'builder',
         });
 
         this._engine = new AsyncNunjucksEnvironment(loader, {

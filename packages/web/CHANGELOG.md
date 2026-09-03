@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.3](https://github.com/sitepark/fractality/compare/%40fractality%2Fweb%400.4.2...%40fractality%2Fweb%400.4.3) (2026-09-03)
+
+**Note:** Version bump only for package @fractality/web
+
 ## [0.4.2](https://github.com/sitepark/fractality/compare/%40fractality%2Fweb%400.4.1...%40fractality%2Fweb%400.4.2) (2026-08-26)
 
 ### Performance Improvements

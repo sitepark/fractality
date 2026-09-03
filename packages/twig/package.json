@@ -1,6 +1,6 @@
 {
   "name": "@fractality/twig",
-  "version": "1.5.3",
+  "version": "1.5.4",
   "description": "Twig template adapter for Fractalilty.",
   "main": "index.js",
   "type": "module",

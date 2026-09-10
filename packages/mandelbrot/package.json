@@ -45,7 +45,7 @@
   },
   "devDependencies": {
     "@fractality/web": "workspace:*",
-    "autoprefixer": "^10.5.4",
+    "autoprefixer": "^10.5.5",
     "globby": "^16.2.4",
     "highlight.js": "^11.12.0",
     "jquery": "^4.0.0",
@@ -53,10 +53,10 @@
     "jquery-resizable-dom": "^0.35.0",
     "mark.js": "^8.11.1",
     "normalize.css": "^8.0.1",
-    "postcss": "^8.5.26",
+    "postcss": "^8.5.28",
     "rimraf": "^6.1.3",
     "rollup-plugin-visualizer": "^7.1.1",
-    "sass": "^1.103.1",
+    "sass": "^1.104.0",
     "vite": "^8.2.2",
     "vite-plugin-static-copy": "^4.1.1"
   },

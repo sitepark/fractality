@@ -47,7 +47,7 @@
     "express": "^5.2.1",
     "get-port": "^7.2.0",
     "path-to-regexp": "^8.4.2",
-    "vite": "^8.2.1"
+    "vite": "^8.3.0"
   },
   "publishConfig": {
     "access": "public"

@@ -2,7 +2,6 @@
   "name": "fractality",
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@12.1.0",
   "engines": {
     "node": ">=22.13.0"
   },
@@ -17,7 +16,7 @@
     "husky": "^9.1.7",
     "jest-extended": "^7.0.0",
     "lerna": "^10.0.1",
-    "lint-staged": "^17.5.0",
+    "lint-staged": "^17.5.1",
     "mock-argv": "^5.0.0",
     "mock-fs": "^5.5.0",
     "postcss-scss": "^4.0.9",

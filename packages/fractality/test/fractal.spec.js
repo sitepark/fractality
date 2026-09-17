@@ -5,11 +5,9 @@ import Cli from '../src/cli';
 import ComponentSource from '../src/api/components';
 import DocSource from '../src/api/docs/source';
 import fsExtra from 'fs-extra';
-import { URL, fileURLToPath } from 'url';
 
 const { readJsonSync } = fsExtra;
-const __dirname = fileURLToPath(new URL('.', import.meta.url));
-const pkg = readJsonSync(__dirname + '../package.json');
+const pkg = readJsonSync(new URL('../package.json', import.meta.url));
 
 describe('Fractality', () => {
     let app = create();

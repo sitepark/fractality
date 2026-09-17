@@ -3,10 +3,9 @@
 import create from '@fractality/fractality';
 import mandelbrot from '@fractality/mandelbrot';
 import path from 'path';
-import { URL, fileURLToPath } from 'url';
 import createReactAdapter from '@fractality/react';
 
-const __dirname = fileURLToPath(new URL('.', import.meta.url));
+const __dirname = import.meta.dirname;
 const fractality = create();
 const reactAdapter = createReactAdapter({
     wrapperElements: [

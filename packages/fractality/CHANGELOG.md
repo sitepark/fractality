@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.5](https://github.com/sitepark/fractality/compare/%40fractality%2Ffractality%401.7.4...%40fractality%2Ffractality%401.7.5) (2026-09-17)
+
+### Bug Fixes
+
+- make file path handling work on Windows ([7e99971](https://github.com/sitepark/fractality/commit/7e999710a8fb3aa027b1a067bbf3e3fdb710f8b4))
+
 ## [1.7.4](https://github.com/sitepark/fractality/compare/%40fractality%2Ffractality%401.7.3...%40fractality%2Ffractality%401.7.4) (2026-09-03)
 
 **Note:** Version bump only for package @fractality/fractality

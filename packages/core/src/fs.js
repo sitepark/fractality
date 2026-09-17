@@ -7,9 +7,15 @@ import fs from 'fs-extra';
 import * as utils from './utils.js';
 import { globbySync } from 'globby';
 
+// Windows separates segments with '\', so splitting on '/' finds nothing there.
+// The separator is a parameter to keep the win32 case testable off Windows.
+export function pathSegments(filePath, sep = Path.sep) {
+    return _.compact(filePath.split(sep));
+}
+
 export default {
     describe(dir, relDir, filter, ext) {
-        filter = filter || ((filePath) => !/(^|\/)\.[^/.]/g.test(filePath));
+        filter = filter || ((filePath) => !Path.basename(filePath).startsWith('.'));
 
         return dirscribe(dir, {
             filter: filter,
@@ -55,8 +61,8 @@ async function build(filePath, stat, root, ext) {
     p.fsName = basename;
     p.name = _.get(p.fsName.match(/^_?(\d+-)?(.*)/), 2, p.fsName);
     p.path = filePath;
-    p.dirs = _.compact(p.dir.split('/'));
-    p.isHidden = !!(_.find(p.relPath.split('/'), (s) => s.startsWith('_')) || p.fsName.startsWith('_'));
+    p.dirs = pathSegments(p.dir);
+    p.isHidden = pathSegments(p.relPath).some((s) => s.startsWith('_')) || p.fsName.startsWith('_');
     p.order = parseInt(_.get(p.fsName.match(/^_?(\d+)-.*/), 1, 1000000), 10);
     p.ext = p.ext.toLowerCase();
     p.isFile = stat.isFile();

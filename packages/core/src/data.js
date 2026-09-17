@@ -6,11 +6,10 @@ import Path from 'path';
 import fs from 'fs-extra';
 import * as utils from './utils.js';
 import Log from './log.js';
-import { URL, fileURLToPath } from 'url';
+import { pathToFileURL } from 'node:url';
 import { stat } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 
-const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const require = createRequire(import.meta.url);
 
 export default {
@@ -48,8 +47,14 @@ export default {
                 delete require.cache[require.resolve(filePath)];
                 const { mtimeMs } = await stat(filePath);
 
-                const relativePath = Path.relative(__dirname, filePath);
-                let data = (await import(`${relativePath}?t=${mtimeMs}`)).default;
+                // import() takes a URL, not a path. pathToFileURL escapes what
+                // would otherwise change the meaning of that URL: drive letters,
+                // backslashes, '#', '?', spaces. The mtime query gives every
+                // revision its own URL, because Node keeps ESM modules cached
+                // for good and only require.cache can be cleared, as above.
+                const fileUrl = pathToFileURL(filePath);
+                fileUrl.searchParams.set('t', mtimeMs);
+                let data = (await import(fileUrl.href)).default;
                 if (typeof data === 'function') {
                     data = data();
                 }
@@ -59,9 +64,7 @@ export default {
                 }
                 return Promise.resolve(data);
             } catch (err) {
-                Log.error(
-                    `Error parsing data file ${filePath.split('/')[filePath.split('/').length - 1]}: ${err.message}`,
-                );
+                Log.error(`Error parsing data file ${Path.basename(filePath)}: ${err.message}`);
                 return Promise.resolve({});
             }
         } else {

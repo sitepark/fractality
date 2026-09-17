@@ -42,10 +42,9 @@ export default function (theme, env, app) {
     });
 
     env.engine.addFilter('resourceUrl', function (str) {
-        return `/${app.web.get('assets.mount')}/components/${Path.relative(
-            Path.resolve(app.components.get('path')),
-            Path.resolve(str),
-        )}`;
+        const relative = Path.relative(Path.resolve(app.components.get('path')), Path.resolve(str));
+        // A URL path always uses '/', whatever the platform separator is.
+        return `/${app.web.get('assets.mount')}/components/${relative.split(Path.sep).join('/')}`;
     });
 
     env.engine.addFilter('componentPath', function (str) {

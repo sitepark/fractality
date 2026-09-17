@@ -3,12 +3,10 @@
 import mandelbrot from '@fractality/mandelbrot';
 import handlebars from '@fractality/handlebars';
 import { highlighter } from '@fractality/core';
-import { URL, fileURLToPath } from 'url';
 import fsExtra from 'fs-extra';
 const { readJsonSync } = fsExtra;
 
-const __dirname = fileURLToPath(new URL('.', import.meta.url));
-const packageJSON = readJsonSync(__dirname + './package.json');
+const packageJSON = readJsonSync(new URL('./package.json', import.meta.url));
 
 export default {
     version: packageJSON.version,

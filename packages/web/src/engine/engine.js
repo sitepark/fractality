@@ -4,10 +4,9 @@ import Path from 'path';
 import nunjucks from 'nunjucks';
 import _ from 'lodash';
 import WebError from '../error.js';
-import { URL, fileURLToPath } from 'url';
 import { AsyncNunjucksEnvironment } from '../AsyncNunjucksEnvironment.js';
 
-const __dirname = fileURLToPath(new URL('.', import.meta.url));
+const __dirname = import.meta.dirname;
 
 import filters from './filters/index.js';
 import globals from './globals/index.js';

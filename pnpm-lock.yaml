@@ -227,8 +227,8 @@ importers:
         specifier: ^5.0.3
         version: 5.0.3(prettier@3.9.6)(stylelint@17.15.0(supports-color@7.2.0)(typescript@6.0.3))
       stylelint-scss:
-        specifier: ^7.2.0
-        version: 7.2.0(stylelint@17.15.0(supports-color@7.2.0)(typescript@6.0.3))
+        specifier: ^7.3.0
+        version: 7.3.0(stylelint@17.15.0(supports-color@7.2.0)(typescript@6.0.3))
       vitest:
         specifier: ^5.0.1
         version: 5.0.1(@types/node@22.20.2)(vite@8.3.0(@types/node@22.20.2)(sass@1.104.1)(yaml@2.9.0))
@@ -5420,8 +5420,8 @@ packages:
       prettier: '>=3.0.0'
       stylelint: '>=16.0.0'
 
-  stylelint-scss@7.2.0:
-    resolution: {integrity: sha512-6E79Bachv0Iz0gqRUZgdqdXCsiq26DWBWIBNHYtjTmAp3wJu6cp/I37VfW7BPntmh2puF3bY09XWl4HZGrLhzw==}
+  stylelint-scss@7.3.0:
+    resolution: {integrity: sha512-FBz075AUFoEJ1WQKsgsRr6EJKcjy7jxQjV8xsAqbPcnhNiXnJ7C489vqUyDZccBy1GorewlshERkaMuCyOKXaw==}
     engines: {node: '>=20.19.0'}
     peerDependencies:
       stylelint: ^16.8.2 || ^17.0.0
@@ -11297,7 +11297,7 @@ snapshots:
       prettier-linter-helpers: 1.0.1
       stylelint: 17.15.0(supports-color@7.2.0)(typescript@6.0.3)
 
-  stylelint-scss@7.2.0(stylelint@17.15.0(supports-color@7.2.0)(typescript@6.0.3)):
+  stylelint-scss@7.3.0(stylelint@17.15.0(supports-color@7.2.0)(typescript@6.0.3)):
     dependencies:
       '@csstools/css-calc': 3.4.0(@csstools/css-parser-algorithms@4.0.0(@csstools/css-tokenizer@4.0.0))(@csstools/css-tokenizer@4.0.0)
       '@csstools/css-parser-algorithms': 4.0.0(@csstools/css-tokenizer@4.0.0)

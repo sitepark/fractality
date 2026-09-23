@@ -291,8 +291,13 @@ export default class Server extends mix(Emitter) {
     }
 }
 
+/*
+ * getPort is deliberately called without a `host`: both the express
+ * server and BrowserSync bind the wildcard address, while a check
+ * limited to 127.0.0.1 reports ports as free that are already taken on
+ * 0.0.0.0 — the later listen() then fails with EADDRINUSE.
+ */
 async function findPorts(serverPort, useSync) {
-    const ip = '127.0.0.1';
     const from = 3000;
     const range = 50;
     const until = from + range;
@@ -309,7 +314,6 @@ async function findPorts(serverPort, useSync) {
             sync: serverPort,
             server: await getPort({
                 port: portNumbers(serverPort + 1, parseInt(serverPort, 10) + range),
-                host: ip,
             }),
         };
     }
@@ -319,18 +323,15 @@ async function findPorts(serverPort, useSync) {
             sync: null,
             server: await getPort({
                 port: portNumbers(from, until),
-                host: ip,
             }),
         };
     }
     if (useSync && !serverPort) {
         const syncPort = await getPort({
             port: portNumbers(from, until),
-            host: ip,
         });
         const serverPort = await getPort({
             port: portNumbers(syncPort + 1, syncPort + range),
-            host: ip,
         });
         return {
             sync: syncPort,

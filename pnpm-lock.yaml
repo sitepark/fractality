@@ -183,7 +183,7 @@ importers:
         version: 8.70.1(eslint@10.11.0(supports-color@7.2.0))(supports-color@7.2.0)(typescript@6.0.3)
       '@vitest/eslint-plugin':
         specifier: ^1.6.27
-        version: 1.6.27(eslint@10.11.0(supports-color@7.2.0))(supports-color@7.2.0)(typescript@6.0.3)(vitest@5.0.1(@types/node@22.20.2)(vite@8.3.0(@types/node@22.20.2)(sass@1.104.1)(yaml@2.9.0)))
+        version: 1.6.27(eslint@10.11.0(supports-color@7.2.0))(supports-color@7.2.0)(typescript@6.0.3)(vitest@5.0.1(@types/node@22.20.2)(vite@8.3.0(@types/node@22.20.2)(sass@1.105.0)(yaml@2.9.0)))
       eslint:
         specifier: ^10.11.0
         version: 10.11.0(supports-color@7.2.0)
@@ -231,7 +231,7 @@ importers:
         version: 7.3.0(stylelint@17.15.0(supports-color@7.2.0)(typescript@6.0.3))
       vitest:
         specifier: ^5.0.1
-        version: 5.0.1(@types/node@22.20.2)(vite@8.3.0(@types/node@22.20.2)(sass@1.104.1)(yaml@2.9.0))
+        version: 5.0.1(@types/node@22.20.2)(vite@8.3.0(@types/node@22.20.2)(sass@1.105.0)(yaml@2.9.0))
 
   examples/adapter-tests: {}
 
@@ -500,14 +500,14 @@ importers:
         specifier: ^7.1.1
         version: 7.1.1(rolldown@1.2.8)
       sass:
-        specifier: ^1.104.1
-        version: 1.104.1
+        specifier: ^1.105.0
+        version: 1.105.0
       vite:
         specifier: ^8.3.0
-        version: 8.3.0(@types/node@22.20.2)(sass@1.104.1)(yaml@2.9.0)
+        version: 8.3.0(@types/node@22.20.2)(sass@1.105.0)(yaml@2.9.0)
       vite-plugin-static-copy:
         specifier: ^4.1.1
-        version: 4.1.1(vite@8.3.0(@types/node@22.20.2)(sass@1.104.1)(yaml@2.9.0))
+        version: 4.1.1(vite@8.3.0(@types/node@22.20.2)(sass@1.105.0)(yaml@2.9.0))
 
   packages/nunjucks:
     dependencies:
@@ -5152,8 +5152,8 @@ packages:
   safer-buffer@2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
 
-  sass@1.104.1:
-    resolution: {integrity: sha512-yDA+1aIG3EHgN4V/BvuhCvu61FF6hEd4e+9DxikUm9U0CAGuvdIZ/UYy7qbOxjhbbWQraoyLlMuzdRGOSV5Bmw==}
+  sass@1.105.0:
+    resolution: {integrity: sha512-4EjSuRTyG8M4yRXXY1PT9OUV5zz23xBxJkbIAprohKHqf6HOU4MCpE3U3vAC+iO1gxobBjESNbcj8rYAQZWnyA==}
     engines: {node: '>=20.19.0'}
     hasBin: true
 
@@ -7655,25 +7655,25 @@ snapshots:
       '@typescript-eslint/types': 8.70.1
       eslint-visitor-keys: 5.0.1
 
-  '@vitest/eslint-plugin@1.6.27(eslint@10.11.0(supports-color@7.2.0))(supports-color@7.2.0)(typescript@6.0.3)(vitest@5.0.1(@types/node@22.20.2)(vite@8.3.0(@types/node@22.20.2)(sass@1.104.1)(yaml@2.9.0)))':
+  '@vitest/eslint-plugin@1.6.27(eslint@10.11.0(supports-color@7.2.0))(supports-color@7.2.0)(typescript@6.0.3)(vitest@5.0.1(@types/node@22.20.2)(vite@8.3.0(@types/node@22.20.2)(sass@1.105.0)(yaml@2.9.0)))':
     dependencies:
       '@typescript-eslint/scope-manager': 8.70.0
       '@typescript-eslint/utils': 8.70.1(eslint@10.11.0(supports-color@7.2.0))(supports-color@7.2.0)(typescript@6.0.3)
       eslint: 10.11.0(supports-color@7.2.0)
     optionalDependencies:
       typescript: 6.0.3
-      vitest: 5.0.1(@types/node@22.20.2)(vite@8.3.0(@types/node@22.20.2)(sass@1.104.1)(yaml@2.9.0))
+      vitest: 5.0.1(@types/node@22.20.2)(vite@8.3.0(@types/node@22.20.2)(sass@1.105.0)(yaml@2.9.0))
     transitivePeerDependencies:
       - supports-color
 
-  '@vitest/mocker@5.0.1(vite@8.3.0(@types/node@22.20.2)(sass@1.104.1)(yaml@2.9.0))':
+  '@vitest/mocker@5.0.1(vite@8.3.0(@types/node@22.20.2)(sass@1.105.0)(yaml@2.9.0))':
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
       '@vitest/spy': 5.0.1
       estree-walker: 3.0.3
       magic-string: 1.4.1
     optionalDependencies:
-      vite: 8.3.0(@types/node@22.20.2)(sass@1.104.1)(yaml@2.9.0)
+      vite: 8.3.0(@types/node@22.20.2)(sass@1.105.0)(yaml@2.9.0)
 
   '@vitest/spy@5.0.1': {}
 
@@ -11000,7 +11000,7 @@ snapshots:
 
   safer-buffer@2.1.2: {}
 
-  sass@1.104.1:
+  sass@1.105.0:
     dependencies:
       chokidar: 5.0.0
       immutable: 5.1.9
@@ -11726,15 +11726,15 @@ snapshots:
       - bare-abort-controller
       - react-native-b4a
 
-  vite-plugin-static-copy@4.1.1(vite@8.3.0(@types/node@22.20.2)(sass@1.104.1)(yaml@2.9.0)):
+  vite-plugin-static-copy@4.1.1(vite@8.3.0(@types/node@22.20.2)(sass@1.105.0)(yaml@2.9.0)):
     dependencies:
       chokidar: 3.6.0
       p-map: 7.0.8
       picocolors: 1.1.1
       tinyglobby: 0.2.17
-      vite: 8.3.0(@types/node@22.20.2)(sass@1.104.1)(yaml@2.9.0)
+      vite: 8.3.0(@types/node@22.20.2)(sass@1.105.0)(yaml@2.9.0)
 
-  vite@8.3.0(@types/node@22.20.2)(sass@1.104.1)(yaml@2.9.0):
+  vite@8.3.0(@types/node@22.20.2)(sass@1.105.0)(yaml@2.9.0):
     dependencies:
       lightningcss: 1.33.0
       picomatch: 4.0.7
@@ -11744,13 +11744,13 @@ snapshots:
     optionalDependencies:
       '@types/node': 22.20.2
       fsevents: 2.3.3
-      sass: 1.104.1
+      sass: 1.105.0
       yaml: 2.9.0
 
-  vitest@5.0.1(@types/node@22.20.2)(vite@8.3.0(@types/node@22.20.2)(sass@1.104.1)(yaml@2.9.0)):
+  vitest@5.0.1(@types/node@22.20.2)(vite@8.3.0(@types/node@22.20.2)(sass@1.105.0)(yaml@2.9.0)):
     dependencies:
       '@types/chai': 5.2.3
-      '@vitest/mocker': 5.0.1(vite@8.3.0(@types/node@22.20.2)(sass@1.104.1)(yaml@2.9.0))
+      '@vitest/mocker': 5.0.1(vite@8.3.0(@types/node@22.20.2)(sass@1.105.0)(yaml@2.9.0))
       chai: 6.2.2
       es-module-lexer: 2.3.2
       expect-type: 1.4.0
@@ -11761,7 +11761,7 @@ snapshots:
       tinybench: 6.1.4
       tinyexec: 1.3.0
       tinyglobby: 0.2.17
-      vite: 8.3.0(@types/node@22.20.2)(sass@1.104.1)(yaml@2.9.0)
+      vite: 8.3.0(@types/node@22.20.2)(sass@1.105.0)(yaml@2.9.0)
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/node': 22.20.2

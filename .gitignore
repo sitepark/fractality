@@ -7,3 +7,6 @@ dist
 /fractal.js
 .idea/
 .project
+.classpath
+.project
+.settings/

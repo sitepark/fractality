@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.4](https://github.com/sitepark/fractality/compare/%40fractality%2Fcore%400.6.3...%40fractality%2Fcore%400.6.4) (2026-09-29)
+
+**Note:** Version bump only for package @fractality/core
+
 ## [0.6.3](https://github.com/sitepark/fractality/compare/%40fractality%2Fcore%400.6.2...%40fractality%2Fcore%400.6.3) (2026-09-17)
 
 ### Bug Fixes

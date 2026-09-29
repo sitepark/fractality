@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.6](https://github.com/sitepark/fractality/compare/%40fractality%2Ffractality%401.7.5...%40fractality%2Ffractality%401.7.6) (2026-09-29)
+
+### Bug Fixes
+
+- **web:** check and bind free ports on the same host ([c9a1d20](https://github.com/sitepark/fractality/commit/c9a1d209e33ff3f899a3f15abc7a4d896e2207c9))
+
 ## [1.7.5](https://github.com/sitepark/fractality/compare/%40fractality%2Ffractality%401.7.4...%40fractality%2Ffractality%401.7.5) (2026-09-17)
 
 ### Bug Fixes

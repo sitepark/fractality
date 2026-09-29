@@ -15,6 +15,35 @@ describe('Server', () => {
         expect(server.hasMixedIn('Emitter')).toBe(true);
     });
 
+    describe('.start()', () => {
+        function startServer(config) {
+            const fakeApp = { load: () => Promise.resolve(), watch: () => {} };
+            const fakeTheme = { static: () => [], matchRoute: () => null };
+            const startedServer = new Server(fakeTheme, {}, config, fakeApp);
+            return startedServer.start(false).then(() => startedServer);
+        }
+
+        it('binds the configured host, the same address the free port was checked on', async () => {
+            const hostServer = await startServer({ host: '127.0.0.1' });
+            try {
+                expect(hostServer._instance.address().address).toBe('127.0.0.1');
+                expect(hostServer.url).toBe(`http://127.0.0.1:${hostServer.port}`);
+            } finally {
+                hostServer.stop();
+            }
+        });
+
+        it('binds the wildcard address when no host is configured', async () => {
+            const wildcardServer = await startServer({});
+            try {
+                expect(['::', '0.0.0.0']).toContain(wildcardServer._instance.address().address);
+                expect(wildcardServer.url).toBe(`http://localhost:${wildcardServer.port}`);
+            } finally {
+                wildcardServer.stop();
+            }
+        });
+    });
+
     describe('._onRequest()', () => {
         function fakeReqRes() {
             const req = { url: '/', path: '/', headers: {}, query: {} };

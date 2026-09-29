@@ -113,6 +113,7 @@ export default {
             sync: false,
             watch: false,
             port: null,
+            host: null,
             syncOptions: {},
         },
         builder: {

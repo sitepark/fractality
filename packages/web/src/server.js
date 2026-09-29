@@ -6,6 +6,7 @@ import chokidar from 'chokidar';
 import express from 'express';
 import getPort, { portNumbers } from 'get-port';
 import _ from 'lodash';
+import net from 'net';
 import Path from 'path';
 import WebError from './error.js';
 import browserSync from 'browser-sync';
@@ -60,17 +61,19 @@ export default class Server extends mix(Emitter) {
                 this._app.watch();
             }
 
-            return findPorts(this._config.port, sync).then((ports) => {
+            const host = this._config.host || undefined;
+
+            return findPorts(this._config.port, sync, host).then((ports) => {
                 this._ports = ports;
                 this._sync = sync;
 
                 return new Promise((resolve, reject) => {
-                    this._instance = this._server.listen(ports.server, (err) => {
+                    this._instance = this._server.listen(ports.server, host, (err) => {
                         if (err) {
                             return reject(err);
                         }
 
-                        this._urls.server = `http://localhost:${ports.server}`;
+                        this._urls.server = `http://${urlHost(host)}:${ports.server}`;
 
                         if (this._sync) {
                             return this._startSync(resolve, reject);
@@ -132,6 +135,7 @@ export default class Server extends mix(Emitter) {
                 port: this._ports.sync,
             },
             watchOptions: {},
+            ...(this._config.host ? { listen: this._config.host } : {}),
         });
         let watchers = {};
 
@@ -203,7 +207,7 @@ export default class Server extends mix(Emitter) {
             address: this._urls.server,
             port: this._ports.server,
             syncPort: this._ports.sync,
-            host: 'localhost',
+            host: urlHost(this._config.host),
             sync: this.isSynced,
         });
 
@@ -291,11 +295,16 @@ export default class Server extends mix(Emitter) {
     }
 }
 
-async function findPorts(serverPort, useSync) {
-    const ip = '127.0.0.1';
+/*
+ * The port check has to cover the same address the server binds. With a
+ * `host`, both check and bind use it; without one, the server binds the
+ * wildcard address and getPort checks every local address.
+ */
+async function findPorts(serverPort, useSync, host) {
     const from = 3000;
     const range = 50;
     const until = from + range;
+    const find = (port) => getPort(host ? { port, host } : { port });
 
     if (!useSync && serverPort) {
         return {
@@ -307,34 +316,29 @@ async function findPorts(serverPort, useSync) {
     if (useSync && serverPort) {
         return {
             sync: serverPort,
-            server: await getPort({
-                port: portNumbers(serverPort + 1, parseInt(serverPort, 10) + range),
-                host: ip,
-            }),
+            server: await find(portNumbers(serverPort + 1, parseInt(serverPort, 10) + range)),
         };
     }
 
     if (!useSync && !serverPort) {
         return {
             sync: null,
-            server: await getPort({
-                port: portNumbers(from, until),
-                host: ip,
-            }),
+            server: await find(portNumbers(from, until)),
         };
     }
     if (useSync && !serverPort) {
-        const syncPort = await getPort({
-            port: portNumbers(from, until),
-            host: ip,
-        });
-        const serverPort = await getPort({
-            port: portNumbers(syncPort + 1, syncPort + range),
-            host: ip,
-        });
+        const syncPort = await find(portNumbers(from, until));
+        const serverPort = await find(portNumbers(syncPort + 1, syncPort + range));
         return {
             sync: syncPort,
             server: serverPort,
         };
     }
+}
+
+function urlHost(host) {
+    if (!host || host === '0.0.0.0' || host === '::') {
+        return 'localhost';
+    }
+    return net.isIPv6(host) ? `[${host}]` : host;
 }

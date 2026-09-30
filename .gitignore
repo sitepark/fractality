@@ -6,3 +6,6 @@ dist
 /build/*
 /fractal.js
 .idea/
+.classpath
+.project
+.settings/

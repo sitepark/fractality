@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useResizable } from './useResizable.js';
 import { usePreviewWidth } from './usePreviewWidth.js';
 import { usePreviewSize } from './usePreviewSize.js';
@@ -39,9 +39,16 @@ export function Pen({ entity, statuses, selected, onNavigate }: PenProps) {
     // route changes, so a `useState` initialiser reads whichever entity was
     // still on screen — the previous component. The switcher's own choice is a
     // separate override, cleared whenever the route names a different entity.
+    // Cleared during render rather than in an effect: an effect also runs on
+    // mount, after the switcher is already clickable, and wiped a choice made
+    // in between.
     const [override, setOverride] = useState<string | null>(null);
+    const [overrideFor, setOverrideFor] = useState(`${entity.handle}:${selected}`);
 
-    useEffect(() => setOverride(null), [entity.handle, selected]);
+    if (overrideFor !== `${entity.handle}:${selected}`) {
+        setOverrideFor(`${entity.handle}:${selected}`);
+        setOverride(null);
+    }
 
     // A collated component is one document containing all of its variants, so
     // there is nothing to switch between and no default to fall back to — unless

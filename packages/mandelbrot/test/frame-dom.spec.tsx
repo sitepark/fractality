@@ -1161,6 +1161,27 @@ describe('the panels follow the variant on screen', () => {
 
         await waitFor(() => expect(container.querySelector('.Browser-code pre')?.textContent).toContain('Buy now'));
     });
+
+    it('keeps a variant chosen the moment the switcher appears', async () => {
+        // Clicked from a MutationObserver, so before React has run the effects
+        // of the commit that drew the switcher. A reset running on mount landed
+        // after the click and put the default variant back — which a loaded
+        // machine made the test above do intermittently.
+        const { container } = await mount();
+        await new Promise<void>((resolve) => {
+            const observer = new MutationObserver(() => {
+                const primary = screen.queryByRole('button', { name: 'Primary' });
+                if (!primary) return;
+                observer.disconnect();
+                fireEvent.click(primary);
+                resolve();
+            });
+            observer.observe(container, { childList: true, subtree: true });
+        });
+
+        await new Promise((resolve) => setTimeout(resolve, 50));
+        expect(screen.getByRole('button', { name: 'Primary' }).getAttribute('aria-pressed')).toBe('true');
+    });
 });
 
 describe('the info panel', () => {

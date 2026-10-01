@@ -145,6 +145,21 @@ describe('createDevHost', () => {
         expect(html).toContain('/@vite/client');
     });
 
+    it("leaves the Shell's scripts to the static mounts that serve them", async () => {
+        // Vite pre-transforms the scripts of any html it transforms, through a
+        // module graph that knows nothing of the theme's static mount — so every
+        // Frame route logged a "Pre-transform error" for the Frame bundle. It
+        // fails some time after the response, hence the wait.
+        const errors = vi.spyOn(console, 'error').mockImplementation(() => {});
+        try {
+            await fetch(`${origin}/components/detail/render`).then((r) => r.text());
+            await new Promise((resolve) => setTimeout(resolve, 500));
+            expect(errors.mock.calls.flat().join('\n')).not.toContain('Pre-transform error');
+        } finally {
+            errors.mockRestore();
+        }
+    });
+
     it('gives a Preview its own live-reload subscription', async () => {
         // A Preview can be opened as a window of its own, outside the Frame.
         // browser-sync used to inject an equivalent into everything it served;

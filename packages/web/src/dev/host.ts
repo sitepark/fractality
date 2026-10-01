@@ -79,6 +79,12 @@ export async function createDevHost(options: DevHostOptions): Promise<DevHost> {
             // Without this Vite opens a *second* HTTP server on port 24678 for
             // its websocket. Handing it ours keeps the dev server to one port.
             ws: { server },
+            // transformIndexHtml would otherwise pre-transform the Shell's
+            // scripts through Vite's module graph, which cannot see the static
+            // mounts the theme's prebuilt bundle is actually served from — so
+            // every Frame route logged "Pre-transform error: Failed to load url"
+            // for a file the browser then loads without trouble.
+            preTransformRequests: false,
         },
     });
 

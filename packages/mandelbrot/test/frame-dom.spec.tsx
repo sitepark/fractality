@@ -656,7 +656,7 @@ describe('panel visibility', () => {
                 (a) => a.textContent?.toLowerCase() === name,
             ) as HTMLElement;
             expect(tab, `tab ${name} exists`).toBeTruthy();
-            tab.click();
+            fireEvent.click(tab);
 
             await waitFor(() => {
                 const panel = container.querySelector('.Browser-panel.is-active');
@@ -673,7 +673,7 @@ describe('code panels', () => {
         const tab = [...container.querySelectorAll('.Browser-tab a')].find(
             (a) => a.textContent?.toLowerCase() === name,
         ) as HTMLElement;
-        tab.click();
+        fireEvent.click(tab);
     };
 
     it('highlights view source, lazily', async () => {
@@ -725,9 +725,9 @@ describe('code panels', () => {
     it('renders notes as Markdown rather than as source', async () => {
         const { container } = await mount();
         await waitFor(() => expect(container.querySelector('.Browser-tabs')).not.toBeNull());
-        (
-            [...container.querySelectorAll('.Browser-tab a')].find((a) => a.textContent === 'Notes') as HTMLElement
-        ).click();
+        fireEvent.click(
+            [...container.querySelectorAll('.Browser-tab a')].find((a) => a.textContent === 'Notes') as HTMLElement,
+        );
         await waitFor(() => expect(container.querySelector('.Browser-notes')).not.toBeNull());
         await waitFor(() => expect(container.querySelector('.Browser-notes p')?.textContent).toContain('Some notes.'));
     });
@@ -779,7 +779,7 @@ describe('search', () => {
         await waitFor(() => expect(container.querySelectorAll('.Tree-entityLink')).toHaveLength(1));
 
         const clear = container.querySelector('.Search-clearButton') as HTMLElement;
-        clear.click();
+        fireEvent.click(clear);
         await waitFor(() => expect(container.querySelectorAll('.Tree-entityLink').length).toBeGreaterThan(1));
     });
 });
@@ -800,7 +800,7 @@ describe('navigating between components', () => {
         const link = [...container.querySelectorAll('.Tree-entityLink')].find(
             (a) => a.getAttribute('href') === '/components/detail/field',
         ) as HTMLElement;
-        link.click();
+        fireEvent.click(link);
 
         await waitFor(() =>
             expect(container.querySelector('.Preview-iframe')?.getAttribute('src')).toBe('/components/preview/field'),
@@ -815,7 +815,7 @@ describe('navigating between components', () => {
         const link = [...container.querySelectorAll('.Tree-entityLink')].find(
             (a) => a.getAttribute('href') === '/components/detail/field',
         ) as HTMLElement;
-        link.click();
+        fireEvent.click(link);
 
         await waitFor(() => expect(container.querySelector('.Pen-title')?.textContent).toContain('Field'));
     });
@@ -832,10 +832,10 @@ describe('the sidebar toggle', () => {
         const frame = document.getElementById('frame')!;
         expect(frame.classList.contains('is-closed')).toBe(false);
 
-        (container.querySelector('.Header-navToggle') as HTMLElement).click();
+        fireEvent.click(container.querySelector('.Header-navToggle') as HTMLElement);
         await waitFor(() => expect(frame.classList.contains('is-closed')).toBe(true));
 
-        (container.querySelector('.Header-navToggle') as HTMLElement).click();
+        fireEvent.click(container.querySelector('.Header-navToggle') as HTMLElement);
         await waitFor(() => expect(frame.classList.contains('is-closed')).toBe(false));
     });
 
@@ -850,20 +850,20 @@ describe('the sidebar toggle', () => {
         const body = container.querySelector('.Frame-body') as HTMLElement;
         expect(body.style.transform).toBe('translate3d(0, 0, 0)');
 
-        (container.querySelector('.Header-navToggle') as HTMLElement).click();
+        fireEvent.click(container.querySelector('.Header-navToggle') as HTMLElement);
         await waitFor(() => {
             expect(body.style.transform).toMatch(/translate3d\(-\d+px/);
             expect(body.style.marginRight).toMatch(/^-\d+px$/);
         });
 
-        (container.querySelector('.Header-navToggle') as HTMLElement).click();
+        fireEvent.click(container.querySelector('.Header-navToggle') as HTMLElement);
         await waitFor(() => expect(body.style.transform).toBe('translate3d(0, 0, 0)'));
     });
 
     it('remembers the sidebar state across a reload', async () => {
         const first = await mount();
         await waitFor(() => expect(first.container.querySelector('.Header-navToggle')).not.toBeNull());
-        (first.container.querySelector('.Header-navToggle') as HTMLElement).click();
+        fireEvent.click(first.container.querySelector('.Header-navToggle') as HTMLElement);
         await waitFor(() => expect(document.getElementById('frame')?.classList.contains('is-closed')).toBe(true));
         cleanup();
 
@@ -893,7 +893,7 @@ describe('collapsing a collection', () => {
         expect(collection.querySelector('.Tree-collectionItems')).not.toBeNull();
         expect(toggle.getAttribute('aria-expanded')).toBe('true');
 
-        toggle.click();
+        fireEvent.click(toggle);
 
         await waitFor(() => {
             expect(collection.classList.contains('is-closed')).toBe(true);
@@ -909,10 +909,10 @@ describe('collapsing a collection', () => {
         const collection = container.querySelector('.Tree-collection') as HTMLElement;
         const toggle = collection.querySelector('.Tree-collectionLabel') as HTMLElement;
 
-        toggle.click();
+        fireEvent.click(toggle);
         await waitFor(() => expect(collection.classList.contains('is-closed')).toBe(true));
 
-        toggle.click();
+        fireEvent.click(toggle);
         await waitFor(() => {
             expect(collection.classList.contains('is-closed')).toBe(false);
             expect(collection.querySelector('.Tree-collectionItems')).not.toBeNull();
@@ -933,7 +933,7 @@ describe('the tree collapse control', () => {
         const tree = treeOf(container);
         // Something is open — the current item's branch — so the button offers
         // "collapse" and one click should close every collection.
-        (tree.querySelector('.Tree-collapse') as HTMLElement).click();
+        fireEvent.click(tree.querySelector('.Tree-collapse') as HTMLElement);
 
         await waitFor(() => {
             const all = tree.querySelectorAll('.Tree-collection');
@@ -948,10 +948,10 @@ describe('the tree collapse control', () => {
         await waitFor(() => expect(container.querySelector('.Tree-collapse')).not.toBeNull());
 
         const tree = treeOf(container);
-        (tree.querySelector('.Tree-collapse') as HTMLElement).click();
+        fireEvent.click(tree.querySelector('.Tree-collapse') as HTMLElement);
         await waitFor(() => expect(tree.querySelectorAll('.Tree-collection.is-closed').length).toBeGreaterThan(0));
 
-        (tree.querySelector('.Tree-collapse') as HTMLElement).click();
+        fireEvent.click(tree.querySelector('.Tree-collapse') as HTMLElement);
         await waitFor(() => expect(tree.querySelectorAll('.Tree-collection.is-closed')).toHaveLength(0));
     });
 
@@ -960,7 +960,7 @@ describe('the tree collapse control', () => {
         // expansion survives a refresh as it did before.
         const first = await mount();
         await waitFor(() => expect(first.container.querySelector('.Tree-collectionLabel')).not.toBeNull());
-        (first.container.querySelector('.Tree-collectionLabel') as HTMLElement).click();
+        fireEvent.click(first.container.querySelector('.Tree-collectionLabel') as HTMLElement);
         await waitFor(() => expect(first.container.querySelector('.Tree-collection.is-closed')).not.toBeNull());
         cleanup();
 
@@ -1016,7 +1016,7 @@ describe('opening a variant directly', () => {
         const link = [...container.querySelectorAll('.Tree-entityLink')].find(
             (a) => a.getAttribute('href') === '/components/detail/tabs--default',
         ) as HTMLElement;
-        link.click();
+        fireEvent.click(link);
 
         await waitFor(() =>
             expect(container.querySelector('.Preview-iframe')?.getAttribute('src')).toBe(
@@ -1033,11 +1033,11 @@ describe('a collated component', () => {
     // component showed one variant and offered a switcher for the rest.
     const openPanel = async (container: HTMLElement, name: string) => {
         await waitFor(() => expect(container.querySelector('.Browser-tabs')).not.toBeNull());
-        (
+        fireEvent.click(
             [...container.querySelectorAll('.Browser-tab a')].find(
                 (a) => a.textContent?.toLowerCase() === name,
-            ) as HTMLElement
-        ).click();
+            ) as HTMLElement,
+        );
     };
 
     beforeEach(() => {
@@ -1153,45 +1153,39 @@ describe('the panels follow the variant on screen', () => {
         fireEvent.click(screen.getByRole('button', { name: 'Primary' }));
 
         await waitFor(() => expect(container.querySelector('.Browser-tabs')).not.toBeNull());
-        (
+        fireEvent.click(
             [...container.querySelectorAll('.Browser-tab a')].find(
                 (a) => a.textContent?.toLowerCase() === 'context',
-            ) as HTMLElement
-        ).click();
+            ) as HTMLElement,
+        );
 
         await waitFor(() => expect(container.querySelector('.Browser-code pre')?.textContent).toContain('Buy now'));
     });
 
     it('keeps a variant chosen the moment the switcher appears', async () => {
-        // Clicked from a MutationObserver, so before React has run the effects
-        // of the commit that drew the switcher. A reset running on mount landed
-        // after the click and put the default variant back — which a loaded
-        // machine made the test above do intermittently.
-        const { container } = await mount();
-        await new Promise<void>((resolve) => {
-            const observer = new MutationObserver(() => {
-                const primary = screen.queryByRole('button', { name: 'Primary' });
-                if (!primary) return;
-                observer.disconnect();
-                fireEvent.click(primary);
-                resolve();
-            });
-            observer.observe(container, { childList: true, subtree: true });
-        });
+        // Clicked from inside the waitFor, which runs it from a MutationObserver
+        // — so before React has run the effects of the commit that drew the
+        // switcher. A reset running on mount landed after the click and put the
+        // default variant back, which a loaded machine made the test above do
+        // intermittently. Clicking after the waitFor resolves is too late to
+        // catch it.
+        await mount();
+        await waitFor(() => fireEvent.click(screen.getByRole('button', { name: 'Primary' })));
 
-        await new Promise((resolve) => setTimeout(resolve, 50));
-        expect(screen.getByRole('button', { name: 'Primary' }).getAttribute('aria-pressed')).toBe('true');
+        await waitFor(() =>
+            expect(screen.getByRole('button', { name: 'Primary' }).getAttribute('aria-pressed')).toBe('true'),
+        );
     });
 });
 
 describe('the info panel', () => {
     const openInfo = async (container: HTMLElement) => {
         await waitFor(() => expect(container.querySelector('.Browser-tabs')).not.toBeNull());
-        (
+        fireEvent.click(
             [...container.querySelectorAll('.Browser-tab a')].find(
                 (a) => a.textContent?.toLowerCase() === 'info',
-            ) as HTMLElement
-        ).click();
+            ) as HTMLElement,
+        );
         await waitFor(() => expect(container.querySelector('.Browser-info')).not.toBeNull());
     };
 
@@ -1332,11 +1326,11 @@ describe('the labels a consumer configures', () => {
 
         const { container } = await mount();
         await waitFor(() => expect(container.querySelector('.Browser-tabs')).not.toBeNull());
-        (
+        fireEvent.click(
             [...container.querySelectorAll('.Browser-tab a')].find(
                 (a) => a.textContent?.toLowerCase() === 'context',
-            ) as HTMLElement
-        ).click();
+            ) as HTMLElement,
+        );
 
         await waitFor(() =>
             expect(container.querySelector('.Browser-code pre')?.textContent).toBe('/* Kein Kontext. */'),
@@ -1354,11 +1348,11 @@ describe('the labels a consumer configures', () => {
 
         const { container } = await mount();
         await waitFor(() => expect(container.querySelector('.Browser-tabs')).not.toBeNull());
-        (
+        fireEvent.click(
             [...container.querySelectorAll('.Browser-tab a')].find(
                 (a) => a.textContent?.toLowerCase() === 'notes',
-            ) as HTMLElement
-        ).click();
+            ) as HTMLElement,
+        );
 
         await waitFor(() =>
             expect(container.querySelector('.Browser-isEmptyNote')?.textContent).toBe('Keine Notizen.'),
@@ -1377,11 +1371,11 @@ describe('the labels a consumer configures', () => {
 describe('the resources panel', () => {
     const openResources = async (container: HTMLElement) => {
         await waitFor(() => expect(container.querySelector('.Browser-tabs')).not.toBeNull());
-        (
+        fireEvent.click(
             [...container.querySelectorAll('.Browser-tab a')].find(
                 (a) => a.textContent?.toLowerCase() === 'resources',
-            ) as HTMLElement
-        ).click();
+            ) as HTMLElement,
+        );
     };
 
     it("lists a component's files in a chooser, one file at a time", async () => {
@@ -1748,12 +1742,12 @@ describe('what the tree starts expanded', () => {
 
         // Open one the default would have closed.
         const tabs = collectionNamed(container, 'Tabs');
-        (tabs.querySelector('.Tree-collectionLabel') as HTMLElement).click();
+        fireEvent.click(tabs.querySelector('.Tree-collectionLabel') as HTMLElement);
         await waitFor(() => expect(tabs.classList.contains('is-closed')).toBe(false));
 
         // Close the one containing the current item.
         const forms = collectionNamed(container, 'Forms');
-        (forms.querySelector('.Tree-collectionLabel') as HTMLElement).click();
+        fireEvent.click(forms.querySelector('.Tree-collectionLabel') as HTMLElement);
         await waitFor(() => expect(forms.classList.contains('is-closed')).toBe(true));
     });
 
@@ -1838,7 +1832,7 @@ describe('the HTML panel', () => {
         const tab = [...container.querySelectorAll('.Browser-tab a')].find(
             (a) => a.textContent?.toLowerCase() === name,
         ) as HTMLElement;
-        tab.click();
+        fireEvent.click(tab);
     };
 
     it('shows the component markup, highlighted and escaped', async () => {

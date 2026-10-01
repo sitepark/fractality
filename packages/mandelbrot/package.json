@@ -51,7 +51,7 @@
     "autoprefixer": "^10.6.1",
     "globby": "^16.2.4",
     "highlight.js": "^11.12.0",
-    "marked": "^18.0.13",
+    "marked": "^18.0.14",
     "normalize.css": "^8.0.1",
     "postcss": "^8.5.28",
     "react": "^19.3.0",

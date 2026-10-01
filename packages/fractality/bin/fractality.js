@@ -9,15 +9,13 @@ import chalk from 'chalk';
 import updateNotifier from 'update-notifier';
 import { create } from '../src/fractal.js';
 import fsExtra from 'fs-extra';
-import { URL, fileURLToPath } from 'url';
+import { pathToFileURL } from 'node:url';
 const { readJsonSync } = fsExtra;
 
-const __dirname = fileURLToPath(new URL('.', import.meta.url));
-
-// This is the CLI's own manifest, not the project's — the project's is read
-// from process.cwd() further down. Resolve it against __dirname so it doesn't
-// depend on where the CLI happens to be invoked from.
-const cliPackage = readJsonSync(Path.join(__dirname, '..', 'package.json'));
+// This is the CLI's own manifest. The project's own one comes from
+// process.cwd() further down. Resolve this one against the module so it does
+// not depend on where the CLI was invoked from.
+const cliPackage = readJsonSync(new URL('../package.json', import.meta.url));
 
 const notifier = updateNotifier({
     pkg: cliPackage,
@@ -72,7 +70,7 @@ FractalCli.prepare(config, (env) => {
         if (configPath) {
             // Config file found - it's running in project context.
             try {
-                app = (await import(configPath)).default;
+                app = (await import(pathToFileURL(configPath).href)).default;
                 scope = 'project';
             } catch (e) {
                 console.error(e.stack);
@@ -93,7 +91,7 @@ FractalCli.prepare(config, (env) => {
                 console.log(
                     `Fractality version mismatch! Global: ${cliPackage.version} / Local: ${env.modulePackage.version}`,
                 );
-                import(env.modulePath).then((frctl) => frctl.run());
+                import(pathToFileURL(env.modulePath).href).then((frctl) => frctl.run());
                 return;
             }
 

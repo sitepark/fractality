@@ -3,12 +3,11 @@
 import Path from 'path';
 import _ from 'lodash';
 import { Theme, CONTRACT_VERSION } from '@fractality/web';
-import { URL, fileURLToPath } from 'url';
 import fsExtra from 'fs-extra';
 const { readJsonSync } = fsExtra;
 
-const __dirname = fileURLToPath(new URL('.', import.meta.url));
-const packageJSON = readJsonSync(__dirname + '../package.json');
+const __dirname = import.meta.dirname;
+const packageJSON = readJsonSync(new URL('../package.json', import.meta.url));
 
 /**
  * The custom properties the stylesheet reads, and the `skin` keys that feed

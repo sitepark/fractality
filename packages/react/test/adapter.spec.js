@@ -1,9 +1,8 @@
 import Path from 'path';
-import { fileURLToPath } from 'url';
 
 import reactAdapterFactory from '../src/adapter.js';
 
-const __dirname = fileURLToPath(new URL('.', import.meta.url));
+const __dirname = import.meta.dirname;
 
 function fakeSource() {
     return { on() {} };

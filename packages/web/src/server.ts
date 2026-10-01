@@ -1,4 +1,5 @@
 import { readFile } from 'node:fs/promises';
+import { isIPv6 } from 'node:net';
 import getPort, { portNumbers } from 'get-port';
 import { mixins } from '@fractality/core';
 
@@ -14,6 +15,7 @@ const Emitter = mixins.emitter;
 
 export interface ServerConfig {
     port?: number;
+    host?: string | null;
     [key: string]: unknown;
 }
 
@@ -44,7 +46,7 @@ export default class Server extends mix(Emitter) {
     }
 
     get urls(): { server: string | null } {
-        return { server: this._port ? `http://localhost:${this._port}` : null };
+        return { server: this._port ? `http://${urlHost(this._config.host)}:${this._port}` : null };
     }
 
     /**
@@ -98,8 +100,16 @@ export default class Server extends mix(Emitter) {
             staticMounts: this._theme.static(),
         });
 
-        const port = this._config.port ?? (await getPort({ port: portNumbers(3000, 3100) }));
-        this._port = await host.listen(port);
+        // The port check has to cover the same address the server binds. With a
+        // `host`, both check and bind use it; without one, the server binds the
+        // wildcard address and getPort checks every local address.
+        const hostname = this._config.host || undefined;
+        const port =
+            this._config.port ??
+            (await getPort(
+                hostname ? { port: portNumbers(3000, 3100), host: hostname } : { port: portNumbers(3000, 3100) },
+            ));
+        this._port = await host.listen(port, hostname);
         this._host = host;
 
         this.emit('ready', this);
@@ -112,4 +122,11 @@ export default class Server extends mix(Emitter) {
         this._host = null;
         this._port = null;
     }
+}
+
+function urlHost(host: string | null | undefined): string {
+    if (!host || host === '0.0.0.0' || host === '::') {
+        return 'localhost';
+    }
+    return isIPv6(host) ? `[${host}]` : host;
 }

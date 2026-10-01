@@ -40,7 +40,7 @@ export interface DevHost {
     express: Express;
     server: Server;
     vite: ViteDevServer;
-    listen(port?: number): Promise<number>;
+    listen(port?: number, hostname?: string): Promise<number>;
     close(): Promise<void>;
     /** Where the Frame subscribes for rebuild notifications. */
     liveReloadRoute: string;
@@ -115,8 +115,8 @@ export async function createDevHost(options: DevHostOptions): Promise<DevHost> {
         express: host,
         server,
         vite,
-        async listen(port = 0) {
-            await new Promise<void>((resolve) => server.listen(port, resolve));
+        async listen(port = 0, hostname) {
+            await new Promise<void>((resolve) => server.listen(port, hostname, resolve));
             const address = server.address();
             if (typeof address === 'string' || address === null) {
                 throw new Error('dev host did not bind a port');

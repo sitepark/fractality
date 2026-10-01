@@ -6,9 +6,8 @@ import fs from 'fs-extra';
 import Handlebars from 'handlebars';
 import * as inquirer from '@inquirer/prompts';
 import Path from 'path';
-import { URL, fileURLToPath } from 'url';
 
-const __dirname = fileURLToPath(new URL('.', import.meta.url));
+const __dirname = import.meta.dirname;
 
 /**
  * @param {import("../../fractal.js").Fractality} fractality
@@ -21,8 +20,7 @@ export default function (fractality) {
         .argument('<path>')
         .description('Create a new Fractality project')
         .action(async (args) => {
-            const baseDir = Path.resolve(args);
-            const basePath = baseDir.startsWith('/') ? baseDir : Path.join(process.cwd(), baseDir);
+            const basePath = Path.resolve(args);
             const viewsPath = Path.join(__dirname, '../../../views/cli/new');
             const fractalFileTpl = Path.join(viewsPath, 'fractal.hbs');
             const docsIndexTpl = Path.join(viewsPath, 'docs/index.md');

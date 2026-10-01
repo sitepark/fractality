@@ -6,9 +6,8 @@
 import path from 'path';
 import mandelbrot from '@fractality/mandelbrot';
 import create from '@fractality/fractality';
-import { URL, fileURLToPath } from 'url';
 
-const __dirname = fileURLToPath(new URL('.', import.meta.url));
+const __dirname = import.meta.dirname;
 
 /*
  * Require the Fractality module

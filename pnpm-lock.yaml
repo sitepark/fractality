@@ -218,17 +218,17 @@ importers:
         specifier: ^3.9.9
         version: 3.9.9
       stylelint:
-        specifier: ^17.15.0
-        version: 17.15.0(supports-color@7.2.0)(typescript@6.0.3)
+        specifier: ^17.16.0
+        version: 17.16.0(supports-color@7.2.0)(typescript@6.0.3)
       stylelint-config-standard:
         specifier: ^40.0.0
-        version: 40.0.0(stylelint@17.15.0(supports-color@7.2.0)(typescript@6.0.3))
+        version: 40.0.0(stylelint@17.16.0(supports-color@7.2.0)(typescript@6.0.3))
       stylelint-prettier:
         specifier: ^5.0.3
-        version: 5.0.3(prettier@3.9.9)(stylelint@17.15.0(supports-color@7.2.0)(typescript@6.0.3))
+        version: 5.0.3(prettier@3.9.9)(stylelint@17.16.0(supports-color@7.2.0)(typescript@6.0.3))
       stylelint-scss:
         specifier: ^7.3.0
-        version: 7.3.0(stylelint@17.15.0(supports-color@7.2.0)(typescript@6.0.3))
+        version: 7.3.0(stylelint@17.16.0(supports-color@7.2.0)(typescript@6.0.3))
       vitest:
         specifier: ^5.0.2
         version: 5.0.2(@types/node@26.6.3)(vite@8.3.1(@types/node@26.6.3)(sass@1.105.1)(yaml@2.9.0))
@@ -5424,8 +5424,8 @@ packages:
     peerDependencies:
       stylelint: ^16.8.2 || ^17.0.0
 
-  stylelint@17.15.0:
-    resolution: {integrity: sha512-mWIkesYQvQjf4Kvdeu9ns0IL8/K/wtjaGxPqsPd6DlLZvaQxGysJsocxUDrBcyHQ5VleAk4uSMat4yMrVED7PA==}
+  stylelint@17.16.0:
+    resolution: {integrity: sha512-ejlWnbJ13x1GU32+zZXa6sYQJsKKkwSdv2B4rAdO3OWdEmvhSJKcXi5pOphQYSzyaj1kXpuGJr7pcMBNfDIuPw==}
     engines: {node: '>=20.19.0'}
     hasBin: true
 
@@ -11275,22 +11275,22 @@ snapshots:
 
   stubborn-utils@1.0.2: {}
 
-  stylelint-config-recommended@18.0.0(stylelint@17.15.0(supports-color@7.2.0)(typescript@6.0.3)):
+  stylelint-config-recommended@18.0.0(stylelint@17.16.0(supports-color@7.2.0)(typescript@6.0.3)):
     dependencies:
-      stylelint: 17.15.0(supports-color@7.2.0)(typescript@6.0.3)
+      stylelint: 17.16.0(supports-color@7.2.0)(typescript@6.0.3)
 
-  stylelint-config-standard@40.0.0(stylelint@17.15.0(supports-color@7.2.0)(typescript@6.0.3)):
+  stylelint-config-standard@40.0.0(stylelint@17.16.0(supports-color@7.2.0)(typescript@6.0.3)):
     dependencies:
-      stylelint: 17.15.0(supports-color@7.2.0)(typescript@6.0.3)
-      stylelint-config-recommended: 18.0.0(stylelint@17.15.0(supports-color@7.2.0)(typescript@6.0.3))
+      stylelint: 17.16.0(supports-color@7.2.0)(typescript@6.0.3)
+      stylelint-config-recommended: 18.0.0(stylelint@17.16.0(supports-color@7.2.0)(typescript@6.0.3))
 
-  stylelint-prettier@5.0.3(prettier@3.9.9)(stylelint@17.15.0(supports-color@7.2.0)(typescript@6.0.3)):
+  stylelint-prettier@5.0.3(prettier@3.9.9)(stylelint@17.16.0(supports-color@7.2.0)(typescript@6.0.3)):
     dependencies:
       prettier: 3.9.9
       prettier-linter-helpers: 1.0.1
-      stylelint: 17.15.0(supports-color@7.2.0)(typescript@6.0.3)
+      stylelint: 17.16.0(supports-color@7.2.0)(typescript@6.0.3)
 
-  stylelint-scss@7.3.0(stylelint@17.15.0(supports-color@7.2.0)(typescript@6.0.3)):
+  stylelint-scss@7.3.0(stylelint@17.16.0(supports-color@7.2.0)(typescript@6.0.3)):
     dependencies:
       '@csstools/css-calc': 3.4.1(@csstools/css-parser-algorithms@4.0.1(@csstools/css-tokenizer@4.0.2))(@csstools/css-tokenizer@4.0.2)
       '@csstools/css-parser-algorithms': 4.0.1(@csstools/css-tokenizer@4.0.2)
@@ -11303,9 +11303,9 @@ snapshots:
       postcss-resolve-nested-selector: 0.1.6
       postcss-selector-parser: 7.1.6
       postcss-value-parser: 4.2.0
-      stylelint: 17.15.0(supports-color@7.2.0)(typescript@6.0.3)
+      stylelint: 17.16.0(supports-color@7.2.0)(typescript@6.0.3)
 
-  stylelint@17.15.0(supports-color@7.2.0)(typescript@6.0.3):
+  stylelint@17.16.0(supports-color@7.2.0)(typescript@6.0.3):
     dependencies:
       '@csstools/css-calc': 3.4.1(@csstools/css-parser-algorithms@4.0.1(@csstools/css-tokenizer@4.0.2))(@csstools/css-tokenizer@4.0.2)
       '@csstools/css-parser-algorithms': 4.0.1(@csstools/css-tokenizer@4.0.2)

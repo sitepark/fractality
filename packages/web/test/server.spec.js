@@ -44,6 +44,62 @@ describe('Server', () => {
         });
     });
 
+    describe('Chrome DevTools workspace route', () => {
+        const devtoolsPath = '/.well-known/appspecific/com.chrome.devtools.json';
+        const uuidV4 = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
+
+        async function withServer(config, cli, fn) {
+            const fakeApp = { load: () => Promise.resolve(), watch: () => {}, whenIdle: () => Promise.resolve(), cli };
+            const fakeTheme = { static: () => [], matchRoute: () => null, errorView: () => null };
+            const startedServer = new Server(fakeTheme, { setGlobal: () => {} }, config, fakeApp);
+            await startedServer.start(false);
+            try {
+                return await fn(startedServer);
+            } finally {
+                startedServer.stop();
+            }
+        }
+
+        function fetchWorkspace(config, cli) {
+            return withServer(config, cli, async (s) => {
+                const res = await fetch(`${s.url}${devtoolsPath}`);
+                return { status: res.status, body: res.status === 200 ? await res.json() : null };
+            });
+        }
+
+        it('serves the directory of the config file as root, with a v4-formatted uuid', async () => {
+            const { status, body } = await fetchWorkspace(
+                { host: '127.0.0.1' },
+                { configPath: '/projects/styleguide/fractality.config.js' },
+            );
+            expect(status).toBe(200);
+            expect(body.workspace.root).toBe('/projects/styleguide');
+            expect(body.workspace.uuid).toMatch(uuidV4);
+        });
+
+        it('falls back to the working directory when no config file was loaded', async () => {
+            const { body } = await fetchWorkspace({ host: '127.0.0.1' }, { configPath: null });
+            expect(body.workspace.root).toBe(process.cwd());
+        });
+
+        it('derives the uuid from the root, so it is stable across restarts', async () => {
+            const cli = { configPath: '/projects/styleguide/fractality.config.js' };
+            const first = await fetchWorkspace({ host: '127.0.0.1' }, cli);
+            const second = await fetchWorkspace({ host: '127.0.0.1' }, cli);
+            const other = await fetchWorkspace(
+                { host: '127.0.0.1' },
+                { configPath: '/projects/other/fractality.config.js' },
+            );
+            expect(second.body.workspace.uuid).toBe(first.body.workspace.uuid);
+            expect(other.body.workspace.uuid).not.toBe(first.body.workspace.uuid);
+        });
+
+        it('is not served when disabled via the devtools option', async () => {
+            const { status } = await fetchWorkspace({ host: '127.0.0.1', devtools: false }, { configPath: null });
+            expect(status).toBe(404);
+        });
+    });
+
     describe('._onRequest()', () => {
         function fakeReqRes() {
             const req = { url: '/', path: '/', headers: {}, query: {} };

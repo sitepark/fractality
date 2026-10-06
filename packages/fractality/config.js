@@ -115,6 +115,8 @@ export default {
             port: null,
             host: null,
             syncOptions: {},
+            // serve /.well-known/appspecific/com.chrome.devtools.json for Chrome DevTools workspaces
+            devtools: true,
         },
         builder: {
             dest: null,

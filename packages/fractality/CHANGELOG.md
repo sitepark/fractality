@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.8.0](https://github.com/sitepark/fractality/compare/%40fractality%2Ffractality%401.7.6...%40fractality%2Ffractality%401.8.0) (2026-10-06)
+
+### Features
+
+- **web:** serve Chrome DevTools workspace JSON in dev server ([4d2625c](https://github.com/sitepark/fractality/commit/4d2625c047b02f5b0643516728c1d553914967c3))
+
 ## [1.7.6](https://github.com/sitepark/fractality/compare/%40fractality%2Ffractality%401.7.5...%40fractality%2Ffractality%401.7.6) (2026-09-29)
 
 ### Bug Fixes

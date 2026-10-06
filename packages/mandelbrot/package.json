@@ -53,11 +53,11 @@
     "jquery-resizable-dom": "^0.35.0",
     "mark.js": "^8.11.1",
     "normalize.css": "^8.0.1",
-    "postcss": "^8.5.28",
+    "postcss": "^8.5.29",
     "rimraf": "^6.1.3",
     "rollup-plugin-visualizer": "^7.1.1",
     "sass": "^1.105.1",
-    "vite": "^8.3.1",
+    "vite": "^8.3.2",
     "vite-plugin-static-copy": "^4.1.1"
   },
   "dependencies": {

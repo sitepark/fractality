@@ -11,6 +11,7 @@ import Path from 'path';
 import WebError from './error.js';
 import browserSync from 'browser-sync';
 import { createHash } from 'crypto';
+import { v4 as uuidv4 } from 'uuid';
 const mix = mixins.mix;
 const Emitter = mixins.emitter;
 
@@ -346,18 +347,14 @@ async function findPorts(serverPort, useSync, host) {
 /*
  * Chrome DevTools "Automatic Workspace Folders": the root is the project
  * directory, the uuid is derived from it so DevTools recognises the same
- * workspace across server restarts. Hash bytes are formatted as a v4 uuid,
- * which is what DevTools expects.
+ * workspace across server restarts. DevTools expects a v4 uuid, so a hash
+ * of the root stands in for the random bytes.
  */
 function devtoolsWorkspace(app) {
     const configPath = app.cli && app.cli.configPath;
     const root = configPath ? Path.dirname(configPath) : process.cwd();
-    const bytes = createHash('sha1').update(root).digest().subarray(0, 16);
-    bytes[6] = (bytes[6] & 0x0f) | 0x40;
-    bytes[8] = (bytes[8] & 0x3f) | 0x80;
-    const hex = bytes.toString('hex');
-    const uuid = [hex.slice(0, 8), hex.slice(8, 12), hex.slice(12, 16), hex.slice(16, 20), hex.slice(20)].join('-');
-    return { root, uuid };
+    const random = createHash('sha256').update(root).digest().subarray(0, 16);
+    return { root, uuid: uuidv4({ random }) };
 }
 
 function urlHost(host) {

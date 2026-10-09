@@ -1,6 +1,6 @@
 {
   "name": "@fractality/web",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Web module of Fractality.",
   "main": "src/index.js",
   "type": "module",

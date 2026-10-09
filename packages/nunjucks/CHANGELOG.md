@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.1](https://github.com/sitepark/fractality/compare/%40fractality%2Fnunjucks%402.4.0...%40fractality%2Fnunjucks%402.4.1) (2026-10-09)
+
+**Note:** Version bump only for package @fractality/nunjucks
+
 # [2.4.0](https://github.com/sitepark/fractality/compare/%40fractality%2Fnunjucks%402.3.6...%40fractality%2Fnunjucks%402.4.0) (2026-10-06)
 
 **Note:** Version bump only for package @fractality/nunjucks

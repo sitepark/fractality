@@ -405,8 +405,8 @@ importers:
         specifier: ^4.0.3
         version: 4.0.3
       handlebars:
-        specifier: ^4.7.9
-        version: 4.7.9
+        specifier: ^4.7.10
+        version: 4.7.10
       liftoff:
         specifier: ^5.0.1
         version: 5.0.1
@@ -442,14 +442,14 @@ importers:
         specifier: workspace:*
         version: link:../fractality
       handlebars:
-        specifier: ^4.7.9
-        version: 4.7.9
+        specifier: ^4.7.10
+        version: 4.7.10
       lodash:
         specifier: ^4.18.1
         version: 4.18.1
       promised-handlebars:
         specifier: ^2.0.1
-        version: 2.0.1(handlebars@4.7.9)
+        version: 2.0.1(handlebars@4.7.10)
 
   packages/mandelbrot:
     dependencies:
@@ -3477,6 +3477,11 @@ packages:
   gray-matter@4.0.3:
     resolution: {integrity: sha512-5v6yZd4JK3eMI3FqqCouswVqwugaA9r4dNZB1wwcmrD02QkV5H0y7XBQW8QwQqEaZY1pM9aqORSORhJRdNK44Q==}
     engines: {node: '>=6.0'}
+
+  handlebars@4.7.10:
+    resolution: {integrity: sha512-P5VJMVM7qgBn6vjXMw8WG9uVI+ncf2pi72j4de4yz5ZULLj2RGqLYaKOYGsgyrViQ0tePOVlN1tDCCXXtFqXKg==}
+    engines: {node: '>=0.4.7'}
+    hasBin: true
 
   handlebars@4.7.9:
     resolution: {integrity: sha512-4E71E0rpOaQuJR2A3xDZ+GM1HyWYv1clR58tC8emQNeQe3RH7MAzSbat+V0wG78LQBo6m6bzSG/L4pBuCsgnUQ==}
@@ -9092,6 +9097,15 @@ snapshots:
       section-matter: 1.0.0
       strip-bom-string: 1.0.0
 
+  handlebars@4.7.10:
+    dependencies:
+      minimist: 1.2.8
+      neo-async: 2.6.2
+      source-map: 0.6.1
+      wordwrap: 1.0.0
+    optionalDependencies:
+      uglify-js: 3.19.3
+
   handlebars@4.7.9:
     dependencies:
       minimist: 1.2.8
@@ -10616,10 +10630,10 @@ snapshots:
       err-code: 2.0.3
       retry: 0.12.0
 
-  promised-handlebars@2.0.1(handlebars@4.7.9):
+  promised-handlebars@2.0.1(handlebars@4.7.10):
     dependencies:
       deep-aplus: 1.0.4
-      handlebars: 4.7.9
+      handlebars: 4.7.10
 
   promzard@2.0.0:
     dependencies:

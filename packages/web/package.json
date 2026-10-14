@@ -41,7 +41,7 @@
     "nunjucks": "^3.2.4",
     "path-to-regexp": "^8.4.2",
     "throat": "^6.0.2",
-    "uuid": "^14.0.2"
+    "uuid": "^14.0.3"
   },
   "publishConfig": {
     "access": "public"

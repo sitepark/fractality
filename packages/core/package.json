@@ -40,7 +40,7 @@
     "marked-smartypants": "^1.1.12",
     "minimist": "^1.2.8",
     "mixwith": "^0.1.1",
-    "readable-stream": "^4.7.0"
+    "readable-stream": "^4.8.0"
   },
   "devDependencies": {
     "mock-argv": "^5.0.0",

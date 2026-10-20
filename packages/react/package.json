@@ -47,7 +47,7 @@
   "devDependencies": {
     "@fractality/fractality": "workspace:*",
     "react": "^19.3.1",
-    "react-dom": "^19.3.0"
+    "react-dom": "^19.3.1"
   },
   "peerDependencies": {
     "@fractality/fractality": ">= 1.1.7 < 2",

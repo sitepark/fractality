@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.7](https://github.com/sitepark/fractality/compare/%40fractality%2Fhandlebars%401.5.6...%40fractality%2Fhandlebars%401.5.7) (2026-10-20)
+
+**Note:** Version bump only for package @fractality/handlebars
+
 ## [1.5.6](https://github.com/sitepark/fractality/compare/%40fractality%2Fhandlebars%401.5.5...%40fractality%2Fhandlebars%401.5.6) (2026-10-09)
 
 **Note:** Version bump only for package @fractality/handlebars

@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/sitepark/fractality/compare/%40fractality%2Fweb%400.5.2...%40fractality%2Fweb%400.6.0) (2026-10-22)
+
+### Bug Fixes
+
+- log file watcher errors instead of crashing ([b730232](https://github.com/sitepark/fractality/commit/b73023267eafd47b8926dbf51c547d06fd5cc8df))
+
+### Performance Improvements
+
+- speed up twig rendering, route URL building and prop lookup ([#565](https://github.com/sitepark/fractality/issues/565)) ([0b1353d](https://github.com/sitepark/fractality/commit/0b1353d32ab8bf5b8f68e95e67a9abe6b9b16642))
+
 ## [0.5.2](https://github.com/sitepark/fractality/compare/%40fractality%2Fweb%400.5.1...%40fractality%2Fweb%400.5.2) (2026-10-20)
 
 **Note:** Version bump only for package @fractality/web

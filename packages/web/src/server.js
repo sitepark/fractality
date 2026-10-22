@@ -162,6 +162,7 @@ export default class Server extends mix(Emitter) {
             }
             monitor.on('change', (filepath) => reload(filepath, getFilePaths(filepath)));
             monitor.on('add', (filepath) => reload(filepath, getFilePaths(filepath)));
+            monitor.on('error', (err) => Log.error(`Error watching static directory ${s.path}: ${err.message}`));
             watchers[s.path] = monitor;
         });
 

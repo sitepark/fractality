@@ -4,7 +4,7 @@
   "type": "module",
   "packageManager": "pnpm@12.4.2",
   "engines": {
-    "node": ">=22.13.0"
+    "node": ">=22.22.0"
   },
   "devDependencies": {
     "@babel/preset-react": "^8.0.1",

@@ -117,7 +117,7 @@ We use [conventional commits](https://www.conventionalcommits.org/), which means
 
 This repository is a [pnpm workspaces](https://pnpm.io/workspaces) monorepo. There is a single lockfile in root, and the packages under [packages](./packages) and [examples](./examples) reference each other through the `workspace:*` protocol, so pnpm links them from your working tree — no separate bootstrap step is needed. Lerna is only used to version and publish releases from CI.
 
-You need Node.js >= 22.13.0. The pnpm version is pinned via the `packageManager` field, so enable [corepack](https://nodejs.org/api/corepack.html) (`corepack enable`) or install the matching pnpm yourself.
+You need Node.js >= 22.22.0. The pnpm version is pinned via the `packageManager` field, so enable [corepack](https://nodejs.org/api/corepack.html) (`corepack enable`) or install the matching pnpm yourself.
 
 To get started, run `pnpm install` in root. That is the whole setup.
 

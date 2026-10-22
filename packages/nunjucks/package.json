@@ -1,6 +1,6 @@
 {
   "name": "@fractality/nunjucks",
-  "version": "2.3.6",
+  "version": "2.5.0",
   "type": "module",
   "description": "Nunjucks template adapter for Fractalility.",
   "main": "index.js",
@@ -16,7 +16,7 @@
     "CHANGELOG.md"
   ],
   "engines": {
-    "node": ">=22.0.0"
+    "node": ">=22.22.0"
   },
   "repository": {
     "type": "git",
@@ -30,7 +30,7 @@
   },
   "homepage": "https://github.com/sitepark/fractality/tree/main/packages/nunjucks",
   "peerDependencies": {
-    "@fractality/fractality": ">= 1.5 < 2"
+    "@fractality/fractality": ">= 1.5 < 4"
   },
   "dependencies": {
     "@fractality/core": "workspace:*",

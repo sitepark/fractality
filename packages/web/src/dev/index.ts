@@ -10,6 +10,8 @@ export type { ResourceRoutesOptions } from './resource-routes.js';
 export type { PreviewRoutesOptions } from './preview-routes.js';
 export { createDevHost } from './host.js';
 export { liveReloadRoutes, LIVE_RELOAD_ROUTE } from './live-reload.js';
+export { devtoolsRoutes, DEVTOOLS_ROUTE } from './devtools-routes.js';
+export type { DevtoolsRoutesOptions } from './devtools-routes.js';
 export type { LiveReloadOptions } from './live-reload.js';
 export type { DevHost, DevHostOptions } from './host.js';
 export type { PayloadRoutesOptions } from './payload-routes.js';

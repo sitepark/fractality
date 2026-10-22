@@ -117,6 +117,8 @@ export default {
             watch: true,
             port: null,
             host: null,
+            // serve /.well-known/appspecific/com.chrome.devtools.json for Chrome DevTools workspaces
+            devtools: true,
         },
         builder: {
             dest: null,

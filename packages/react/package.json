@@ -1,6 +1,6 @@
 {
   "name": "@fractality/react",
-  "version": "0.6.6",
+  "version": "0.8.0",
   "type": "module",
   "description": "React template adapter for Fractality.",
   "main": "index.js",
@@ -21,7 +21,7 @@
     "CHANGELOG.md"
   ],
   "engines": {
-    "node": "^22.18.0 || >=24.11.0"
+    "node": "^22.22.0 || >=24.11.0"
   },
   "repository": {
     "type": "git",
@@ -34,8 +34,8 @@
   },
   "homepage": "https://github.com/sitepark/fractality/tree/main/packages/react",
   "dependencies": {
-    "@babel/core": "^8.0.6",
-    "@babel/preset-env": "^8.0.6",
+    "@babel/core": "^8.0.7",
+    "@babel/preset-env": "^8.0.7",
     "@babel/preset-react": "^8.0.1",
     "@babel/register": "^8.0.6",
     "@fractality/core": "workspace:*",
@@ -46,11 +46,11 @@
   },
   "devDependencies": {
     "@fractality/fractality": "workspace:*",
-    "react": "^19.3.0",
-    "react-dom": "^19.3.0"
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
   },
   "peerDependencies": {
-    "@fractality/fractality": ">= 1.1.7 < 2",
+    "@fractality/fractality": ">= 1.1.7 < 4",
     "react": ">= 18.0.0 < 20",
     "react-dom": ">= 18.0.0 < 20"
   },

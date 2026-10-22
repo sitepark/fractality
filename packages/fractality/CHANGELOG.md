@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+**From 3.0.0 on, all `@fractality/*` packages share one version, and their changes are recorded in the [root changelog](https://github.com/sitepark/fractality/blob/main/CHANGELOG.md). This file ends at the last release versioned on its own.**
+
+# [1.9.0](https://github.com/sitepark/fractality/compare/%40fractality%2Ffractality%401.8.2...%40fractality%2Ffractality%401.9.0) (2026-10-22)
+
+### Bug Fixes
+
+- log file watcher errors instead of crashing ([b730232](https://github.com/sitepark/fractality/commit/b73023267eafd47b8926dbf51c547d06fd5cc8df))
+
+## [1.8.2](https://github.com/sitepark/fractality/compare/%40fractality%2Ffractality%401.8.1...%40fractality%2Ffractality%401.8.2) (2026-10-20)
+
+**Note:** Version bump only for package @fractality/fractality
+
+## [1.8.1](https://github.com/sitepark/fractality/compare/%40fractality%2Ffractality%401.8.0...%40fractality%2Ffractality%401.8.1) (2026-10-09)
+
+**Note:** Version bump only for package @fractality/fractality
+
+# [1.8.0](https://github.com/sitepark/fractality/compare/%40fractality%2Ffractality%401.7.6...%40fractality%2Ffractality%401.8.0) (2026-10-06)
+
+### Features
+
+- **web:** serve Chrome DevTools workspace JSON in dev server ([4d2625c](https://github.com/sitepark/fractality/commit/4d2625c047b02f5b0643516728c1d553914967c3))
+
 ## [1.7.6](https://github.com/sitepark/fractality/compare/%40fractality%2Ffractality%401.7.5...%40fractality%2Ffractality%401.7.6) (2026-09-29)
 
 ### Bug Fixes

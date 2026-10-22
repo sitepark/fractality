@@ -57,7 +57,7 @@ export default class EntitySource extends mix(Source, Heritable) {
     }
 
     getProp(key) {
-        const upstream = this.get(`default.${key}`);
+        const upstream = this.get(['default', key]);
         const prop = this._props.get(key);
         return utils.mergeProp(prop, upstream);
     }

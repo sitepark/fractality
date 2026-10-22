@@ -1,6 +1,6 @@
 {
   "name": "@fractality/mandelbrot",
-  "version": "1.13.5",
+  "version": "1.15.0",
   "type": "module",
   "description": "The default theme for Fractality.",
   "main": "index.js",
@@ -40,8 +40,8 @@
     "build:frame": "vite build --config vite.frame.config.js"
   },
   "peerDependencies": {
-    "@fractality/fractality": ">= 1.5 < 2",
-    "@fractality/web": ">= 1 < 2"
+    "@fractality/fractality": ">= 1.5 < 4",
+    "@fractality/web": ">= 1 < 4"
   },
   "devDependencies": {
     "@fractality/web": "workspace:*",
@@ -51,15 +51,15 @@
     "autoprefixer": "^10.6.1",
     "globby": "^16.2.4",
     "highlight.js": "^11.12.0",
-    "marked": "^18.0.14",
+    "marked": "^18.1.1",
     "normalize.css": "^8.0.1",
-    "postcss": "^8.5.28",
-    "react": "^19.3.0",
-    "react-dom": "^19.3.0",
+    "postcss": "^8.5.31",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
     "rimraf": "^6.1.3",
     "rollup-plugin-visualizer": "^7.1.1",
-    "sass": "^1.105.0",
-    "vite": "^8.3.1",
+    "sass": "^1.106.0",
+    "vite": "^8.3.5",
     "vite-plugin-static-copy": "^4.1.1"
   },
   "dependencies": {

@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+**From 3.0.0 on, all `@fractality/*` packages share one version, and their changes are recorded in the [root changelog](https://github.com/sitepark/fractality/blob/main/CHANGELOG.md). This file ends at the last release versioned on its own.**
+
+# [0.8.0](https://github.com/sitepark/fractality/compare/%40fractality%2Freact%400.7.2...%40fractality%2Freact%400.8.0) (2026-10-22)
+
+**Note:** Version bump only for package @fractality/react
+
+## [0.7.2](https://github.com/sitepark/fractality/compare/%40fractality%2Freact%400.7.1...%40fractality%2Freact%400.7.2) (2026-10-20)
+
+**Note:** Version bump only for package @fractality/react
+
+## [0.7.1](https://github.com/sitepark/fractality/compare/%40fractality%2Freact%400.7.0...%40fractality%2Freact%400.7.1) (2026-10-09)
+
+**Note:** Version bump only for package @fractality/react
+
+# [0.7.0](https://github.com/sitepark/fractality/compare/%40fractality%2Freact%400.6.6...%40fractality%2Freact%400.7.0) (2026-10-06)
+
+**Note:** Version bump only for package @fractality/react
+
 ## [0.6.6](https://github.com/sitepark/fractality/compare/%40fractality%2Freact%400.6.5...%40fractality%2Freact%400.6.6) (2026-09-29)
 
 **Note:** Version bump only for package @fractality/react

@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+**From 3.0.0 on, all `@fractality/*` packages share one version, and their changes are recorded in the [root changelog](https://github.com/sitepark/fractality/blob/main/CHANGELOG.md). This file ends at the last release versioned on its own.**
+
+# [1.15.0](https://github.com/sitepark/fractality/compare/%40fractality%2Fmandelbrot%401.14.2...%40fractality%2Fmandelbrot%401.15.0) (2026-10-22)
+
+**Note:** Version bump only for package @fractality/mandelbrot
+
+## [1.14.2](https://github.com/sitepark/fractality/compare/%40fractality%2Fmandelbrot%401.14.1...%40fractality%2Fmandelbrot%401.14.2) (2026-10-20)
+
+**Note:** Version bump only for package @fractality/mandelbrot
+
+## [1.14.1](https://github.com/sitepark/fractality/compare/%40fractality%2Fmandelbrot%401.14.0...%40fractality%2Fmandelbrot%401.14.1) (2026-10-09)
+
+**Note:** Version bump only for package @fractality/mandelbrot
+
+# [1.14.0](https://github.com/sitepark/fractality/compare/%40fractality%2Fmandelbrot%401.13.5...%40fractality%2Fmandelbrot%401.14.0) (2026-10-06)
+
+**Note:** Version bump only for package @fractality/mandelbrot
+
 ## [1.13.5](https://github.com/sitepark/fractality/compare/%40fractality%2Fmandelbrot%401.13.4...%40fractality%2Fmandelbrot%401.13.5) (2026-09-29)
 
 **Note:** Version bump only for package @fractality/mandelbrot

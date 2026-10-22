@@ -1,4 +1,5 @@
 import { readFile } from 'node:fs/promises';
+import { dirname } from 'node:path';
 import { isIPv6 } from 'node:net';
 import getPort, { portNumbers } from 'get-port';
 import { mixins } from '@fractality/core';
@@ -16,6 +17,8 @@ const Emitter = mixins.emitter;
 export interface ServerConfig {
     port?: number;
     host?: string | null;
+    /** Serve the Chrome DevTools workspace file. On unless `false`. */
+    devtools?: boolean;
     [key: string]: unknown;
 }
 
@@ -98,6 +101,7 @@ export default class Server extends mix(Emitter) {
             shell: readShell,
             config: frctlConfigFor({ theme: this._theme, app: this._app, env: 'server', shellPath }),
             staticMounts: this._theme.static(),
+            devtoolsRoot: this._config.devtools === false ? undefined : projectRoot(this._app),
         });
 
         // The port check has to cover the same address the server binds. With a
@@ -122,6 +126,15 @@ export default class Server extends mix(Emitter) {
         this._host = null;
         this._port = null;
     }
+}
+
+/**
+ * The directory of the loaded config file, or the working directory when the
+ * app was configured without one.
+ */
+function projectRoot(app: object): string {
+    const configPath = (app as { cli?: { configPath?: string | null } }).cli?.configPath;
+    return configPath ? dirname(configPath) : process.cwd();
 }
 
 function urlHost(host: string | null | undefined): string {

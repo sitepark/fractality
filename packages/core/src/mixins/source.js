@@ -126,6 +126,9 @@ export default mixin(
                         ignored: [/[/\\]\./, ...exclude],
                         ignoreInitial: true,
                     });
+                    this._monitor.on('error', (err) => {
+                        Log.error(`Error watching ${this.name} directory ${sourcePath}: ${err.message}`);
+                    });
                     this._monitor.on('ready', () => {
                         this._monitor.on('all', (event, path) => {
                             if (this._fileFilter && !this._fileFilter(path)) {

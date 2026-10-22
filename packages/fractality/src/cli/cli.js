@@ -94,6 +94,9 @@ class Cli extends mix(Configurable, Emitter) {
                 this.warn('Exit & restart the current process to see your changes take effect.');
                 monitor.close();
             });
+            monitor.on('error', (err) => {
+                this.error(`Error watching configuration file ${this._configPath}: ${err.message}`);
+            });
         }
     }
 }

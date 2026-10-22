@@ -1,6 +1,6 @@
 {
   "name": "@fractality/twig",
-  "version": "1.5.6",
+  "version": "1.7.0",
   "description": "Twig template adapter for Fractalilty.",
   "main": "index.js",
   "type": "module",
@@ -16,7 +16,7 @@
     "CHANGELOG.md"
   ],
   "engines": {
-    "node": ">=22.0.0"
+    "node": ">=22.22.0"
   },
   "repository": {
     "type": "git",
@@ -38,7 +38,7 @@
     "@fractality/fractality": "workspace:*"
   },
   "peerDependencies": {
-    "@fractality/fractality": ">= 1.5 < 2"
+    "@fractality/fractality": ">= 1.5 < 4"
   },
   "publishConfig": {
     "access": "public"

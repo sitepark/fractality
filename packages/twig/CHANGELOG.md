@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+**From 3.0.0 on, all `@fractality/*` packages share one version, and their changes are recorded in the [root changelog](https://github.com/sitepark/fractality/blob/main/CHANGELOG.md). This file ends at the last release versioned on its own.**
+
+# [1.7.0](https://github.com/sitepark/fractality/compare/%40fractality%2Ftwig%401.6.2...%40fractality%2Ftwig%401.7.0) (2026-10-22)
+
+### Performance Improvements
+
+- speed up twig rendering, route URL building and prop lookup ([#565](https://github.com/sitepark/fractality/issues/565)) ([0b1353d](https://github.com/sitepark/fractality/commit/0b1353d32ab8bf5b8f68e95e67a9abe6b9b16642))
+
+## [1.6.2](https://github.com/sitepark/fractality/compare/%40fractality%2Ftwig%401.6.1...%40fractality%2Ftwig%401.6.2) (2026-10-20)
+
+**Note:** Version bump only for package @fractality/twig
+
+## [1.6.1](https://github.com/sitepark/fractality/compare/%40fractality%2Ftwig%401.6.0...%40fractality%2Ftwig%401.6.1) (2026-10-09)
+
+**Note:** Version bump only for package @fractality/twig
+
+# [1.6.0](https://github.com/sitepark/fractality/compare/%40fractality%2Ftwig%401.5.6...%40fractality%2Ftwig%401.6.0) (2026-10-06)
+
+**Note:** Version bump only for package @fractality/twig
+
 ## [1.5.6](https://github.com/sitepark/fractality/compare/%40fractality%2Ftwig%401.5.5...%40fractality%2Ftwig%401.5.6) (2026-09-29)
 
 **Note:** Version bump only for package @fractality/twig

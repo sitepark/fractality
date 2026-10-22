@@ -1,4 +1,12 @@
-import { compile, match, parse, type MatchFunction, type ParamData, type Token } from 'path-to-regexp';
+import {
+    compile,
+    match,
+    parse,
+    type MatchFunction,
+    type ParamData,
+    type PathFunction,
+    type Token,
+} from 'path-to-regexp';
 import { mixins } from '@fractality/core';
 
 const mix = mixins.mix;
@@ -17,6 +25,7 @@ export interface RouteDefinition {
     /** Where this route redirects to, if it is a redirect. */
     redirect?: string;
     matcher: MatchFunction<ParamData>;
+    compiler: PathFunction<ParamData>;
     /** Names of the route's wildcard parameters, e.g. `path` for `/docs{/*path}`. */
     wildcards: string[];
     [key: string]: unknown;
@@ -120,6 +129,7 @@ export default class Theme extends mix(Configurable, Emitter) {
             path,
             handle,
             matcher: match(path),
+            compiler: compile(path),
             wildcards: wildcardNames(path),
         };
         this.addResolver(handle, resolvers ?? null);
@@ -152,7 +162,7 @@ export default class Theme extends mix(Configurable, Emitter) {
         const route = this._routes.get(handle);
         if (!route) return null;
         if (!noRedirect && route.redirect) return route.redirect;
-        return compile(route.path)(pathsToWildcards(params, route.wildcards)).replace(/%2F/g, '/');
+        return route.compiler(pathsToWildcards(params, route.wildcards)).replace(/%2F/g, '/');
     }
 }
 

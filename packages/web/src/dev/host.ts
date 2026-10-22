@@ -6,6 +6,7 @@ import { prepareShell } from '../shell/writer.js';
 import type { FrctlConfig } from '../shell/config.js';
 import type { SourceApp, Watchable } from '../payload/source-types.js';
 import type { IdleGateable } from './gate.js';
+import { devtoolsRoutes } from './devtools-routes.js';
 import { liveReloadRoutes, LIVE_RELOAD_ROUTE } from './live-reload.js';
 import { payloadRoutes } from './payload-routes.js';
 import { previewRoutes } from './preview-routes.js';
@@ -34,6 +35,11 @@ export interface DevHostOptions {
      * unreachable.
      */
     staticMounts?: Array<{ path: string; mount: string }>;
+    /**
+     * The project directory to announce to Chrome DevTools as a workspace. The
+     * route is not served without one.
+     */
+    devtoolsRoot?: string;
 }
 
 export interface DevHost {
@@ -53,11 +59,12 @@ export interface DevHost {
  * that look like something else:
  *
  * 1. The live-reload stream.
- * 2. Preview and render routes — the user's templates, never transformed.
- * 3. Payload routes — the data contract.
- * 4. The theme's static assets.
- * 5. `vite.middlewares`.
- * 6. The Frame catch-all, **last**. It matches everything, `/@vite/client`
+ * 2. The Chrome DevTools workspace file, when enabled.
+ * 3. Preview and render routes — the user's templates, never transformed.
+ * 4. Payload routes — the data contract.
+ * 5. The theme's static assets.
+ * 6. `vite.middlewares`.
+ * 7. The Frame catch-all, **last**. It matches everything, `/@vite/client`
  *    included, so anything after it is unreachable and HMR silently dies.
  *
  * `appType: 'custom'` drops Vite's own HTML-fallback and 404 middlewares so it
@@ -66,7 +73,7 @@ export interface DevHost {
  * Specified in docs/specs/client-rendered-frame.md §8.
  */
 export async function createDevHost(options: DevHostOptions): Promise<DevHost> {
-    const { app, shell, config, root, staticMounts = [] } = options;
+    const { app, shell, config, root, staticMounts = [], devtoolsRoot } = options;
 
     const host = express();
     const server = createHttpServer(host);
@@ -91,6 +98,10 @@ export async function createDevHost(options: DevHostOptions): Promise<DevHost> {
     // Before everything: it is a long-lived stream, and must not be gated on a
     // rebuild it exists to announce.
     host.use(liveReloadRoutes({ app }));
+
+    if (devtoolsRoot) {
+        host.use(devtoolsRoutes({ root: devtoolsRoot }));
+    }
 
     host.use(previewRoutes({ app }));
     host.use(payloadRoutes({ app, treeFile: config.treeFile }));

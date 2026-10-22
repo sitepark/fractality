@@ -84,6 +84,7 @@ export default class Theme extends mix(Configurable, Emitter) {
         opts.path = path;
         opts.handle = opts.handle || path;
         opts.matcher = match(path);
+        opts.compiler = compile(path);
         opts.wildcards = wildcardNames(path);
         this.addResolver(opts.handle, resolvers || null);
         this._routes.set(opts.handle, _.clone(opts));
@@ -130,9 +131,6 @@ export default class Theme extends mix(Configurable, Emitter) {
         if (route) {
             if (!noRedirect && route.redirect) {
                 return route.redirect;
-            }
-            if (!route.compiler) {
-                route.compiler = compile(route.path);
             }
             return cleanUrlPath(route.compiler(pathsToWildcards(params, route.wildcards)));
         }

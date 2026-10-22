@@ -50,7 +50,7 @@ class TwigAdapter extends Fractality.Adapter {
 
             const render = Twig.Template.prototype.render;
             Twig.Template.prototype.render = function (context, params) {
-                if (!self._config.pristine && config.importContext && this.id) {
+                if (!self._config.pristine && self._config.importContext && this.id) {
                     let handle = null;
 
                     if (adapterUtils.isHandle(this.id, self._config.handlePrefix)) {

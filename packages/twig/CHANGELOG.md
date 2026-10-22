@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.1](https://github.com/sitepark/fractality/compare/%40fractality%2Ftwig%401.7.0...%40fractality%2Ftwig%401.7.1) (2026-10-22)
+
+**Note:** Version bump only for package @fractality/twig
+
 # [1.7.0](https://github.com/sitepark/fractality/compare/%40fractality%2Ftwig%401.6.2...%40fractality%2Ftwig%401.7.0) (2026-10-22)
 
 ### Performance Improvements

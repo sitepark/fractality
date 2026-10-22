@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.1](https://github.com/sitepark/fractality/compare/%40fractality%2Fcore%400.7.0...%40fractality%2Fcore%400.7.1) (2026-10-22)
+
+### Bug Fixes
+
+- keep editor temp files out of the component tree ([#566](https://github.com/sitepark/fractality/issues/566)) ([ecf606f](https://github.com/sitepark/fractality/commit/ecf606f61dd7c1f550b1a41f005778769415c881))
+
 # [0.7.0](https://github.com/sitepark/fractality/compare/%40fractality%2Fcore%400.6.6...%40fractality%2Fcore%400.7.0) (2026-10-22)
 
 ### Bug Fixes

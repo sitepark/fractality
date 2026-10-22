@@ -91,8 +91,8 @@ export default class Web extends mix(Configurable, Emitter) {
 
         if (declared === null) {
             throw new Error(
-                'This theme targets Fractality 0.x and cannot run on @fractality/web ' +
-                    `${CONTRACT_VERSION}.0: it declares no data-contract version. Themes now render ` +
+                'This theme was written for server-rendered views and cannot run on this ' +
+                    '@fractality/web: it declares no data-contract version. Themes now render ' +
                     'from a data contract rather than from server-rendered views. See ' +
                     'MIGRATION.md for what changed and what replaces it.',
             );

@@ -1,4 +1,4 @@
-# Migrating to `@fractality/web` 1.0
+# Migrating to `@fractality/web` 3.0
 
 The tool's own interface — the **Frame** — is now rendered in the browser from a
 documented data contract instead of being rendered on the server from templates.
@@ -151,14 +151,22 @@ holding the plugin API's design open.
 
 ## Versions
 
-`@fractality/web` goes to **1.0.0**. Themes should require `">= 1 < 2"`.
+The client-rendered Frame ships in **3.0.0**. It is also the first release in
+which all Fractality packages share one version
+([ADR](../adr/0006-one-shared-version-for-all-packages.md)), so
+`@fractality/web` goes straight from 0.x to 3.0. Themes should require
+`">= 3 < 4"`.
 
-The version deliberately crosses the `< 1` boundary that existing themes peer
-against, so an incompatible pairing is rejected at install time rather than
-failing mysteriously later. npm errors on this; **pnpm only warns** unless
-`strict-peer-dependencies` is set, so `@fractality/web` also refuses at theme
-registration, before anything renders, with a message naming the versions
-involved.
+Every theme written for server-rendered views peers below 1 — mandelbrot 1.x
+included — so an incompatible pairing is rejected at install time rather than
+failing mysteriously later. npm errors on
+this; **pnpm only warns** unless `strict-peer-dependencies` is set, so
+`@fractality/web` also refuses at theme registration, before anything renders,
+with a message naming the versions involved.
 
-**0.3.x is frozen.** No backports, no security fixes. Maintaining two rendering
-models is the cost this release exists to stop paying.
+The data-contract version a theme declares with `setContractVersion()` is not
+the package version. It is `1`, and changes only when the contract does.
+
+**0.x is frozen.** It is the last line with server-rendered views. No backports,
+no security fixes. Maintaining two rendering models is the cost this release
+exists to stop paying.

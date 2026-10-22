@@ -29,7 +29,7 @@ The run refuses to release when nothing changelog-worthy happened since the last
 
 ## The first shared release
 
-The packages moved to one version after each had been versioned on its own, so the first shared version has to be above the highest one in use (nunjucks at 2.5.0). `lerna.json` therefore starts at 2.5.0, and the first run must be started with **bump: major**, which lands every package on 3.0.0. The workflow refuses any other bump while no `v*` tag exists. 3.0.0 is a renumbering, not a breaking change: the adapters' peer ranges accept fractality 1.5 and up as before.
+The packages moved to one version after each had been versioned on its own, so the first shared version has to be above the highest one in use (nunjucks at 2.5.0). `lerna.json` therefore starts at 2.5.0, and the first run must be started with **bump: major**, which lands every package on 3.0.0. The workflow refuses any other bump while no `v*` tag exists. 3.0.0 is also the release that brings the client-rendered Frame, a breaking change for `@fractality/web` and `@fractality/mandelbrot` (see [the migration guide](migration/web-0-to-3.md)). For the other packages it is a renumbering: the adapters' peer ranges accept fractality 1.5 and up as before.
 
 ## Holding back a bump
 

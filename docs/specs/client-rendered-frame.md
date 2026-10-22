@@ -1,7 +1,7 @@
 # Implementation spec: the client-rendered Frame
 
 Status: **implemented on `next-major`** (2026-08-18), except where noted in §11. Target release: the
-next major of `@fractality/web` (1.0.0).
+next major of `@fractality/web` (3.0.0, see §9.3).
 
 Decisions behind this document: [ADR 0005](../adr/0005-client-render-the-frame.md) (rendering model)
 and [ADR 0006](../adr/0006-compile-and-publish-web-from-typescript.md) (TypeScript and the build
@@ -437,10 +437,12 @@ Two couplings drove this and must not be undone:
 
 ### 9.3 Version and compatibility
 
-`@fractality/web` publishes **1.0.0**, not 0.4.0. It sits at 0.3.3 and mandelbrot peers
-`">= 0.3 < 1"`, so 0.4.0 would still satisfy that range and let an old theme install against an
-incompatible `web` and fail at runtime. 1.0.0 makes the range reject the pairing. Mandelbrot's peer
-becomes `">= 1 < 2"`.
+`@fractality/web` publishes **3.0.0**. The version has to cross the `< 1` that mandelbrot 1.x and
+every other existing theme peers, so the pairing is rejected rather than installed and failing at
+runtime. This spec first targeted 1.0.0, which would have crossed it as well; it became 3.0.0
+because the release also moves all packages to one shared version
+([one shared version](../adr/0006-one-shared-version-for-all-packages.md)), which has to start above
+the highest existing one. Mandelbrot's peer becomes `">= 3 < 4"`.
 
 That rejection is **hard on npm (`ERESOLVE`) but only a warning on pnpm** unless
 `strict-peer-dependencies` is set — which is why the runtime check is not optional.
@@ -451,7 +453,7 @@ renders, with two distinct diagnostics:
 - **absent** — no `contractVersion` at all. This is _every existing third-party theme_, so it is the
   message most people will see and deserves its own wording.
 
-**0.3.x is frozen, not supported.** No backports, no security fixes.
+**0.x, the last line with server-rendered views, is frozen, not supported.** No backports, no security fixes.
 
 ### 9.4 Migration guide
 

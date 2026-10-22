@@ -28,13 +28,13 @@ describe('Web', () => {
         expect(web.server({})).toBeDefined();
     });
 
-    it('names 0.x themes specifically, since that is what every existing theme is', () => {
+    it('names themes written for server-rendered views specifically, since that is what every existing theme is', () => {
         // The common case deserves the precise message: a theme that declares
         // nothing was written before the contract existed, which is different
         // from one targeting a version this build does not support.
         const web = new Web(app());
         web.theme('default', new Theme());
-        expect(() => web.builder({})).toThrow(/targets Fractality 0\.x/);
+        expect(() => web.builder({})).toThrow(/written for server-rendered views/);
     });
 
     it('reports a version mismatch separately, naming both versions', () => {

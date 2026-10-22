@@ -40,8 +40,8 @@
     "build:frame": "vite build --config vite.frame.config.js"
   },
   "peerDependencies": {
-    "@fractality/fractality": ">= 1.5 < 4",
-    "@fractality/web": ">= 1 < 4"
+    "@fractality/fractality": ">= 3 < 4",
+    "@fractality/web": ">= 3 < 4"
   },
   "devDependencies": {
     "@fractality/web": "workspace:*",

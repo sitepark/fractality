@@ -131,8 +131,10 @@ export default class Theme extends mix(Configurable, Emitter) {
             if (!noRedirect && route.redirect) {
                 return route.redirect;
             }
-            const compiler = compile(route.path);
-            return cleanUrlPath(compiler(pathsToWildcards(params, route.wildcards)));
+            if (!route.compiler) {
+                route.compiler = compile(route.path);
+            }
+            return cleanUrlPath(route.compiler(pathsToWildcards(params, route.wildcards)));
         }
         return null;
     }

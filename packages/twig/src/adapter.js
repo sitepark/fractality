@@ -50,7 +50,7 @@ class TwigAdapter extends Fractality.Adapter {
 
             const render = Twig.Template.prototype.render;
             Twig.Template.prototype.render = function (context, params) {
-                if (!self._config.pristine && this.id) {
+                if (!self._config.pristine && config.importContext && this.id) {
                     let handle = null;
 
                     if (adapterUtils.isHandle(this.id, self._config.handlePrefix)) {
@@ -66,11 +66,9 @@ class TwigAdapter extends Fractality.Adapter {
                         let entity = source.find(adapterUtils.replaceHandlePrefix(handle, self._config.handlePrefix));
                         if (entity) {
                             entity = entity.isComponent ? entity.variants().default() : entity;
-                            if (config.importContext) {
-                                context = utils.defaultsDeep(_.cloneDeep(context), entity.getContext());
-                                context._self = entity.toJSON();
-                                setKeys(context);
-                            }
+                            context = utils.defaultsDeep(_.cloneDeep(context), entity.getContext());
+                            context._self = entity.toJSON();
+                            setKeys(context);
                         }
                     }
                 }

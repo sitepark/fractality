@@ -13,12 +13,20 @@ export function pathSegments(filePath, sep = Path.sep) {
     return _.compact(filePath.split(sep));
 }
 
+// Swap, backup and temp files editors write while saving, as skipped by
+// chokidar's `atomic` option. The source watcher ignores them, so a tree read
+// that picked one up would never be refreshed once the editor removed it.
+const EDITOR_TEMP_FILE = /\..*\.(sw[px])$|~$|\.subl.*\.tmp/;
+
+function isIgnored(filePath) {
+    const name = Path.basename(filePath);
+    return name.startsWith('.') || EDITOR_TEMP_FILE.test(name);
+}
+
 export default {
     describe(dir, relDir, filter, ext) {
-        filter = filter || ((filePath) => !Path.basename(filePath).startsWith('.'));
-
         return dirscribe(dir, {
-            filter: filter,
+            filter: (filePath) => !isIgnored(filePath) && (!filter || filter(filePath)),
             after: (files) => _.orderBy(files, ['isDirectory', 'order', 'path'], ['desc', 'asc', 'asc']),
             build: build,
             ext: ext,
@@ -109,10 +117,20 @@ function dirscribe(root, opts) {
             .then((files) => {
                 const filteredDir = files
                     .filter((file) => filter(Path.join(dir, file)))
-                    .map((filePath) => objectify(Path.join(dir, filePath)));
+                    .map((filePath) => objectify(Path.join(dir, filePath)).catch(skipMissing));
                 return Promise.all(filteredDir);
             })
+            .then(_.compact)
             .then(after);
+    }
+
+    // a file deleted between readdir and stat (e.g. an editor's temp file) is
+    // left out instead of failing the whole tree
+    function skipMissing(err) {
+        if (err.code === 'ENOENT') {
+            return null;
+        }
+        throw err;
     }
 
     function objectify(filePath) {

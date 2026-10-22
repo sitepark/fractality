@@ -36,7 +36,7 @@
     "promised-handlebars": "^2.0.1"
   },
   "peerDependencies": {
-    "@fractality/fractality": ">= 1.5 < 2"
+    "@fractality/fractality": ">= 1.5 < 4"
   },
   "publishConfig": {
     "access": "public"

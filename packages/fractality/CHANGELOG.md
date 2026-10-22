@@ -3,6 +3,8 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+**From 3.0.0 on, all `@fractality/*` packages share one version, and their changes are recorded in the [root changelog](https://github.com/sitepark/fractality/blob/main/CHANGELOG.md). This file ends at the last release versioned on its own.**
+
 # [1.9.0](https://github.com/sitepark/fractality/compare/%40fractality%2Ffractality%401.8.2...%40fractality%2Ffractality%401.9.0) (2026-10-22)
 
 ### Bug Fixes

@@ -40,8 +40,8 @@
     "prepack": "pnpm run build"
   },
   "peerDependencies": {
-    "@fractality/fractality": ">= 1.5 < 2",
-    "@fractality/web": ">= 0.3 < 1"
+    "@fractality/fractality": ">= 1.5 < 4",
+    "@fractality/web": ">= 0.3 < 4"
   },
   "devDependencies": {
     "@fractality/web": "workspace:*",

@@ -3,6 +3,8 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+**From 3.0.0 on, all `@fractality/*` packages share one version, and their changes are recorded in the [root changelog](https://github.com/sitepark/fractality/blob/main/CHANGELOG.md). This file ends at the last release versioned on its own.**
+
 # [1.7.0](https://github.com/sitepark/fractality/compare/%40fractality%2Ftwig%401.6.2...%40fractality%2Ftwig%401.7.0) (2026-10-22)
 
 ### Performance Improvements

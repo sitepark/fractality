@@ -38,7 +38,7 @@
     "@fractality/fractality": "workspace:*"
   },
   "peerDependencies": {
-    "@fractality/fractality": ">= 1.5 < 2"
+    "@fractality/fractality": ">= 1.5 < 4"
   },
   "publishConfig": {
     "access": "public"

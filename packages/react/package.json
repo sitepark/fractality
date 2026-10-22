@@ -50,7 +50,7 @@
     "react-dom": "^19.3.1"
   },
   "peerDependencies": {
-    "@fractality/fractality": ">= 1.1.7 < 2",
+    "@fractality/fractality": ">= 1.1.7 < 4",
     "react": ">= 18.0.0 < 20",
     "react-dom": ">= 18.0.0 < 20"
   },

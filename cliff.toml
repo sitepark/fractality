@@ -1,0 +1,169 @@
+# git-cliff configuration for the root CHANGELOG.md and the GitHub release notes.
+# https://git-cliff.org/docs/configuration
+#
+# The release workflow (.github/workflows/release.yml) renders the first shared
+# release from the last per-package release on, so the history before the
+# packages moved to one shared version never ends up in here.
+
+[changelog]
+header = """
+# Changelog
+
+All notable changes to the `@fractality/*` packages. All packages share one
+version and are released together. Releases before 3.0.0 were versioned per
+package and are recorded in each package's own `CHANGELOG.md`.
+
+"""
+# Whitespace rules, because two separate layers are at work here:
+#  * This is a TOML multi-line string, so a trailing `\` swallows the newline *and* the
+#    following line's indentation, while `\n` and `\t` are TOML escapes.
+#  * `trim = true` (below) additionally strips leading whitespace from every template line.
+# Consequence: indentation that has to survive into the output must be produced by an
+# expression such as `{{ "  " }}`, never by literal spaces in the template.
+body = """
+{% set repo = "https://github.com/sitepark/fractality" %}\
+
+{# Renders the passed commit id as a link to the commit #}\
+{% macro commit_id_link(id) %}\
+    [`{{ id | truncate(length=7, end="") }}`](https://github.com/sitepark/fractality/commit/{{ id }})\
+{% endmacro commit_id_link %}\
+
+{# Renders a section heading #}\
+{% macro group_heading(heading) %}\
+    ### {{ heading | trim | upper_first }}
+{% endmacro group_heading %}\
+
+{# Renders a commit line #}\
+{% macro commit_line(commit, ids, show_scope=true) %}\
+    {% if commit.breaking %}**«BREAKING»** {% endif %}\
+    {% if commit.scope and show_scope %}**{{ commit.scope }}:** {% endif %}\
+    {{ commit.message | split(pat="\n") | first | upper_first | trim }} – \
+    {% for id in ids %}\
+        {{ self::commit_id_link(id=id) }}\
+        {% if not loop.last %}, {% endif %}\
+    {% endfor %}\
+    {% if commit.breaking_description %}
+
+{{ "  " }}> {{ commit.breaking_description | trim | upper_first }}\
+    {% endif %}\
+{% endmacro commit_line %}\
+
+{# Renders a list of commits, grouping commits by message #}\
+{% macro commit_lines(commits, show_scope=true) %}\
+    {% for message, grouped_commits in commits | group_by(attribute="message") %}\
+        {% set commit_ids = grouped_commits | map(attribute="id") %}\
+        {% set first_commit = grouped_commits | first %}\
+        - {{ self::commit_line(commit=first_commit, ids=commit_ids, show_scope=show_scope) }}
+    {% endfor %}\
+{% endmacro commit_lines %}\
+
+{# `version` and `timestamp` are both null for an untagged/unreleased section, which the
+   `date` filter refuses outright -- hence the defaults. #}\
+{% set display_version = version | default(value="Unreleased") | trim_start_matches(pat="v") %}\
+{% set date = timestamp | default(value=now(timestamp=true)) | date(format="%Y-%m-%d") %}\
+{% if version and previous and previous.version %}\
+## [{{ display_version }}]({{ repo }}/compare/{{ previous.version }}...{{ version }}) - {{ date }}\n
+{% else %}\
+## {{ display_version }} - {{ date }}\n
+{% endif %}\
+
+{# Separate Commits into "normal", breaking and dependencies #}\
+{% set breaking_commits = commits | filter(attribute="group", value="__breaking")  %}\
+{% set deps_commits = commits | filter(attribute="group", value="__deps") %}\
+{% set special_groups = ["__deps", "__breaking"] %}\
+
+{% if breaking_commits %}\
+    {{ self::group_heading(heading="💥 Breaking Changes") }}
+    {{ self::commit_lines(commits=breaking_commits) }}
+{% endif %}\
+
+{# `commit_groups` (git-cliff >= 2.14) instead of Tera's `group_by`: the latter is backed by a
+   BTreeMap and always sorts groups alphabetically, i.e. by emoji codepoint here. Passing
+   `commit_parsers_groups` -- injected by git-cliff, the `commit_parsers` group names in order
+   of first appearance -- renders the sections in the order they are declared under `[git]`. #}\
+{% for entry in commits | commit_groups(groups=commit_parsers_groups) %}\
+    {% if entry.group not in special_groups %}\
+        {{ self::group_heading(heading=entry.group) }}
+        {{ self::commit_lines(commits=entry.commits) }}
+    {% endif %}\
+{% endfor %}\
+
+{% if deps_commits %}\
+    {{ self::group_heading(heading="⬆️ Dependency Updates") }}
+    {{ self::commit_lines(commits=deps_commits | sort(attribute="message"), show_scope=false) }}
+{% endif %}\
+"""
+# Remove leading and trailing whitespaces from every line of the changelog's body.
+trim = true
+render_always = true
+postprocessors = []
+
+[git]
+conventional_commits = true
+# Non-conventional commits are still worth listing; they end up under "Other".
+filter_unconventional = false
+require_conventional = false
+split_commits = false
+commit_preprocessors = [
+    # Collapse runs of spaces.
+    { pattern = " +", replace = " " },
+    # Link GitHub issue and pull request references (`#123`) where they start a word.
+    # GitHub redirects /issues/<n> to the pull request when that is what <n> is.
+    { pattern = "(^|[\\s(])#(\\d+)", replace = "${1}[#${2}](https://github.com/sitepark/fractality/issues/${2})" },
+]
+protect_breaking_commits = true
+# Rules are evaluated top to bottom and the first match wins. The order also decides the
+# order of the rendered sections, see `commit_groups` in the template.
+#
+# Do NOT use `field = "..."` here: the lookup errors out on commits that are not conventional
+# commits and git-cliff then drops the whole commit with nothing but a WARN on stderr.
+commit_parsers = [
+    # Breaking changes outrank everything, including the skip rules below.
+    { message = "^\\w+(\\(.*\\))?!:", group = "__breaking" },
+    { footer = "^BREAKING[ -]CHANGE", group = "__breaking" },
+
+    # Explicit opt-out via commit footer.
+    { footer = "^changelog: ?ignore", skip = true },
+
+    { message = "^Merge ", skip = true },
+
+    # Housekeeping that should never reach a changelog.
+    { message = "^ci", skip = true },
+    { message = "^chore\\(pr\\)", skip = true },
+    { message = "^chore\\(pull\\)", skip = true },
+    { message = "^chore\\(release\\)", skip = true },
+    # Version commits from the per-package lerna releases before 3.0.0.
+    { message = "^chore: publish", skip = true },
+
+    # Dev-only dependency bumps (Dependabot's `build(deps-dev):`) never reach a published
+    # package, and there are dozens of them per release.
+    { message = "^\\w+\\(deps-dev\\)", skip = true },
+    # Dependency bumps that do ship, whatever type prefix the bot used.
+    { message = "^\\w+\\(deps\\)", group = "__deps" },
+
+    # Security, opt-in via a `security:` type or a `Security:` footer.
+    { message = "^security", group = "🔒️ Security" },
+    { footer = "^Security: ?", group = "🔒️ Security" },
+
+    { message = "^feat", group = "✨ Features" },
+    { message = "^fix", group = "🐛 Bug Fixes" },
+    { message = "^refactor", group = "♻️ Refactor" },
+    { message = "^doc", group = "📚 Documentation" },
+    { message = "^perf", group = "⚡️ Performance" },
+    { message = "^style", group = "🎨 Styling" },
+    { message = "^test", group = "🧪 Testing" },
+    { message = "^build", group = "📦 Build System" },
+    { message = "^chore", group = "⚙️ Miscellaneous Tasks" },
+    { message = "(?i)^revert(\\(.*\\))?!?:", group = "⏪️ Revert" },
+    { message = "^Revert \"", group = "⏪️ Revert" },
+    { message = ".*", group = "💼 Other" },
+]
+filter_commits = false
+# Only the shared release tags; the old per-package tags (`@fractality/core@0.7.0`) are not
+# releases of this changelog.
+tag_pattern = "^v[0-9]"
+use_branch_tags = false
+topo_order = false
+topo_order_commits = true
+sort_commits = "oldest"
+recurse_submodules = false

@@ -30,7 +30,7 @@
   },
   "homepage": "https://github.com/sitepark/fractality/tree/main/packages/nunjucks",
   "peerDependencies": {
-    "@fractality/fractality": ">= 1.5 < 2"
+    "@fractality/fractality": ">= 1.5 < 4"
   },
   "dependencies": {
     "@fractality/core": "workspace:*",

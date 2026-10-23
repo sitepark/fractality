@@ -356,9 +356,6 @@ importers:
       mock-argv:
         specifier: ^5.0.0
         version: 5.0.0
-      mock-fs:
-        specifier: ^5.5.0
-        version: 5.5.0
 
   packages/fractality:
     dependencies:

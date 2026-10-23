@@ -1,27 +1,25 @@
 import path from 'path';
+import os from 'os';
 
 import fs from 'fs-extra';
-import mock from 'mock-fs';
 import shell from '../src/shell';
 
 describe('Shell', () => {
     let originalPwd;
+    let tmpRoot;
 
-    beforeEach(() => {
+    beforeEach(async () => {
         originalPwd = process.cwd();
-        mock({
-            shelltest: {
-                'nested-directory': {},
-                'empty-file.txt': '',
-            },
-        });
+        tmpRoot = await fs.mkdtemp(path.join(os.tmpdir(), 'fractality-shell-'));
+        await fs.ensureDir(path.join(tmpRoot, 'shelltest', 'nested-directory'));
+        await fs.outputFile(path.join(tmpRoot, 'shelltest', 'empty-file.txt'), '');
+        process.chdir(tmpRoot);
     });
 
-    afterEach(() => {
+    afterEach(async () => {
         // Ensure the current working directory is the same as when we started the test suite.
-        process.cwd(originalPwd);
-        // Reset the filesystem.
-        mock.restore();
+        process.chdir(originalPwd);
+        await fs.remove(tmpRoot);
     });
 
     it('can change directory', () => {
@@ -34,7 +32,7 @@ describe('Shell', () => {
         expect(() => shell.cd()).not.toThrow();
     });
 
-    it.todo('can create a file', async () => {
+    it('can create a file', async () => {
         shell.touch('test-file.md');
         const stats = await fs.stat(path.join(process.cwd(), 'test-file.md'));
         expect(stats.isFile()).toBe(true);

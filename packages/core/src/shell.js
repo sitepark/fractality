@@ -4,10 +4,14 @@ export default {
     /**
      * Change the current working directory.
      *
-     * @param {string} [directory=''] The directory to navigate into.
+     * Without a directory, the working directory stays unchanged.
+     *
+     * @param {string} [directory] The directory to navigate into.
      */
-    cd(directory = '') {
-        return process.chdir(directory);
+    cd(directory) {
+        if (directory) {
+            process.chdir(directory);
+        }
     },
 
     /**

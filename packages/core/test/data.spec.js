@@ -14,8 +14,8 @@ const runner = Path.join(import.meta.dirname, 'fixtures', 'read-data-file.mjs');
 
 let tmpRoot;
 
-// readFile() pulls JS data files in through dynamic import(), which reads the
-// real filesystem and never sees mock-fs. So these tests write real files.
+// readFile() pulls JS data files in through dynamic import(), so these tests
+// write real files.
 async function writeProject(name, { type, files }) {
     const dir = Path.join(tmpRoot, name);
     await fs.ensureDir(dir);

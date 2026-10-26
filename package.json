@@ -10,7 +10,7 @@
     "@babel/preset-react": "^8.0.1",
     "@eslint/js": "^10.0.1",
     "@typescript-eslint/utils": "^8.72.0",
-    "@vitest/eslint-plugin": "^1.6.27",
+    "@vitest/eslint-plugin": "^1.6.28",
     "eslint": "^10.13.0",
     "eslint-plugin-react": "^7.37.5",
     "globals": "^17.13.0",

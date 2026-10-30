@@ -63,6 +63,9 @@ export default class Doc extends Entity {
         });
     }
 
+    /*
+     * Deprecated, will be removed in the next major version.
+     */
     toc(maxDepth) {
         return this.source.toc(this, maxDepth);
     }

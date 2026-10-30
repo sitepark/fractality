@@ -1,4 +1,5 @@
-import md from '../src/markdown';
+import { marked } from 'marked';
+import md from '../../src/markdown/index.js';
 
 const code = `
 \`\`\`
@@ -36,5 +37,15 @@ describe('Markdown renderer', () => {
     it('renders code with lang correctly', () => {
         const result = md(codeWithLang);
         expect(result).toMatchSnapshot();
+    });
+
+    it('highlights code when options are supplied', () => {
+        expect(md(codeWithLang, { gfm: true })).toBe(md(codeWithLang));
+    });
+
+    it('does not register extensions on the global marked instance', () => {
+        md('"foo"');
+        expect(marked.parse('"foo"')).toBe('<p>&quot;foo&quot;</p>\n');
+        expect(marked.parse(codeWithLang)).not.toContain('hljs');
     });
 });

@@ -5,7 +5,7 @@ export { default as entities } from './entities/index.js';
 export { default as fs } from './fs.js';
 export { default as highlighter } from './highlighter.js';
 export { default as Log } from './log.js';
-export { default as markdown } from './markdown.js';
+export { default as markdown } from './markdown/index.js';
 export { default as mixins } from './mixins/index.js';
 export { default as PromiseStream } from './promise-stream.js';
 export { default as resolver } from './resolver.js';

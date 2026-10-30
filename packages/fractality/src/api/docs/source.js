@@ -1,12 +1,14 @@
 'use strict';
 
-import { entities, markdown as md, resolver } from '@fractality/core';
+import { Log, entities, markdown as md, resolver } from '@fractality/core';
 import anymatch from 'anymatch';
 import fs from 'fs-extra';
 import _ from 'lodash';
 import DocCollection from './collection.js';
 import Doc from './doc.js';
 const EntitySource = entities.Source;
+
+let tocDeprecationWarned = false;
 
 export default class DocSource extends EntitySource {
     constructor(app) {
@@ -25,7 +27,14 @@ export default class DocSource extends EntitySource {
         return resolver.context(context, this);
     }
 
+    /*
+     * Deprecated, will be removed in the next major version.
+     */
     toc(page, maxDepth) {
+        if (!tocDeprecationWarned) {
+            tocDeprecationWarned = true;
+            Log.warn('doc.toc() is deprecated and will be removed in the next major version.');
+        }
         return page.getContent().then((content) => {
             return this.resolve(page.context || {}).then((context) => {
                 const meta = { env: {} };

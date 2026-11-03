@@ -4,10 +4,11 @@ import { Marked } from 'marked';
 import { markedSmartypants } from 'marked-smartypants';
 import _ from 'lodash';
 import markedHighlight from './highlight.js';
+import markedHeadingIds from './heading-ids.js';
 import toc from './toc.js';
 
 // A dedicated instance keeps our extensions out of the global `marked` used by other code in the process.
-const marked = new Marked(markedSmartypants(), markedHighlight());
+const marked = new Marked(markedSmartypants(), markedHighlight(), markedHeadingIds());
 
 /*
  * Export the markdown parser.

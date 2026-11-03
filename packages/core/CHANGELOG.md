@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.2](https://github.com/sitepark/fractality/compare/%40fractality%2Fcore%400.7.1...%40fractality%2Fcore%400.7.2) (2026-11-03)
+
+### Bug Fixes
+
+- **core:** restore heading ids in rendered markdown (fix [#574](https://github.com/sitepark/fractality/issues/574)) ([#575](https://github.com/sitepark/fractality/issues/575)) ([989a1d4](https://github.com/sitepark/fractality/commit/989a1d4649bea8fb5d061803d63e7bb781527a09))
+
 ## [0.7.1](https://github.com/sitepark/fractality/compare/%40fractality%2Fcore%400.7.0...%40fractality%2Fcore%400.7.1) (2026-10-22)
 
 ### Bug Fixes

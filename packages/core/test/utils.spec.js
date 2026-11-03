@@ -1,5 +1,8 @@
+import path from 'path';
+import os from 'os';
+
+import fs from 'fs-extra';
 import mockArgv from 'mock-argv';
-import mock from 'mock-fs';
 
 import * as utils from '../src/utils';
 import { describe } from 'vitest';
@@ -118,14 +121,25 @@ describe('Utils', () => {
     });
 
     describe('.fileExistsSync()', () => {
-        it.todo('returns true if file is accessible', () => {
-            mock({
-                'path/to/accessible/file': 'can access',
-            });
+        let tmpRoot;
 
-            expect(utils.fileExistsSync('path/to/accessible/file')).toBe(true);
+        beforeEach(async () => {
+            tmpRoot = await fs.mkdtemp(path.join(os.tmpdir(), 'fractality-utils-'));
+        });
 
-            mock.restore();
+        afterEach(async () => {
+            await fs.remove(tmpRoot);
+        });
+
+        it('returns true if file is accessible', async () => {
+            const file = path.join(tmpRoot, 'path/to/accessible/file');
+            await fs.outputFile(file, 'can access');
+
+            expect(utils.fileExistsSync(file)).toBe(true);
+        });
+
+        it('returns false if file does not exist', () => {
+            expect(utils.fileExistsSync(path.join(tmpRoot, 'missing'))).toBe(false);
         });
     });
 

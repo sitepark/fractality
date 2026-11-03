@@ -5,6 +5,18 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **From 3.0.0 on, all `@fractality/*` packages share one version, and their changes are recorded in the [root changelog](https://github.com/sitepark/fractality/blob/main/CHANGELOG.md). This file ends at the last release versioned on its own.**
 
+## [0.7.2](https://github.com/sitepark/fractality/compare/%40fractality%2Fcore%400.7.1...%40fractality%2Fcore%400.7.2) (2026-11-03)
+
+### Bug Fixes
+
+- **core:** restore heading ids in rendered markdown (fix [#574](https://github.com/sitepark/fractality/issues/574)) ([#575](https://github.com/sitepark/fractality/issues/575)) ([989a1d4](https://github.com/sitepark/fractality/commit/989a1d4649bea8fb5d061803d63e7bb781527a09))
+
+## [0.7.1](https://github.com/sitepark/fractality/compare/%40fractality%2Fcore%400.7.0...%40fractality%2Fcore%400.7.1) (2026-10-22)
+
+### Bug Fixes
+
+- keep editor temp files out of the component tree ([#566](https://github.com/sitepark/fractality/issues/566)) ([ecf606f](https://github.com/sitepark/fractality/commit/ecf606f61dd7c1f550b1a41f005778769415c881))
+
 # [0.7.0](https://github.com/sitepark/fractality/compare/%40fractality%2Fcore%400.6.6...%40fractality%2Fcore%400.7.0) (2026-10-22)
 
 ### Bug Fixes

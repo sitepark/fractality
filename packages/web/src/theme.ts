@@ -175,7 +175,7 @@ export default class Theme extends mix(Configurable, Emitter) {
 /** Names of every wildcard in a route path, including those nested in optional groups. */
 function wildcardNames(path: string): string[] {
     const names: string[] = [];
-    const collect = (tokens: Token[]) => {
+    const collect = (tokens: readonly Token[]) => {
         for (const token of tokens) {
             if (token.type === 'wildcard') {
                 names.push(token.name);

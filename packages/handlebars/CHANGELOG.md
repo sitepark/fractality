@@ -5,6 +5,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **From 3.0.0 on, all `@fractality/*` packages share one version, and their changes are recorded in the [root changelog](https://github.com/sitepark/fractality/blob/main/CHANGELOG.md). This file ends at the last release versioned on its own.**
 
+## [1.6.2](https://github.com/sitepark/fractality/compare/%40fractality%2Fhandlebars%401.6.1...%40fractality%2Fhandlebars%401.6.2) (2026-11-03)
+
+**Note:** Version bump only for package @fractality/handlebars
+
+## [1.6.1](https://github.com/sitepark/fractality/compare/%40fractality%2Fhandlebars%401.6.0...%40fractality%2Fhandlebars%401.6.1) (2026-10-22)
+
+**Note:** Version bump only for package @fractality/handlebars
+
 # [1.6.0](https://github.com/sitepark/fractality/compare/%40fractality%2Fhandlebars%401.5.7...%40fractality%2Fhandlebars%401.6.0) (2026-10-22)
 
 **Note:** Version bump only for package @fractality/handlebars

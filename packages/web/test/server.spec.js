@@ -1,3 +1,7 @@
+import fs from 'fs';
+import os from 'os';
+import Path from 'path';
+
 import app from '../../fractality/src/fractal';
 
 import Theme from '../src/theme';
@@ -146,6 +150,50 @@ describe('Server', () => {
             resolveIdle();
             await new Promise((resolve) => setTimeout(resolve, 20));
             expect(sent).toEqual('ok');
+        });
+    });
+
+    describe('static routes', () => {
+        let dir;
+
+        beforeEach(() => {
+            dir = fs.mkdtempSync(Path.join(os.tmpdir(), 'fractality-static-'));
+            fs.mkdirSync(Path.join(dir, 'assets'));
+            fs.writeFileSync(Path.join(dir, 'secret.txt'), 'secret');
+            fs.writeFileSync(Path.join(dir, 'assets', 'a%20b.txt'), 'literal percent');
+        });
+
+        afterEach(() => {
+            fs.rmSync(dir, { recursive: true, force: true });
+        });
+
+        async function fetchStatic(file) {
+            const fakeApp = { load: () => Promise.resolve(), watch: () => {}, whenIdle: () => Promise.resolve() };
+            const fakeTheme = {
+                static: () => [],
+                matchRoute: () => ({ route: { static: Path.join(dir, 'assets', file) }, params: {} }),
+                errorView: () => null,
+            };
+            const staticServer = new Server(fakeTheme, { setGlobal: () => {} }, { host: '127.0.0.1' }, fakeApp);
+            await staticServer.start(false);
+            try {
+                const res = await fetch(`${staticServer.url}/any`);
+                return { status: res.status, body: await res.text() };
+            } finally {
+                staticServer.stop();
+            }
+        }
+
+        it('serves the returned path as is, without decoding it a second time', async () => {
+            const { status, body } = await fetchStatic('a%20b.txt');
+            expect(status).toBe(200);
+            expect(body).toBe('literal percent');
+        });
+
+        it('does not turn an encoded ../ in the returned path into a traversal', async () => {
+            const { status, body } = await fetchStatic('%2e%2e/secret.txt');
+            expect(status).not.toBe(200);
+            expect(body).not.toBe('secret');
         });
     });
 });

@@ -229,7 +229,8 @@ export default class Server extends mix(Emitter) {
             const staticPath = _.isFunction(match.route.static)
                 ? match.route.static(match.params, this._app)
                 : match.route.static;
-            return res.sendFile(decodeURI(staticPath));
+            // route params arrive URL-decoded; decoding again would mangle file names containing '%'
+            return res.sendFile(staticPath);
         }
 
         res.locals.__request.params = match.params;

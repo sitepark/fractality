@@ -1,3 +1,4 @@
+import Path from 'path';
 import { vi } from 'vitest';
 
 import mandelbrot from '../src/theme.js';
@@ -124,7 +125,7 @@ describe('mandelbrot theme factory', () => {
         }
 
         it('resolves an asset inside the component view directory', () => {
-            expect(staticPathFor('/components/raw/button/image.png')).toEqual(`${viewDir}/image.png`);
+            expect(staticPathFor('/components/raw/button/image.png')).toEqual(Path.resolve(viewDir, 'image.png'));
         });
 
         it.each([

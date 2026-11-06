@@ -2,7 +2,7 @@
 
 import Path from 'path';
 import _ from 'lodash';
-import { Theme } from '@fractality/web';
+import { Theme, WebError } from '@fractality/web';
 import filters from './filters.js';
 import fsExtra from 'fs-extra';
 const { readJsonSync } = fsExtra;
@@ -189,10 +189,17 @@ export default function (options) {
             handle: 'component-resource',
             static: function (params, app) {
                 const component = app.components.find(`@${params.handle}`);
-                if (component) {
-                    return Path.join(component.viewDir, params.asset);
+                if (!component) {
+                    throw new WebError(404, 'Component not found');
                 }
-                throw new Error('Component not found');
+                // params are already URL-decoded, so an encoded '../' would
+                // otherwise lead outside the component directory
+                const viewDir = Path.resolve(component.viewDir);
+                const assetPath = Path.resolve(viewDir, params.asset);
+                if (!assetPath.startsWith(viewDir + Path.sep)) {
+                    throw new WebError(404, 'Component resource not found');
+                }
+                return assetPath;
             },
         },
         getResources,

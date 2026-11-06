@@ -1,6 +1,5 @@
 export default {
-    extends: ['stylelint-prettier/recommended'],
-    plugins: ['stylelint-scss'],
+    plugins: ['stylelint-prettier', 'stylelint-scss'],
     customSyntax: 'postcss-scss',
     rules: {
         'prettier/prettier': true,

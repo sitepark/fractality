@@ -110,6 +110,37 @@ describe('mandelbrot theme factory', () => {
         });
     });
 
+    describe('component resource route (static file path)', () => {
+        const viewDir = '/project/components/button';
+        const app = {
+            components: {
+                find: (handle) => (handle === '@button' ? { viewDir } : null),
+            },
+        };
+
+        function staticPathFor(url) {
+            const match = mandelbrot().matchRoute(url);
+            return match.route.static(match.params, app);
+        }
+
+        it('resolves an asset inside the component view directory', () => {
+            expect(staticPathFor('/components/raw/button/image.png')).toEqual(`${viewDir}/image.png`);
+        });
+
+        it.each([
+            ['an encoded ../ sequence', '/components/raw/button/..%2F..%2F..%2Fetc%2Fpasswd'],
+            ['an encoded .. segment', '/components/raw/button/%2E%2E'],
+        ])('rejects %s that escapes the component view directory with a 404', (label, url) => {
+            expect(() => staticPathFor(url)).toThrow(expect.objectContaining({ status: 404 }));
+        });
+
+        it('responds 404 for an unknown component', () => {
+            expect(() => staticPathFor('/components/raw/unknown/image.png')).toThrow(
+                expect.objectContaining({ status: 404 }),
+            );
+        });
+    });
+
     describe('component handle resolver (shared by the preview/render/component detail routes)', () => {
         function fakeComponents(components) {
             return {

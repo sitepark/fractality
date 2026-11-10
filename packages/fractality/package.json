@@ -37,7 +37,7 @@
     "chokidar": "^6.0.0",
     "cli-table3": "^0.6.5",
     "columnify": "^1.6.0",
-    "commander": "^15.0.0",
+    "commander": "^15.1.0",
     "execa": "^10.2.1",
     "fs-extra": "^11.4.1",
     "gray-matter": "^4.0.3",

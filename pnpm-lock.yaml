@@ -535,8 +535,8 @@ importers:
         specifier: ^8.0.1
         version: 8.0.1(@babel/core@8.1.2)
       '@babel/register':
-        specifier: ^8.0.6
-        version: 8.0.6(@babel/core@8.1.2)
+        specifier: ^8.1.2
+        version: 8.1.2(@babel/core@8.1.2)
       '@fractality/core':
         specifier: workspace:*
         version: link:../core
@@ -1144,8 +1144,8 @@ packages:
     peerDependencies:
       '@babel/core': ^8.0.0
 
-  '@babel/register@8.0.6':
-    resolution: {integrity: sha512-Ix77Wl3Xpv/YXCRUa7s/FC0pWqsA+fego+HjmC0ziJioGKrBdS2Jpz2GruJMkUKYiJ33m+W8NXfce+3PQRzmSQ==}
+  '@babel/register@8.1.2':
+    resolution: {integrity: sha512-ZzLJg0RjvqcKHsnaFRVa7FDENGRXINoHtC9vT0XG8FpuOW+Jb/L/sMLXKiIzjN8wD4gL6ui6hUWuDderLyJH6Q==}
     engines: {node: ^22.18.0 || >=24.11.0}
     peerDependencies:
       '@babel/core': ^8.0.0
@@ -6320,7 +6320,7 @@ snapshots:
       '@babel/plugin-transform-react-jsx-development': 8.0.1(@babel/core@8.1.2)
       '@babel/plugin-transform-react-pure-annotations': 8.0.1(@babel/core@8.1.2)
 
-  '@babel/register@8.0.6(@babel/core@8.1.2)':
+  '@babel/register@8.1.2(@babel/core@8.1.2)':
     dependencies:
       '@babel/core': 8.1.2
       '@cspotcode/source-map-support': 0.8.1

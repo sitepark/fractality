@@ -25,7 +25,7 @@
     "stylelint": "^18.0.0",
     "stylelint-config-standard": "^41.0.0",
     "stylelint-prettier": "^5.1.0",
-    "stylelint-scss": "^7.4.0",
+    "stylelint-scss": "^7.5.0",
     "vitest": "^5.1.0"
   },
   "scripts": {

@@ -23,7 +23,7 @@
     "postcss-scss": "^4.0.9",
     "prettier": "^3.10.1",
     "stylelint": "^18.1.0",
-    "stylelint-config-standard": "^41.0.0",
+    "stylelint-config-standard": "^41.1.0",
     "stylelint-prettier": "^5.1.0",
     "stylelint-scss": "^7.5.0",
     "vitest": "^5.1.1"

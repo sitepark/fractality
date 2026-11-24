@@ -25,7 +25,7 @@ describe('Theme', () => {
         const theme = new Theme();
         theme.addRoute('/components/detail/:handle', { handle: 'component' });
         const matched = theme.matchRoute('/components/detail/button');
-        expect(matched && matched.params).toEqual({ handle: 'button' });
+        expect(matched !== false && matched.params).toEqual({ handle: 'button' });
     });
 
     it('reads a wildcard param back as a slash separated path', () => {
@@ -34,14 +34,14 @@ describe('Theme', () => {
         const theme = new Theme();
         theme.addRoute('/docs{/*path}', { handle: 'page' });
         const matched = theme.matchRoute('/docs/nested/page');
-        expect(matched && matched.params).toEqual({ path: 'nested/page' });
+        expect(matched !== false && matched.params).toEqual({ path: 'nested/page' });
     });
 
     it('omits an unmatched optional wildcard param', () => {
         const theme = new Theme();
         theme.addRoute('/docs{/*path}', { handle: 'page' });
         const matched = theme.matchRoute('/docs');
-        expect(matched && matched.params).toEqual({});
+        expect(matched !== false && matched.params).toEqual({});
     });
 
     it('builds a url from a wildcard param given as a path', () => {

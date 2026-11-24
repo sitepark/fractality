@@ -27,7 +27,7 @@ declare module '@fractality/core' {
      * be expressed without generics deep enough to obscure the call sites.
      */
     export const mixins: {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: see above, the class factory chain has no expressible type
         mix(...behaviours: unknown[]): new (...args: any[]) => any;
         configurable: unknown;
         emitter: unknown;

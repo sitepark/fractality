@@ -129,7 +129,7 @@ Useful scripts, all run from root:
 - `pnpm format` — format everything
 - `pnpm format:check` — report unformatted files without changing them
 
-A Husky pre-commit hook runs `biome check --write` on staged files: it formats them, applies safe lint fixes, and blocks the commit if lint errors remain.
+A Husky pre-commit hook runs `biome check --write` on staged files: it formats them, applies safe lint fixes, and blocks the commit if lint errors remain. CI runs `pnpm validate` on every push and pull request.
 
 ### Releasing
 

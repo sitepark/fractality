@@ -7,6 +7,18 @@ on:
     branches:
       - main
 jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: PNPM
+        uses: pnpm/setup@v3
+        with:
+          cache: true
+          runtime: node@24
+      - name: Lint and format check
+        run: pnpm validate
   test:
     runs-on: ${{ matrix.os }}
     strategy:

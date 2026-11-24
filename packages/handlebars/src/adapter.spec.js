@@ -12,8 +12,7 @@ describe('handlebars adapter: _self on data.root', () => {
     function withPatch(resolveSelf) {
         const hbs = promisedHbs(Handlebars, { Promise });
         const invokePartial = hbs.VM.invokePartial;
-        hbs.VM.invokePartial = function () {
-            const args = Array.from(arguments);
+        hbs.VM.invokePartial = (...args) => {
             const data = args[2].data;
             args[2].data = { ...data, root: { ...data.root, _self: resolveSelf(args[2].name) } };
             return invokePartial.apply(hbs.VM, args);

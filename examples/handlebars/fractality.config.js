@@ -1,9 +1,7 @@
-'use strict';
-
 /*
  * Require the path module
  */
-import path from 'path';
+import path from 'node:path';
 import mandelbrot from '@fractality/mandelbrot';
 import create from '@fractality/fractality';
 

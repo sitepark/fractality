@@ -30,7 +30,7 @@
     height: calc(100% - 3rem);
 
     @media (width < config.$mq_nav-collapse) {
-        transform: translate3d((config.$width-sidebar * -1), 0, 0);
+        transform: translate3d((config.$width-sidebar * -1,), 0, 0);
         transition: none;
         @include mixins.margin-inline(end, config.$width-sidebar);
     }

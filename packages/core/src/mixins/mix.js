@@ -1,5 +1,3 @@
-'use strict';
-
 import _ from 'lodash';
 import { mix } from 'mixwith';
 
@@ -23,7 +21,6 @@ class Base {
     }
 }
 
-export default function () {
-    const mixer = mix(Base);
-    return mixer.with.apply(mixer, Array.from(arguments));
+export default function (...mixins) {
+    return mix(Base).with(...mixins);
 }

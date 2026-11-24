@@ -1,5 +1,3 @@
-'use strict';
-
 import _ from 'lodash';
 import Log from './log.js';
 import { awaitProps } from './utils.js';
@@ -63,14 +61,14 @@ export default {
                 if (entity) {
                     entity = self.entity(entity);
                     if (entity._hasResolvedContext) {
-                        let context = entity.getContext();
+                        const context = entity.getContext();
                         if (parts.length) {
                             return _.get(context, parts.join('.'), null);
                         }
                         return context;
                     } else {
                         return resolve(entity.context).then((entityContext) => {
-                            let clonedContext = _.cloneDeep(entityContext);
+                            const clonedContext = _.cloneDeep(entityContext);
                             if (parts.length) {
                                 return _.get(clonedContext, parts.join('.'), null);
                             }

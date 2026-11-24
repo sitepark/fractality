@@ -1,5 +1,3 @@
-'use strict';
-
 import { PromiseStream as Stream, fs, mixins } from '@fractality/core';
 import Asset from './asset.js';
 import AssetCollection from './collection.js';

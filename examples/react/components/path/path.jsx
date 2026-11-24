@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { usePath } from '@fractality/react/components';
 
 const Path = () => {

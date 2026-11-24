@@ -1,6 +1,4 @@
-'use strict';
-
-import Path from 'path';
+import Path from 'node:path';
 import _ from 'lodash';
 import { Theme, CONTRACT_VERSION } from '@fractality/web';
 import fsExtra from 'fs-extra';
@@ -231,9 +229,7 @@ export default function (options) {
         {
             handle: 'asset-source',
         },
-        function (app) {
-            return app.assets.visible().map((asset) => ({ name: asset.name }));
-        },
+        (app) => app.assets.visible().map((asset) => ({ name: asset.name })),
     );
 
     theme.addRoute(
@@ -270,12 +266,11 @@ export default function (options) {
         {
             handle: 'page',
         },
-        function (app) {
-            return app.docs
+        (app) =>
+            app.docs
                 .filter((d) => !d.isHidden && d.path !== '')
                 .flatten()
-                .map((page) => ({ path: page.path }));
-        },
+                .map((page) => ({ path: page.path })),
     );
 
     let handles = null;

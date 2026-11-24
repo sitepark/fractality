@@ -1,5 +1,3 @@
-'use strict';
-
 import nunjucks from 'nunjucks';
 
 export default function (fractality) {
@@ -13,9 +11,8 @@ export default function (fractality) {
             return new nodes.CallExtensionAsync(this, 'run', args);
         };
 
-        this.run = function () {
+        this.run = (...args) => {
             const source = fractality.components;
-            const args = Array.from(arguments);
             const callback = args.pop();
             args.shift();
             const handle = args[0];

@@ -1,13 +1,19 @@
-'use strict';
-
 import { shell, utils } from '@fractality/core';
 import { execa } from 'execa';
 import fs from 'fs-extra';
 import Handlebars from 'handlebars';
 import * as inquirer from '@inquirer/prompts';
-import Path from 'path';
+import Path from 'node:path';
 
 const __dirname = import.meta.dirname;
+
+/*
+ * The templates write the answers into JavaScript and YAML, not HTML, so
+ * Handlebars' default HTML escaping is wrong for them. `{{json value}}` emits
+ * a double-quoted JSON string, which is a valid string literal in both.
+ */
+const templates = Handlebars.create();
+templates.registerHelper('json', (value) => new Handlebars.SafeString(JSON.stringify(value)));
 
 /**
  * @param {import("../../fractal.js").Fractality} fractality
@@ -19,8 +25,8 @@ export default function (fractality) {
         .command('new')
         .argument('<path>')
         .description('Create a new Fractality project')
-        .action(async (args) => {
-            const basePath = Path.resolve(args);
+        .action(async (projectPath) => {
+            const basePath = Path.resolve(projectPath);
             const viewsPath = Path.join(__dirname, '../../../views/cli/new');
             const fractalFileTpl = Path.join(viewsPath, 'fractal.hbs');
             const docsIndexTpl = Path.join(viewsPath, 'docs/index.md');
@@ -36,7 +42,7 @@ export default function (fractality) {
             const answers = {
                 projectTitle: await inquirer.input({
                     message: "What's the title of your project?",
-                    default: utils.titlize(args.path),
+                    default: utils.titlize(Path.basename(projectPath)),
                 }),
                 componentDir: await inquirer.input({
                     message: 'Where would you like to keep your components?',
@@ -58,7 +64,7 @@ export default function (fractality) {
 
             console.log('Generating project structure...');
 
-            const componentsDir = Path.join(basePath, componentsDir);
+            const componentsDir = Path.join(basePath, answers.componentDir);
             const docsDir = Path.join(basePath, answers.docsDir);
             const publicDir = Path.join(basePath, answers.publicDir);
             const packageJSONPath = Path.join(basePath, 'package.json');
@@ -70,6 +76,7 @@ export default function (fractality) {
             const packageJSON = {
                 name: utils.slugify(answers.projectTitle),
                 version: '0.1.0',
+                type: 'module',
                 dependencies: {
                     '@fractality/fractality': `^${fractality.get('version')}`,
                 },
@@ -79,8 +86,8 @@ export default function (fractality) {
                 },
             };
 
-            const fractalContents = Handlebars.compile(fs.readFileSync(fractalFileTpl, 'utf8'))(answers);
-            const indexContents = Handlebars.compile(fs.readFileSync(docsIndexTpl, 'utf8'))(answers);
+            const fractalContents = templates.compile(fs.readFileSync(fractalFileTpl, 'utf8'))(answers);
+            const indexContents = templates.compile(fs.readFileSync(docsIndexTpl, 'utf8'))(answers);
 
             try {
                 await fs.ensureDir(basePath);

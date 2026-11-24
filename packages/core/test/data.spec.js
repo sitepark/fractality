@@ -1,7 +1,5 @@
-'use strict';
-
-import Path from 'path';
-import os from 'os';
+import Path from 'node:path';
+import os from 'node:os';
 import fs from 'fs-extra';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';

@@ -1,9 +1,7 @@
-'use strict';
-
 import { Adapter } from '@fractality/core';
 import Handlebars from 'handlebars';
 import _ from 'lodash';
-import path from 'path';
+import path from 'node:path';
 import promisedHbs from 'promised-handlebars';
 import helpers from './helpers/index.js';
 import partials from './partials/index.js';
@@ -28,7 +26,7 @@ class HandlebarsAdapter extends Adapter {
         return this._engine;
     }
 
-    render(path, str, context, meta) {
+    render(_path, str, context, meta) {
         meta = meta || {};
         setEnv('_self', meta.self, context);
         setEnv('_target', meta.target, context);
@@ -89,8 +87,7 @@ export default function (config) {
             };
 
             const invokePartial = hbs.VM.invokePartial;
-            hbs.VM.invokePartial = function () {
-                const args = Array.from(arguments);
+            hbs.VM.invokePartial = (...args) => {
                 const data = args[2].data;
 
                 /*
@@ -108,18 +105,18 @@ export default function (config) {
             const adapter = new HandlebarsAdapter(hbs, source, app);
 
             if (!config.pristine) {
-                _.each(helpers(app) || {}, function (helper, name) {
+                _.each(helpers(app) || {}, (helper, name) => {
                     hbs.registerHelper(name, helper);
                 });
-                _.each(partials(app) || {}, function (partial, name) {
+                _.each(partials(app) || {}, (partial, name) => {
                     hbs.registerPartial(name, partial);
                 });
             }
 
-            _.each(config.helpers, function (helper, name) {
+            _.each(config.helpers, (helper, name) => {
                 hbs.registerHelper(name, helper);
             });
-            _.each(config.partials, function (partial, name) {
+            _.each(config.partials, (partial, name) => {
                 hbs.registerPartial(name, partial);
             });
 

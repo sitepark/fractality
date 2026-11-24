@@ -1,5 +1,3 @@
-'use strict';
-
 import _ from 'lodash';
 import Stream from '../array-stream.js';
 import { Mixin as mixin } from 'mixwith';
@@ -144,41 +142,37 @@ export default mixin(
                 );
             }
 
-            orderBy() {
-                let args;
-                if (arguments.length === 1 && _.isObject(arguments[0]) && !_.isArrayLikeObject(arguments[0])) {
-                    args = [_.keys(arguments[0]), _.values(arguments[0])];
-                } else {
-                    args = Array.prototype.slice.call(arguments);
+            orderBy(...args) {
+                if (args.length === 1 && _.isObject(args[0]) && !_.isArrayLikeObject(args[0])) {
+                    return this.newSelf(_.orderBy(this.toArray(), _.keys(args[0]), _.values(args[0])));
                 }
-                args.unshift(this.toArray());
-                return this.newSelf(_.orderBy.apply(null, args));
+                return this.newSelf(_.orderBy(this.toArray(), ...args));
             }
 
-            find() {
-                if (this.size === 0 || arguments.length === 0) {
+            find(...args) {
+                if (this.size === 0 || args.length === 0) {
                     return;
                 }
                 for (const item of this) {
                     if (item.isCollection) {
-                        const search = item.find.apply(item, arguments);
+                        const search = item.find(...args);
                         if (search) return search;
                     } else {
-                        const matcher = this._makePredicate.apply(null, arguments);
+                        const matcher = this._makePredicate(...args);
                         if (matcher(item)) return item;
                     }
                 }
             }
 
-            findCollection() {
-                if (this.size === 0 || arguments.length === 0) {
+            findCollection(...args) {
+                if (this.size === 0 || args.length === 0) {
                     return;
                 }
                 for (const item of this) {
                     if (item.isCollection) {
-                        const matcher = this._makePredicate.apply(null, arguments);
+                        const matcher = this._makePredicate(...args);
                         if (matcher(item)) return item;
-                        const search = item.findCollection.apply(item, arguments);
+                        const search = item.findCollection(...args);
                         if (search) return search;
                     }
                 }
@@ -203,19 +197,16 @@ export default mixin(
                 return this.newSelf(this.squashItems(this.toArray()));
             }
 
-            filter() {
-                const args = Array.from(arguments);
-                args.unshift(this.toArray());
-                return this.newSelf(this.filterItems.apply(this, args));
+            filter(...predicate) {
+                return this.newSelf(this.filterItems(this.toArray(), ...predicate));
             }
 
-            filterItems(items) {
-                const predicate = Array.prototype.slice.call(arguments, 1);
-                const matcher = this._makePredicate.apply(null, predicate);
+            filterItems(items, ...predicate) {
+                const matcher = this._makePredicate(...predicate);
                 const ret = [];
                 for (const item of items) {
                     if (item.isCollection) {
-                        const collection = item.filter.apply(item, predicate);
+                        const collection = item.filter(...predicate);
                         if (collection.size) {
                             ret.push(collection);
                         }
@@ -231,15 +222,12 @@ export default mixin(
             /**
              * Filters both entities and collections, not just entities in collections.
              */
-            filterAll() {
-                const args = Array.from(arguments);
-                args.unshift(this.toArray());
-                return this.newSelf(this.filterAllItems.apply(this, args));
+            filterAll(...predicate) {
+                return this.newSelf(this.filterAllItems(this.toArray(), ...predicate));
             }
 
-            filterAllItems(items) {
-                const predicate = Array.prototype.slice.call(arguments, 1);
-                const matcher = this._makePredicate.apply(null, predicate);
+            filterAllItems(items, ...predicate) {
+                const matcher = this._makePredicate(...predicate);
                 const ret = [];
                 for (const item of items) {
                     if (matcher(item)) {
@@ -319,14 +307,14 @@ export default mixin(
                 return this.toArray()[Symbol.iterator]();
             }
 
-            _makePredicate() {
-                if (arguments.length == 1 && _.isString(arguments[0]) && arguments[0].startsWith('@')) {
-                    return _.iteratee(['handle', arguments[0].replace('@', '')]);
+            _makePredicate(...args) {
+                if (args.length === 1 && _.isString(args[0]) && args[0].startsWith('@')) {
+                    return _.iteratee(['handle', args[0].replace('@', '')]);
                 }
-                if (arguments.length === 2) {
-                    return _.iteratee([arguments[0], arguments[1]]);
+                if (args.length === 2) {
+                    return _.iteratee([args[0], args[1]]);
                 }
-                return _.iteratee(arguments[0]);
+                return _.iteratee(args[0]);
             }
         },
 );

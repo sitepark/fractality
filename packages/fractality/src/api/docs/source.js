@@ -1,5 +1,3 @@
-'use strict';
-
 import { Log, entities, markdown as md, resolver } from '@fractality/core';
 import anymatch from 'anymatch';
 import fs from 'fs-extra';
@@ -46,8 +44,6 @@ export default class DocSource extends EntitySource {
     }
 
     async render(page, context, env) {
-        const self = this;
-
         env = env || {};
 
         if (!page) {
@@ -63,7 +59,7 @@ export default class DocSource extends EntitySource {
             } else {
                 return fs.readFile(page, 'utf8').then((content) => {
                     return this.resolve(context).then((ctx) => {
-                        return self._render(page, content, ctx, {
+                        return this._render(page, content, ctx, {
                             env: env,
                         });
                     });
@@ -74,13 +70,13 @@ export default class DocSource extends EntitySource {
         const renderContext = context || page.context;
         const target = page.toJSON();
 
-        if (!self.isLoaded) {
-            await self.load();
+        if (!this.isLoaded) {
+            await this.load();
         }
         {
-            const context = await self.resolve(renderContext);
+            const context = await this.resolve(renderContext);
             const content = await page.getContent();
-            return self._render(page.filePath, content, context, {
+            return this._render(page.filePath, content, context, {
                 env: env,
                 self: target,
             });
@@ -118,12 +114,10 @@ export default class DocSource extends EntitySource {
     }
 
     _parse(fileTree) {
-        const source = this;
-
         const build = async (dir, parent) => {
             let collection;
             const children = dir.children || [];
-            const configs = children.filter((f) => source.isConfig(f));
+            const configs = children.filter((f) => this.isConfig(f));
 
             const dirConfig = await EntitySource.getConfig(
                 _.find(configs, (f) => f.name.startsWith(dir.name)),
@@ -136,8 +130,8 @@ export default class DocSource extends EntitySource {
             );
 
             if (!parent) {
-                collection = source;
-                source.setProps(dirConfig);
+                collection = this;
+                this.setProps(dirConfig);
             } else {
                 collection = new DocCollection(dirConfig, [], parent);
                 collection.setProps(dirConfig);
@@ -145,7 +139,7 @@ export default class DocSource extends EntitySource {
 
             const items = await Promise.all(
                 children.map((item) => {
-                    if (source.isPage(item)) {
+                    if (this.isPage(item)) {
                         const nameMatch = `${item.name}.`;
                         const configFile = _.find(configs, (f) => f.name.startsWith(nameMatch));
                         const contents = item.read();

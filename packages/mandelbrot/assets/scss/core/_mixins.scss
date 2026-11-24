@@ -227,7 +227,7 @@
 @mixin offset-inline($position, $value: 0) {
     @if $position == start {
         & {
-            offset-inline-start: $value;
+            inset-inline-start: $value;
         }
         [dir="ltr"] & {
             left: $value;
@@ -240,7 +240,7 @@
 
     @if $position == end {
         & {
-            offset-inline-end: $value;
+            inset-inline-end: $value;
         }
         [dir="ltr"] & {
             right: $value;

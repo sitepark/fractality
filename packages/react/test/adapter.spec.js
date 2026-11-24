@@ -1,4 +1,4 @@
-import Path from 'path';
+import Path from 'node:path';
 
 import reactAdapterFactory from '../src/adapter.js';
 

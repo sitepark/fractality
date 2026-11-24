@@ -10,7 +10,7 @@ const { readJsonSync } = fsExtra;
 const pkg = readJsonSync(new URL('../package.json', import.meta.url));
 
 describe('Fractality', () => {
-    let app = create();
+    const app = create();
     beforeEach(() => {
         app.web;
         app.cli;

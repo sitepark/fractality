@@ -1,8 +1,6 @@
-'use strict';
-
 import * as yaml from 'js-yaml';
 import _ from 'lodash';
-import Path from 'path';
+import Path from 'node:path';
 import fs from 'fs-extra';
 import * as utils from './utils.js';
 import Log from './log.js';

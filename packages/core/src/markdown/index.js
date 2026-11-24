@@ -1,5 +1,3 @@
-'use strict';
-
 import { Marked } from 'marked';
 import { markedSmartypants } from 'marked-smartypants';
 import _ from 'lodash';
@@ -21,8 +19,6 @@ const markdown = function markdown(content, mdConfig) {
 };
 
 // Deprecated, see ./toc.js
-markdown.toc = function (content, maxDepth) {
-    return toc(marked.lexer(_.toString(content)), maxDepth);
-};
+markdown.toc = (content, maxDepth) => toc(marked.lexer(_.toString(content)), maxDepth);
 
 export default markdown;

@@ -1,5 +1,3 @@
-'use strict';
-
 import _ from 'lodash';
 import * as utils from '../utils.js';
 import { Mixin as mixin } from 'mixwith';

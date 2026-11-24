@@ -1,7 +1,5 @@
-'use strict';
-
 import _ from 'lodash';
-import Path from 'path';
+import Path from 'node:path';
 import VinylFile from 'vinyl';
 import mime from 'mime';
 import { utils } from '@fractality/core';

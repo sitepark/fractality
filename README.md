@@ -124,10 +124,12 @@ To get started, run `pnpm install` in root. That is the whole setup.
 Useful scripts, all run from root:
 
 - `pnpm test` — run the test suite
-- `pnpm validate` — lint JavaScript (ESLint) and SCSS (Stylelint)
-- `pnpm format` — format everything with Prettier
+- `pnpm validate` — lint and format-check everything with [Biome](https://biomejs.dev)
+- `pnpm lint` — lint only, without the format check
+- `pnpm format` — format everything
+- `pnpm format:check` — report unformatted files without changing them
 
-Prettier also runs automatically on staged files via a Husky pre-commit hook, so formatting is taken care of for you. The linters are not part of the hook — run `pnpm validate` yourself before pushing.
+A Husky pre-commit hook runs `biome check --write` on staged files: it formats them, applies safe lint fixes, and blocks the commit if lint errors remain. CI runs `pnpm validate` on every push and pull request.
 
 ### Releasing
 

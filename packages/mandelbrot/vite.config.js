@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import autoprefixer from 'autoprefixer';
 import { defineConfig } from 'vite';
 import { viteStaticCopy } from 'vite-plugin-static-copy';

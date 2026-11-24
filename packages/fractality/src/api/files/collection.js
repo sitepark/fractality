@@ -1,5 +1,3 @@
-'use strict';
-
 import { PromiseStream as Stream, mixins } from '@fractality/core';
 import anymatch from 'anymatch';
 const mix = mixins.mix;

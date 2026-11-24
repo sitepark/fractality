@@ -12,7 +12,6 @@
 ::selection {
     --background-color: rgba(var(--skin-links), 0.2);
 
-    background-color: rgba(theme.$color-link, 0.2);
     background-color: var(--background-color, rgba(theme.$color-link, 0.2));
 }
 
@@ -59,6 +58,7 @@ button {
 
 button:focus {
     outline: 1px dotted;
+    // biome-ignore lint/suspicious/noDuplicateProperties: fallback for browsers without -webkit-focus-ring-color
     outline: 5px auto -webkit-focus-ring-color;
 }
 
@@ -82,19 +82,16 @@ ul {
 a {
     --color: rgba(var(--skin-links), 0.9);
 
-    color: rgba(theme.$color-link, 0.9);
     color: var(--color, rgba(theme.$color-link, 0.9));
     transition: all 0.15s ease-out;
 
     &:active {
-        color: theme.$color-link;
         color: var(--color, rgba(theme.$color-link, 0.9));
     }
 
     &:hover {
         --color: rgb(var(--skin-links));
 
-        color: theme.$color-link;
         color: var(--color, theme.$color-link);
     }
 }
@@ -191,6 +188,5 @@ h6 {
 mark {
     --background-color: rgba(var(--skin-links), 0.3);
 
-    background-color: rgba(theme.$color-link, 0.3);
     background-color: var(--background-color, rgba(theme.$color-link, 0.3));
 }

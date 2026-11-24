@@ -1,5 +1,5 @@
 ---
-title: { { projectTitle } }
+title: {{json projectTitle}}
 ---
 
-This is your index page. You can edit its contents at `{{ docsDir }}/01-index.md`
+This is your index page. You can edit its contents at `{{{ docsDir }}}/01-index.md`

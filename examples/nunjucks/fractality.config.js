@@ -1,9 +1,7 @@
-'use strict';
-
 import create from '@fractality/fractality';
 import mandelbrot from '@fractality/mandelbrot';
 import nunjucks from '@fractality/nunjucks';
-import path from 'path';
+import path from 'node:path';
 
 const __dirname = import.meta.dirname;
 

@@ -5,7 +5,7 @@ import { create } from '../../../src/fractal';
 
 describe('ComponentSource', () => {
     let components;
-    let app = create();
+    const app = create();
 
     beforeEach(() => {
         components = new ComponentSource(app);

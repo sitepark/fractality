@@ -27,7 +27,6 @@
     top: 0;
     bottom: 0;
     height: 100%;
-    width: 100%;
     width: calc(100% + #{config.$handle-size});
     min-width: 200px;
     max-width: calc(100% + #{config.$handle-size});

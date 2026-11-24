@@ -68,7 +68,6 @@
     svg {
         --fill: rgb(var(--skin-links));
 
-        fill: theme.$color-link;
         fill: var(--fill, theme.$color-link);
         opacity: 0.75;
     }

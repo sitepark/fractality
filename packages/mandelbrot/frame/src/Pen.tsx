@@ -161,6 +161,7 @@ export function Pen({ entity, statuses, selected, onNavigate }: PenProps) {
                         ) : null}
                     </div>
 
+                    {/* biome-ignore lint/a11y/useSemanticElements: a resize handle is an interactive separator, which <hr> cannot be */}
                     <div
                         className="Preview-handle"
                         role="separator"
@@ -175,6 +176,7 @@ export function Pen({ entity, statuses, selected, onNavigate }: PenProps) {
                 </div>
             </div>
 
+            {/* biome-ignore lint/a11y/useSemanticElements: a resize handle is an interactive separator, which <hr> cannot be */}
             <div
                 className="Pen-handle Pen-handle--browser"
                 role="separator"

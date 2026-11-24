@@ -8,7 +8,7 @@ import { createDevHost, type DevHost } from './dev/host.js';
 import type { Loadable, SourceApp, Watchable } from './payload/source-types.js';
 import type { IdleGateable } from './dev/gate.js';
 import { frctlConfigFor } from './shell/config.js';
-import Theme from './theme.js';
+import type Theme from './theme.js';
 import WebError from './error.js';
 
 const mix = mixins.mix;

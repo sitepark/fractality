@@ -5,7 +5,7 @@ import type { Matcher } from 'anymatch';
 import { buildStatic, copyStaticAssets, type BuildStaticResult, type StaticAssetError } from './build/index.js';
 import type { Loadable, SourceApp } from './payload/source-types.js';
 import { frctlConfigFor } from './shell/config.js';
-import Theme from './theme.js';
+import type Theme from './theme.js';
 import WebError from './error.js';
 
 const mix = mixins.mix;

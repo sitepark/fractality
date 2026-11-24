@@ -166,7 +166,6 @@
     &[aria-pressed="true"] {
         --active-color: rgb(var(--skin-links));
 
-        border-color: theme.$color-link;
         border-color: var(--active-color, theme.$color-link);
         background-color: theme.$color-ui-active;
         font-weight: bolder;

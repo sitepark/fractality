@@ -16,6 +16,7 @@ export function Search({ value, onChange, stuck }: SearchProps) {
 
     return (
         <div className={`Navigation-group Navigation-search${stuck ? ' is-stuck' : ''}`}>
+            {/* biome-ignore lint/a11y/useSemanticElements: <form role="search"> is the established landmark; a <search> wrapper would add an element the stylesheet does not expect */}
             <form className="Search" onSubmit={(event) => event.preventDefault()} role="search">
                 <label className="Search-label" htmlFor="search-input">
                     {text.label ?? 'Search'}

@@ -29,12 +29,12 @@ for (const comp of app.components.flatten().toArray()) {
     dupGz += zlib.gzipSync(a, { level: 9 }).length;
     dedupGz += zlib.gzipSync(b, { level: 9 }).length;
 }
-const mb = (n) => (n / 1024 ** 2).toFixed(2) + ' MB';
+const mb = (n) => `${(n / 1024 ** 2).toFixed(2)} MB`;
 console.log('content duplicated per variant :', mb(dupTotal), ' gzip', mb(dupGz));
 console.log('content hoisted + referenced   :', mb(dedupTotal), ' gzip', mb(dedupGz));
 console.log(
     'raw saving %.1f%%  gzip saving %.1f%%'
-        .replace('%.1f%%', ((1 - dedupTotal / dupTotal) * 100).toFixed(1) + '%')
-        .replace('%.1f%%', ((1 - dedupGz / dupGz) * 100).toFixed(1) + '%'),
+        .replace('%.1f%%', `${((1 - dedupTotal / dupTotal) * 100).toFixed(1)}%`)
+        .replace('%.1f%%', `${((1 - dedupGz / dupGz) * 100).toFixed(1)}%`),
 );
 process.exit(0);

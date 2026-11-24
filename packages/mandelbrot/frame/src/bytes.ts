@@ -11,7 +11,7 @@ export function formatBytes(bytes: number): string {
     if (!bytes) return '0 Bytes';
 
     const exponent = Math.min(Math.floor(Math.log(bytes) / Math.log(1000)), UNITS.length - 1);
-    const value = bytes / Math.pow(1000, exponent);
+    const value = bytes / 1000 ** exponent;
 
     return `${parseFloat(value.toFixed(1))} ${UNITS[exponent]}`;
 }

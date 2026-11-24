@@ -595,7 +595,7 @@ describe('the home page', () => {
                 return Promise.resolve({
                     ok: false,
                     status: 404,
-                    json: () => Promise.resolve({ error: 'No payload is served at ' + url }),
+                    json: () => Promise.resolve({ error: `No payload is served at ${url}` }),
                 });
             }),
         );

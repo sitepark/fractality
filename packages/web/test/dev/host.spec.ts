@@ -129,8 +129,8 @@ describe('createDevHost', () => {
         // Looked up in the library rather than joined onto a directory, so a
         // traversal is just a name that is not in the list — and the theme route
         // this replaces did join, so it was traversable.
-        const escape = await fetch(`${origin}/components/raw/path/..%2F..%2F..%2Fpackage.json`);
-        const body = await escape.text();
+        const traversal = await fetch(`${origin}/components/raw/path/..%2F..%2F..%2Fpackage.json`);
+        const body = await traversal.text();
         expect(body).not.toContain('"@fractality');
         // What is left is the Frame, which answers for anything that is neither a
         // payload nor a file.

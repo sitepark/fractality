@@ -102,7 +102,6 @@
         display: block;
         height: 100%;
         width: 33%;
-        background-color: theme.$color-link;
         background-color: var(--color, theme.$color-link);
         animation: Preview-progress-slide 1.2s ease-in-out infinite;
     }

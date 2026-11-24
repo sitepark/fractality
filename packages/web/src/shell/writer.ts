@@ -105,7 +105,7 @@ function themingBlock(theming: FrctlConfig['theming']): string {
     const declarations = Object.entries(theming ?? {}).map(([property, value]) => {
         if (!CUSTOM_PROPERTY.test(property)) {
             throw new WebError(
-                `Theming property "${property}" is not a CSS custom property. ` + 'Names must look like "--accent".',
+                `Theming property "${property}" is not a CSS custom property. Names must look like "--accent".`,
             );
         }
         if (typeof value !== 'string' || UNSAFE_DECLARATION.test(value)) {

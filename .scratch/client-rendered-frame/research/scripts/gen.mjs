@@ -14,7 +14,10 @@ fs.mkdirSync(COMPONENTS, { recursive: true });
 
 // Deterministic PRNG so the library is reproducible across runs.
 let seed = 20260817;
-const rnd = () => (seed = (seed * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff;
+const rnd = () => {
+    seed = (seed * 1103515245 + 12345) & 0x7fffffff;
+    return seed / 0x7fffffff;
+};
 const pick = (a) => a[Math.floor(rnd() * a.length)];
 
 const COLLECTIONS = [
@@ -97,7 +100,7 @@ while (handles < TARGET) {
         ),
         `</div>`,
     ].join('\n');
-    fs.writeFileSync(path.join(dir, `${name}.hbs`), tpl + '\n');
+    fs.writeFileSync(path.join(dir, `${name}.hbs`), `${tpl}\n`);
 
     const cfg = [];
     cfg.push(`title: ${noun.charAt(0).toUpperCase() + noun.slice(1)} ${i}`);
@@ -125,7 +128,7 @@ while (handles < TARGET) {
             cfg.push(``);
         }
     }
-    fs.writeFileSync(path.join(dir, `${name}.config.yml`), cfg.join('\n') + '\n');
+    fs.writeFileSync(path.join(dir, `${name}.config.yml`), `${cfg.join('\n')}\n`);
 
     manifest.push({ name, collection, weight, variantCount, contributed });
     handles += contributed;
@@ -142,6 +145,9 @@ console.log(
         components: componentCount,
         handles,
         collections: COLLECTIONS.length,
-        byWeight: manifest.reduce((a, m) => ((a[m.weight] = (a[m.weight] ?? 0) + 1), a), {}),
+        byWeight: manifest.reduce((a, m) => {
+            a[m.weight] = (a[m.weight] ?? 0) + 1;
+            return a;
+        }, {}),
     }),
 );

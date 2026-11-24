@@ -5,7 +5,9 @@ export default class PromiseStream extends Readable {
         super({ objectMode: true });
         this._settled = false;
         this._data = Promise.resolve(p).then((items) => {
-            items.forEach((i) => this.push(i));
+            items.forEach((i) => {
+                this.push(i);
+            });
             this._settled = true;
         });
         this._data.catch((err) => {

@@ -51,7 +51,9 @@ export default class AssetSourceCollection extends mix(Configurable, Emitter) {
 
     sources() {
         const sources = [];
-        this._sources.forEach((source) => sources.push(source));
+        this._sources.forEach((source) => {
+            sources.push(source);
+        });
         return sources;
     }
 
@@ -61,17 +63,25 @@ export default class AssetSourceCollection extends mix(Configurable, Emitter) {
 
     visible() {
         const sources = [];
-        this._sources.forEach((source) => (source.isHidden ? null : sources.push(source)));
+        this._sources.forEach((source) => {
+            if (!source.isHidden) {
+                sources.push(source);
+            }
+        });
         return sources;
     }
 
     watch() {
-        this.sources().forEach((s) => s.watch());
+        this.sources().forEach((s) => {
+            s.watch();
+        });
         return this;
     }
 
     unwatch() {
-        this.sources().forEach((s) => s.unwatch());
+        this.sources().forEach((s) => {
+            s.unwatch();
+        });
         return this;
     }
 

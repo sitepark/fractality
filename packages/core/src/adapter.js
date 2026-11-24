@@ -100,12 +100,16 @@ export default class Adapter extends mix(Emitter) {
             }
             const touched = _.filter(this._views, ['path', Path.resolve(eventData.path)]);
             if (eventData.event === 'change') {
-                touched.forEach((view) => this._updateView(view));
+                touched.forEach((view) => {
+                    this._updateView(view);
+                });
                 return this._views;
             } else if (eventData.event === 'unlink') {
                 const touchedPaths = _.map(touched, (view) => view.path);
                 this._views = _.reject(this._views, (v) => _.includes(touchedPaths, v.path));
-                touched.forEach((view) => this.emit('view:removed', view));
+                touched.forEach((view) => {
+                    this.emit('view:removed', view);
+                });
                 return this._views;
             }
         }

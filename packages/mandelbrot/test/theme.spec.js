@@ -169,7 +169,9 @@ describe('mandelbrot theme factory', () => {
                     return {
                         size: variantHandles.length,
                         each(cb) {
-                            variantHandles.forEach((h) => cb({ handle: h }));
+                            variantHandles.forEach((h) => {
+                                cb({ handle: h });
+                            });
                         },
                     };
                 },

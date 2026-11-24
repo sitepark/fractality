@@ -22,9 +22,9 @@ export function StatusTag({ status }: { status: StatusDefinition | undefined }) 
     if (!status) return null;
     return (
         <div className="Status Status--tag">
-            <label className="Status-label" style={{ backgroundColor: status.color, borderColor: status.color }}>
+            <span className="Status-label" style={{ backgroundColor: status.color, borderColor: status.color }}>
                 {status.label}
-            </label>
+            </span>
         </div>
     );
 }

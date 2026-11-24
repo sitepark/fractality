@@ -58,7 +58,7 @@ export default function (fractality) {
 
             console.log('Generating project structure...');
 
-            const componentsDir = Path.join(basePath, componentsDir);
+            const componentsDir = Path.join(basePath, answers.componentDir);
             const docsDir = Path.join(basePath, answers.docsDir);
             const publicDir = Path.join(basePath, answers.publicDir);
             const packageJSONPath = Path.join(basePath, 'package.json');

@@ -25,7 +25,17 @@
     "lineEnding": "lf"
   },
   "linter": {
-    "enabled": false
+    "enabled": true,
+    "domains": {
+      "test": "recommended"
+    },
+    "rules": {
+      "correctness": {
+        "noUndeclaredVariables": "error",
+        "noUnusedVariables": "error",
+        "noUnusedImports": "error"
+      }
+    }
   },
   "assist": {
     "enabled": false
@@ -34,7 +44,8 @@
     "formatter": {
       "quoteStyle": "single",
       "semicolons": "always"
-    }
+    },
+    "globals": ["vi", "$", "jQuery"]
   },
   "css": {
     "formatter": {
@@ -56,5 +67,38 @@
     "formatter": {
       "enabled": false
     }
-  }
+  },
+  "overrides": [
+    {
+      "includes": ["examples/react/**", "packages/react/**"],
+      "linter": {
+        "domains": {
+          "react": "recommended"
+        }
+      }
+    },
+    {
+      "includes": ["packages/mandelbrot/assets/img/**/*.svg", "packages/mandelbrot/views/icons/**/*.svg"],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "noSvgWithoutTitle": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["**/*.scss", "**/*.css"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noDescendingSpecificity": "off"
+          },
+          "complexity": {
+            "noImportantStyles": "off"
+          }
+        }
+      }
+    }
+  ]
 }

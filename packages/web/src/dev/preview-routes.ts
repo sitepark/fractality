@@ -88,7 +88,9 @@ export function previewRoutes(options: PreviewRoutesOptions): Router {
                     // It is reported in the iframe rather than as a server error,
                     // so the Frame around it stays usable.
                     const message = error instanceof Error ? error.message : String(error);
-                    res.status(200).type('html').send(`<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+                    res.status(200)
+                        .type('html')
+                        .send(`<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
 <title>Error rendering ${escapeHtml(handle)}</title></head><body>
 <h1>Error rendering <code>${escapeHtml(handle)}</code></h1>
 <pre>${escapeHtml(message)}</pre></body></html>`);

@@ -104,19 +104,9 @@ describe('writePayloads', () => {
         // A component with substantial notes must not pay for them on every
         // navigation — that is the whole point of the panel split.
         const coreOf = async (handle: string): Promise<number> =>
-            (
-                await readFile(
-                    result.entities.find((f) => f.endsWith(`${path.sep}${handle}.json`))!,
-                    'utf8',
-                )
-            ).length;
+            (await readFile(result.entities.find((f) => f.endsWith(`${path.sep}${handle}.json`))!, 'utf8')).length;
         const notesOf = async (handle: string): Promise<number> =>
-            (
-                await readFile(
-                    result.panels.find((f) => f.endsWith(`${path.sep}${handle}.notes.json`))!,
-                    'utf8',
-                )
-            ).length;
+            (await readFile(result.panels.find((f) => f.endsWith(`${path.sep}${handle}.notes.json`))!, 'utf8')).length;
 
         const withNotes = await coreOf('notes-config');
         expect(await notesOf('notes-config')).toBeGreaterThan(0);
@@ -130,10 +120,7 @@ describe('writePayloads', () => {
         const body = (notes.notes ?? '').trim();
         expect(body.length).toBeGreaterThan(0);
 
-        const core = await readFile(
-            result.entities.find((f) => f.endsWith(`${path.sep}notes-config.json`))!,
-            'utf8',
-        );
+        const core = await readFile(result.entities.find((f) => f.endsWith(`${path.sep}notes-config.json`))!, 'utf8');
         expect(core).not.toContain(body);
     });
 

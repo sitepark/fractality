@@ -1,5 +1,3 @@
-'use strict';
-
 const storages = {
     local: localStorage,
     session: sessionStorage,

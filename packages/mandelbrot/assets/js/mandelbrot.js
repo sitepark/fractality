@@ -1,5 +1,3 @@
-'use strict';
-
 import './jquery-global.js';
 import 'jquery-pjax';
 
@@ -21,7 +19,7 @@ globalThis.fractal = {
 
 loadPen();
 
-if (frctl.env == 'server') {
+if (frctl.env === 'server') {
     doc.pjax(
         'a[data-pjax], code a[href], .Prose a[href]:not([data-no-pjax]), .Browser a[href]:not([data-no-pjax])',
         '#pjax-container',
@@ -30,7 +28,7 @@ if (frctl.env == 'server') {
             timeout: 10000,
         },
     )
-        .on('pjax:start', function (e, xhr, options) {
+        .on('pjax:start', (e, _xhr, options) => {
             const handle = $(e.relatedTarget).data('handle');
             const hasVariantPanel = nav.hasVariantPanel(handle);
             if (utils.isSmallScreen() && (nav.isVariantPanelVisible() || !hasVariantPanel)) {
@@ -39,7 +37,7 @@ if (frctl.env == 'server') {
             frame.startLoad();
             events.trigger('main-content-preload', options.url);
         })
-        .on('pjax:end', function () {
+        .on('pjax:end', () => {
             events.trigger('main-content-loaded');
             frame.endLoad();
         });
@@ -48,7 +46,7 @@ if (frctl.env == 'server') {
 events.on('main-content-loaded', loadPen);
 
 function loadPen() {
-    setTimeout(function () {
+    setTimeout(() => {
         $.map($('[data-behaviour="pen"]'), (p) => new Pen(p));
     }, 1);
 }

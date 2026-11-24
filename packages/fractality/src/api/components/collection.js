@@ -1,5 +1,3 @@
-'use strict';
-
 import { entities } from '@fractality/core';
 const EntityCollection = entities.Collection;
 

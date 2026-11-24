@@ -1,5 +1,3 @@
-'use strict';
-
 import storage from '../storage.js';
 import utils from '../utils.js';
 import events from '../events.js';
@@ -25,7 +23,7 @@ export default function (element) {
 
     handle.on('mousedown', (e) => {
         handleClicks++;
-        setTimeout(function () {
+        setTimeout(() => {
             handleClicks = 0;
         }, 400);
         if (handleClicks === 2) {
@@ -43,28 +41,28 @@ export default function (element) {
 
     events.on('toggle-sidebar', toggleSidebar);
     events.on('start-dragging', () => (dragOccuring = true));
-    events.on('end-dragging', function () {
-        setTimeout(function () {
+    events.on('end-dragging', () => {
+        setTimeout(() => {
             dragOccuring = false;
         }, 200);
     });
 
-    events.on('data-changed', function () {
+    events.on('data-changed', () => {
         // TODO: make this smarter?
         document.location.reload(true);
     });
 
     function closeSidebar() {
-        if (dragOccuring || (!isInitialClose && sidebarState == 'closed')) return;
+        if (dragOccuring || (!isInitialClose && sidebarState === 'closed')) return;
         const w = sidebar.outerWidth();
-        let translate = dir == 'rtl' ? w + 'px' : -1 * w + 'px';
-        let sidebarProps = {
+        const translate = dir === 'rtl' ? `${w}px` : `${-1 * w}px`;
+        const sidebarProps = {
             transform: `translate3d(${translate}, 0, 0)`,
         };
-        if (dir == 'rtl') {
-            sidebarProps.marginLeft = -1 * w + 'px';
+        if (dir === 'rtl') {
+            sidebarProps.marginLeft = `${-1 * w}px`;
         } else {
-            sidebarProps.marginRight = -1 * w + 'px';
+            sidebarProps.marginRight = `${-1 * w}px`;
         }
         sidebarProps.transition = isInitialClose ? 'none' : '.3s ease all';
         body.css(sidebarProps);
@@ -75,7 +73,7 @@ export default function (element) {
     }
 
     function openSidebar() {
-        if (dragOccuring || sidebarState == 'open') return;
+        if (dragOccuring || sidebarState === 'open') return;
         body.css({
             marginRight: 0,
             marginLeft: 0,
@@ -88,7 +86,7 @@ export default function (element) {
     }
 
     function toggleSidebar() {
-        sidebarState == 'open' ? closeSidebar() : openSidebar();
+        sidebarState === 'open' ? closeSidebar() : openSidebar();
         return false;
     }
 
@@ -97,11 +95,11 @@ export default function (element) {
 
         openSidebar: openSidebar,
 
-        startLoad: function () {
+        startLoad: () => {
             main.addClass('is-loading');
         },
 
-        endLoad: function () {
+        endLoad: () => {
             main.removeClass('is-loading');
         },
     };

@@ -1,5 +1,3 @@
-'use strict';
-
 /*
  * Deprecated, only used by the deprecated doc.toc(). Remove together with it in the next major version.
  */

@@ -1,5 +1,3 @@
-'use strict';
-
 import { Log, mixins } from '@fractality/core';
 import chokidar from 'chokidar';
 import Console from './console.js';

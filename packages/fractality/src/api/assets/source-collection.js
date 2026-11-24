@@ -1,5 +1,3 @@
-'use strict';
-
 import _ from 'lodash';
 
 import { utils, mixins } from '@fractality/core';

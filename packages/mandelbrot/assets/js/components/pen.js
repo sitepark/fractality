@@ -1,5 +1,3 @@
-'use strict';
-
 import 'jquery-resizable-dom';
 
 import storage from '../storage.js';
@@ -37,7 +35,7 @@ export default class Pen {
             dblClick = false;
             handleClicks++;
 
-            setTimeout(function () {
+            setTimeout(() => {
                 handleClicks = 0;
             }, 400);
 

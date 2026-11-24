@@ -1,10 +1,8 @@
-'use strict';
-
 import { Log, mixins } from '@fractality/core';
 import anymatch from 'anymatch';
 import fs from 'fs-extra';
 import _ from 'lodash';
-import Path from 'path';
+import Path from 'node:path';
 import throat from 'throat';
 const mix = mixins.mix;
 const Emitter = mixins.emitter;
@@ -49,7 +47,7 @@ export default class Builder extends mix(Emitter) {
                 const setup = fs.remove(this._config.dest).then(() => fs.ensureDir(this._config.dest));
 
                 return setup.then(() => {
-                    let jobs = [];
+                    const jobs = [];
 
                     // 1. Start any static copy jobs
                     jobs.push(
@@ -58,7 +56,7 @@ export default class Builder extends mix(Emitter) {
 
                     // 2. Run the requests in parallel
                     this._requests.forEach((r) => {
-                        let req = this._throttle(() => this._onRequest(r));
+                        const req = this._throttle(() => this._onRequest(r));
                         if (req) {
                             this._jobsCount++;
                             jobs.push(req);
@@ -114,8 +112,8 @@ export default class Builder extends mix(Emitter) {
                 return;
             }
 
-            for (let resolver of routeResolvers) {
-                let resolverSet = _.isFunction(resolver) ? resolver(this._app) : [].concat(resolver);
+            for (const resolver of routeResolvers) {
+                const resolverSet = _.isFunction(resolver) ? resolver(this._app) : [].concat(resolver);
                 for (const params of resolverSet) {
                     const url = this._theme.urlFromRoute(route.handle, params, true);
                     const req = Builder.Request(url, params, route);
@@ -126,8 +124,8 @@ export default class Builder extends mix(Emitter) {
     }
 
     _getLegacyResolvers(routes) {
-        let resolvers = {};
-        for (let route of routes) {
+        const resolvers = {};
+        for (const route of routes) {
             _.set(resolvers, route.handle, [].concat(route.params || null));
         }
         return resolvers;
@@ -150,7 +148,7 @@ export default class Builder extends mix(Emitter) {
 
         if (req.route.view) {
             const ext = this._app.web.get('builder.ext');
-            const dest = req.url + (req.url == '/' ? `index${ext}` : ext);
+            const dest = req.url + (req.url === '/' ? `index${ext}` : ext);
             const context = req.route.context || {};
 
             context.request = req;
@@ -191,7 +189,7 @@ export default class Builder extends mix(Emitter) {
     }
 
     _copy(source, dest, addToJobCount) {
-        let ignored = this._config.static.ignored;
+        const ignored = this._config.static.ignored;
         dest = _.trimEnd(Path.join(this._config.dest, dest), Path.sep);
         source = Path.resolve(source);
         if (addToJobCount !== false) {
@@ -200,9 +198,7 @@ export default class Builder extends mix(Emitter) {
         return fs
             .copy(source, dest, {
                 clobber: true,
-                filter: function (path) {
-                    return !anymatch(ignored, path);
-                },
+                filter: (path) => !anymatch(ignored, path),
             })
             .then(() => {
                 this._updateProgress();
@@ -230,7 +226,7 @@ export default class Builder extends mix(Emitter) {
             throw new Error('You need to specify a build destination in your configuration.');
         }
         for (const stat of this._theme.static()) {
-            if (stat.path == this._config.dest) {
+            if (stat.path === this._config.dest) {
                 throw new Error(
                     `Your build destination directory (${Path.resolve(
                         stat.path,

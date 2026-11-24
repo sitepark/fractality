@@ -1,17 +1,15 @@
-'use strict';
-
 import { utils } from '@fractality/core';
 import _ from 'lodash';
 
 export default function (fractality) {
     return function render(handle) {
         let context;
-        let source = fractality.components;
+        const source = fractality.components;
         if (arguments.length >= 3) {
             context = arguments[1];
-        } else if (arguments.length == 2) {
+        } else if (arguments.length === 2) {
             context = null;
-        } else if (arguments.length == 1) {
+        } else if (arguments.length === 1) {
             throw new Error(`You must provide a component handle to the withContext helper.`);
         }
         const entity = source.find(handle);

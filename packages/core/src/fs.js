@@ -1,7 +1,5 @@
-'use strict';
-
 import { isBinary } from 'istextorbinary';
-import Path from 'path';
+import Path from 'node:path';
 import _ from 'lodash';
 import fs from 'fs-extra';
 import * as utils from './utils.js';
@@ -24,7 +22,7 @@ function isIgnored(filePath) {
 }
 
 export default {
-    describe(dir, relDir, filter, ext) {
+    describe(dir, _relDir, filter, ext) {
         return dirscribe(dir, {
             filter: (filePath) => !isIgnored(filePath) && (!filter || filter(filePath)),
             after: (files) => _.orderBy(files, ['isDirectory', 'order', 'path'], ['desc', 'asc', 'asc']),
@@ -79,23 +77,17 @@ async function build(filePath, stat, root, ext) {
     if (p.isFile) {
         p.lang = utils.lang(filePath);
         p.isBinary = await checkIsBinary(p);
-        p.readBuffer = function () {
-            return fs.readFileSync(filePath);
-        };
-        p.readSync = function () {
+        p.readBuffer = () => fs.readFileSync(filePath);
+        p.readSync = () => {
             const contents = p.isBinary ? fs.readFileSync(filePath) : fs.readFileSync(filePath, 'utf8');
             return contents.toString();
         };
-        p.read = function () {
+        p.read = () => {
             const read = p.isBinary ? fs.readFile(filePath) : fs.readFile(filePath, 'utf8');
-            return read.then(function (contents) {
-                return contents.toString();
-            });
+            return read.then((contents) => contents.toString());
         };
     }
-    p.toString = function () {
-        return p.path;
-    };
+    p.toString = () => p.path;
     p.toJSON = function () {
         const self = _.clone(this);
         return self;
@@ -108,7 +100,7 @@ function dirscribe(root, opts) {
     const filter = opts.filter || (() => true);
     const after = opts.after || ((i) => i);
     const build = opts.build || buildDefault;
-    const recursive = opts.recursive === false ? false : true;
+    const recursive = opts.recursive !== false;
     const ext = opts.ext || undefined;
 
     function readdir(dir) {
@@ -137,13 +129,13 @@ function dirscribe(root, opts) {
         let statCache;
         return fs
             .stat(filePath)
-            .then(function (stat) {
+            .then((stat) => {
                 statCache = stat;
                 return build(filePath, stat, root, ext);
             })
-            .then(function (desc) {
+            .then((desc) => {
                 if (recursive && statCache.isDirectory()) {
-                    return readdir(filePath).then(function (children) {
+                    return readdir(filePath).then((children) => {
                         desc.children = children;
                         return desc;
                     });

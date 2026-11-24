@@ -1,5 +1,3 @@
-'use strict';
-
 import { utils } from '@fractality/core';
 import Handlebars from 'handlebars';
 import _ from 'lodash';
@@ -7,15 +5,15 @@ import _ from 'lodash';
 export default function (fractality) {
     return function render(handle) {
         let context;
-        let source = fractality.components;
+        const source = fractality.components;
         const opts = arguments[arguments.length - 1].hash;
         const root = arguments[arguments.length - 1].data.root;
         const merge = opts.merge || false;
         if (arguments.length >= 3) {
             context = arguments[1];
-        } else if (arguments.length == 2) {
+        } else if (arguments.length === 2) {
             context = null;
-        } else if (arguments.length == 1) {
+        } else if (arguments.length === 1) {
             throw new Error(`You must provide a component handle to the render helper.`);
         }
         const entity = source.find(handle);
@@ -32,7 +30,7 @@ export default function (fractality) {
         }
 
         // fix env for rendered components
-        let env = JSON.parse(JSON.stringify(root._env));
+        const env = JSON.parse(JSON.stringify(root._env));
         _.set(context, '_env', env);
 
         return entity.render(context).then((html) => new Handlebars.SafeString(html));

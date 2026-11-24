@@ -1,5 +1,3 @@
-'use strict';
-
 import Mark from 'mark.js';
 
 export default class Search {
@@ -43,7 +41,7 @@ export default class Search {
 
                     $treeGroup.removeClass('has-search-results');
 
-                    if (!tree._el.has('mark').length && !!key) {
+                    if (!tree._el.has('mark').length && key) {
                         $treeGroup.attr('hidden', true);
                     } else {
                         $treeGroup.removeAttr('hidden');

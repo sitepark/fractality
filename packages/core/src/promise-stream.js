@@ -1,5 +1,3 @@
-'use strict';
-
 import { Readable } from 'readable-stream';
 
 export default class PromiseStream extends Readable {

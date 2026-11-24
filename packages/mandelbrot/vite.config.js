@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import { globbySync } from 'globby';
 import autoprefixer from 'autoprefixer';
 import { defineConfig } from 'vite';

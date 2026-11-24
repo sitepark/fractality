@@ -1,5 +1,3 @@
-'use strict';
-
 import _ from 'lodash';
 import chalk from 'chalk';
 
@@ -64,11 +62,11 @@ export default class Theme {
         const prefix = _.get(this._styles, `${style}.prefix`, '');
         const formatter = _.get(this._styles, `${style}.format`, (str) => str);
         const suffix = _.get(this._styles, `${style}.suffix`, '');
-        return formatter(strip ? _.trim(str) : `${prefix ? prefix + ' ' : ''}${str}${suffix ? ' ' + suffix : ''}`);
+        return formatter(strip ? _.trim(str) : `${prefix ? `${prefix} ` : ''}${str}${suffix ? ` ${suffix}` : ''}`);
     }
 
     style(name) {
-        return this._styles[name] ? this._styles[name] : this._styles['log'];
+        return this._styles[name] ? this._styles[name] : this._styles.log;
     }
 
     delimiter() {

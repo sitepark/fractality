@@ -1,8 +1,6 @@
 #!/usr/bin/env node
 
-'use strict';
-
-import Path from 'path';
+import Path from 'node:path';
 import semver from 'semver';
 import Liftoff from 'liftoff';
 import chalk from 'chalk';
@@ -50,10 +48,10 @@ const FractalCli = new Liftoff({
  * - Otherwise look for the default fractal.config.js or fractal.js
  */
 
-let config = {};
+const config = {};
 try {
     const projectPackage = readJsonSync(Path.join(process.cwd(), 'package.json'));
-    if (projectPackage.fractal && projectPackage.fractal.main) {
+    if (projectPackage.fractal?.main) {
         config.configPath = Path.join(process.cwd(), projectPackage.fractal.main);
     }
 } catch (_e) {
@@ -65,7 +63,7 @@ FractalCli.prepare(config, (env) => {
     FractalCli.execute(env, async (env) => {
         let app;
         let scope = 'global';
-        let configPath = env.configPath;
+        const configPath = env.configPath;
 
         if (configPath) {
             // Config file found - it's running in project context.
@@ -95,7 +93,7 @@ FractalCli.prepare(config, (env) => {
                 return;
             }
 
-            if (!app || !app.__fractal) {
+            if (!app?.__fractal) {
                 // looks like the configuration file is not correctly module.export'ing a fractal instance
                 console.log(
                     `${chalk.red(
@@ -130,7 +128,7 @@ FractalCli.prepare(config, (env) => {
          */
 
         if (notifier.update) {
-            process.on('exit', function () {
+            process.on('exit', () => {
                 app.cli.notify.updateAvailable(notifier.update);
             });
         }

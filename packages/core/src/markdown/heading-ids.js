@@ -1,5 +1,3 @@
-'use strict';
-
 /*
  * Slugify headings and add slug as id
  */

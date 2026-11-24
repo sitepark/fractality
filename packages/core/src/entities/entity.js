@@ -1,5 +1,3 @@
-'use strict';
-
 import _ from 'lodash';
 import EntityMixin from '../mixins/entity.js';
 import Heritable from '../mixins/heritable.js';
@@ -49,9 +47,9 @@ export default class Entity extends mix(Heritable, EntityMixin) {
 
     static defineProperty(key, opts) {
         if (_.isPlainObject(opts)) {
-            Object.defineProperty(this.prototype, key, opts);
+            Object.defineProperty(Entity.prototype, key, opts);
         } else {
-            Object.defineProperty(this.prototype, key, {
+            Object.defineProperty(Entity.prototype, key, {
                 enumerable: true,
                 writable: true,
                 value: opts,

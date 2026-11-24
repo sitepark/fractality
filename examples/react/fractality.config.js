@@ -1,8 +1,6 @@
-'use strict';
-
 import create from '@fractality/fractality';
 import mandelbrot from '@fractality/mandelbrot';
-import path from 'path';
+import path from 'node:path';
 import createReactAdapter from '@fractality/react';
 
 const __dirname = import.meta.dirname;

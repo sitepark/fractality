@@ -1,5 +1,3 @@
-'use strict';
-
 import _ from 'lodash';
 import React from 'react';
 import { createRequire } from 'node:module';
@@ -21,7 +19,7 @@ class ReactAdapter extends Adapter {
         super(null, source);
         this._app = app;
 
-        if (options.renderMethod == 'renderToString') {
+        if (options.renderMethod === 'renderToString') {
             this._renderMethod = ReactDOMServer.renderToString;
         } else {
             this._renderMethod = ReactDOMServer.renderToStaticMarkup;
@@ -81,7 +79,7 @@ class ReactAdapter extends Adapter {
         }, children);
     }
 
-    render(path, str, context, meta = {}) {
+    render(path, _str, context, meta = {}) {
         try {
             setEnv('_self', meta.self, context);
             setEnv('_target', meta.target, context);
@@ -104,7 +102,7 @@ class ReactAdapter extends Adapter {
         }
     }
 
-    renderLayout(path, str, context, meta = {}) {
+    renderLayout(path, _str, context, meta = {}) {
         const adapter = {
             componentName: this.nameCache[`@${meta.target.handle}`],
         };
@@ -118,7 +116,7 @@ class ReactAdapter extends Adapter {
         const element = React.createElement(component, context);
         const parentElements = this.renderParentElements(element, meta);
         // DOCTYPE is not allowed to be a part of a React component, so it must be prepended here.
-        const html = '<!DOCTYPE html>' + ReactDOMServer.renderToStaticMarkup(parentElements);
+        const html = `<!DOCTYPE html>${ReactDOMServer.renderToStaticMarkup(parentElements)}`;
 
         return Promise.resolve(html);
     }
@@ -126,7 +124,7 @@ class ReactAdapter extends Adapter {
     getPath(assetPath, root) {
         const fractality = this._source._app;
 
-        if (!root || !root.env || root.env.server) {
+        if (!root?.env || root.env.server) {
             return assetPath;
         }
 
@@ -177,7 +175,7 @@ export default function (config = {}) {
 
 const requireModule = (path) => {
     const require = createRequire(import.meta.url);
-    let component = require(path);
+    const component = require(path);
 
     return component.default || component;
 };

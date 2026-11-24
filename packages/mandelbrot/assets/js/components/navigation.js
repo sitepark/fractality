@@ -1,5 +1,3 @@
-'use strict';
-
 import storage from '../storage.js';
 import utils from '../utils.js';
 import events from '../events.js';
@@ -27,7 +25,7 @@ export default class Navigation {
             this._mainPanel.scrollTop(scrollPos);
         });
 
-        events.on('main-content-preload', (e, url) => {
+        events.on('main-content-preload', (_e, url) => {
             const handle = getHandleFromUrl(url);
 
             if (!handle || !this.hasVariantPanel(handle)) {

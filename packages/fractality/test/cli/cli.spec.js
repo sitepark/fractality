@@ -5,7 +5,7 @@ import Console from '../../src/cli/console';
 describe('Cli', () => {
     /** @type Cli */
     let cli;
-    let app = create();
+    const app = create();
 
     beforeEach(() => {
         cli = new Cli(app);
@@ -26,7 +26,7 @@ describe('Cli', () => {
         it.todo('sets the CLI theme');
     });
 
-    for (let method of ['log', 'error', 'warn', 'success', 'debug']) {
+    for (const method of ['log', 'error', 'warn', 'success', 'debug']) {
         describe(`.${method}()`, () => {
             it(`calls the console ${method} method`, () => {
                 const spy = vi.spyOn(cli.console, method);

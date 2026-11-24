@@ -1,6 +1,4 @@
-'use strict';
-
-import Path from 'path';
+import Path from 'node:path';
 import { describe, it, expect } from 'vitest';
 
 import filters from '../src/filters.js';

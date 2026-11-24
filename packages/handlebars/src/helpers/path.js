@@ -1,5 +1,3 @@
-'use strict';
-
 import { utils } from '@fractality/core';
 import Handlebars from 'handlebars';
 import _ from 'lodash';
@@ -14,10 +12,10 @@ export default function (fractality) {
         // Other template adapters do not have this implemented either.
         // Remove in next major release if noone understands.
         if (path.includes('{{')) {
-            let context = _.defaults(
+            const context = _.defaults(
                 {},
                 this,
-                _.pickBy(root, (item, key) => key.startsWith('_')),
+                _.pickBy(root, (_item, key) => key.startsWith('_')),
             );
             const tpl = Handlebars.compile(path, {
                 data: false,
@@ -25,7 +23,7 @@ export default function (fractality) {
             path = tpl(context);
         }
 
-        if (!root || !root._env || root._env.server) {
+        if (!root?._env || root._env.server) {
             return path;
         }
 

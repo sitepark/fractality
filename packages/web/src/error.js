@@ -1,5 +1,3 @@
-'use strict';
-
 export default class WebError extends Error {
     constructor(statusCode, message) {
         statusCode = statusCode || 500;

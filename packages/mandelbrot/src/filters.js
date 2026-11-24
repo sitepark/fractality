@@ -1,9 +1,7 @@
-'use strict';
-
-import Path from 'path';
+import Path from 'node:path';
 
 export default function (theme, env, app) {
-    env.engine.addFilter('url', function (item) {
+    env.engine.addFilter('url', (item) => {
         if (item.isDoc) {
             if (!item.path) {
                 return '/';
@@ -19,7 +17,7 @@ export default function (theme, env, app) {
         throw new Error(`Cannot generate URL for ${item}`);
     });
 
-    env.engine.addFilter('beautify', function (str) {
+    env.engine.addFilter('beautify', (str) => {
         /*
         TODO: Removed for now, maybe replace with prettier?
         const defaults = {
@@ -41,29 +39,29 @@ export default function (theme, env, app) {
         return str;
     });
 
-    env.engine.addFilter('resourceUrl', function (str) {
+    env.engine.addFilter('resourceUrl', (str) => {
         const relative = Path.relative(Path.resolve(app.components.get('path')), Path.resolve(str));
         // A URL path always uses '/', whatever the platform separator is.
         return `/${app.web.get('assets.mount')}/components/${relative.split(Path.sep).join('/')}`;
     });
 
-    env.engine.addFilter('componentPath', function (str) {
-        return Path.relative(
+    env.engine.addFilter('componentPath', (str) =>
+        Path.relative(
             process.cwd(),
             Path.join(
                 app.components.get('path'),
                 Path.relative(Path.resolve(app.components.get('path')), Path.resolve(str)),
             ),
-        );
-    });
+        ),
+    );
 
     env.engine.addFilter('fileSize', function formatBytes(bytes, decimals) {
-        if (bytes == 0) return '0 Byte';
-        let k = 1000; // or 1024 for binary
-        let dm = decimals + 1 || 3;
-        let sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-        let i = Math.floor(Math.log(bytes) / Math.log(k));
-        return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+        if (bytes === 0) return '0 Byte';
+        const k = 1000; // or 1024 for binary
+        const dm = decimals + 1 || 3;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return `${parseFloat((bytes / k ** i).toFixed(dm))} ${sizes[i]}`;
     });
 
     env.engine.addFilter('linkRefs', function (str, item) {
@@ -88,22 +86,22 @@ export default function (theme, env, app) {
         });
     });
 
-    env.engine.addFilter('hexToRgb', function (h) {
+    env.engine.addFilter('hexToRgb', (h) => {
         let r = 0,
             g = 0,
             b = 0;
 
         // 3 digits
-        if (h.length == 4) {
-            r = '0x' + h[1] + h[1];
-            g = '0x' + h[2] + h[2];
-            b = '0x' + h[3] + h[3];
+        if (h.length === 4) {
+            r = `0x${h[1]}${h[1]}`;
+            g = `0x${h[2]}${h[2]}`;
+            b = `0x${h[3]}${h[3]}`;
 
             // 6 digits
-        } else if (h.length == 7) {
-            r = '0x' + h[1] + h[2];
-            g = '0x' + h[3] + h[4];
-            b = '0x' + h[5] + h[6];
+        } else if (h.length === 7) {
+            r = `0x${h[1]}${h[2]}`;
+            g = `0x${h[3]}${h[4]}`;
+            b = `0x${h[5]}${h[6]}`;
         }
 
         return `${parseInt(r, 16)}, ${parseInt(g, 16)}, ${parseInt(b, 16)}`;

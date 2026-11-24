@@ -1,5 +1,3 @@
-'use strict';
-
 export default function (fractality) {
     function ContextExtension() {
         this.tags = ['context'];

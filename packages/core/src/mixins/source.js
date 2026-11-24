@@ -1,9 +1,7 @@
-'use strict';
-
 import _ from 'lodash';
 import chokidar from 'chokidar';
 import anymatch from 'anymatch';
-import Path from 'path';
+import Path from 'node:path';
 import { Mixin as mixin } from 'mixwith';
 import { mix } from 'mixwith';
 
@@ -30,7 +28,7 @@ export default mixin(
                 this._fileTree = null;
             }
 
-            initSource(name, config, app) {
+            initSource(name, _config, app) {
                 this._app = app;
                 this.name = utils.slugify(name.toLowerCase());
             }
@@ -188,9 +186,9 @@ export default mixin(
             }
 
             _resolveTreeContext(tree) {
-                let pending = [];
-                for (let item of tree.flattenDeep()) {
-                    let resolvedContext = resolver.context(item.context, this).then((ctx) => {
+                const pending = [];
+                for (const item of tree.flattenDeep()) {
+                    const resolvedContext = resolver.context(item.context, this).then((ctx) => {
                         item.setContext(ctx);
                         return ctx;
                     });

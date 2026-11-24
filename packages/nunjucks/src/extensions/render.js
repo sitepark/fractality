@@ -1,5 +1,3 @@
-'use strict';
-
 import nunjucks from 'nunjucks';
 import { utils } from '@fractality/core';
 
@@ -38,7 +36,7 @@ export default function (fractality) {
                 .resolve(context)
                 .then((context) => {
                     // fix env for rendered components
-                    let env = JSON.parse(JSON.stringify(rootContext._env));
+                    const env = JSON.parse(JSON.stringify(rootContext._env));
                     context._env = env;
                     return entity.render(context).then((html) => {
                         callback(null, new nunjucks.runtime.SafeString(html));

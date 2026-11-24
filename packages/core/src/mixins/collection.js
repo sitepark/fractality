@@ -1,5 +1,3 @@
-'use strict';
-
 import _ from 'lodash';
 import Stream from '../array-stream.js';
 import { Mixin as mixin } from 'mixwith';
@@ -320,7 +318,7 @@ export default mixin(
             }
 
             _makePredicate() {
-                if (arguments.length == 1 && _.isString(arguments[0]) && arguments[0].startsWith('@')) {
+                if (arguments.length === 1 && _.isString(arguments[0]) && arguments[0].startsWith('@')) {
                     return _.iteratee(['handle', arguments[0].replace('@', '')]);
                 }
                 if (arguments.length === 2) {

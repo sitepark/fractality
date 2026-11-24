@@ -1,8 +1,8 @@
-import path from 'path';
+import path from 'node:path';
 
 import resolveFrom from 'resolve-from';
 import parentModule from 'parent-module';
-import { createRequire } from 'module';
+import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 
 const resolve = (moduleId) => {
@@ -26,7 +26,7 @@ const clearModule = (moduleId) => {
 
     // Delete itself from module parent
     // Module parent should always be the adapter file that requires components
-    if (require.cache[filePath] && require.cache[filePath].parent) {
+    if (require.cache[filePath]?.parent) {
         let i = require.cache[filePath].parent.children.length;
 
         while (i--) {

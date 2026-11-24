@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * @param {import("../../fractal.js").Fractality} fractality
  */
@@ -32,7 +30,7 @@ export default function (fractality) {
                 console.persist();
                 const e = data.errorCount;
                 console[e ? 'warn' : 'success'](
-                    `Build finished with ${e === 0 ? 'no' : e} error${e == 1 ? '' : 's'}.`,
+                    `Build finished with ${e === 0 ? 'no' : e} error${e === 1 ? '' : 's'}.`,
                 ).unslog();
             } catch (e) {
                 console.error(e).unslog().br();

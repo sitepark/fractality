@@ -1,8 +1,6 @@
-'use strict';
-
 import * as Fractality from '@fractality/core';
 import _ from 'lodash';
-import Path from 'path';
+import Path from 'node:path';
 import Twig from 'twig';
 const utils = Fractality.utils;
 import adapterUtils from './utils.js';
@@ -20,17 +18,17 @@ class TwigAdapter extends Fractality.Adapter {
 
         source.set('engine', '@fractality/twig');
 
-        let self = this;
+        const self = this;
 
-        Twig.extend(function (Twig) {
+        Twig.extend((Twig) => {
             /*
              * Register a Fractality template loader. Locations can be handles or paths.
              */
-            Twig.Templates.registerLoader(self._loaderName, function (location, params) {
+            Twig.Templates.registerLoader(self._loaderName, (location, params) => {
                 if (params.precompiled) {
                     params.data = params.precompiled;
                 } else {
-                    let view = adapterUtils.isHandle(location, self._config.handlePrefix)
+                    const view = adapterUtils.isHandle(location, self._config.handlePrefix)
                         ? self.getView(location)
                         : _.find(self.views, { path: Path.join(source.fullPath, location) });
                     if (!view) {
@@ -56,7 +54,7 @@ class TwigAdapter extends Fractality.Adapter {
                     if (adapterUtils.isHandle(this.id, self._config.handlePrefix)) {
                         handle = this.id;
                     } else {
-                        let view = _.find(self.views, { path: Path.join(source.fullPath, this.id) });
+                        const view = _.find(self.views, { path: Path.join(source.fullPath, this.id) });
                         if (view) {
                             handle = view.handle;
                         }
@@ -80,7 +78,7 @@ class TwigAdapter extends Fractality.Adapter {
 
                 function setKeys(obj) {
                     obj._keys = _.compact(
-                        _.map(obj, (val, key) => {
+                        _.map(obj, (_val, key) => {
                             return _.isString(key) && !key.startsWith('_') ? key : undefined;
                         }),
                     );
@@ -107,7 +105,7 @@ class TwigAdapter extends Fractality.Adapter {
             self.on('wrapper:removed', unCache);
 
             function unCache(view) {
-                let path = Path.relative(source.fullPath, _.isString(view) ? view : view.path);
+                const path = Path.relative(source.fullPath, _.isString(view) ? view : view.path);
                 if (view.handle && Twig.Templates.registry[view.handle]) {
                     delete Twig.Templates.registry[view.handle];
                 }
@@ -123,8 +121,6 @@ class TwigAdapter extends Fractality.Adapter {
     }
 
     render(path, str, context, meta) {
-        let self = this;
-
         meta = meta || {};
 
         if (!this._config.pristine) {
@@ -134,25 +130,25 @@ class TwigAdapter extends Fractality.Adapter {
             setEnv('_config', this._app.config(), context);
         }
 
-        return new Promise(function (resolve, reject) {
-            let tplPath = path ? Path.relative(self._source.fullPath, path) : undefined;
+        return new Promise((resolve, reject) => {
+            const tplPath = path ? Path.relative(this._source.fullPath, path) : undefined;
 
             try {
-                let template = self.engine.twig({
-                    method: self._config.method === 'fractal' ? self._loaderName : self._config.method,
+                const template = this.engine.twig({
+                    method: this._config.method === 'fractal' ? this._loaderName : this._config.method,
                     async: false,
                     rethrow: true,
                     name:
-                        self._config.method === 'fractal'
+                        this._config.method === 'fractal'
                             ? meta.self
-                                ? `${self._config.handlePrefix}${meta.self.handle}`
+                                ? `${this._config.handlePrefix}${meta.self.handle}`
                                 : tplPath
                             : undefined,
                     path: path,
                     precompiled: str,
-                    base: self._config.base,
-                    strict_variables: self._config.strict_variables,
-                    namespaces: self._config.namespaces,
+                    base: this._config.base,
+                    strict_variables: this._config.strict_variables,
+                    namespaces: this._config.namespaces,
                 });
                 resolve(template.render(context));
             } catch (e) {
@@ -182,33 +178,33 @@ export default function (config) {
     return {
         register(source, app) {
             if (!config.pristine) {
-                _.each(functions(app) || {}, function (func, name) {
+                _.each(functions(app) || {}, (func, name) => {
                     Twig.extendFunction(name, func);
                 });
-                _.each(filters(app), function (filter, name) {
+                _.each(filters(app), (filter, name) => {
                     Twig.extendFilter(name, filter);
                 });
-                _.each(tests(app), function (test, name) {
+                _.each(tests(app), (test, name) => {
                     Twig.extendTest(name, test);
                 });
-                Twig.extend(function (Twig) {
-                    _.each(tags(app, config), function (tag) {
+                Twig.extend((Twig) => {
+                    _.each(tags(app, config), (tag) => {
                         Twig.exports.extendTag(tag(Twig));
                     });
                 });
             }
 
-            _.each(config.functions || {}, function (func, name) {
+            _.each(config.functions || {}, (func, name) => {
                 Twig.extendFunction(name, func);
             });
-            _.each(config.filters || {}, function (filter, name) {
+            _.each(config.filters || {}, (filter, name) => {
                 Twig.extendFilter(name, filter);
             });
-            _.each(config.tests || {}, function (test, name) {
+            _.each(config.tests || {}, (test, name) => {
                 Twig.extendTest(name, test);
             });
-            Twig.extend(function (Twig) {
-                _.each(config.tags || {}, function (tag) {
+            Twig.extend((Twig) => {
+                _.each(config.tags || {}, (tag) => {
                     Twig.exports.extendTag(tag(Twig));
                 });
             });

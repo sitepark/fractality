@@ -1,8 +1,6 @@
-'use strict';
-
-import Path from 'path';
-import fs from 'fs';
-import crypto from 'crypto';
+import Path from 'node:path';
+import fs from 'node:fs';
+import crypto from 'node:crypto';
 import minimist from 'minimist';
 import * as linguistLanguages from 'linguist-languages';
 import _ from 'lodash';
@@ -110,7 +108,7 @@ export function mergeProp(prop, upstream) {
  * utils.defaultsDeep(src, defaults);
  */
 export function defaultsDeep() {
-    let output = {};
+    const output = {};
 
     _.toArray(arguments)
         .reverse()
@@ -143,11 +141,11 @@ export function relUrlPath(toPath, fromPath, opts) {
     }
 
     fromPath = getStaticPagePath(fromPath).replace(/\\/g, '/');
-    toPath = ('/' + _.trim(Path.extname(toPath) ? toPath : getStaticPagePath(toPath), '/')).replace(/\\/g, '/');
+    toPath = `/${_.trim(Path.extname(toPath) ? toPath : getStaticPagePath(toPath), '/')}`.replace(/\\/g, '/');
 
     let outputPath;
 
-    if (toPath == '/') {
+    if (toPath === '/') {
         outputPath = Path.relative(fromPath, toPath).replace(/\\/g, '/');
     } else {
         const relativePath = Path.relative(fromPath, toPath);
@@ -167,11 +165,11 @@ export function relUrlPath(toPath, fromPath, opts) {
     // `Failed to launch 'foo:btn' because the scheme does not have a registered handler`
     // and halts navigation. Adding the `./`, giving it a relative path to the current folder
     // stops the browser interpreting the link as an app link, behaves as a normal link
-    return opts && opts.relativeToCurrentFolder && !outputPath.startsWith('.') ? `./${outputPath}` : outputPath;
+    return opts?.relativeToCurrentFolder && !outputPath.startsWith('.') ? `./${outputPath}` : outputPath;
 
     function getStaticPagePath(url) {
-        if (url == '/') {
-            return ext == '' ? '/' : '/index.PLACEHOLDER';
+        if (url === '/') {
+            return ext === '' ? '/' : '/index.PLACEHOLDER';
         }
         const parts = Path.parse(url);
         return `${parts.dir}/${parts.name}.PLACEHOLDER`;

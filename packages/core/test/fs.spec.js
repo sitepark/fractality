@@ -1,8 +1,6 @@
-'use strict';
-
-import Path from 'path';
-import os from 'os';
-import fsp from 'fs/promises';
+import Path from 'node:path';
+import os from 'node:os';
+import fsp from 'node:fs/promises';
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 
 import fs, { pathSegments } from '../src/fs.js';

@@ -1,5 +1,3 @@
-'use strict';
-
 import nunjucks from 'nunjucks';
 
 export default function (fractality) {

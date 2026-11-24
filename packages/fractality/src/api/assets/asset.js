@@ -1,6 +1,4 @@
-'use strict';
-
-import Path from 'path';
+import Path from 'node:path';
 import File from '../files/file.js';
 
 export default class Asset extends File {

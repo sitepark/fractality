@@ -1,11 +1,9 @@
-'use strict';
-
 import { shell, utils } from '@fractality/core';
 import { execa } from 'execa';
 import fs from 'fs-extra';
 import Handlebars from 'handlebars';
 import * as inquirer from '@inquirer/prompts';
-import Path from 'path';
+import Path from 'node:path';
 
 const __dirname = import.meta.dirname;
 

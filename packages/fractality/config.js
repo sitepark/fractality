@@ -1,5 +1,3 @@
-'use strict';
-
 import mandelbrot from '@fractality/mandelbrot';
 import handlebars from '@fractality/handlebars';
 import { highlighter } from '@fractality/core';

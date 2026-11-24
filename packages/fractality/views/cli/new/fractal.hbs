@@ -22,11 +22,11 @@ export default fractality;
 fractality.set('project.title', '{{ projectTitle }}');
 {{/if}}
 
-{{#if componentsDir}}
+{{#if componentDir}}
 /*
  * Tell Fractality where to look for components.
  */
-fractality.components.set('path', path.join(__dirname, '{{ componentsDir }}'));
+fractality.components.set('path', path.join(__dirname, '{{ componentDir }}'));
 {{/if}}
 
 {{#if docsDir}}

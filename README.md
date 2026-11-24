@@ -125,9 +125,10 @@ Useful scripts, all run from root:
 
 - `pnpm test` — run the test suite
 - `pnpm validate` — lint JavaScript (ESLint) and SCSS (Stylelint)
-- `pnpm format` — format everything with Prettier
+- `pnpm format` — format everything with [Biome](https://biomejs.dev)
+- `pnpm format:check` — report unformatted files without changing them
 
-Prettier also runs automatically on staged files via a Husky pre-commit hook, so formatting is taken care of for you. The linters are not part of the hook — run `pnpm validate` yourself before pushing.
+Biome also formats staged files automatically via a Husky pre-commit hook, so formatting is taken care of for you. Biome only formats here; linting stays with ESLint and Stylelint. The linters are not part of the hook — run `pnpm validate` yourself before pushing.
 
 ### Releasing
 

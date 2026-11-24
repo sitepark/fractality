@@ -3,8 +3,7 @@ import config from './config.js';
 export default {
     debounce(func, wait, immediate) {
         var timeout;
-        return function () {
-            var args = arguments;
+        return function (...args) {
             var later = () => {
                 timeout = null;
                 if (!immediate) func.apply(this, args);

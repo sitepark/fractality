@@ -3,17 +3,20 @@ import Handlebars from 'handlebars';
 import _ from 'lodash';
 
 export default function (fractality) {
-    return function render(handle) {
+    // Handlebars appends its options object, so args is [handle, context?, options].
+    return function render(...args) {
+        const handle = args[0];
         let context;
         const source = fractality.components;
-        const opts = arguments[arguments.length - 1].hash;
-        const root = arguments[arguments.length - 1].data.root;
+        const options = args[args.length - 1];
+        const opts = options.hash;
+        const root = options.data.root;
         const merge = opts.merge || false;
-        if (arguments.length >= 3) {
-            context = arguments[1];
-        } else if (arguments.length === 2) {
+        if (args.length >= 3) {
+            context = args[1];
+        } else if (args.length === 2) {
             context = null;
-        } else if (arguments.length === 1) {
+        } else if (args.length === 1) {
             throw new Error(`You must provide a component handle to the render helper.`);
         }
         const entity = source.find(handle);

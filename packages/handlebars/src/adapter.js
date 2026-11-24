@@ -87,8 +87,7 @@ export default function (config) {
             };
 
             const invokePartial = hbs.VM.invokePartial;
-            hbs.VM.invokePartial = function () {
-                const args = Array.from(arguments);
+            hbs.VM.invokePartial = (...args) => {
                 const data = args[2].data;
 
                 /*

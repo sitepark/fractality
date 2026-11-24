@@ -102,8 +102,8 @@ export default class Server extends mix(Emitter) {
         });
     }
 
-    use() {
-        this._server.use(...arguments);
+    use(...args) {
+        this._server.use(...args);
     }
 
     stop() {

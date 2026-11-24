@@ -26,13 +26,15 @@ export default class EntitySource extends mix(Source, Heritable) {
         return this.newSelf(this.toArray().filter((i) => !i.isCollection));
     }
 
-    engine(adapter) {
-        if (!arguments.length) {
+    engine(...args) {
+        // Called with no arguments it is a getter; engine(undefined) must still reach the setter path.
+        if (!args.length) {
             if (this._engine === null) {
                 return this.engine(this.get('engine')); // load the default template engine
             }
             return this._engine;
         }
+        let adapter = args[0];
         // TODO: Breaking Change
         // if (_.isString(adapter)) {
         //     adapter = require(adapter);

@@ -3,8 +3,10 @@ import Handlebars from 'handlebars';
 import _ from 'lodash';
 
 export default function (fractality) {
-    return function staticPath(path) {
-        const options = Array.from(arguments).pop();
+    // Handlebars appends its options object as the last argument.
+    return function staticPath(...args) {
+        let path = args[0];
+        const options = args[args.length - 1];
         const root = options.data.root;
 
         // TODO: what is this for?

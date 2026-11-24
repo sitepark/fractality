@@ -59,11 +59,10 @@ export default class ComponentSource extends EntitySource {
         return this.newSelf(items);
     }
 
-    find() {
-        if (this.size === 0 || arguments.length === 0) {
+    find(...args) {
+        if (this.size === 0 || args.length === 0) {
             return;
         }
-        const args = Array.from(arguments);
         if (args.length === 1 && _.isString(args[0]) && !args[0].startsWith('@') && args[0].indexOf('.') !== -1) {
             return this.findFile(args[0]);
         }

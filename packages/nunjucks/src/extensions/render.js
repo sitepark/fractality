@@ -12,9 +12,8 @@ export default function (fractality) {
             return new nodes.CallExtensionAsync(this, 'run', args);
         };
 
-        this.run = function () {
+        this.run = (...args) => {
             const source = fractality.components;
-            const args = Array.from(arguments);
             const rootContext = args[0].ctx;
             const callback = args.pop();
             args.shift();

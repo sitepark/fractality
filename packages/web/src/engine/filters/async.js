@@ -2,8 +2,7 @@ export default function () {
     return {
         name: 'async',
         async: true,
-        filter() {
-            const args = Array.from(arguments);
+        filter(...args) {
             const cb = args.pop();
             if (!args[1]) {
                 Promise.resolve(args[0])

@@ -107,24 +107,22 @@ export function mergeProp(prop, upstream) {
  *
  * utils.defaultsDeep(src, defaults);
  */
-export function defaultsDeep() {
+export function defaultsDeep(...sources) {
     const output = {};
 
-    _.toArray(arguments)
-        .reverse()
-        .forEach((item) => {
-            _.mergeWith(output, item, (objectValue, sourceValue) => {
-                if (_.isArray(sourceValue)) {
-                    return _.cloneDeep(sourceValue);
-                }
-                if (!_.isPlainObject(sourceValue) || !_.isPlainObject(objectValue)) {
-                    return sourceValue;
-                }
-                if (_.isUndefined(sourceValue)) {
-                    return objectValue;
-                }
-            });
+    sources.reverse().forEach((item) => {
+        _.mergeWith(output, item, (objectValue, sourceValue) => {
+            if (_.isArray(sourceValue)) {
+                return _.cloneDeep(sourceValue);
+            }
+            if (!_.isPlainObject(sourceValue) || !_.isPlainObject(objectValue)) {
+                return sourceValue;
+            }
+            if (_.isUndefined(sourceValue)) {
+                return objectValue;
+            }
         });
+    });
 
     return output;
 }

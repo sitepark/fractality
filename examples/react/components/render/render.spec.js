@@ -35,7 +35,7 @@ describe('render', () => {
 
     it('renders with preview layout', async () => {
         const render = await fractality.components.find('@render').render(undefined, undefined, { preview: true });
-        expect(render).toMatch(new RegExp('^<!DOCTYPE html>?'));
+        expect(render).toMatch(/^<!DOCTYPE html>?/);
         expect(render).toMatchSnapshot();
     });
 });

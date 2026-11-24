@@ -1,7 +1,5 @@
-'use strict';
-
 import _ from 'lodash';
-import path from 'path';
+import path from 'node:path';
 import { utils } from '@fractality/core';
 import adapterUtils from '../utils.js';
 
@@ -11,78 +9,76 @@ import adapterUtils from '../utils.js';
  *  Format: {% render "@component" with {some: 'values'} %}
  */
 export default function (fractality, config) {
-    return function (Twig) {
-        return {
-            type: 'rendertag',
-            regex: /^render\s+(.+?)\s*(?:with\s+([\S\s]+?))?\s*$/,
-            next: [],
-            open: true,
-            compile: function (token) {
-                const match = token.match,
-                    handle = match[1].trim(),
-                    context = match[2];
+    return (Twig) => ({
+        type: 'rendertag',
+        regex: /^render\s+(.+?)\s*(?:with\s+([\S\s]+?))?\s*$/,
+        next: [],
+        open: true,
+        compile: function (token) {
+            const match = token.match,
+                handle = match[1].trim(),
+                context = match[2];
 
-                token.stack = Twig.expression.compile.apply(this, [
+            token.stack = Twig.expression.compile.apply(this, [
+                {
+                    type: Twig.expression.type.expression,
+                    value: handle,
+                },
+            ]).stack;
+
+            if (context !== undefined) {
+                token.contextStack = Twig.expression.compile.apply(this, [
                     {
                         type: Twig.expression.type.expression,
-                        value: handle,
+                        value: context.trim(),
                     },
                 ]).stack;
+            }
 
-                if (context !== undefined) {
-                    token.contextStack = Twig.expression.compile.apply(this, [
-                        {
-                            type: Twig.expression.type.expression,
-                            value: context.trim(),
-                        },
-                    ]).stack;
-                }
+            delete token.match;
+            return token;
+        },
+        parse: function (token, context, chain) {
+            const file = Twig.expression.parse.apply(this, [token.stack, context]);
+            let handle = path.parse(file).name;
 
-                delete token.match;
-                return token;
-            },
-            parse: function (token, context, chain) {
-                const file = Twig.expression.parse.apply(this, [token.stack, context]);
-                let handle = path.parse(file).name;
+            if (adapterUtils.isHandle(handle, config.handlePrefix)) {
+                handle = adapterUtils.replaceHandlePrefix(handle, config.handlePrefix);
+            }
 
-                if (adapterUtils.isHandle(handle, config.handlePrefix)) {
-                    handle = adapterUtils.replaceHandlePrefix(handle, config.handlePrefix);
-                }
+            if (!handle.startsWith('@')) {
+                throw new Error(`You must provide a valid component handle to the render tag.`);
+            }
 
-                if (!handle.startsWith('@')) {
-                    throw new Error(`You must provide a valid component handle to the render tag.`);
-                }
+            const entity = fractality.components.find(handle);
 
-                const entity = fractality.components.find(handle);
+            if (!entity) {
+                throw new Error(`Could not render component '${handle}' - component not found.`);
+            }
 
-                if (!entity) {
-                    throw new Error(`Could not render component '${handle}' - component not found.`);
-                }
+            let innerContext = _.cloneDeep(
+                entity.isComponent ? entity.variants().default().getContext() : entity.getContext(),
+            );
 
-                let innerContext = _.cloneDeep(
-                    entity.isComponent ? entity.variants().default().getContext() : entity.getContext(),
+            if (token.contextStack !== undefined) {
+                innerContext = utils.defaultsDeep(
+                    Twig.expression.parse.apply(this, [token.contextStack, context]),
+                    innerContext,
                 );
+            }
 
-                if (token.contextStack !== undefined) {
-                    innerContext = utils.defaultsDeep(
-                        Twig.expression.parse.apply(this, [token.contextStack, context]),
-                        innerContext,
-                    );
-                }
+            let template;
 
-                let template;
+            if (file instanceof Twig.Template) {
+                template = file;
+            } else {
+                template = this.template.importFile(file);
+            }
 
-                if (file instanceof Twig.Template) {
-                    template = file;
-                } else {
-                    template = this.template.importFile(file);
-                }
-
-                return {
-                    chain: chain,
-                    output: template.render(innerContext),
-                };
-            },
-        };
-    };
+            return {
+                chain: chain,
+                output: template.render(innerContext),
+            };
+        },
+    });
 }

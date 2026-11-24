@@ -1,5 +1,3 @@
-'use strict';
-
 /*
  * Slugify headings and add slug as id
  */
@@ -34,7 +32,7 @@ class Slugger {
     }
 }
 
-function unescape(html) {
+function unescapeHtml(html) {
     return html.replace(/&(#(?:\d+)|(?:#x[0-9A-Fa-f]+)|(?:\w+));?/gi, (_, n) => {
         n = n.toLowerCase();
         if (n === 'colon') {
@@ -62,7 +60,7 @@ export default function markedHeadingIds() {
                     slugger = new Slugger();
                     sluggers.set(this.parser, slugger);
                 }
-                const id = slugger.slug(unescape(this.parser.parseInline(tokens, this.parser.textRenderer)));
+                const id = slugger.slug(unescapeHtml(this.parser.parseInline(tokens, this.parser.textRenderer)));
                 return `<h${depth} id="${id}">${this.parser.parseInline(tokens)}</h${depth}>\n`;
             },
         },

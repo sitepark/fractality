@@ -1,6 +1,4 @@
-'use strict';
-
-export default function (app, engine) {
+export default function (_app, engine) {
     return {
         name: 'render',
         async: false,

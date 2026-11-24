@@ -1,5 +1,3 @@
-'use strict';
-
 import nunjucks from 'nunjucks';
 import { utils } from '@fractality/core';
 
@@ -14,9 +12,8 @@ export default function (fractality) {
             return new nodes.CallExtensionAsync(this, 'run', args);
         };
 
-        this.run = function () {
+        this.run = (...args) => {
             const source = fractality.components;
-            const args = Array.from(arguments);
             const rootContext = args[0].ctx;
             const callback = args.pop();
             args.shift();
@@ -38,7 +35,7 @@ export default function (fractality) {
                 .resolve(context)
                 .then((context) => {
                     // fix env for rendered components
-                    let env = JSON.parse(JSON.stringify(rootContext._env));
+                    const env = JSON.parse(JSON.stringify(rootContext._env));
                     context._env = env;
                     return entity.render(context).then((html) => {
                         callback(null, new nunjucks.runtime.SafeString(html));

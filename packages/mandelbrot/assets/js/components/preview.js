@@ -1,5 +1,3 @@
-'use strict';
-
 import 'jquery-resizable-dom';
 
 import storage from '../storage.js';
@@ -24,7 +22,7 @@ export default class Preview {
         const initialWidth = storage.get(`preview.width`, this._resizer.outerWidth());
         let handleClicks = 0;
 
-        if (initialWidth == this._el.outerWidth()) {
+        if (initialWidth === this._el.outerWidth()) {
             this._resizer.css('width', '100%');
         } else {
             this._resizer.outerWidth(initialWidth);
@@ -35,7 +33,7 @@ export default class Preview {
         this._handle.on('mousedown', () => {
             handleClicks++;
 
-            setTimeout(function () {
+            setTimeout(() => {
                 handleClicks = 0;
             }, 400);
 
@@ -54,7 +52,7 @@ export default class Preview {
                 events.trigger('start-dragging');
             },
             onDragEnd: () => {
-                if (this._resizer.outerWidth() == this._el.outerWidth()) {
+                if (this._resizer.outerWidth() === this._el.outerWidth()) {
                     this._resizer.css('width', '100%');
                 }
                 storage.set(`preview.width`, this._resizer.outerWidth());

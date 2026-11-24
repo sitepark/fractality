@@ -1,7 +1,5 @@
-'use strict';
-
 import _ from 'lodash';
-import Path from 'path';
+import Path from 'node:path';
 import mix from './mixins/mix.js';
 import Emitter from './mixins/emitter.js';
 import * as utils from './utils.js';
@@ -43,7 +41,7 @@ export default class Adapter extends mix(Emitter) {
     }
 
     getView(handle) {
-        let prefixMatcher = new RegExp(`^${utils.escapeForRegexp(this._handlePrefix)}`);
+        const prefixMatcher = new RegExp(`^${utils.escapeForRegexp(this._handlePrefix)}`);
         return _.find(
             this._views,
             (view) => view.handle.replace(prefixMatcher, '') === handle.replace(prefixMatcher, ''),
@@ -91,7 +89,7 @@ export default class Adapter extends mix(Emitter) {
     }
 
     _onSourceChange(eventData) {
-        if (eventData && eventData.isTemplate) {
+        if (eventData?.isTemplate) {
             if (eventData.isWrapper) {
                 if (eventData.event === 'change') {
                     this.emit('wrapper:updated', eventData.path);
@@ -102,12 +100,16 @@ export default class Adapter extends mix(Emitter) {
             }
             const touched = _.filter(this._views, ['path', Path.resolve(eventData.path)]);
             if (eventData.event === 'change') {
-                touched.forEach((view) => this._updateView(view));
+                touched.forEach((view) => {
+                    this._updateView(view);
+                });
                 return this._views;
             } else if (eventData.event === 'unlink') {
                 const touchedPaths = _.map(touched, (view) => view.path);
                 this._views = _.reject(this._views, (v) => _.includes(touchedPaths, v.path));
-                touched.forEach((view) => this.emit('view:removed', view));
+                touched.forEach((view) => {
+                    this.emit('view:removed', view);
+                });
                 return this._views;
             }
         }

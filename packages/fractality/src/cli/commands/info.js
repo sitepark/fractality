@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * @param {import("../../fractal.js").Fractality} fractality
  */

@@ -1,5 +1,3 @@
-'use strict';
-
 import Handlebars from 'handlebars';
 
 export default function (fractality) {

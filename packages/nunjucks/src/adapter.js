@@ -1,9 +1,7 @@
-'use strict';
-
 import _ from 'lodash';
 import nunjucks from 'nunjucks';
-import path from 'path';
-import fs from 'fs';
+import path from 'node:path';
+import fs from 'node:fs';
 import { Adapter } from '@fractality/core';
 import extensions from './extensions/index.js';
 import filters from './filters/index.js';
@@ -86,7 +84,7 @@ class NunjucksAdapter extends Adapter {
         this._engine = new AsyncNunjucksEnvironment(loaders, config.env || {});
     }
 
-    render(path, str, context, meta) {
+    render(_path, str, context, meta) {
         meta = meta || {};
         setEnv('_self', meta.self, context);
         setEnv('_target', meta.target, context);
@@ -111,21 +109,21 @@ export default function (config) {
             const nj = adapter.engine;
 
             if (!config.pristine) {
-                _.each(filters(app) || {}, function (filter, name) {
+                _.each(filters(app) || {}, (filter, name) => {
                     addFilter(name, filter);
                 });
-                _.each(extensions(app) || {}, function (ext, name) {
+                _.each(extensions(app) || {}, (ext, name) => {
                     nj.addExtension(name, ext);
                 });
             }
 
-            _.each(config.filters || {}, function (filter, name) {
+            _.each(config.filters || {}, (filter, name) => {
                 addFilter(name, filter);
             });
-            _.each(config.extensions || {}, function (ext, name) {
+            _.each(config.extensions || {}, (ext, name) => {
                 nj.addExtension(name, ext);
             });
-            _.each(config.globals || {}, function (value, name) {
+            _.each(config.globals || {}, (value, name) => {
                 nj.addGlobal(name, value);
             });
 

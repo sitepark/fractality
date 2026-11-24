@@ -1,5 +1,3 @@
-'use strict';
-
 import { utils, mixins } from '@fractality/core';
 import Server from './server.js';
 import Builder from './builder.js';

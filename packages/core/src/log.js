@@ -1,5 +1,3 @@
-'use strict';
-
 import mix from './mixins/mix.js';
 import Emitter from './mixins/emitter.js';
 

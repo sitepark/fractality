@@ -1,5 +1,3 @@
-'use strict';
-
 import _ from 'lodash';
 import { compile, match, parse } from 'path-to-regexp';
 import { mixins } from '@fractality/core';

@@ -1,10 +1,8 @@
-'use strict';
-
 import { Log, entities, fs as frfs, resolver } from '@fractality/core';
 import anymatch from 'anymatch';
 import fs from 'fs-extra';
 import _ from 'lodash';
-import Path from 'path';
+import Path from 'node:path';
 import FileCollection from '../files/collection.js';
 import File from '../files/file.js';
 import ComponentCollection from './collection.js';
@@ -29,7 +27,7 @@ export default class ComponentSource extends EntitySource {
     }
 
     rootCollections() {
-        let collections = super.rootCollections().toArray();
+        const collections = super.rootCollections().toArray();
 
         return this.newSelf([this, ...collections]);
     }
@@ -41,7 +39,7 @@ export default class ComponentSource extends EntitySource {
                 for (const variant of component.variants()) {
                     if (variant.id !== target.id) {
                         for (const ref of variant.references) {
-                            if (target.handle == ref.handle || target.alias == ref.handle) {
+                            if (target.handle === ref.handle || target.alias === ref.handle) {
                                 refs.push(variant.isDefault ? component : variant);
                                 break;
                             }
@@ -61,15 +59,14 @@ export default class ComponentSource extends EntitySource {
         return this.newSelf(items);
     }
 
-    find() {
-        if (this.size === 0 || arguments.length === 0) {
+    find(...args) {
+        if (this.size === 0 || args.length === 0) {
             return;
         }
-        const args = Array.from(arguments);
-        if (args.length == 1 && _.isString(args[0]) && !args[0].startsWith('@') && args[0].indexOf('.') !== -1) {
+        if (args.length === 1 && _.isString(args[0]) && !args[0].startsWith('@') && args[0].indexOf('.') !== -1) {
             return this.findFile(args[0]);
         }
-        const isHandleFind = args.length == 1 && _.isString(args[0]) && args[0].startsWith('@');
+        const isHandleFind = args.length === 1 && _.isString(args[0]) && args[0].startsWith('@');
         for (const item of this.items()) {
             if (item.isCollection) {
                 const search = item.find.apply(item, args);
@@ -90,7 +87,7 @@ export default class ComponentSource extends EntitySource {
     }
 
     findFile(filePath) {
-        let source = this;
+        const source = this;
         filePath = Path.resolve(filePath);
         if (this._fileTree) {
             function findFile(items) {
@@ -152,8 +149,6 @@ export default class ComponentSource extends EntitySource {
         opts.preview = opts.preview || opts.useLayout || false;
         opts.collate = opts.collate || false;
 
-        const self = this;
-
         if (!entity) {
             return Promise.reject(null);
         }
@@ -180,19 +175,19 @@ export default class ComponentSource extends EntitySource {
         if (entity.isComponent || entity.isVariant) {
             if (entity.isComponent) {
                 if (entity.isCollated && opts.collate && entity.variants().size > 1) {
-                    rendered = await self._renderCollatedComponent(entity, env);
+                    rendered = await this._renderCollatedComponent(entity, env);
                 } else {
                     entity = entity.variants().default();
-                    rendered = await self._renderVariant(entity, context, env);
+                    rendered = await this._renderVariant(entity, context, env);
                 }
             } else {
-                rendered = await self._renderVariant(entity, context, env);
+                rendered = await this._renderVariant(entity, context, env);
             }
             if (opts.preview && entity.preview) {
                 const target = entity.toJSON();
                 target.component = target.isVariant ? entity.parent.toJSON() : target;
                 const layout = _.isString(opts.preview) ? opts.preview : entity.preview;
-                return await self._wrapInLayout(target, rendered, layout, env);
+                return await this._wrapInLayout(target, rendered, layout, env);
             }
             return rendered;
         } else {
@@ -244,7 +239,7 @@ export default class ComponentSource extends EntitySource {
             return items.map((i) => i.markup).join('\n');
         }
 
-        let context = _.defaults(collator.context, {
+        const context = _.defaults(collator.context, {
             _variants: items,
         });
 
@@ -265,7 +260,7 @@ export default class ComponentSource extends EntitySource {
             return content;
         }
 
-        let context = _.defaults(layout.context, {
+        const context = _.defaults(layout.context, {
             [this.get('yield')]: content,
         });
         const renderMethod = _.isFunction(this.engine().renderLayout) ? 'renderLayout' : 'render';
@@ -335,13 +330,13 @@ export default class ComponentSource extends EntitySource {
         if (_.get(indentifier, 'isFile')) {
             // If the wrapper is a file, try to resolve it to an existing component so it could access its context.
             // This happens when using a wrapper template in root of components dir.
-            let entity = this.find('viewPath', indentifier.path);
+            const entity = this.find('viewPath', indentifier.path);
             if (entity) {
                 return await this._getWrapper(`@${entity.handle}`);
             }
 
             // using a file
-            let content = await indentifier.getContent();
+            const content = await indentifier.getContent();
             return {
                 context: {},
                 content: content,
@@ -472,7 +467,7 @@ export default class ComponentSource extends EntitySource {
             const defaultVariant = _.find(dirConfig.variants || [], { name: defaultName });
             let view;
 
-            if (defaultVariant && defaultVariant.view) {
+            if (defaultVariant?.view) {
                 view = _.find([].concat(matched.views, matched.varViews), { base: defaultVariant.view });
             } else {
                 view = _.find(matched.views, { name: dir.name });

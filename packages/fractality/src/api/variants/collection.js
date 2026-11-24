@@ -1,8 +1,6 @@
-'use strict';
-
 import { Log, entities, utils } from '@fractality/core';
 import _ from 'lodash';
-import Path from 'path';
+import Path from 'node:path';
 import Variant from './variant.js';
 const EntityCollection = entities.Collection;
 
@@ -81,7 +79,7 @@ export default class VariantCollection extends EntityCollection {
         const hasDefaultConfigured = _.find(configured, ['name', component.defaultName]);
 
         function isRelated(variantHandle) {
-            return function (file) {
+            return (file) => {
                 if (file.name.includes(source.get('splitter'))) {
                     return file.name === variantHandle;
                 }

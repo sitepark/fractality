@@ -1,6 +1,4 @@
-'use strict';
-
-import Path from 'path';
+import Path from 'node:path';
 import nunjucks from 'nunjucks';
 import _ from 'lodash';
 import WebError from '../error.js';
@@ -15,7 +13,7 @@ const extensions = [];
 const templateError = nunjucks.lib.TemplateError;
 let lastError = null;
 
-nunjucks.lib.TemplateError = function (message, lineno, colno) {
+nunjucks.lib.TemplateError = (message, lineno, colno) => {
     if (message instanceof WebError) {
         message.lineno = lineno;
         message.colno = colno;

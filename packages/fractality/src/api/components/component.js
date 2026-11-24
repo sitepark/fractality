@@ -1,8 +1,6 @@
-'use strict';
-
 import { data as Data, entities, utils } from '@fractality/core';
 import _ from 'lodash';
-import Path from 'path';
+import Path from 'node:path';
 import Asset from '../assets/asset.js';
 import AssetCollection from '../assets/collection.js';
 import VariantCollection from '../variants/collection.js';

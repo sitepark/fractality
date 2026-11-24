@@ -1,8 +1,6 @@
-'use strict';
-
 import _ from 'lodash';
 import { Mixin } from 'mixwith';
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 
 export default Mixin((superclass) => {
     const Emitter = class extends superclass {

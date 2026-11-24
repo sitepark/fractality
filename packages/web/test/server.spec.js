@@ -1,6 +1,6 @@
-import fs from 'fs';
-import os from 'os';
-import Path from 'path';
+import fs from 'node:fs';
+import os from 'node:os';
+import Path from 'node:path';
 
 import app from '../../fractality/src/fractal';
 

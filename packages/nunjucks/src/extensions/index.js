@@ -1,5 +1,3 @@
-'use strict';
-
 import _render from './render.js';
 import _view from './view.js';
 import _context from './context.js';

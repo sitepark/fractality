@@ -1,5 +1,3 @@
-'use strict';
-
 import storage from '../storage.js';
 import events from '../events.js';
 
@@ -28,7 +26,7 @@ export default class Tree {
 
         this._collapseButton.on('click', this.closeAll.bind(this));
 
-        for (let key in this._collections) {
+        for (const key in this._collections) {
             const collection = this._collections[key];
             if (collection.containsCurrentItem()) {
                 this._state.push(collection.id);
@@ -41,7 +39,7 @@ export default class Tree {
         this._applyState();
 
         events.trigger('scroll-sidebar');
-        events.on('main-content-preload', (e, url) => {
+        events.on('main-content-preload', (_e, url) => {
             this.selectItem(getTreeUrl(url));
         });
     }
@@ -65,7 +63,7 @@ export default class Tree {
     }
 
     _applyState() {
-        for (let key in this._collections) {
+        for (const key in this._collections) {
             const collection = this._collections[key];
             if (this._state.indexOf(collection.id) > -1) {
                 collection.open(true);

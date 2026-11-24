@@ -1,5 +1,5 @@
-import path from 'path';
-import os from 'os';
+import path from 'node:path';
+import os from 'node:os';
 
 import fs from 'fs-extra';
 import mockArgv from 'mock-argv';
@@ -94,7 +94,7 @@ describe('Utils', () => {
         it('returns stringified object', () => {
             const object = {
                 buffer: Buffer.from('buffer'),
-                func: function () {},
+                func: () => {},
                 plainObject: {},
             };
             const expected = `{
@@ -182,9 +182,9 @@ describe('Utils', () => {
         });
 
         it('Does not attempt to merge objects that are instances of classes', () => {
-            let prop = new MyClass();
-            let upstream = new MyOtherClass();
-            let plain = { foo: 'bar' };
+            const prop = new MyClass();
+            const upstream = new MyOtherClass();
+            const plain = { foo: 'bar' };
             expect(utils.mergeProp(prop, upstream)).toEqual(prop);
             expect(utils.mergeProp(plain, upstream)).toEqual(plain);
             expect(utils.mergeProp(prop, plain)).toEqual(prop);
@@ -193,9 +193,9 @@ describe('Utils', () => {
 
     describe('.defaultsDeep()', () => {
         it('Does not modify source objects', () => {
-            let target = {};
-            let defaults = { foo: 'bar' };
-            let result = utils.defaultsDeep(target, defaults);
+            const target = {};
+            const defaults = { foo: 'bar' };
+            const result = utils.defaultsDeep(target, defaults);
 
             expect(result).not.toBe(defaults);
             expect(result).not.toEqual(target);
@@ -206,7 +206,7 @@ describe('Utils', () => {
         });
 
         it('Recursively merges plain objects', () => {
-            let target = {
+            const target = {
                 top: 'from target',
                 item: {
                     nested: {
@@ -219,7 +219,7 @@ describe('Utils', () => {
                     },
                 },
             };
-            let defaults = {
+            const defaults = {
                 item: {
                     def: 'from default',
                     nested: {
@@ -233,7 +233,7 @@ describe('Utils', () => {
                     },
                 },
             };
-            let expected = {
+            const expected = {
                 top: 'from target',
                 item: {
                     def: 'from default',
@@ -252,23 +252,23 @@ describe('Utils', () => {
         });
 
         it('Does not merge non-plain-object values', () => {
-            let target = { item: new MyClass() };
-            let defaults = { item: new MyOtherClass() };
-            let plain = { item: { foo: 'plain' } };
+            const target = { item: new MyClass() };
+            const defaults = { item: new MyOtherClass() };
+            const plain = { item: { foo: 'plain' } };
             expect(utils.defaultsDeep(target, defaults)).toEqual(target);
             expect(utils.defaultsDeep(plain, defaults)).toEqual(plain);
             expect(utils.defaultsDeep(target, plain)).toEqual(target);
         });
 
         it('Does not merge array values', () => {
-            let target = { items: ['one', 'two'] };
-            let defaults = { items: ['one', 'three', 'four'] };
+            const target = { items: ['one', 'two'] };
+            const defaults = { items: ['one', 'three', 'four'] };
             expect(utils.defaultsDeep(target, defaults).items).toEqual(target.items);
         });
 
         it('Does not let a mutation of a merged array bleed back into the source object', () => {
-            let source = { items: ['one', 'two'] };
-            let result = utils.defaultsDeep({}, source);
+            const source = { items: ['one', 'two'] };
+            const result = utils.defaultsDeep({}, source);
 
             result.items.push('three');
 
@@ -276,9 +276,9 @@ describe('Utils', () => {
         });
 
         it('Returns the default value if the target property is undefined', () => {
-            let target = { anotherItem: 'foo', nullItem: null, undefinedItem: undefined };
-            let defaults = { item: ['one', 'three', 'four'], nullItem: 'not null', undefinedItem: 'not undefined' };
-            let result = utils.mergeProp(target, defaults);
+            const target = { anotherItem: 'foo', nullItem: null, undefinedItem: undefined };
+            const defaults = { item: ['one', 'three', 'four'], nullItem: 'not null', undefinedItem: 'not undefined' };
+            const result = utils.mergeProp(target, defaults);
             expect(result).toHaveProperty('anotherItem');
             expect(result).toHaveProperty('item');
             expect(result.nullItem).toBeNull();

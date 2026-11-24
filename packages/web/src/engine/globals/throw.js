@@ -1,5 +1,3 @@
-'use strict';
-
 import WebError from '../../error.js';
 
 export default function () {

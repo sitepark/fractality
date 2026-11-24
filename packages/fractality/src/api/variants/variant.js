@@ -1,8 +1,6 @@
-'use strict';
-
 import { entities, utils } from '@fractality/core';
 import _ from 'lodash';
-import Path from 'path';
+import Path from 'node:path';
 
 const Entity = entities.Entity;
 

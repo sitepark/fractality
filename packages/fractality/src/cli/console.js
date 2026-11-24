@@ -1,5 +1,3 @@
-'use strict';
-
 import _ from 'lodash';
 import chalk from 'chalk';
 import Table from 'cli-table3';
@@ -84,7 +82,7 @@ class Console {
         if ((data || err instanceof Error) && this._debugging) {
             data = data || err;
             if (data.stack) {
-                this.log('    ' + _.trim(data.stack.toString().replace(err.toString(), '')));
+                this.log(`    ${_.trim(data.stack.toString().replace(err.toString(), ''))}`);
             } else {
                 this.dump(data);
             }

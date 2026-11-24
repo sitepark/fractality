@@ -1,4 +1,3 @@
-'use strict';
 import hljs from 'highlight.js';
 import _ from 'lodash';
 

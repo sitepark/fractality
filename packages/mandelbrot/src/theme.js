@@ -1,6 +1,4 @@
-'use strict';
-
-import Path from 'path';
+import Path from 'node:path';
 import _ from 'lodash';
 import { Theme, WebError } from '@fractality/web';
 import filters from './filters.js';
@@ -151,9 +149,7 @@ export default function (options) {
             handle: 'asset-source',
             view: 'pages/assets.nunj',
         },
-        function (app) {
-            return app.assets.visible().map((asset) => ({ name: asset.name }));
-        },
+        (app) => app.assets.visible().map((asset) => ({ name: asset.name })),
     );
 
     theme.addRoute(
@@ -187,7 +183,7 @@ export default function (options) {
         '/components/raw/:handle/:asset',
         {
             handle: 'component-resource',
-            static: function (params, app) {
+            static: (params, app) => {
                 const component = app.components.find(`@${params.handle}`);
                 if (!component) {
                     throw new WebError(404, 'Component not found');
@@ -211,15 +207,14 @@ export default function (options) {
             handle: 'page',
             view: 'pages/doc.nunj',
         },
-        function (app) {
-            return app.docs
+        (app) =>
+            app.docs
                 .filter((d) => !d.isHidden && d.path !== '')
                 .flatten()
-                .map((page) => ({ path: page.path }));
-        },
+                .map((page) => ({ path: page.path })),
     );
 
-    theme.on('init', function (env, app) {
+    theme.on('init', (env, app) => {
         filters(theme, env, app);
     });
 

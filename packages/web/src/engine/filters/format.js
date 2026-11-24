@@ -1,5 +1,3 @@
-'use strict';
-
 import _ from 'lodash';
 import * as yaml from 'js-yaml';
 

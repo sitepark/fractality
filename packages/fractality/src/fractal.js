@@ -1,5 +1,3 @@
-'use strict';
-
 import { mixins, utils } from '@fractality/core';
 import { Web } from '@fractality/web';
 import _ from 'lodash';
@@ -86,12 +84,16 @@ export class Fractality extends mix(Configurable, Emitter) {
     }
 
     watch() {
-        this._sources().forEach((s) => s.watch());
+        this._sources().forEach((s) => {
+            s.watch();
+        });
         return this;
     }
 
     unwatch() {
-        this._sources().forEach((s) => s.unwatch());
+        this._sources().forEach((s) => {
+            s.unwatch();
+        });
         return this;
     }
 

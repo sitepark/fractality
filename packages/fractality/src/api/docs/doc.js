@@ -1,6 +1,4 @@
-'use strict';
-
-import Path from 'path';
+import Path from 'node:path';
 import matter from 'gray-matter';
 import _ from 'lodash';
 import { utils, entities } from '@fractality/core';

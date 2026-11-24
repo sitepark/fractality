@@ -1,5 +1,3 @@
-'use strict';
-
 import mix from '../mixins/mix.js';
 import Collection from '../mixins/collection.js';
 import Heritable from '../mixins/heritable.js';

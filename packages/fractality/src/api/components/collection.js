@@ -1,5 +1,3 @@
-'use strict';
-
 import { entities } from '@fractality/core';
 const EntityCollection = entities.Collection;
 
@@ -8,15 +6,15 @@ export default class ComponentCollection extends EntityCollection {
         super(config.name, config, items, parent);
     }
 
-    find() {
-        return this.source.find.apply(this, arguments);
+    find(...args) {
+        return this.source.find.apply(this, args);
     }
 
     components() {
         return super.entities();
     }
 
-    variants() {
-        return this.source.variants.apply(this, arguments);
+    variants(...args) {
+        return this.source.variants.apply(this, args);
     }
 }

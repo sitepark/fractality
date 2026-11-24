@@ -1,4 +1,4 @@
-import Path from 'path';
+import Path from 'node:path';
 import { vi } from 'vitest';
 
 import mandelbrot from '../src/theme.js';
@@ -131,7 +131,7 @@ describe('mandelbrot theme factory', () => {
         it.each([
             ['an encoded ../ sequence', '/components/raw/button/..%2F..%2F..%2Fetc%2Fpasswd'],
             ['an encoded .. segment', '/components/raw/button/%2E%2E'],
-        ])('rejects %s that escapes the component view directory with a 404', (label, url) => {
+        ])('rejects %s that escapes the component view directory with a 404', (_label, url) => {
             expect(() => staticPathFor(url)).toThrow(expect.objectContaining({ status: 404 }));
         });
 
@@ -169,7 +169,9 @@ describe('mandelbrot theme factory', () => {
                     return {
                         size: variantHandles.length,
                         each(cb) {
-                            variantHandles.forEach((h) => cb({ handle: h }));
+                            variantHandles.forEach((h) => {
+                                cb({ handle: h });
+                            });
                         },
                     };
                 },

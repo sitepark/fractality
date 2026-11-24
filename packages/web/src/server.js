@@ -1,16 +1,14 @@
-'use strict';
-
 import { Log, mixins, utils } from '@fractality/core';
 import anymatch from 'anymatch';
 import chokidar from 'chokidar';
 import express from 'express';
 import getPort, { portNumbers } from 'get-port';
 import _ from 'lodash';
-import net from 'net';
-import Path from 'path';
+import net from 'node:net';
+import Path from 'node:path';
 import WebError from './error.js';
 import browserSync from 'browser-sync';
-import { createHash } from 'crypto';
+import { createHash } from 'node:crypto';
 import { v4 as uuidv4 } from 'uuid';
 const mix = mixins.mix;
 const Emitter = mixins.emitter;
@@ -104,8 +102,8 @@ export default class Server extends mix(Emitter) {
         });
     }
 
-    use() {
-        this._server.use(...arguments);
+    use(...args) {
+        this._server.use(...args);
     }
 
     stop() {
@@ -146,7 +144,7 @@ export default class Server extends mix(Emitter) {
         this._app.watch();
 
         // listen out for source changes
-        this._app.on('source:updated', (source, data) => {
+        this._app.on('source:updated', (_source, data) => {
             reload(data.path);
         });
 
@@ -251,7 +249,7 @@ export default class Server extends mix(Emitter) {
             .catch((err) => next(err));
     }
 
-    _onError(err, req, res, next) {
+    _onError(err, _req, res, next) {
         if (res.headersSent || !this._theme.errorView()) {
             return next(err);
         }
@@ -290,7 +288,7 @@ export default class Server extends mix(Emitter) {
         });
 
         if (this._config.devtools !== false) {
-            this._server.get('/.well-known/appspecific/com.chrome.devtools.json', (req, res) => {
+            this._server.get('/.well-known/appspecific/com.chrome.devtools.json', (_req, res) => {
                 res.json({ workspace: devtoolsWorkspace(this._app) });
             });
         }
@@ -353,7 +351,7 @@ async function findPorts(serverPort, useSync, host) {
  * of the root stands in for the random bytes.
  */
 function devtoolsWorkspace(app) {
-    const configPath = app.cli && app.cli.configPath;
+    const configPath = app.cli?.configPath;
     const root = configPath ? Path.dirname(configPath) : process.cwd();
     const random = createHash('sha256').update(root).digest().subarray(0, 16);
     return { root, uuid: uuidv4({ random }) };

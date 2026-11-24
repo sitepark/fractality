@@ -1,5 +1,3 @@
-'use strict';
-
 import { markdown } from '@fractality/core';
 
 export default function () {

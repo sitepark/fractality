@@ -18,7 +18,6 @@
     strong {
         --color: rgb(var(--skin-links));
 
-        color: theme.$color-link;
         color: var(--color, theme.$color-link);
         font-weight: normal;
     }

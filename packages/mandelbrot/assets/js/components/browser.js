@@ -1,5 +1,3 @@
-'use strict';
-
 import storage from '../storage.js';
 
 export default class Browser {

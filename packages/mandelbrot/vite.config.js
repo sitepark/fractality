@@ -5,14 +5,9 @@ import { defineConfig } from 'vite';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import { visualizer } from 'rollup-plugin-visualizer';
 
-const skins = globbySync('./assets/scss/skins/*.scss').reduce((acc, file) => {
-    const fileName = path.basename(file, '.scss');
-
-    return {
-        ...acc,
-        [fileName]: path.resolve(file),
-    };
-}, {});
+const skins = Object.fromEntries(
+    globbySync('./assets/scss/skins/*.scss').map((file) => [path.basename(file, '.scss'), path.resolve(file)]),
+);
 
 export default defineConfig(({ mode }) => ({
     resolve: {

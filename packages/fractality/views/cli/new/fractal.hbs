@@ -19,26 +19,26 @@ export default fractality;
 /*
  * Give your project a title.
  */
-fractality.set('project.title', '{{ projectTitle }}');
+fractality.set('project.title', {{json projectTitle}});
 {{/if}}
 
 {{#if componentDir}}
 /*
  * Tell Fractality where to look for components.
  */
-fractality.components.set('path', path.join(import.meta.dirname, '{{ componentDir }}'));
+fractality.components.set('path', path.join(import.meta.dirname, {{json componentDir}}));
 {{/if}}
 
 {{#if docsDir}}
 /*
  * Tell Fractality where to look for documentation pages.
  */
-fractality.docs.set('path', path.join(import.meta.dirname, '{{ docsDir }}'));
+fractality.docs.set('path', path.join(import.meta.dirname, {{json docsDir}}));
 {{/if}}
 
 {{#if publicDir}}
 /*
  * Tell the Fractality web preview plugin where to look for static assets.
  */
-fractality.web.set('static.path', path.join(import.meta.dirname, '{{ publicDir }}'));
+fractality.web.set('static.path', path.join(import.meta.dirname, {{json publicDir}}));
 {{/if}}

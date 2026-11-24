@@ -9,6 +9,14 @@ import Path from 'path';
 
 const __dirname = import.meta.dirname;
 
+/*
+ * The templates write the answers into JavaScript and YAML, not HTML, so
+ * Handlebars' default HTML escaping is wrong for them. `{{json value}}` emits
+ * a double-quoted JSON string, which is a valid string literal in both.
+ */
+const templates = Handlebars.create();
+templates.registerHelper('json', (value) => new Handlebars.SafeString(JSON.stringify(value)));
+
 /**
  * @param {import("../../fractal.js").Fractality} fractality
  */
@@ -80,8 +88,8 @@ export default function (fractality) {
                 },
             };
 
-            const fractalContents = Handlebars.compile(fs.readFileSync(fractalFileTpl, 'utf8'))(answers);
-            const indexContents = Handlebars.compile(fs.readFileSync(docsIndexTpl, 'utf8'))(answers);
+            const fractalContents = templates.compile(fs.readFileSync(fractalFileTpl, 'utf8'))(answers);
+            const indexContents = templates.compile(fs.readFileSync(docsIndexTpl, 'utf8'))(answers);
 
             try {
                 await fs.ensureDir(basePath);

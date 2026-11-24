@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/sitepark/fractality/compare/%40fractality%2Freact%400.8.3...%40fractality%2Freact%400.9.0) (2026-11-24)
+
+**Note:** Version bump only for package @fractality/react
+
+
+
+
+
 ## [0.8.3](https://github.com/sitepark/fractality/compare/%40fractality%2Freact%400.8.2...%40fractality%2Freact%400.8.3) (2026-11-07)
 
 **Note:** Version bump only for package @fractality/react

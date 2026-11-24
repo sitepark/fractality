@@ -70,6 +70,7 @@ export default function (fractality) {
             const packageJSON = {
                 name: utils.slugify(answers.projectTitle),
                 version: '0.1.0',
+                type: 'module',
                 dependencies: {
                     '@fractality/fractality': `^${fractality.get('version')}`,
                 },

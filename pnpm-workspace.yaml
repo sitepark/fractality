@@ -23,3 +23,7 @@ overrides:
   'js-yaml@>=4.0.0 <4.3.1': '^4.3.1' # GHSA-5p4m-2wfm-xmqj
   'tar@>=7.0.0 <7.5.21': '^7.5.22' # GHSA-r292-9mhp-454m
   'undici@>=7.0.0 <7.30.1': '^7.30.1' # GHSA-4w7w-5xrc-9h26 and others (nx pins 7.29.0)
+
+patchedDependencies:
+  # util._extend is deprecated (DEP0060); http-proxy is unmaintained, so swap in Object.assign
+  http-proxy@1.18.1: patches/http-proxy@1.18.1.patch

@@ -19,8 +19,8 @@ export default function (fractality) {
         .command('new')
         .argument('<path>')
         .description('Create a new Fractality project')
-        .action(async (args) => {
-            const basePath = Path.resolve(args);
+        .action(async (projectPath) => {
+            const basePath = Path.resolve(projectPath);
             const viewsPath = Path.join(__dirname, '../../../views/cli/new');
             const fractalFileTpl = Path.join(viewsPath, 'fractal.hbs');
             const docsIndexTpl = Path.join(viewsPath, 'docs/index.md');
@@ -36,7 +36,7 @@ export default function (fractality) {
             const answers = {
                 projectTitle: await inquirer.input({
                     message: "What's the title of your project?",
-                    default: utils.titlize(args.path),
+                    default: utils.titlize(Path.basename(projectPath)),
                 }),
                 componentDir: await inquirer.input({
                     message: 'Where would you like to keep your components?',

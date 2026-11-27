@@ -8,7 +8,7 @@
   },
   "devDependencies": {
     "@babel/preset-react": "^8.0.1",
-    "@biomejs/biome": "^2.6.8",
+    "@biomejs/biome": "^2.6.9",
     "husky": "^9.1.7",
     "jest-extended": "^7.0.0",
     "lerna": "^10.1.3",
